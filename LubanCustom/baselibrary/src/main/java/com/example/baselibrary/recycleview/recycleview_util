@@ -1,0 +1,16 @@
+
+1、滑到底部自动加载
+recycleview.setOnScrollListener(new OnRcvScrollListener(){
+            @Override
+            public void onBottom() {
+                super.onBottom();
+                // 到底部自动加载
+                if (!isLoadingData){
+                    Log.d(TAG, "loading old data");
+                    adapter.loadOldData();
+                    isLoadingData = true;
+                }
+            }
+        });
+  2、设置分割线
+mRecycleveiw.addItemDecoration(new SpacesItemDecoration(0,0,20,0));
