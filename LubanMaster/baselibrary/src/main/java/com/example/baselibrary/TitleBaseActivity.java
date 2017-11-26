@@ -39,6 +39,13 @@ public abstract class TitleBaseActivity extends BaseActivity{
         llBasetitleBack = findView(R.id.ll_basetitle_back);
         tvBasetitleTitle = findView(R.id.tv_basetitle_title);
         tvBasetitleOK = findView(R.id.tv_basetitle_ok);
+        tvBasetitleOK.setOnClickListener(this);
+        llBasetitleBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     /**

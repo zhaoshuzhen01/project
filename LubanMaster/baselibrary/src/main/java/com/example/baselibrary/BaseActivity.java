@@ -90,11 +90,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
-
+/*
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
+                }*/
             return super.dispatchTouchEvent(ev);
         }
         // 必不可少，否则所有的组件都不会有TouchEvent了

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.baselibrary.BaseActivity;
 import com.example.baselibrary.TitleBaseActivity;
+import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 public class MainActivity extends TitleBaseActivity {
 
@@ -21,6 +22,7 @@ public class MainActivity extends TitleBaseActivity {
     public void initView() {
         mainText = findView(R.id.mainText);
         setTitleText("主页");
+        setOKText("工单列表");
     }
 
     @Override
@@ -30,6 +32,11 @@ public class MainActivity extends TitleBaseActivity {
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case com.example.baselibrary.R.id.tv_basetitle_ok:
+                startActivity(WorkSheetListActivity.class,null);
+                break;
+        }
 
     }
 }
