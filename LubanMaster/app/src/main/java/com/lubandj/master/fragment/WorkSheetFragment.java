@@ -12,7 +12,6 @@ import com.lubandj.master.R;
  */
 
 public class WorkSheetFragment extends BaseFragment {
-    private static final String DATAS = "datas";
     public static boolean sNeedRefresh = false;
     private boolean isVisible ;
     private ListView listView;
