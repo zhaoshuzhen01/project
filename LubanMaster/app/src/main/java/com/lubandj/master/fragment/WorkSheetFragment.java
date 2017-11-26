@@ -2,19 +2,40 @@ package com.lubandj.master.fragment;
 
 
 import android.os.Bundle;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.baselibrary.BaseFragment;
+import com.example.baselibrary.BaseRefreshFragment;
+import com.example.baselibrary.refresh.BaseQuickAdapter;
+import com.example.baselibrary.refresh.RefreshLayout;
+import com.example.baselibrary.refresh.listener.OnItemClickListener;
+import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
+import com.lubandj.master.adapter.WorkSheetAdapter;
+import com.lubandj.master.been.TestBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/9/5.
  */
 
-public class WorkSheetFragment extends BaseFragment {
-    public static boolean sNeedRefresh = false;
-    private boolean isVisible ;
-    private ListView listView;
+public class WorkSheetFragment extends BaseRefreshFragment {
+    @InjectView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    private WorkSheetAdapter workSheetAdapter ;
+    private List<TestBean> testBeen = new ArrayList<>();
+    private boolean isVisible;
+
     public static WorkSheetFragment newInstance() {
         WorkSheetFragment myFragment = new WorkSheetFragment();
         Bundle bundle = new Bundle();
@@ -24,10 +45,24 @@ public class WorkSheetFragment extends BaseFragment {
     }
 
     @Override
-    protected void initData() {
-        if (isVisible&& isFirst ) {
-//            getData(1);
+    public int getLayout() {
+        return R.layout.fragment_worksheet;
+    }
+
+    @Override
+    protected void initView(View view) {
+        for (int i=0;i<20;i++){
+            testBeen.add(new TestBean("",""));
         }
+        refreshLayout = view.findViewById(R.id.refreshLayout);
+        workSheetAdapter = new WorkSheetAdapter(testBeen);
+        initRecyclerView(recyclerView, new LinearLayoutManager(view.getContext()), workSheetAdapter);
+        recyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(final BaseQuickAdapter adapter, final View view, final int position) {
+                Toast.makeText(getContext(), Integer.toString(position), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -47,36 +82,36 @@ public class WorkSheetFragment extends BaseFragment {
     }
 
     protected void lazyLoad() {
-        if (isFirst&&listView!=null) {
+        if (isFirst) {
 //            refreshLayout.startRefresh();
-          initData();
+            initData();
         }
     }
 
-    ;
+    @Override
+    protected void initData() {
+        if (isVisible && isFirst) {
+//            getData(1);
+        }
+    }
 
     protected void onInvisible() {
     }
-
     @Override
-    protected void initView() {
-
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 
     @Override
-    public int getLayout() {
-        return R.layout.fragment_worksheet;
+    protected void onRefresh() {
+        ToastUtils.showShort("刷新");
+        requestComplete();
     }
 
-
-
-
     @Override
-    public void onResume() {
-        super.onResume();
-        if (sNeedRefresh){
-//            getData(1);
-            sNeedRefresh = false;
-        }
+    protected void onLoadMore() {
+        ToastUtils.showShort("加载更多");
+        requestComplete();
     }
 }

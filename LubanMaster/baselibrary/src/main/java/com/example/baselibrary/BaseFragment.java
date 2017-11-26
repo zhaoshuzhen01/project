@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
+
 //import com.squareup.leakcanary.RefWatcher;
 
 /**
@@ -27,7 +29,8 @@ public abstract class BaseFragment extends Fragment {
         if (parent != null) {
             parent.removeView(view);// 先移除
         }
-        initView();
+        ButterKnife.inject(this, view);
+        initView(view);
         return view;
     }
 
@@ -45,7 +48,7 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void initData();
 
 
-    protected abstract void initView();
+    protected abstract void initView(View view);
 
 
     public abstract int getLayout();
