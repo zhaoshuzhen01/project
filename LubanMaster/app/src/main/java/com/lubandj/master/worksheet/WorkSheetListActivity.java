@@ -8,6 +8,7 @@ import android.view.View;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tablayout.CustomTabLayout;
 import com.example.baselibrary.tablayout.MyViewPagerAdapter;
+import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
 import com.lubandj.master.fragment.WorkSheetFragment;
 
@@ -60,7 +61,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
         for (int i = 0; i < Titles.length; i++) {
-            WorkSheetFragment mFragment = WorkSheetFragment.newInstance();
+            WorkSheetFragment mFragment = WorkSheetFragment.newInstance(i);
             mFragments.add(i, mFragment);
             idTablayout.removeAllTabs();
             idTablayout.addTab(idTablayout.newTab().setText(Titles[i]));
@@ -80,5 +81,10 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             idTablayout.setupWithViewPager(viewPager);
         }
         viewPager.setOffscreenPageLimit(5);
+    }
+
+    @Override
+    public void titleLeftClick() {
+        ToastUtils.showShort("打开我的");
     }
 }

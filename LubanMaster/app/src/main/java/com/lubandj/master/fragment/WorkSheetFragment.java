@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.baselibrary.BaseFragment;
 import com.example.baselibrary.BaseRefreshFragment;
+import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.RefreshLayout;
 import com.example.baselibrary.refresh.listener.OnItemClickListener;
@@ -35,10 +36,12 @@ public class WorkSheetFragment extends BaseRefreshFragment {
     private WorkSheetAdapter workSheetAdapter ;
     private List<TestBean> testBeen = new ArrayList<>();
     private boolean isVisible;
+    private int index ;
 
-    public static WorkSheetFragment newInstance() {
+    public static WorkSheetFragment newInstance(int index) {
         WorkSheetFragment myFragment = new WorkSheetFragment();
         Bundle bundle = new Bundle();
+        bundle.putInt("index",index);
 //        bundle.putSerializable(DATAS, bean);
         myFragment.setArguments(bundle);
         return myFragment;
@@ -51,12 +54,16 @@ public class WorkSheetFragment extends BaseRefreshFragment {
 
     @Override
     protected void initView(View view) {
-        for (int i=0;i<20;i++){
-            testBeen.add(new TestBean("",""));
+        Bundle bundle = getArguments();
+        index = bundle.getInt("index");
+        if (index==0){
+            for (int i=0;i<20;i++){
+                testBeen.add(new TestBean("",""));
+            }
         }
-        refreshLayout = view.findViewById(R.id.refreshLayout);
         workSheetAdapter = new WorkSheetAdapter(testBeen);
         initRecyclerView(recyclerView, new LinearLayoutManager(view.getContext()), workSheetAdapter);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(5,5,15,0));
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(final BaseQuickAdapter adapter, final View view, final int position) {

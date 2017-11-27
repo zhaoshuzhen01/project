@@ -9,7 +9,6 @@
         android:id="@+id/ll_basetitle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#ff0dc0f8"
         android:orientation="horizontal">
         <LinearLayout
             android:id="@+id/ll_basetitle_back"
@@ -26,8 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="返回"
-                android:textColor="#ffffff"
+                android:textColor="#000000"
                 android:textSize="16sp" />
         </LinearLayout>
         <LinearLayout
@@ -40,7 +38,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="标题"
-                android:textColor="#ffffff"
+                android:textColor="#000000"
                 android:textSize="16sp" />
         </LinearLayout>
         <LinearLayout
@@ -53,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="OK"
-                android:textColor="#ffffff"
+                android:textColor="#000000"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>

@@ -61,6 +61,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
         ButterKnife.inject(this);
         setTitleText(R.string.txt_login_page_title);
         setOkVisibity(false);
+        setLeftVisibity(false);
         setListener();
         initData();
     }
@@ -114,5 +115,10 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
             mHandler=null;
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void titleLeftClick() {
+
     }
 }

@@ -10,7 +10,7 @@ import com.example.baselibrary.BaseActivity;
 import com.example.baselibrary.TitleBaseActivity;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
 
-public class MainActivity extends TitleBaseActivity {
+public class MainActivity extends BaseActivity {
 
     private TextView mainText ;
     @Override
@@ -21,8 +21,6 @@ public class MainActivity extends TitleBaseActivity {
     @Override
     public void initView() {
         mainText = findView(R.id.mainText);
-        setTitleText("主页");
-        setOKText("工单列表");
     }
 
     @Override

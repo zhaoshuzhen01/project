@@ -18,6 +18,7 @@ public abstract class TitleBaseActivity extends BaseActivity{
     private LinearLayout llBasetitleBack;
     private TextView tvBasetitleTitle;
     private TextView tvBasetitleOK;
+    private TextView tv_basetitle_back ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +41,11 @@ public abstract class TitleBaseActivity extends BaseActivity{
         tvBasetitleTitle = findView(R.id.tv_basetitle_title);
         tvBasetitleOK = findView(R.id.tv_basetitle_ok);
         tvBasetitleOK.setOnClickListener(this);
+        tv_basetitle_back = findView(R.id.tv_basetitle_back);
         llBasetitleBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+              titleLeftClick();
             }
         });
     }
@@ -103,8 +105,19 @@ public abstract class TitleBaseActivity extends BaseActivity{
                 tvBasetitleOK.setVisibility(View.GONE);
         }
     }
-
-
+    /**
+     * 设置左边按钮是否显示
+     * @param visible
+     */
+    public void setLeftVisibity(boolean visible) {
+        if (llBasetitleBack != null) {
+            if (visible)
+                llBasetitleBack.setVisibility(View.VISIBLE);
+            else
+                llBasetitleBack.setVisibility(View.GONE);
+        }
+    }
+  public abstract void titleLeftClick();
 
     public LinearLayout getLlBasetitleBack() {
         return llBasetitleBack;

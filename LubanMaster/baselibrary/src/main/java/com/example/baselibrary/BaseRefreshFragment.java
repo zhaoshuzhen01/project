@@ -13,7 +13,7 @@ import com.example.baselibrary.refresh.RefreshLayout;
  * Created by dingboyang on 2017/5/27.
  */
 
-public abstract class BaseRefreshFragment extends BaseFragment implements BaseQuickAdapter.RequestLoadMoreListener{
+public abstract class BaseRefreshFragment extends BaseFragment{
     protected RefreshLayout refreshLayout;
 
     private RecyclerView mRecyclerView;
@@ -59,19 +59,11 @@ public abstract class BaseRefreshFragment extends BaseFragment implements BaseQu
     public void initRecyclerView(RecyclerView recyclerView, RecyclerView.LayoutManager layoutManager, BaseQuickAdapter adapter) {
         mRecyclerView = recyclerView;
         mOriginAdapter =adapter;
-        mOriginAdapter.setOnLoadMoreListener(this, recyclerView);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mOriginAdapter);
-        mOriginAdapter.setEnableLoadMore(true);
-        mOriginAdapter.setOnLoadMoreListener(this,recyclerView);
     }
 
-    @Override
-    public void onLoadMoreRequested() {
-
-        onLoadMore();
-    }
     public void requestComplete() {
 
         if (refreshLayout != null)
