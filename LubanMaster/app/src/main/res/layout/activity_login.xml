@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/h_35dp"
+    android:paddingRight="@dimen/h_35dp"
+    tools:context="com.lubandj.master.login.LoginActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/h_30dp"
+        android:text="@string/txt_login_page_desc"
+        android:textColor="@color/color_636363"
+        android:textSize="@dimen/sp_12" />
+
+    <com.example.baselibrary.widget.EditTextWithDel
+        android:id="@+id/et_phone_num"
+        style="@style/editTextStyles"
+        android:layout_height="@dimen/h_40dp"
+        android:layout_marginTop="@dimen/h_10dp"
+        android:background="@drawable/shape_edit_text_bg"
+        android:hint="@string/txt_login_page_phone_hint"
+        android:textSize="@dimen/sp_14"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:inputType="phone"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/h_15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.example.baselibrary.widget.EditTextWithDel
+            android:id="@+id/et_auth_code"
+            style="@style/editTextStyles"
+            android:layout_height="@dimen/h_40dp"
+            android:layout_width="@dimen/h_0dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_edit_text_bg"
+            android:hint="@string/txt_login_page_code_hint"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:inputType="number"/>
+
+
+        <Button
+            android:id="@+id/btn_send_code"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="@dimen/h_0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginLeft="@dimen/h_20dp"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/white"
+            android:text="@string/txt_login_page_send_code"
+            android:background="@drawable/selector_btn_send_code_bg"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_height="@dimen/dp_40"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/h_15dp"
+        android:text="进入主页面"
+        android:background="@drawable/selector_btn_send_code_bg"/>
+
+</LinearLayout>
+

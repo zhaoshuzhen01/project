@@ -14,4 +14,8 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="EditTextWithDel">
+        <attr name="is_show_delete" format="boolean" />
+    </declare-styleable>
+
 </resources>
