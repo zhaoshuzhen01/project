@@ -9,6 +9,7 @@ import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.widget.EditTextWithDel;
 import com.lubandj.master.MainActivity;
 import com.lubandj.master.R;
+import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -87,7 +88,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                 mHandler.sendEmptyMessage(0);
                 break;
             case R.id.btn_login:
-                startActivity(MainActivity.class, null);
+                startActivity(WorkSheetListActivity.class, null);
                 finish();
                 break;
         }
