@@ -11,7 +11,7 @@ import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 
 
 /**
- * Created by dingboyang on 2017/5/27.
+ * Created by dingboyang on 2017/5/27.//
  */
 
 public abstract class BaseRefreshFragment extends BaseFragment implements PullToRefreshAndPushToLoadView6.PullToRefreshAndPushToLoadMoreListener {
