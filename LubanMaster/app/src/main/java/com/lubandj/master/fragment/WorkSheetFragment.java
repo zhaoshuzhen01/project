@@ -1,24 +1,22 @@
 package com.lubandj.master.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.baselibrary.BaseFragment;
 import com.example.baselibrary.BaseRefreshFragment;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
-import com.example.baselibrary.refresh.RefreshLayout;
 import com.example.baselibrary.refresh.listener.OnItemClickListener;
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.WorkSheetAdapter;
 import com.lubandj.master.been.TestBean;
+import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,15 +31,15 @@ import butterknife.InjectView;
 public class WorkSheetFragment extends BaseRefreshFragment {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
-    private WorkSheetAdapter workSheetAdapter ;
+    private WorkSheetAdapter workSheetAdapter;
     private List<TestBean> testBeen = new ArrayList<>();
     private boolean isVisible;
-    private int index ;
+    private int index;
 
     public static WorkSheetFragment newInstance(int index) {
         WorkSheetFragment myFragment = new WorkSheetFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("index",index);
+        bundle.putInt("index", index);
 //        bundle.putSerializable(DATAS, bean);
         myFragment.setArguments(bundle);
         return myFragment;
@@ -56,18 +54,21 @@ public class WorkSheetFragment extends BaseRefreshFragment {
     protected void initView(View view) {
         Bundle bundle = getArguments();
         index = bundle.getInt("index");
-        if (index==0){
-            for (int i=0;i<20;i++){
-                testBeen.add(new TestBean("",""));
+        if (index == 0) {
+            for (int i = 0; i < 20; i++) {
+                testBeen.add(new TestBean("", ""));
             }
         }
         workSheetAdapter = new WorkSheetAdapter(testBeen);
         initRecyclerView(recyclerView, new LinearLayoutManager(view.getContext()), workSheetAdapter);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(5,5,15,0));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(5, 5, 15, 0));
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(final BaseQuickAdapter adapter, final View view, final int position) {
                 Toast.makeText(getContext(), Integer.toString(position), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, position % 5);
+                startActivity(intent);
             }
         });
     }
@@ -104,6 +105,7 @@ public class WorkSheetFragment extends BaseRefreshFragment {
 
     protected void onInvisible() {
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
