@@ -12,8 +12,9 @@
     <string name="refreshview_release_to_refresh">释放立即刷新</string>
     <string name="refreshview_refreshing">加载中...</string>
     <string name="refreshview_complete">更新完成.</string>
-
-
+    <string name="prompt">提示</string>
+    <string name="action_ok">确定</string>
+    <string name="action_cancel">取消</string>
     <string name="network_error">网络错误</string>
     <string name="network_error_parse">解析错误</string>
     <string name="network_error_connect">连接失败</string>
