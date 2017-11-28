@@ -1,4 +1,4 @@
-package com.example.baselibrary.dialog;
+package com.lubandj.master.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
