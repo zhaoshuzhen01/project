@@ -63,7 +63,7 @@ public class WorkSheetFragment extends BaseRefreshFragment {
         }
         workSheetAdapter = new WorkSheetAdapter(testBeen);
         initRecyclerView(recyclerView, new LinearLayoutManager(view.getContext()), workSheetAdapter);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(5, 5, 15, 0));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(15, 15, 15, 0));
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(final BaseQuickAdapter adapter, final View view, final int position) {

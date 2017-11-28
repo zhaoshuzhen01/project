@@ -2,7 +2,10 @@ package com.example.baselibrary;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -19,7 +22,8 @@ public abstract class TitleBaseActivity extends BaseActivity{
     private TextView tvBasetitleTitle;
     private TextView tvBasetitleOK;
     private TextView tv_basetitle_back ;
-
+    protected DrawerLayout mDrawerLayout;
+    protected NavigationView mNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,9 @@ public abstract class TitleBaseActivity extends BaseActivity{
     }
 
     private void findView() {
+        mNavigationView = (NavigationView) findViewById(R.id.id_nv_menu);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mNavigationView.setItemIconTintList(null);
         llRoot = findView(R.id.ll_basetitle_root);
         llBasetitleBack = findView(R.id.ll_basetitle_back);
         tvBasetitleTitle = findView(R.id.tv_basetitle_title);
@@ -48,6 +55,11 @@ public abstract class TitleBaseActivity extends BaseActivity{
               titleLeftClick();
             }
         });
+        initLeftMenu();
+    }
+    public void MenuShow(){
+        ViewGroup.LayoutParams params = mNavigationView.getLayoutParams();
+        params.width = getResources().getDisplayMetrics().widthPixels/3;
     }
 
     /**
@@ -132,5 +144,36 @@ public abstract class TitleBaseActivity extends BaseActivity{
 
     public TextView getTvBasetitleOK() {
         return tvBasetitleOK;
+    }
+
+    private void initLeftMenu(){
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                View content = mDrawerLayout.getChildAt(0);
+                View menu = drawerView;
+
+                float scale = 1 - slideOffset;//1~0
+                content.setTranslationX((float) ((menu.getMeasuredWidth() * (1 - scale)) * 0.5));//0~width
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                // mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
     }
 }
