@@ -7,22 +7,19 @@ import android.view.View;
 
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.RefreshLayout;
+import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 
 
 /**
  * Created by dingboyang on 2017/5/27.
  */
 
-public abstract class BaseRefreshFragment extends BaseFragment{
+public abstract class BaseRefreshFragment extends BaseFragment implements PullToRefreshAndPushToLoadView6.PullToRefreshAndPushToLoadMoreListener {
     protected RefreshLayout refreshLayout;
-
+    protected PullToRefreshAndPushToLoadView6 pullToRefreshAndPushToLoadView;
     private RecyclerView mRecyclerView;
 
     private BaseQuickAdapter mOriginAdapter;
-
-    protected abstract void onRefresh();
-
-    protected abstract void onLoadMore();
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -32,19 +29,12 @@ public abstract class BaseRefreshFragment extends BaseFragment{
 
     private void initRecyclerRefreshLayout(View view) {
 
-        if (refreshLayout == null) {
-            return;
-        }
         if (allowPullToRefresh()) {
-            refreshLayout.setNestedScrollingEnabled(true);
-            refreshLayout.addOnPullListener(new RefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefreshing(RefreshLayout refreshLayout) {
-                    onRefresh();
-                }
-            });
+            pullToRefreshAndPushToLoadView.setOnRefreshAndLoadMoreListener(this);
+            pullToRefreshAndPushToLoadView.setCanRefresh(true);
+            pullToRefreshAndPushToLoadView.setCanAutoLoadMore(true);
         } else {
-            refreshLayout.setEnabled(false);
+            pullToRefreshAndPushToLoadView.setCanRefresh(false);
         }
     }
 
@@ -87,4 +77,5 @@ public abstract class BaseRefreshFragment extends BaseFragment{
         if(mOriginAdapter!= null)
             mOriginAdapter.loadMoreFail();
     }
+
 }

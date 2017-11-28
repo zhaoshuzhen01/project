@@ -12,6 +12,7 @@ import com.example.baselibrary.BaseRefreshFragment;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.listener.OnItemClickListener;
+import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.WorkSheetAdapter;
@@ -52,6 +53,7 @@ public class WorkSheetFragment extends BaseRefreshFragment {
 
     @Override
     protected void initView(View view) {
+        pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6)view.findViewById(R.id.prpt);
         Bundle bundle = getArguments();
         index = bundle.getInt("index");
         if (index == 0) {
@@ -112,15 +114,16 @@ public class WorkSheetFragment extends BaseRefreshFragment {
         ButterKnife.reset(this);
     }
 
+
     @Override
-    protected void onRefresh() {
+    public void onRefresh() {
         ToastUtils.showShort("刷新");
-        requestComplete();
+        pullToRefreshAndPushToLoadView.finishRefreshing();
     }
 
     @Override
-    protected void onLoadMore() {
-        ToastUtils.showShort("加载更多");
-        requestComplete();
+    public void onLoadMore() {
+        ToastUtils.showShort("加载");
+        pullToRefreshAndPushToLoadView.finishLoading();
     }
 }
