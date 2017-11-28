@@ -1,8 +1,11 @@
 package com.lubandj.master.worksheet;
 
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 
 import com.example.baselibrary.TitleBaseActivity;
@@ -25,7 +28,8 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     private List<String> mTitles=new ArrayList<>();
     // 填充到ViewPager中的Fragment
     private List<Fragment> mFragments;
-
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
     @Override
     public int getLayout() {
         return R.layout.activity_work_sheet_list;
@@ -36,6 +40,12 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         setTitleText("工单列表");
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         idTablayout = (CustomTabLayout)findViewById(R.id.id_tablayout);
+        mNavigationView = (NavigationView) findViewById(R.id.id_nv_menu);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mNavigationView.setItemIconTintList(null);
+        View view = mNavigationView.inflateHeaderView(R.layout.header_just_username);
+        mNavigationView.setItemIconTintList(null);
+        initLeftMenu();
         initData();
     }
 
@@ -86,5 +96,37 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     @Override
     public void titleLeftClick() {
         ToastUtils.showShort("打开我的");
+        mDrawerLayout.openDrawer(Gravity.LEFT);
+    }
+
+    private void initLeftMenu(){
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                View content = mDrawerLayout.getChildAt(0);
+                View menu = drawerView;
+
+                float scale = 1 - slideOffset;//1~0
+                content.setTranslationX((float) ((menu.getMeasuredWidth() * (1 - scale)) * 0.8));//0~width
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                // mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
     }
 }
