@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lubandj.master">
 
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name="com.example.baselibrary.TApplication"
@@ -31,8 +31,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".worksheet.WorkSheetDetailsActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".worksheet.WorkSheetDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".worksheet.SignExceptionActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

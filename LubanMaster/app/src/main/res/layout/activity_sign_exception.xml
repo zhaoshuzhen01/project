@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_eeeeee"
+    android:padding="@dimen/h_10dp"
+    android:orientation="vertical"
+    tools:context="com.lubandj.master.worksheet.SignExceptionActivity">
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:padding="@dimen/h_10dp">
+
+        <RadioButton
+            android:id="@+id/radio_btn_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户主动取消订单"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/black"
+            />
+
+        <RadioButton
+            android:id="@+id/radio_btn_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已到达目的地，与用户无法取得联系"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/black"
+            />
+
+        <RadioButton
+            android:id="@+id/radio_btn_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="临时有事，请求更换师傅"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/black"
+            />
+
+        <RadioButton
+            android:id="@+id/radio_btn_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="其他"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/black"
+            />
+
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/fl_reason"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_150dp"
+        android:layout_marginTop="@dimen/dp_1"
+        android:padding="@dimen/dp_10"
+        android:visibility="gone"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/edit_reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/editTextStyles"
+            android:hint="在这里写出标记异常原因"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="200"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/color_eeeeee"
+            android:layout_gravity="bottom|right"
+            />
+    </FrameLayout>
+
+
+    <Button
+        android:id="@+id/btn_submit"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_height="@dimen/dp_40"
+        android:layout_width="@dimen/h_150dp"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/h_30dp"
+        android:layout_gravity="center"
+        android:text="提交"
+        android:background="@drawable/selector_btn_send_code_bg"/>
+
+</LinearLayout>

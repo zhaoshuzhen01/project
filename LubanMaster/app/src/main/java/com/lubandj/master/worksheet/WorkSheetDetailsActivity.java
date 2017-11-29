@@ -172,6 +172,7 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity {
                 onClickCopy(tvWorkSheetNo.getText().toString());
                 break;
             case R.id.btn_sign_exception:
+                startActivity(SignExceptionActivity.class,null);
                 break;
             case R.id.btn_start_server:
                 new AlertDialog(this)
