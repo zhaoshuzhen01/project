@@ -11,11 +11,101 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        config {
+            keyAlias 'luban.com'
+            keyPassword 'luban.com'
+            storeFile file('D:/copy/project/luban.jks')
+            storePassword 'luban.com'
+            v2SigningEnabled false
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+            manifestPlaceholders = [channelID: "testluban"]
+        }
+    }
+    productFlavors {
+
+        ceshi { // 测试渠道
+            manifestPlaceholders = [channelID: "testmoli"]
+        }
+        guanwang { // 官方渠道
+            manifestPlaceholders = [channelID: "guanwang"]
+        }
+        xiaomi { // 小米
+            manifestPlaceholders = [channelID: "xiaomi"]
+        }
+//        baidu { // 百度
+//            manifestPlaceholders = [channelID: "baidu"]
+//        }
+//        meizu { // 魅族
+//            manifestPlaceholders = [channelID: "meizu"]
+//        }
+//        huawei { // 华为
+//            manifestPlaceholders = [channelID: "huawei"]
+//        }
+//        vivo { // vivo
+//            manifestPlaceholders = [channelID: "vivo"]
+//        }
+//        lenovo { // 联想
+//            manifestPlaceholders = [channelID: "lenovo"]
+//        }
+//        leshi { // 乐视
+//            manifestPlaceholders = [channelID: "leshi"]
+//        }
+//        uc { // UC
+//            manifestPlaceholders = [channelID: "uc"]
+//        }
+//        anzhi { // 安智
+//            manifestPlaceholders = [channelID: "anzhi"]
+//        }
+//        sougou { // 搜狗
+//            manifestPlaceholders = [channelID: "sougou"]
+//        }
+//        mumayi { // 木蚂蚁
+//            manifestPlaceholders = [channelID: "mumayi"]
+//        }
+//        qihu { // 360
+//            manifestPlaceholders = [channelID: "qihu"]
+//        }
+//        tencent { // 腾讯
+//            manifestPlaceholders = [channelID: "tencent"]
+//        }
+//        aiqiyi { // 爱奇艺
+//            manifestPlaceholders = [channelID: "aiqiyi"]
+//        }
+//        oppo { // oppo
+//            manifestPlaceholders = [channelID: "oppo"]
+//        }
+//        chuizi { // 锤子科技
+//            manifestPlaceholders = [channelID: "chuizi"]
+//        }
+//        aliyun { // 阿里云.在线应用商店
+//            manifestPlaceholders = [channelID: "aliyun"]
+//        }
+//        yingyonghui { // 应用汇
+//            manifestPlaceholders = [channelID: "yingyonghui"]
+//        }
+//        youyi { // 优亿市场
+//            manifestPlaceholders = [channelID: "youyi"]
+//        }
+//        qiuyu { // 秋雨
+//            manifestPlaceholders = [channelID: "qiuyu"]
+//        }
     }
 }
 
@@ -29,4 +119,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:5.1.1'
+}
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }

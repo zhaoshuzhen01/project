@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LubanMaster</string>
+    <string name="app_name">鹿班师傅端</string>
     <string name="txt_login_page_title">登录</string>
     <string name="txt_login_page_desc">发送验证码后，经系统验证后即可登陆</string>
     <string name="txt_login_page_phone_hint">请输入手机号码</string>
