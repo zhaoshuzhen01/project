@@ -21,6 +21,7 @@
         <item name="android:textCursorDrawable">@drawable/shape_edit_text_cursor</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
+        <item name="android:background">@null</item>
     </style>
 
 </resources>

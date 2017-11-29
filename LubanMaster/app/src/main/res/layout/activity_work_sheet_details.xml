@@ -341,8 +341,8 @@
                 android:layout_height="@dimen/h_1dp"
                 android:layout_marginTop="@dimen/h_10dp"
                 android:background="@color/color_eeeeee" />
-
             <LinearLayout
+                android:id="@+id/ll_btn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/h_50dp"
                 android:orientation="horizontal">
@@ -383,6 +383,33 @@
                         android:textSize="@dimen/sp_15" />
                 </FrameLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_cancel_reason"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/h_50dp"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/h_10dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_work_sheet_details_cancel_reason"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_15" />
+
+                <EditText
+                    android:id="@+id/et_cancel_reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/h_20dp"
+                    style="@style/editTextStyles"
+                    />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
