@@ -1,11 +1,7 @@
 package com.lubandj.master.model;
 
-import com.example.baselibrary.net.RetrofitUtil;
-
-import rx.Subscriber;
-
 /**
- * Created by ${zhaoshuzhen} on 2017/8/29.
+ * Created by ${zhaoshuzhen} on 2017/8/29.11
  */
 
 public class WarmTipModel {
