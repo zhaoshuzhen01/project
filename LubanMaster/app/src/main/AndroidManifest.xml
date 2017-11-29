@@ -31,7 +31,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".worksheet.WorkSheetDetailsActivity"></activity>
+        <activity android:name=".worksheet.WorkSheetDetailsActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
