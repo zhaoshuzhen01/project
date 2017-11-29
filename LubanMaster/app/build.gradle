@@ -26,7 +26,7 @@ android {
             zipAlignEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
@@ -34,7 +34,7 @@ android {
             shrinkResources false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
             manifestPlaceholders = [channelID: "testluban"]
         }
     }
@@ -107,6 +107,11 @@ android {
 //            manifestPlaceholders = [channelID: "qiuyu"]
 //        }
     }
+
+    dataBinding{
+        enabled = true
+    }
+
 }
 
 dependencies {

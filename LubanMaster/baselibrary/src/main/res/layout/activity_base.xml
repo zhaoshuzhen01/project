@@ -69,5 +69,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:overScrollMode="never"
+
         android:scrollbars="none" />
 </android.support.v4.widget.DrawerLayout>

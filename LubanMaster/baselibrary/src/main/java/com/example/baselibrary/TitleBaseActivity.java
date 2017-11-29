@@ -59,7 +59,8 @@ public abstract class TitleBaseActivity extends BaseActivity{
     }
     public void MenuShow(){
         ViewGroup.LayoutParams params = mNavigationView.getLayoutParams();
-        params.width = getResources().getDisplayMetrics().widthPixels/3;
+        params.width = getResources().getDisplayMetrics().widthPixels*3/4;
+        params.height = getResources().getDisplayMetrics().heightPixels;
     }
 
     /**
