@@ -658,7 +658,7 @@ public class PullToRefreshAndPushToLoadView6 extends ViewGroup {
             public void run() {
                 hideHeader(true);
             }
-        },1000);
+        },10);
     }
 
     @Override

@@ -34,14 +34,13 @@ public class WorkSheetFragment extends BaseRefreshFragment {
     RecyclerView recyclerView;
     private WorkSheetAdapter workSheetAdapter;
     private List<TestBean> testBeen = new ArrayList<>();
-    private boolean isVisible;
+    private boolean isVisible = false;
     private int index;
 
     public static WorkSheetFragment newInstance(int index) {
         WorkSheetFragment myFragment = new WorkSheetFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("index", index);
-//        bundle.putSerializable(DATAS, bean);
         myFragment.setArguments(bundle);
         return myFragment;
     }
@@ -56,11 +55,9 @@ public class WorkSheetFragment extends BaseRefreshFragment {
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6)view.findViewById(R.id.prpt);
         Bundle bundle = getArguments();
         index = bundle.getInt("index");
-        if (index == 0) {
-            for (int i = 0; i < 20; i++) {
+           /* for (int i = 0; i < 20; i++) {
                 testBeen.add(new TestBean("", ""));
-            }
-        }
+            }*/
         workSheetAdapter = new WorkSheetAdapter(testBeen);
         initRecyclerView(recyclerView, new LinearLayoutManager(view.getContext()), workSheetAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(15, 15, 15, 0));
@@ -80,33 +77,23 @@ public class WorkSheetFragment extends BaseRefreshFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
             isVisible = true;
-            onVisible();
+            lazyLoad();
         } else {
-            isVisible = false;
-            onInvisible();
+            isVisible = false ;
         }
     }
-
-    protected void onVisible() {
-        lazyLoad();
-    }
-
     protected void lazyLoad() {
-        if (isFirst) {
-//            refreshLayout.startRefresh();
+        if (isVisible && isFirst) {
             initData();
         }
     }
 
     @Override
     protected void initData() {
-        if (isVisible && isFirst) {
-//            getData(1);
-        }
+        ToastUtils.showShort("请求");
+       isFirst = false ;
     }
 
-    protected void onInvisible() {
-    }
 
     @Override
     public void onDestroyView() {
