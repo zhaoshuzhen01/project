@@ -28,7 +28,7 @@ public class SignExceptionActivity extends TitleBaseActivity implements RadioGro
 
     @Override
     public void titleLeftClick() {
-
+        finish();
     }
 
     @Override
