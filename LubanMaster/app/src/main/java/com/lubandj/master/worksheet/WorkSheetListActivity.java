@@ -1,5 +1,6 @@
 package com.lubandj.master.worksheet;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,9 @@ import com.example.baselibrary.tablayout.MyViewPagerAdapter;
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
 import com.lubandj.master.fragment.WorkSheetFragment;
+import com.lubandj.master.my.AboutLuBanActivity;
+import com.lubandj.master.my.ModifyPhoneActivity;
+import com.lubandj.master.my.WorkCodeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,18 +110,21 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_menu_phone:
+                startActivity(ModifyPhoneActivity.class, null);
                 break;
             case R.id.ll_menu_address:
                 break;
             case R.id.ll_menu_service:
                 break;
             case R.id.ll_menu_workcode:
+                startActivity(WorkCodeActivity.class, null);
                 break;
             case R.id.ll_menu_workcalendar:
                 break;
             case R.id.ll_menu_askforleave:
                 break;
             case R.id.ll_menu_aboutus:
+                startActivity(AboutLuBanActivity.class, null);
                 break;
             case R.id.btn_menu_logout:
                 break;

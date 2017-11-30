@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lubandj.master">
+          package="com.lubandj.master">
 
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:name="com.example.baselibrary.TApplication"
@@ -21,20 +21,32 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".worksheet.WorkSheetListActivity" />
+        <activity android:name=".worksheet.WorkSheetListActivity"/>
         <activity
             android:name=".login.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".worksheet.WorkSheetDetailsActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".worksheet.SignExceptionActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".worksheet.SignExceptionActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".my.AboutLuBanActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".my.ModifyPhoneActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".my.WorkCodeActivity"
             android:screenOrientation="portrait"/>
     </application>
 
