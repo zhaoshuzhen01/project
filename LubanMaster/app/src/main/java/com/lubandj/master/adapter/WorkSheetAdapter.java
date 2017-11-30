@@ -1,6 +1,7 @@
 package com.lubandj.master.adapter;
 
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
@@ -20,6 +21,15 @@ public class WorkSheetAdapter extends BaseQuickAdapter<TestBean, BaseViewHolder>
 
     @Override
     protected void convert(BaseViewHolder helper, TestBean item) {
+        initView(helper,item);
+    }
 
+    /**
+     * 初始化view
+     * @param helper
+     * @param item
+     */
+    private void initView(BaseViewHolder helper, TestBean item){
+        ((TextView) (helper.getView(R.id.finishState))).setText("已完成");
     }
 }
