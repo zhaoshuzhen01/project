@@ -17,6 +17,7 @@
             android:src="@mipmap/ic_launcher" />
 
         <TextView
+            android:id="@+id/serviceState"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/h_60dp"
             android:layout_marginLeft="@dimen/dp_15"
@@ -98,7 +99,19 @@
             android:layout_height="wrap_content"
             android:text="服务完成"
             android:padding="@dimen/dp_8"
+            android:focusable="false"
             android:layout_alignParentRight="true"
+            android:background="@drawable/listback"
+            android:layout_marginRight="@dimen/dp_8"
+            android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/daohangState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始导航"
+            android:focusable="false"
+            android:layout_toLeftOf="@+id/finishState"
+            android:padding="@dimen/dp_8"
             android:background="@drawable/listback"
             android:layout_marginRight="@dimen/dp_8"
             android:textColor="@color/black" />

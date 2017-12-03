@@ -29,7 +29,7 @@ import butterknife.InjectView;
  * Created by ${zhaoshuzhen} on 2017/9/5.
  */
 
-public class WorkSheetFragment extends BaseRefreshFragment {
+public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickAdapter.OnItemClickListener{
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     private WorkSheetAdapter workSheetAdapter;
@@ -55,21 +55,13 @@ public class WorkSheetFragment extends BaseRefreshFragment {
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6)view.findViewById(R.id.prpt);
         Bundle bundle = getArguments();
         index = bundle.getInt("index");
-           /* for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 20; i++) {
                 testBeen.add(new TestBean("", ""));
-            }*/
-        workSheetAdapter = new WorkSheetAdapter(testBeen);
+            }
+        workSheetAdapter = new WorkSheetAdapter(testBeen,getActivity());
+        workSheetAdapter.setOnItemClickListener(this);
         initRecyclerView(recyclerView, new LinearLayoutManager(view.getContext()), workSheetAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(15, 15, 15, 0));
-        recyclerView.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(final BaseQuickAdapter adapter, final View view, final int position) {
-                Toast.makeText(getContext(), Integer.toString(position), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, position % 5);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -90,7 +82,6 @@ public class WorkSheetFragment extends BaseRefreshFragment {
 
     @Override
     protected void initData() {
-        ToastUtils.showShort("请求");
        isFirst = false ;
     }
 
@@ -104,13 +95,18 @@ public class WorkSheetFragment extends BaseRefreshFragment {
 
     @Override
     public void onRefresh() {
-        ToastUtils.showShort("刷新");
         pullToRefreshAndPushToLoadView.finishRefreshing();
     }
 
     @Override
     public void onLoadMore() {
-        ToastUtils.showShort("加载");
         pullToRefreshAndPushToLoadView.finishLoading();
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
+        intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, position % 5);
+        startActivity(intent);
     }
 }

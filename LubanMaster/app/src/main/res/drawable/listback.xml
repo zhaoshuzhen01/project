@@ -4,7 +4,7 @@
 
     <!-- 边框 -->
     <stroke
-        android:color="#000"
+        android:color="@color/color_cecece"
         android:width="1dp"/>
 
     <!-- 形状颜色（如果需要的是空心矩形, 则形状颜色设置为透明） -->

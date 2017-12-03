@@ -1945,4 +1945,6 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
     public final OnItemChildLongClickListener getOnItemChildLongClickListener() {
         return mOnItemChildLongClickListener;
     }
+
+    public abstract void childViewClick(int position,View view);
 }
