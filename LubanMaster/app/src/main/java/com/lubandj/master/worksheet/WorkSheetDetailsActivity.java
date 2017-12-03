@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -83,6 +84,7 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
 
     @Override
     public void initView() {
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         ButterKnife.inject(this);
         setTitleText(R.string.txt_work_sheet_details_title);
         setOKText("客服");

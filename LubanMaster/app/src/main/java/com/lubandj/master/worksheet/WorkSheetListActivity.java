@@ -138,8 +138,6 @@ public class WorkSheetListActivity extends TitleBaseActivity {
 
     //zsz
     protected void onSetupTabData(List<String> titles) {
-        Log.e("cc", titles.size() + "      datas.size() ");
-
         Titles = (String[]) titles.toArray(new String[titles.size()]);
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
