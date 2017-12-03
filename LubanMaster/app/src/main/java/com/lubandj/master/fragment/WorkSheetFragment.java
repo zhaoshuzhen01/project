@@ -35,8 +35,9 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     private WorkSheetAdapter workSheetAdapter;
     private List<TestBean> testBeen = new ArrayList<>();
     private boolean isVisible = false;
-    private int index;
-
+    private int index;// 0 未完成  1  已完成  2 已取消
+    private static final int TYPE_COMPLETED = 3;//完成
+    private static final int TYPE_CANCELED = 4;//取消
     public static WorkSheetFragment newInstance(int index) {
         WorkSheetFragment myFragment = new WorkSheetFragment();
         Bundle bundle = new Bundle();
@@ -58,7 +59,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
             for (int i = 0; i < 20; i++) {
                 testBeen.add(new TestBean("", ""));
             }
-        workSheetAdapter = new WorkSheetAdapter(testBeen,getActivity());
+        workSheetAdapter = new WorkSheetAdapter(testBeen,getActivity(),index);
         workSheetAdapter.setOnItemClickListener(this);
         initRecyclerView(recyclerView, new LinearLayoutManager(view.getContext()), workSheetAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(15, 15, 15, 0));
@@ -105,8 +106,22 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
-        intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, position % 5);
-        startActivity(intent);
+        switch (index){
+            case 0://工单服务中
+                Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, position % 5);
+                startActivity(intent);
+                break;
+            case 1://工单完成
+                 intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, TYPE_COMPLETED);
+                startActivity(intent);
+                break;
+            case 2://工单取消
+                 intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, TYPE_CANCELED);
+                startActivity(intent);
+                break;
+        }
     }
 }

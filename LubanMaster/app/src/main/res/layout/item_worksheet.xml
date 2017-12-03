@@ -88,6 +88,7 @@
         android:background="@color/color_cecece"></View>
 
     <RelativeLayout
+        android:id="@+id/bottom_lay"
         android:layout_width="match_parent"
         android:paddingTop="@dimen/dp_8"
         android:paddingBottom="@dimen/dp_8"
