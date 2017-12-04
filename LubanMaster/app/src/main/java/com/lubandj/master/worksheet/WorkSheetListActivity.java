@@ -26,6 +26,7 @@ import com.lubandj.master.R;
 import com.lubandj.master.fragment.WorkSheetFragment;
 import com.lubandj.master.my.AboutLuBanActivity;
 import com.lubandj.master.my.ModifyPhoneActivity;
+import com.lubandj.master.my.MyAddressActivity;
 import com.lubandj.master.my.WorkCodeActivity;
 
 import java.util.ArrayList;
@@ -54,9 +55,9 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     @Override
     public int getLayout() {
         // com.getui.demo.DemoPushService 为第三方自定义推送服务
-        PushManager.getInstance().initialize(this.getApplicationContext(),CustomService.class);
+        PushManager.getInstance().initialize(this.getApplicationContext(), CustomService.class);
         // com.getui.demo.DemoIntentService 为第三方自定义的推送服务事件接收类
-        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(),CusstomIntentService.class);
+        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), CusstomIntentService.class);
         return R.layout.activity_work_sheet_list;
     }
 
@@ -120,6 +121,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 startActivity(ModifyPhoneActivity.class, null);
                 break;
             case R.id.ll_menu_address:
+                startActivity(MyAddressActivity.class, null);
                 break;
             case R.id.ll_menu_service:
                 break;
