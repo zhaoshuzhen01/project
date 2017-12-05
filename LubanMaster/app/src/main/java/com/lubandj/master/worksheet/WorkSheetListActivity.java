@@ -44,6 +44,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
 
     @Override
     public int getLayout() {
+//        NotificationUtil.initNotification(this);
         return R.layout.activity_work_sheet_list;
     }
 
