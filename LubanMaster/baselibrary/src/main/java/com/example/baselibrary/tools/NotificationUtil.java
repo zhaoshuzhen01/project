@@ -4,6 +4,7 @@ import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 
@@ -56,17 +57,42 @@ public class NotificationUtil {
         }
         return false;
     }
+
+    /**
+     * 应用通知管理界面
+     * @param context
+     */
     private static void goToSet(Context context){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BASE) {
-            // 进入设置系统应用权限界面
-            Intent intent = new Intent(Settings.ACTION_SETTINGS);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Intent intent = new Intent();
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("app_package", Tools.getPackageName(context));
+            intent.putExtra("app_uid", context.getApplicationInfo().uid);
             context.startActivity(intent);
-            return;
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {// 运行系统在5.x环境使用
-            // 进入设置系统应用权限界面
-            Intent intent = new Intent(Settings.ACTION_SETTINGS);
+        } else if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setData(Uri.parse("package:" + Tools.getPackageName(context)));
             context.startActivity(intent);
-            return;
         }
+    }
+
+    /**
+     * 应用权限管理界面
+     * @param context
+     */
+    private static void goToSet1(Context context){
+        Intent localIntent = new Intent();
+        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= 9) {
+            localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            localIntent.setData(Uri.fromParts("package",Tools.getPackageName(context),null));
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            localIntent.setAction(Intent.ACTION_VIEW);
+            localIntent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails");
+            localIntent.putExtra("com.android.settings.ApplicationPkgName",Tools.getPackageName(context));
+        }
+        context.startActivity(localIntent);
     }
 }

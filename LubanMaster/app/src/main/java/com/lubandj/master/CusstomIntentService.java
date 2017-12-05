@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.baselibrary.tools.NotificationUtil;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.message.GTCmdMessage;
@@ -49,6 +50,7 @@ public class CusstomIntentService extends GTIntentService {
         } else {
             String data = new String(payload);
             shownotification(data,context);
+            NotificationUtil.initNotification(this);
         }
     }
 
