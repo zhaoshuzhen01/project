@@ -58,7 +58,7 @@ public class BaiduApi {
     }
     private void openMap(boolean isBaiduMap) {
         if (!checkApkExist(context, isBaiduMap ? "com.baidu.BaiduMap" : "com.autonavi.minimap")) {
-            ToastUtils.showShort(isBaiduMap ? "请安装百度地图" : "请安装高德地图");
+            ToastUtils.showShort(context,isBaiduMap ? "请安装百度地图" : "请安装高德地图");
             return;
         }
         Intent intent = null;

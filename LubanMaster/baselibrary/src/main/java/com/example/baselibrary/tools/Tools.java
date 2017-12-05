@@ -6,14 +6,12 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.ActivityManager.RunningTaskInfo;
-import android.app.AppOpsManager;
 import android.app.PendingIntent;
 import android.app.PendingIntent.CanceledException;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Intent.ShortcutIconResource;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -38,8 +36,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.media.MediaMetadataRetriever;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Debug;
@@ -50,7 +46,6 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Thumbnails;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -64,7 +59,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.baselibrary.R;
-import com.example.baselibrary.TApplication;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -74,9 +68,6 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -120,25 +111,25 @@ public class Tools {
      * 获取字符串
      * @return
      */
-    public static String getString(int id) {
-        return TApplication.context.getString(id);
+    public static String getString(Context context,int id) {
+        return context.getString(id);
     }
 
     /**
      * 获取软件包名
      * @return
      */
-    public static String getPackageName() {
-        return TApplication.context.getPackageName();
+    public static String getPackageName(Context context) {
+        return context.getPackageName();
     }
 
     /**
      * 获取versionCode（ANDROID版本号）
      */
-    public static int getVersionCode() {
+    public static int getVersionCode(Context context) {
         int versioncode = 0;
         try {
-            PackageInfo pinfo = TApplication.context.getPackageManager().getPackageInfo(getPackageName(), 0);
+            PackageInfo pinfo = context.getPackageManager().getPackageInfo(getPackageName(context), 0);
             versioncode = pinfo.versionCode;
         } catch (NameNotFoundException e) {
             e.printStackTrace();
@@ -151,9 +142,9 @@ public class Tools {
      *
      * @return
      */
-    public static String getVersionName() {
+    public static String getVersionName(Context context) {
         try {
-            PackageInfo pinfo = TApplication.context.getPackageManager().getPackageInfo(getPackageName(), 0);
+            PackageInfo pinfo = context.getPackageManager().getPackageInfo(getPackageName(context), 0);
             String versionName = pinfo.versionName;
             if (null != versionName) {
                 return versionName.toLowerCase();
@@ -165,11 +156,6 @@ public class Tools {
         return "";
     }
 
-    public static boolean isConnected(Context context) {
-        ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        android.net.NetworkInfo info = conn.getActiveNetworkInfo();
-        return (info != null && info.isConnected());
-    }
 
 
     /**
@@ -753,7 +739,7 @@ public class Tools {
             activity.startActivity(intent);
 
         } else {
-            Tools.Toast("安装失败", false);
+            Tools.Toast(activity,"安装失败", false);
         }
     }
 
@@ -802,13 +788,13 @@ public class Tools {
      *
      * @return
      */
-    public static String getRootPath() {
+    public static String getRootPath(Context context) {
         String rootPath = "";
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 && Environment.getExternalStorageDirectory().canWrite()) {
             rootPath = getSdcardRootPath();
         } else {
-            rootPath = getDataRootPath();
+            rootPath = getDataRootPath(context);
         }
         return rootPath;
     }
@@ -827,8 +813,8 @@ public class Tools {
      *
      * @return
      */
-    public static String getDataRootPath() {
-        return Environment.getDataDirectory() + "/data/" + Tools.getPackageName() + "/files/";
+    public static String getDataRootPath(Context context) {
+        return Environment.getDataDirectory() + "/data/" + Tools.getPackageName(context) + "/files/";
     }
 
     /**
@@ -837,8 +823,8 @@ public class Tools {
      * @param dip
      * @return
      */
-    public static int dipToPixel(float dip) {
-        return (int) (dip * TApplication.context.getResources().getDisplayMetrics().density + 0.5);
+    public static int dipToPixel(Context context,float dip) {
+        return (int) (dip * context.getResources().getDisplayMetrics().density + 0.5);
     }
 
     /**
@@ -848,14 +834,14 @@ public class Tools {
      * @param resId 资源id
      * @return
      */
-    public static Bitmap readBitmap(int resId) {
+    public static Bitmap readBitmap(Context context,int resId) {
         InputStream stream = null;
         try {
             BitmapFactory.Options opt = new BitmapFactory.Options();
             opt.inPreferredConfig = Config.ARGB_8888;
             opt.inPurgeable = true;
             opt.inInputShareable = true;
-            stream = TApplication.context.getResources().openRawResource(resId);
+            stream = context.getResources().openRawResource(resId);
             return BitmapFactory.decodeStream(stream, null, opt);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1090,11 +1076,11 @@ public class Tools {
      * @param imagePath
      * @return
      */
-    public static Bitmap createBitmapFormAssets(String imagePath) {
+    public static Bitmap createBitmapFormAssets(Context context,String imagePath) {
         InputStream stream = null;
         try {
             if (imagePath != null) {
-                stream = TApplication.context.getAssets().open(imagePath);
+                stream = context.getAssets().open(imagePath);
             }
             if (stream != null) {
                 return Bitmap.createBitmap(BitmapFactory.decodeStream(stream));
@@ -1119,10 +1105,10 @@ public class Tools {
      * @param location
      * @return
      */
-    public static String getAddress(Location location) {
+    public static String getAddress(Context context,Location location) {
         try {
             if (location != null) {
-                Geocoder geo = new Geocoder(TApplication.context, Locale.getDefault());
+                Geocoder geo = new Geocoder(context, Locale.getDefault());
                 List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
                 if (!addresses.isEmpty()) {
@@ -1148,10 +1134,10 @@ public class Tools {
      * @param location
      * @return
      */
-    public static String getCurrentCity(Location location) {
+    public static String getCurrentCity(Context context,Location location) {
         try {
             if (location != null) {
-                Geocoder geo = new Geocoder(TApplication.context, Locale.getDefault());
+                Geocoder geo = new Geocoder(context, Locale.getDefault());
                 List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
                 if (!addresses.isEmpty()) {
@@ -1270,9 +1256,9 @@ public class Tools {
      *
      * @return int
      */
-    public static int getScreenWidth() {
+    public static int getScreenWidth(Context context) {
         DisplayMetrics dm = new DisplayMetrics();
-        dm = TApplication.context.getApplicationContext().getResources().getDisplayMetrics();
+        dm = context.getApplicationContext().getResources().getDisplayMetrics();
         return dm.widthPixels;
     }
 
@@ -1281,20 +1267,20 @@ public class Tools {
      *
      * @return int
      */
-    public static int getScreenHeight() {
+    public static int getScreenHeight(Context context) {
         DisplayMetrics dm = new DisplayMetrics();
-        dm = TApplication.context.getResources().getDisplayMetrics();
+        dm = context.getResources().getDisplayMetrics();
         return dm.heightPixels;
     }
 
     /**
      * 获取使用内存大小
      */
-    public static int getMemory() {
+    public static int getMemory(Context context) {
         int pss = 0;
-        ActivityManager myAM = (ActivityManager) TApplication.context
+        ActivityManager myAM = (ActivityManager) context
                 .getSystemService(Context.ACTIVITY_SERVICE);
-        String packageName = TApplication.context.getPackageName();
+        String packageName = context.getPackageName();
         List<RunningAppProcessInfo> appProcesses = myAM.getRunningAppProcesses();
         for (RunningAppProcessInfo appProcess : appProcesses) {
             if (appProcess.processName.equals(packageName)) {
@@ -1337,43 +1323,7 @@ public class Tools {
         return cpu;
     }
 
-    /**
-     * 获得手机IMEI
-     *
-     * @return
-     */
-    public static String getIMEI() {
-        try {
-            TelephonyManager tm = (TelephonyManager) TApplication.context
-                    .getSystemService(Context.TELEPHONY_SERVICE);
-            String imei = tm.getDeviceId();
-            if (null != imei) {
-                return imei;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
 
-    /**
-     * 获得手机IMSI
-     *
-     * @return
-     */
-    public static String getIMSI() {
-        try {
-            TelephonyManager tm = (TelephonyManager) TApplication.context
-                    .getSystemService(Context.TELEPHONY_SERVICE);
-            String imsi = tm.getSubscriberId();
-            if (null != imsi) {
-                return imsi;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
 
     /**
      * 全屏切换
@@ -1401,10 +1351,10 @@ public class Tools {
      *
      * @return
      */
-    public static int getSystemBrightness() {
+    public static int getSystemBrightness(Context context) {
         int brightness = 5;
         try {
-            brightness = Settings.System.getInt(TApplication.context.getContentResolver(),
+            brightness = Settings.System.getInt(context.getContentResolver(),
                     Settings.System.SCREEN_BRIGHTNESS);
             brightness = brightness * 100 / 255;
         } catch (SettingNotFoundException ex) {
@@ -1466,8 +1416,8 @@ public class Tools {
      * @param content  提示内容
      * @param longTime 是否长时间提醒
      */
-    public static void Toast(String content, boolean longTime) {
-        Context context = TApplication.context;
+    public static void Toast(Context context1,String content, boolean longTime) {
+        Context context = context1;
         if (content != null && context != null) {
             int timer = Toast.LENGTH_SHORT;
             if (longTime) {
@@ -1869,7 +1819,7 @@ public class Tools {
     }
 
     public static void restartApplication(Context context) {
-        final Intent intent = context.getPackageManager().getLaunchIntentForPackage(getPackageName());
+        final Intent intent = context.getPackageManager().getLaunchIntentForPackage(getPackageName(context));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
     }
@@ -2231,12 +2181,12 @@ public class Tools {
     }
 
 
-    public static boolean isAppOnForeground() {
+    public static boolean isAppOnForeground(Context context) {
         // Returns a list of application processes that are running on the
         // device
 
-        ActivityManager activityManager = (ActivityManager) TApplication.context.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
-        String packageName = TApplication.context.getApplicationContext().getPackageName();
+        ActivityManager activityManager = (ActivityManager)context.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        String packageName = context.getApplicationContext().getPackageName();
 
         List<RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
         if (appProcesses == null)

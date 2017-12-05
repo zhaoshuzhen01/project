@@ -5,8 +5,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -19,14 +17,11 @@ import android.widget.TextView;
 
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
-import com.example.baselibrary.widget.ActionSheetDialog;
 import com.example.baselibrary.widget.AlertDialog;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
 import com.lubandj.master.baiduUtil.BaiduApi;
-
-import java.net.URISyntaxException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -165,7 +160,7 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_basetitle_ok:
-                toast("客服");
+                toast(this,"客服");
                 break;
             default:
                 break;
@@ -182,12 +177,12 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
     public void onClickCopy(String selectedText) {
         ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         cm.setPrimaryClip(ClipData.newPlainText(null, selectedText));
-        toast("复制成功");
+        toast(this,"复制成功");
     }
 
 
     @Override
     public void dialogCall() {
-        ToastUtils.showShort("sdfdsf");
+        ToastUtils.showShort(this,"sdfdsf");
     }
 }

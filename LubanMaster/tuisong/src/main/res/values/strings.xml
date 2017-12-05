@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">tuisong</string>
+    <string name="push_transmission_data">收到一条透传测试消息</string>
 </resources>

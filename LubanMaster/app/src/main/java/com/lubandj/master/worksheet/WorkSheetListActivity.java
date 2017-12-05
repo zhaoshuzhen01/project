@@ -1,16 +1,10 @@
 package com.lubandj.master.worksheet;
 
-import android.content.Intent;
-import android.graphics.Rect;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -18,10 +12,6 @@ import android.widget.TextView;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tablayout.CustomTabLayout;
 import com.example.baselibrary.tablayout.MyViewPagerAdapter;
-import com.example.baselibrary.tools.ToastUtils;
-import com.igexin.sdk.PushManager;
-import com.lubandj.master.CusstomIntentService;
-import com.lubandj.master.CustomService;
 import com.lubandj.master.R;
 import com.lubandj.master.fragment.WorkSheetFragment;
 import com.lubandj.master.my.AboutLuBanActivity;
@@ -54,10 +44,6 @@ public class WorkSheetListActivity extends TitleBaseActivity {
 
     @Override
     public int getLayout() {
-        // com.getui.demo.DemoPushService 为第三方自定义推送服务
-        PushManager.getInstance().initialize(this.getApplicationContext(), CustomService.class);
-        // com.getui.demo.DemoIntentService 为第三方自定义的推送服务事件接收类
-        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), CusstomIntentService.class);
         return R.layout.activity_work_sheet_list;
     }
 

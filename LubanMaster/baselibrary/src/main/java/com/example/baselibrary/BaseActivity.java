@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.baselibrary.tools.ToastUtils;
@@ -52,23 +50,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         }
         startActivity(intent);
     }
-    /**
-     * 打印log
-     * @param tag
-     * @param msg
-     */
-    public void TLog(String tag,String msg) {
-        if (TApplication.isDebug) {
-            Log.e(tag, msg);
-        }
-    }
+
 
     /**
      * 土司
      * @param text
      */
-    public void toast(String text) {
-        ToastUtils.showShort(text);
+    public void toast(Context context,String text) {
+        ToastUtils.showShort(context,text);
     }
 
     /**
