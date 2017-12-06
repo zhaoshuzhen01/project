@@ -39,7 +39,7 @@ public class SignExceptionActivity extends TitleBaseActivity implements RadioGro
     @Override
     public void initView() {
         ButterKnife.inject(this);
-        setTitleText("标记异常");
+        setTitleText(R.string.txt_sign_exception_page_title);
         setOKText("客服");
         radioGroup.setOnCheckedChangeListener(this);
 

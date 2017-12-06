@@ -26,4 +26,11 @@
     <string name="txt_sheet_state_in_service">服务中</string>
     <string name="txt_sheet_state_completed">已完成</string>
     <string name="txt_sheet_state_canceled">已取消</string>
+    <string name="txt_sign_exception_page_title">标记异常</string>
+    <string name="txt_sign_exception_reason_1">用户主动取消订单</string>
+    <string name="txt_sign_exception_reason_2">已到达目的地，与用户无法取得联系</string>
+    <string name="txt_sign_exception_reason_3">临时有事，请求更换师傅</string>
+    <string name="txt_sign_exception_reason_4">其他</string>
+    <string name="txt_sign_exception">在这里写出标记异常原因</string>
+    <string name="txt_submit_exception">提交</string>
 </resources>

@@ -1,97 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_eeeeee"
-    android:padding="@dimen/h_10dp"
-    android:orientation="vertical"
     tools:context="com.lubandj.master.worksheet.SignExceptionActivity">
 
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="@dimen/h_10dp"
         android:background="@color/white"
-        android:padding="@dimen/h_10dp">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/h_15dp"
+        android:paddingLeft="@dimen/h_12dp"
+        android:paddingRight="@dimen/h_12dp"
+        android:paddingTop="@dimen/h_15dp">
 
         <RadioButton
             android:id="@+id/radio_btn_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="用户主动取消订单"
-            android:textSize="@dimen/sp_15"
-            android:textColor="@color/black"
-            />
+            style="@style/radio_btn_style"
+            android:text="@string/txt_sign_exception_reason_1" />
 
         <RadioButton
             android:id="@+id/radio_btn_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="已到达目的地，与用户无法取得联系"
-            android:textSize="@dimen/sp_15"
-            android:textColor="@color/black"
-            />
+            style="@style/radio_btn_style"
+            android:layout_marginTop="@dimen/h_11dp"
+            android:text="@string/txt_sign_exception_reason_2" />
 
         <RadioButton
             android:id="@+id/radio_btn_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="临时有事，请求更换师傅"
-            android:textSize="@dimen/sp_15"
-            android:textColor="@color/black"
-            />
+            style="@style/radio_btn_style"
+            android:layout_marginTop="@dimen/h_11dp"
+            android:text="@string/txt_sign_exception_reason_3" />
 
         <RadioButton
             android:id="@+id/radio_btn_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="其他"
-            android:textSize="@dimen/sp_15"
-            android:textColor="@color/black"
-            />
+            style="@style/radio_btn_style"
+            android:layout_marginTop="@dimen/h_11dp"
+            android:text="@string/txt_sign_exception_reason_4" />
 
     </RadioGroup>
 
     <FrameLayout
         android:id="@+id/fl_reason"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h_150dp"
-        android:layout_marginTop="@dimen/dp_1"
-        android:padding="@dimen/dp_10"
-        android:visibility="gone"
-        android:background="@color/white">
+        android:layout_height="@dimen/h_165.5dp"
+        android:layout_below="@+id/radio_group"
+        android:layout_marginLeft="@dimen/h_12dp"
+        android:layout_marginRight="@dimen/h_12dp"
+        android:layout_marginTop="@dimen/h_10dp"
+        android:background="@drawable/shape_sign_exception_edit_bg"
+        android:paddingBottom="@dimen/h_12dp"
+        android:paddingTop="@dimen/h_12dp"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/edit_reason"
+            style="@style/editTextStyles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/editTextStyles"
-            android:hint="在这里写出标记异常原因"/>
+            android:layout_marginLeft="@dimen/h_12dp"
+            android:hint="@string/txt_sign_exception"
+            android:maxLength="200"
+            android:textSize="@dimen/sp_13" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="200"
-            android:textSize="@dimen/sp_12"
-            android:textColor="@color/color_eeeeee"
             android:layout_gravity="bottom|right"
-            />
+            android:layout_marginRight="@dimen/h_15dp"
+            android:text="200"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_13" />
     </FrameLayout>
 
 
     <Button
         android:id="@+id/btn_submit"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_height="@dimen/dp_40"
-        android:layout_width="@dimen/h_150dp"
-        android:textSize="@dimen/sp_15"
-        android:textColor="@color/white"
-        android:layout_marginTop="@dimen/h_30dp"
-        android:layout_gravity="center"
-        android:text="提交"
-        android:background="@drawable/selector_btn_send_code_bg"/>
+        style="@style/btn_login"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/h_49dp"
+        android:layout_marginLeft="@dimen/h_23dp"
+        android:layout_marginRight="@dimen/h_23dp"
+        android:text="@string/txt_submit_exception" />
 
-</LinearLayout>
+</RelativeLayout>
