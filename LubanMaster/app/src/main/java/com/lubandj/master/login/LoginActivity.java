@@ -7,7 +7,6 @@ import android.widget.Button;
 
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.widget.EditTextWithDel;
-import com.lubandj.master.MainActivity;
 import com.lubandj.master.R;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
 
@@ -119,6 +118,6 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
 
     @Override
     public void titleLeftClick() {
-
+        finish();
     }
 }
