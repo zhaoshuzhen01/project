@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:paddingLeft="@dimen/h_23dp"
     android:paddingRight="@dimen/h_23dp"
+    android:background="@color/color_eeeeee"
     tools:context="com.lubandj.master.login.LoginActivity">
 
     <TextView

@@ -11,38 +11,35 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_10">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/h_68dp"
+            android:layout_height="@dimen/h_60dp"
+            android:layout_marginTop="@dimen/h_10dp"
             android:background="@color/white"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/h_12dp"
+            android:paddingRight="@dimen/h_12dp">
 
             <ImageView
                 android:id="@+id/iv_state_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_15dp"
-                android:src="@mipmap/ic_launcher_round" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tv_state_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_15dp"
-                android:text="待执行"
+                android:layout_marginLeft="@dimen/h_12dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_15" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/h_50dp"
+            android:layout_height="@dimen/h_44dp"
             android:layout_marginTop="@dimen/h_10dp"
             android:background="@color/white"
             android:gravity="center_vertical"
@@ -51,34 +48,33 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_10dp"
+                android:layout_marginLeft="@dimen/h_12dp"
                 android:text="@string/txt_work_sheet_details_contact_way"
-                android:textColor="@color/black"
+                android:textColor="@color/color_333333"
                 android:textSize="@dimen/sp_15" />
 
             <TextView
                 android:id="@+id/tv_phone_num"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_20dp"
-                android:layout_toRightOf="@+id/tv_contact_way"
+                android:layout_marginLeft="@dimen/h_15dp"
                 android:layout_weight="1"
                 android:text="13811215566"
-                android:textColor="@color/black"
+                android:textColor="@color/color_333333"
                 android:textSize="@dimen/sp_15" />
 
             <ImageView
                 android:id="@+id/iv_phone_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/h_10dp"
-                android:src="@mipmap/ic_launcher_round" />
+                android:layout_marginRight="@dimen/h_12dp"
+                android:src="@drawable/ic_sheet_details_phone" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/h_50dp"
+            android:layout_height="@dimen/h_44dp"
             android:layout_marginTop="@dimen/h_10dp"
             android:background="@color/white"
             android:gravity="center_vertical"
@@ -87,27 +83,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_10dp"
+                android:layout_marginLeft="@dimen/h_12dp"
                 android:text="@string/txt_work_sheet_details_address"
-                android:textColor="@color/black"
+                android:textColor="@color/color_333333"
                 android:textSize="@dimen/sp_15" />
 
             <TextView
                 android:id="@+id/tv_address_desc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_20dp"
+                android:layout_marginLeft="@dimen/h_15dp"
                 android:layout_weight="1"
                 android:text="北京凯泰物业小区5单元203"
-                android:textColor="@color/black"
+                android:textColor="@color/color_333333"
                 android:textSize="@dimen/sp_15" />
 
             <ImageView
                 android:id="@+id/iv_address_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/h_10dp"
-                android:src="@mipmap/ic_launcher_round" />
+                android:layout_marginRight="@dimen/h_12dp"
+                android:src="@drawable/ic_sheet_details_address" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,7 +112,10 @@
             android:layout_marginTop="@dimen/h_10dp"
             android:background="@color/white"
             android:orientation="vertical"
-            android:padding="@dimen/h_10dp">
+            android:paddingBottom="@dimen/h_15dp"
+            android:paddingLeft="@dimen/h_12dp"
+            android:paddingRight="@dimen/h_12dp"
+            android:paddingTop="@dimen/h_15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -128,18 +127,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/txt_work_sheet_details_contact"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_13" />
 
                 <TextView
                     android:id="@+id/tv_contact_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/h_20dp"
+                    android:layout_marginLeft="@dimen/h_15dp"
                     android:layout_weight="1"
                     android:text="胡先生"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_13" />
 
             </LinearLayout>
 
@@ -147,7 +146,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h_5dp"
+                android:layout_marginTop="@dimen/h_8dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -155,24 +154,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/txt_work_sheet_details_time"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_13" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/h_20dp"
+                    android:layout_marginLeft="@dimen/h_15dp"
                     android:layout_weight="1"
                     android:text="2017-10-10 18:30-21:00"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_13" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h_5dp"
+                android:layout_marginTop="@dimen/h_8dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -180,17 +179,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/txt_work_sheet_details_comment_info"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_13" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/h_20dp"
+                    android:layout_marginLeft="@dimen/h_15dp"
                     android:layout_weight="1"
                     android:text="来之前请给我打电话"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_13" />
             </LinearLayout>
 
 
@@ -202,9 +201,10 @@
             android:layout_marginTop="@dimen/h_10dp"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/h_10dp"
-            android:paddingRight="@dimen/h_10dp"
-            android:paddingTop="@dimen/h_10dp">
+            android:paddingBottom="@dimen/h_15dp"
+            android:paddingLeft="@dimen/h_12dp"
+            android:paddingRight="@dimen/h_12dp"
+            android:paddingTop="@dimen/h_15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -216,34 +216,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/txt_work_sheet_details_work_sheet_no"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_13" />
 
                 <TextView
                     android:id="@+id/tv_work_sheet_no"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/h_20dp"
+                    android:layout_marginLeft="@dimen/h_15dp"
                     android:layout_weight="1"
                     android:text="9159764919201134144"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_13" />
 
                 <TextView
                     android:id="@+id/tv_copy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/h_10dp"
+                    android:layout_width="@dimen/h_45dp"
+                    android:layout_height="@dimen/h_20dp"
+                    android:background="@drawable/shape_copy_bg"
+                    android:gravity="center"
                     android:text="@string/txt_copy"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_11" />
 
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h_10dp"
+                android:layout_marginTop="@dimen/h_8dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -251,147 +252,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/txt_work_sheet_details_service_content"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_13" />
 
                 <LinearLayout
+                    android:id="@+id/ll_detail_items"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_service_content"
-                    android:layout_marginLeft="@dimen/h_20dp"
+                    android:layout_marginLeft="@dimen/h_15dp"
                     android:layout_toRightOf="@+id/tv_service_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="空调保养-挂式"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:text="×2"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/h_5dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="空调保养-柜式"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:text="×1"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/h_5dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="冰箱保养-双开门"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:text="×1"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                </LinearLayout>
             </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/h_1dp"
-                android:layout_marginTop="@dimen/h_10dp"
-                android:background="@color/color_eeeeee" />
-            <LinearLayout
-                android:id="@+id/ll_btn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/h_50dp"
-                android:orientation="horizontal">
-
-                <FrameLayout
-                    android:id="@+id/fl_sign_exception"
-                    android:layout_width="@dimen/h_0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <Button
-                        android:id="@+id/btn_sign_exception"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="@dimen/h_100dp"
-                        android:layout_height="@dimen/h_30dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/shape_edit_text_bg"
-                        android:text="@string/txt_work_sheet_details_sign_exception"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_15" />
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/fl_start_server"
-                    android:layout_width="@dimen/h_0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <Button
-                        android:id="@+id/btn_start_server"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="@dimen/h_100dp"
-                        android:layout_height="@dimen/h_30dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/selector_btn_send_code_bg"
-                        android:text="@string/txt_work_sheet_details_on_road"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_15" />
-                </FrameLayout>
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_cancel_reason"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/h_50dp"
-                android:visibility="gone"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/h_10dp"
-                >
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -402,15 +283,38 @@
 
                 <EditText
                     android:id="@+id/et_cancel_reason"
+                    style="@style/editTextStyles"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/h_20dp"
-                    style="@style/editTextStyles"
-                    />
+                    android:layout_marginLeft="@dimen/h_15dp" />
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/ll_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/h_23dp"
+            android:layout_marginRight="@dimen/h_23dp"
+            android:layout_marginTop="@dimen/h_50dp">
+
+            <Button
+                android:id="@+id/btn_sign_exception"
+                style="@style/btn_login"
+                android:layout_width="135dp"
+                android:text="@string/txt_work_sheet_details_sign_exception"
+                android:textSize="@dimen/sp_18" />
+
+            <Button
+                android:id="@+id/btn_start_server"
+                style="@style/btn_login"
+                android:layout_width="135dp"
+                android:layout_gravity="right"
+                android:text="@string/txt_work_sheet_details_on_road"
+                android:textSize="@dimen/sp_18" />
+        </FrameLayout>
 
     </LinearLayout>
 </ScrollView>
