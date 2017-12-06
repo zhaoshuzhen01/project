@@ -8,13 +8,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#eeeeee"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:background="@color/appColor"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:onClick="onBack"
+            android:background="#ffffff">
 
             <ImageView
                 style="@style/my_title_back"/>
@@ -28,7 +30,7 @@
         <ImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="34dp"
             android:scaleType="fitXY"
             android:src="@mipmap/ic_launcher_round"/>
 
@@ -37,10 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginBottom="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:text="当前版本:    1.00"
             android:textColor="#333333"
-            android:textSize="16sp"/>
+            android:textSize="13sp"/>
 
         <View
             style="@style/horizontal_line"/>
@@ -55,8 +57,7 @@
                 android:text="检查更新"/>
 
             <ImageView
-                style="@style/leftmenu_icon"
-                android:src="@mipmap/ic_launcher_round"/>
+                style="@style/about_icon"/>
         </LinearLayout>
 
         <View
@@ -74,8 +75,7 @@
 
 
             <ImageView
-                style="@style/leftmenu_icon"
-                android:src="@mipmap/ic_launcher_round"/>
+                style="@style/about_icon"/>
 
         </LinearLayout>
 
@@ -93,8 +93,7 @@
                 android:text="去评分"/>
 
             <ImageView
-                style="@style/leftmenu_icon"
-                android:src="@mipmap/ic_launcher_round"/>
+                style="@style/about_icon"/>
         </LinearLayout>
 
         <View
@@ -108,18 +107,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="中数运维（北京）科技有限公司"
+            android:layout_marginBottom="2dp"
+            android:text="青岛鹿班到家信息技术有限公司"
             android:textColor="#999999"
             android:textSize="12sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="22dp"
             android:text="Beijing********** Technology Co.,Ltd"
-            android:textColor="#FF6968"
-            android:textSize="12sp"/>
+            android:textColor="#e94b4e"
+            android:textSize="11sp"/>
     </LinearLayout>
 
 </layout>

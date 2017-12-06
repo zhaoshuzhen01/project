@@ -48,9 +48,19 @@ public class MyAddressActivity extends BaseActivity {
 
     /**
      * 点击选择地址
+     *
      * @param view
      */
     public void onSelectAddress(View view) {
-        startActivity(SelectAddressActivity.class,null);
+        startActivity(SelectAddressActivity.class, null);
+    }
+
+    /**
+     * 返回
+     *
+     * @param view
+     */
+    public void onBack(View view) {
+        finish();
     }
 }

@@ -45,4 +45,13 @@ public class WorkCodeActivity extends BaseActivity {
     public void onClick(View v) {
 
     }
+
+    /**
+     * 返回
+     *
+     * @param view
+     */
+    public void onBack(View view) {
+        finish();
+    }
 }
