@@ -62,7 +62,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         workSheetAdapter = new WorkSheetAdapter(testBeen,getActivity(),index);
         workSheetAdapter.setOnItemClickListener(this);
         initRecyclerView(recyclerView, new LinearLayoutManager(view.getContext()), workSheetAdapter);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(15, 15, 15, 0));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 20, 0));
     }
 
     @Override

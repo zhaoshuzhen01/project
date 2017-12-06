@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -67,7 +68,7 @@ public class WorkSheetAdapter extends BaseQuickAdapter<TestBean, BaseViewHolder>
         });
         switch (modeStyle){
             case 0:
-               unFinish(position,serviceState,finishState,daohangState);
+               unFinish(position,serviceState,finishState,daohangState,helper);
                 break;
             case 1:
                 finishOrCancle("已完成",position,serviceState,helper);
@@ -105,19 +106,22 @@ public class WorkSheetAdapter extends BaseQuickAdapter<TestBean, BaseViewHolder>
      * @param finishState
      * @param daohangState
      */
-    private void unFinish(int position,TextView serviceState,TextView finishState,TextView daohangState){
+    private void unFinish(int position,TextView serviceState,TextView finishState,TextView daohangState,final BaseViewHolder helper){
         switch (position){
             case 0:
+                ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.workservie);
                 serviceState.setText("服务中");
                 finishState.setText("服务完成");
                 break;
             case 1:
+                ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.workwait);
                 serviceState.setText("待执行");
                 finishState.setText("开始上门");
                 daohangState.setVisibility(View.VISIBLE);
                 break;
 
             default:
+                ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.workpath);
                 serviceState.setText("正在上门");
                 finishState.setText("开始上门");
                 daohangState.setVisibility(View.VISIBLE);

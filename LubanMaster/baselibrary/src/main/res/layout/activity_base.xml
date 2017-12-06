@@ -20,12 +20,13 @@
             android:id="@+id/ll_basetitle_back"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:layout_weight="3">
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="11dp"
-                android:src="@drawable/more" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/titleleft" />
             <TextView
                 android:id="@+id/tv_basetitle_back"
                 android:layout_width="wrap_content"
@@ -45,20 +46,21 @@
                 android:gravity="center"
                 android:text="标题"
                 android:textColor="#000000"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:gravity="center_vertical|right"
+            android:paddingRight="12dp"
             android:layout_weight="3">
-            <TextView
+            <ImageView
                 android:id="@+id/tv_basetitle_ok"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="OK"
-                android:textColor="#000000"
-                android:textSize="16sp" />
+                android:src="@drawable/titleright"
+               />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

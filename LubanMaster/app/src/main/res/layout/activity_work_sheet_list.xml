@@ -5,25 +5,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <View
-        android:background="@color/color_cecece"
+        android:background="@color/color_e1e1e1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"></View>
+        android:layout_height="@dimen/dp_0.5"></View>
     <com.example.baselibrary.tablayout.CustomTabLayout
         android:id="@+id/id_tablayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h_36dp"
+        android:layout_height="@dimen/h_44dp"
         android:background="@color/color_ffffff"
         tl:CustomAnimatedIndicator="dachshund"
-        tl:CustomIndicatorColor="@color/color_itemtip1_bac"
+        tl:CustomIndicatorColor="@color/color_e94b4e"
         tl:tabBackground="@color/color_ffffff"
         tl:tabMode="fixed"
-        tl:tabSelectedTextColor="@color/color_itemtip1_bac"
+        tl:tabSelectedTextColor="@color/color_e94b4e"
         tl:tabTextAppearance="@style/TabLayoutTextStyle"
-        tl:tabTextColor="@color/color_000000"/>
+        tl:tabTextColor="@color/color_333333"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/h_1div"
-        android:background="@color/color_2c3438"/>
+        android:background="@color/color_e1e1e1"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"

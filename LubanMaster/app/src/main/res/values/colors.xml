@@ -21,6 +21,7 @@
     <color name="color_32333e">#32333e</color>
     <color name="color_ffffff">#ffffff</color>
     <color name="color_cecece">#cecece</color>
+    <color name="color_e1e1e1">#e1e1e1</color>
     <color name="color_open">#bababa</color>
     <color name="color_dive">#2c3438</color>
     <color name="color_141517">#141517</color>
@@ -86,6 +87,8 @@
     <color name="timeline_guide_bg">#cc141517</color>
     <color name="color_ff0000">#ff0000</color>
     <color name="color_43464c">#43464c</color>
+    <color name="color_f4f4f4">#f4f4f4</color>
+
     <drawable name="color_141517">#141517</drawable>
     <drawable name="color_333340">#333340</drawable>
     <drawable name="color_b2000000">#b2000000</drawable>
@@ -113,6 +116,7 @@
     <color name="color_itemtip1_bac">#76a3ff</color>
     <color name="color_2d3539">#2d3539</color>
     <color name="color_272c2e">#272c2e</color>
+    <color name="color_e94b4e">#e94b4e</color>
     <color name="color_b74b00">#b74b00</color>
     <color name="color_ffcdaf">#ffcdaf</color>
     <color name="color_8c8c8c">#8c8c8c</color>

@@ -5,6 +5,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,7 +18,7 @@ public abstract class TitleBaseActivity extends BaseActivity{
     private RelativeLayout llRoot;
     private LinearLayout llBasetitleBack;
     private TextView tvBasetitleTitle;
-    private TextView tvBasetitleOK;
+    private ImageView tvBasetitleOK;
     private TextView tv_basetitle_back ;
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mNavigationView;
@@ -99,8 +100,8 @@ public abstract class TitleBaseActivity extends BaseActivity{
      * @param c
      */
     public void setOKText(CharSequence c) {
-        if (tvBasetitleOK != null)
-            tvBasetitleOK.setText(c);
+//        if (tvBasetitleOK != null)
+//            tvBasetitleOK.setText(c);
     }
 
     /**
@@ -112,7 +113,7 @@ public abstract class TitleBaseActivity extends BaseActivity{
             if (visible)
                 tvBasetitleOK.setVisibility(View.VISIBLE);
             else
-                tvBasetitleOK.setVisibility(View.GONE);
+                tvBasetitleOK.setVisibility(View.INVISIBLE);
         }
     }
     /**
@@ -124,7 +125,7 @@ public abstract class TitleBaseActivity extends BaseActivity{
             if (visible)
                 llBasetitleBack.setVisibility(View.VISIBLE);
             else
-                llBasetitleBack.setVisibility(View.GONE);
+                llBasetitleBack.setVisibility(View.INVISIBLE);
         }
     }
   public abstract void titleLeftClick();
@@ -140,7 +141,7 @@ public abstract class TitleBaseActivity extends BaseActivity{
 
 
 
-    public TextView getTvBasetitleOK() {
+    public ImageView getTvBasetitleOK() {
         return tvBasetitleOK;
     }
 
