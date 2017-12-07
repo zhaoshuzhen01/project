@@ -52,7 +52,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
 
     @Override
     public int getLayout() {
-        // TODO: 2017/12/7 页面背景颜色
+        // REFACTOR: 2017/12/7 待重构 页面背景颜色
         return R.layout.activity_login;
     }
 
