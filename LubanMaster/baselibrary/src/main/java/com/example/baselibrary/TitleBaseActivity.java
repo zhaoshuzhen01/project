@@ -1,6 +1,7 @@
 package com.example.baselibrary;
 
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -14,14 +15,16 @@ import android.widget.TextView;
  * Created by ${zhaoshuzhen} on 2017/11/26.
  */
 
-public abstract class TitleBaseActivity extends BaseActivity{
+public abstract class TitleBaseActivity extends BaseActivity {
     private RelativeLayout llRoot;
     private LinearLayout llBasetitleBack;
     private TextView tvBasetitleTitle;
-    private ImageView tvBasetitleOK;
-    private TextView tv_basetitle_back ;
+    private ImageView ivBasetitleOK;
+    private TextView tv_basetitle_back;
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mNavigationView;
+    private ImageView ivBaseTitleBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,28 +45,31 @@ public abstract class TitleBaseActivity extends BaseActivity{
         mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout);
         mNavigationView.setItemIconTintList(null);
         llRoot = findView(R.id.ll_basetitle_root);
+        ivBaseTitleBack = findView(R.id.iv_basetitle_back);
         llBasetitleBack = findView(R.id.ll_basetitle_back);
         tvBasetitleTitle = findView(R.id.tv_basetitle_title);
-        tvBasetitleOK = findView(R.id.tv_basetitle_ok);
-        tvBasetitleOK.setOnClickListener(this);
+        ivBasetitleOK = findView(R.id.tv_basetitle_ok);
+        ivBasetitleOK.setOnClickListener(this);
         tv_basetitle_back = findView(R.id.tv_basetitle_back);
         llBasetitleBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              titleLeftClick();
+                titleLeftClick();
             }
         });
         initLeftMenu();
     }
-    public void MenuShow(){
+
+    public void MenuShow() {
         ViewGroup.LayoutParams params = mNavigationView.getLayoutParams();
-        params.width = getResources().getDisplayMetrics().widthPixels*3/4;
+        params.width = getResources().getDisplayMetrics().widthPixels * 3 / 4;
         params.height = getResources().getDisplayMetrics().heightPixels;
     }
 
     /**
-     重点是重写setContentView，让继承者可以继续设置setContentView
+     * 重点是重写setContentView，让继承者可以继续设置setContentView
      * 重写setContentView
+     *
      * @param resId
      */
     @Override
@@ -77,17 +83,18 @@ public abstract class TitleBaseActivity extends BaseActivity{
     }
 
     /**
-     *
      * 设置中间标题文字
+     *
      * @param c
      */
     public void setTitleText(CharSequence c) {
         if (tvBasetitleTitle != null)
             tvBasetitleTitle.setText(c);
     }
+
     /**
-     *
      * 设置中间标题文字
+     *
      * @param resId
      */
     public void setTitleText(int resId) {
@@ -96,28 +103,42 @@ public abstract class TitleBaseActivity extends BaseActivity{
     }
 
     /**
-     * 设置右边标题
-     * @param c
+     * 设置返回按钮
+     *
+     * @param resId
      */
-    public void setOKText(CharSequence c) {
-//        if (tvBasetitleOK != null)
-//            tvBasetitleOK.setText(c);
+    public void setBackImg(@DrawableRes int resId) {
+        if (ivBaseTitleBack != null) {
+            ivBaseTitleBack.setImageResource(resId);
+        }
+    }
+
+    /**
+     * 设置右边标题
+     */
+    public void setOKImg(@DrawableRes int resId) {
+        if (ivBasetitleOK != null) {
+            ivBasetitleOK.setImageResource(resId);
+        }
     }
 
     /**
      * 设置右边按钮是否显示
+     *
      * @param visible
      */
     public void setOkVisibity(boolean visible) {
-        if (tvBasetitleOK != null) {
+        if (ivBasetitleOK != null) {
             if (visible)
-                tvBasetitleOK.setVisibility(View.VISIBLE);
+                ivBasetitleOK.setVisibility(View.VISIBLE);
             else
-                tvBasetitleOK.setVisibility(View.INVISIBLE);
+                ivBasetitleOK.setVisibility(View.INVISIBLE);
         }
     }
+
     /**
      * 设置左边按钮是否显示
+     *
      * @param visible
      */
     public void setLeftVisibity(boolean visible) {
@@ -128,7 +149,8 @@ public abstract class TitleBaseActivity extends BaseActivity{
                 llBasetitleBack.setVisibility(View.INVISIBLE);
         }
     }
-  public abstract void titleLeftClick();
+
+    public abstract void titleLeftClick();
 
     public LinearLayout getLlBasetitleBack() {
         return llBasetitleBack;
@@ -140,12 +162,11 @@ public abstract class TitleBaseActivity extends BaseActivity{
     }
 
 
-
-    public ImageView getTvBasetitleOK() {
-        return tvBasetitleOK;
+    public ImageView getIvBasetitleOK() {
+        return ivBasetitleOK;
     }
 
-    private void initLeftMenu(){
+    private void initLeftMenu() {
 //        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {

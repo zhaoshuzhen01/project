@@ -81,7 +81,8 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         ButterKnife.inject(this);
         setTitleText(R.string.txt_work_sheet_details_title);
-        setOKText("客服");
+        setBackImg(R.drawable.back_mark);
+        setOKImg(R.drawable.ic_service);
         currentType = getIntent().getIntExtra(KEY_DETAILS_TYPE, Canstance.TYPE_TO_PERFORM);
         Log.e(TAG, "initView: " + currentType);
         switch (currentType) {

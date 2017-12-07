@@ -25,7 +25,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
     Button btnSendCode;
     @InjectView(R.id.btn_login)
     Button btnLogin;
-    private  int  COUNT_DOWN_TIME=60;
+    private int COUNT_DOWN_TIME = 60;
 
 
     private Handler mHandler = new Handler() {
@@ -34,14 +34,14 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    if(COUNT_DOWN_TIME>0){
-                        btnSendCode.setText(String.format(getString(R.string.txt_login_page_send_code_again1),COUNT_DOWN_TIME));
-                        COUNT_DOWN_TIME=COUNT_DOWN_TIME-1;
-                        mHandler.sendEmptyMessageDelayed(0,1000);
-                    }else{
+                    if (COUNT_DOWN_TIME > 0) {
+                        btnSendCode.setText(String.format(getString(R.string.txt_login_page_send_code_again1), COUNT_DOWN_TIME));
+                        COUNT_DOWN_TIME = COUNT_DOWN_TIME - 1;
+                        mHandler.sendEmptyMessageDelayed(0, 1000);
+                    } else {
                         btnSendCode.setText(getString(R.string.txt_login_page_send_code_again));
                         btnSendCode.setEnabled(true);
-                        COUNT_DOWN_TIME=60;
+                        COUNT_DOWN_TIME = 60;
                     }
                     break;
                 default:
@@ -52,15 +52,16 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
 
     @Override
     public int getLayout() {
+        // TODO: 2017/12/7 页面背景颜色
         return R.layout.activity_login;
     }
 
     @Override
     public void initView() {
         ButterKnife.inject(this);
+        setBackImg(R.drawable.ic_login_close);
         setTitleText(R.string.txt_login_page_title);
         setOkVisibity(false);
-        setLeftVisibity(false);
         setListener();
         initData();
     }
@@ -109,9 +110,9 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
 
     @Override
     protected void onDestroy() {
-        if(mHandler!=null){
+        if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
-            mHandler=null;
+            mHandler = null;
         }
         super.onDestroy();
     }
