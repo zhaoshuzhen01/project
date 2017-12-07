@@ -97,8 +97,7 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                 btnStartServer.setText(R.string.txt_work_sheet_details_start_service);
                 break;
             case Canstance.TYPE_IN_SERVICE:
-                // REFACTOR: 2017/12/7 待重构 没有服务中切图
-                ivStateIcon.setImageResource(R.drawable.ic_details_on_road);
+                ivStateIcon.setImageResource(R.drawable.ic_details_in_service);
                 tvStateDesc.setText(R.string.txt_sheet_state_in_service);
                 btnStartServer.setText(R.string.txt_work_sheet_details_service_completed);
                 ivPhoneIcon.setEnabled(false);
