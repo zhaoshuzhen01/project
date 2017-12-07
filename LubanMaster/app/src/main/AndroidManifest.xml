@@ -81,7 +81,7 @@
             android:name=".my.WorkCodeActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".my.MyAddressActivity"
+            android:name=".my.AskForLeaveActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".my.SelectAddressActivity"

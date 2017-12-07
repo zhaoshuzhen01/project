@@ -22,6 +22,11 @@ public class SelectAddressActivity extends BaseActivity {
     private ActivitySelectaddressBinding binding;
     private SelectAddressAdapter mAdapter;
 
+//    private TextureMapView mMapView;
+//    private BaiduMap mBaiduMap;
+//    mMapView = (TextureMapView) findViewById(R.id.mTexturemap);
+//    mBaiduMap = mMapView.getMap();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp">
+
+    <TextView
+        android:id="@+id/tv_week_month"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:paddingTop="6dp"
+        android:text="月"
+        android:textColor="#e94b4e"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:id="@+id/ll_week_days"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <com.lubandj.master.my.DayShowView
+            android:id="@+id/dsv_first"
+            style="@style/week_item_ll"/>
+
+        <com.lubandj.master.my.DayShowView
+            android:id="@+id/dsv_second"
+            style="@style/week_item_ll"/>
+
+        <com.lubandj.master.my.DayShowView
+            android:id="@+id/dsv_third"
+            style="@style/week_item_ll"/>
+
+        <com.lubandj.master.my.DayShowView
+            android:id="@+id/dsv_forth"
+            style="@style/week_item_ll"/>
+
+        <com.lubandj.master.my.DayShowView
+            android:id="@+id/dsv_fifth"
+            style="@style/week_item_ll"/>
+
+        <com.lubandj.master.my.DayShowView
+            android:id="@+id/dsv_sixth"
+            style="@style/week_item_ll"/>
+
+        <com.lubandj.master.my.DayShowView
+            android:id="@+id/dsv_seventh"
+            style="@style/week_item_ll"/>
+    </LinearLayout>
+</RelativeLayout>
+

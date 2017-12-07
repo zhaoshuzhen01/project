@@ -40,47 +40,54 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="@dimen/h_12dp"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@drawable/selectaddress_gps"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="9dp"
                     android:gravity="center_vertical"
                     android:hint="北京"
-                    android:paddingLeft="5dp"
                     android:textColor="#000000"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     />
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="20dp"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:layout_marginLeft="6dp"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@drawable/selectaddress_gps_down"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@drawable/selector_btn_send_code_bg"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/shape_selectaddress_searchedit"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="20dp"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginRight="5dp"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@drawable/selectaddress_search"/>
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@null"
                     android:hint="查找小区/大厦/学校等"
                     android:textColor="#000000"
                     android:textSize="14sp"/>
@@ -91,8 +98,12 @@
         <com.lubandj.master.my.SquareRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@color/Orange">
+            android:background="@color/white">
+            <!--<com.baidu.mapapi.map.TextureMapView-->
+                <!--android:id="@+id/mTexturemap"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent" >-->
+            <!--</com.baidu.mapapi.map.TextureMapView>-->
         </com.lubandj.master.my.SquareRelativeLayout>
 
 
@@ -100,7 +111,7 @@
             android:id="@+id/lv_address"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="#999999"
+            android:divider="#eeeeee"
             android:dividerHeight="0.5dp"/>
     </LinearLayout>
 

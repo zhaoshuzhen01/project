@@ -15,6 +15,7 @@ import com.example.baselibrary.tablayout.MyViewPagerAdapter;
 import com.lubandj.master.R;
 import com.lubandj.master.fragment.WorkSheetFragment;
 import com.lubandj.master.my.AboutLuBanActivity;
+import com.lubandj.master.my.AskForLeaveActivity;
 import com.lubandj.master.my.ModifyPhoneActivity;
 import com.lubandj.master.my.MyAddressActivity;
 import com.lubandj.master.my.WorkCodeActivity;
@@ -117,6 +118,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             case R.id.ll_menu_workcalendar:
                 break;
             case R.id.ll_menu_askforleave:
+                startActivity(AskForLeaveActivity.class, null);
                 break;
             case R.id.ll_menu_aboutus:
                 startActivity(AboutLuBanActivity.class, null);

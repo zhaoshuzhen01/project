@@ -120,7 +120,29 @@
         <item name="android:drawableLeft">@drawable/selector_radio_button_bg</item>
         <item name="android:drawablePadding">@dimen/h_12dp</item>
         <item name="android:button">@null</item>
+    </style>
 
+    <style name="week_title_tv">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="week_item_ll">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+
+    <style name="week_item_tv_day">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:background">@drawable/selector_week</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16dp</item>
     </style>
 
 </resources>

@@ -8,15 +8,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:gravity="center_horizontal"
-        android:background="#eeeeee"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:onClick="onBack"
-            android:background="@color/appColor">
+            android:background="@color/white"
+            android:onClick="onBack">
 
             <ImageView
                 style="@style/my_title_back"/>
@@ -27,74 +27,64 @@
 
         </RelativeLayout>
 
-        <android.support.v4.widget.Space
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"/>
+            android:layout_height="10dp"
+            android:background="#eeeeee"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_height="40dp"
             android:background="@color/white"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/iv_menu_headimg"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/ic_launcher_round"/>
-
-                <TextView
-                    android:id="@+id/tv_menu_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:text="姓名"
-                    android:textColor="#333333"
-                    android:textSize="18sp"/>
-            </LinearLayout>
-
-            <com.lubandj.master.my.SquareRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@color/Orange">
-
-                <com.lubandj.master.my.SquareRelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="80dp"
-                    android:background="@color/Blue">
-                </com.lubandj.master.my.SquareRelativeLayout>
-            </com.lubandj.master.my.SquareRelativeLayout>
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center_vertical"
-                android:text="扫一扫上面的二维码图案，可让用户指定您去服务"
-                android:textColor="#999999"
-                android:textSize="12sp"/>
+                style="@style/week_title_tv"
+                android:text="日"
+                android:textColor="#e94b4e"/>
+
+            <TextView
+                style="@style/week_title_tv"
+                android:text="一"
+                android:textColor="#000000"/>
+
+            <TextView
+                style="@style/week_title_tv"
+                android:text="二"
+                android:textColor="#000000"/>
+
+            <TextView
+                style="@style/week_title_tv"
+                android:text="三"
+                android:textColor="#000000"/>
+
+            <TextView
+                style="@style/week_title_tv"
+                android:text="四"
+                android:textColor="#000000"/>
+
+            <TextView
+                style="@style/week_title_tv"
+                android:text="五"
+                android:textColor="#000000"/>
+
+            <TextView
+                style="@style/week_title_tv"
+                android:text="六"
+                android:textColor="#e94b4e"/>
         </LinearLayout>
 
-
-        <android.support.v4.widget.Space
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"/>
+            android:layout_height="0.5dp"
+            android:background="#eeeeee"/>
+
+        <ListView
+            android:id="@+id/lv_work_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="0dp"></ListView>
     </LinearLayout>
 
 </layout>
