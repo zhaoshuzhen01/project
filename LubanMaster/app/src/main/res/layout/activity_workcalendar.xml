@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eeeeee"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#ffffff"
+            android:onClick="onBack">
+
+            <ImageView
+                style="@style/my_title_back"/>
+
+            <TextView
+                style="@style/my_title_text"
+                android:text="工作日历"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="#cfcfcf"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_workcalendar_day1"
+                style="@style/workcanlendar_title_ll">
+
+                <TextView
+                    android:id="@+id/tv1_workcalendar_day1"
+                    style="@style/workcanlendar_title_tv1"/>
+
+                <TextView
+                    android:id="@+id/tv2_workcalendar_day1"
+                    style="@style/workcanlendar_title_tv2"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="#cfcfcf"/>
+
+            <LinearLayout
+                android:id="@+id/ll_workcalendar_day2"
+                style="@style/workcanlendar_title_ll">
+
+                <TextView
+                    android:id="@+id/tv1_workcalendar_day2"
+                    style="@style/workcanlendar_title_tv1"/>
+
+                <TextView
+                    android:id="@+id/tv2_workcalendar_day2"
+                    style="@style/workcanlendar_title_tv2"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="#cfcfcf"/>
+
+            <LinearLayout
+                android:id="@+id/ll_workcalendar_day3"
+                style="@style/workcanlendar_title_ll">
+
+                <TextView
+                    android:id="@+id/tv1_workcalendar_day3"
+                    style="@style/workcanlendar_title_tv1"/>
+
+                <TextView
+                    android:id="@+id/tv2_workcalendar_day3"
+                    style="@style/workcanlendar_title_tv2"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="#cfcfcf"/>
+
+            <LinearLayout
+                android:id="@+id/ll_workcalendar_day4"
+                style="@style/workcanlendar_title_ll">
+
+                <TextView
+                    android:id="@+id/tv1_workcalendar_day4"
+                    style="@style/workcanlendar_title_tv1"/>
+
+                <TextView
+                    android:id="@+id/tv2_workcalendar_day4"
+                    style="@style/workcanlendar_title_tv2"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="#cfcfcf"/>
+
+            <LinearLayout
+                android:id="@+id/ll_workcalendar_day5"
+                style="@style/workcanlendar_title_ll">
+
+                <TextView
+                    android:id="@+id/tv1_workcalendar_day5"
+                    style="@style/workcanlendar_title_tv1"/>
+
+                <TextView
+                    android:id="@+id/tv2_workcalendar_day5"
+                    style="@style/workcanlendar_title_tv2"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#cfcfcf"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/lv_workcalendar_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#eeeeee"
+                android:dividerHeight="10dp"
+                android:visibility="invisible"></ListView>
+
+            <LinearLayout
+                android:id="@+id/ll_workcalendar_timeplan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <GridView
+                    android:id="@+id/gv_workcalendar_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cfcfcf"
+                    android:cacheColorHint="#00000000"
+                    android:horizontalSpacing="0.5dp"
+                    android:listSelector="#00000000"
+                    android:numColumns="4"
+                    android:paddingBottom="0.5dp"
+                    android:scrollbars="none"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="0.5dp"
+                    >
+
+                </GridView>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <Button
+                    android:id="@+id/btn_workcalendar_detail"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/selector_btn_send_code_bg"
+                    android:text="查看详情"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>
+

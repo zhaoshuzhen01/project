@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_worktime"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:minHeight="50dp"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_worktime_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="08:00"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
+
+
+    <TextView
+        android:id="@+id/tv_worktime_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:text="(开始时间)"
+        android:textColor="#47a80d"
+        android:textSize="12sp"/>
+
+</LinearLayout>
+
