@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/work_fragment_contaner"
+    android:id="@+id/work_center_lay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_f4f4f4"
     android:orientation="vertical">
-
+    <View
+        android:background="@color/color_e1e1e1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"></View>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_10dp"></View>
     <com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6
         android:id="@+id/prpt"
         android:layout_width="match_parent"
@@ -19,4 +25,4 @@
             android:overScrollMode="never"
             android:scrollbars="none" />
     </com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6>
-</RelativeLayout>
+</LinearLayout>

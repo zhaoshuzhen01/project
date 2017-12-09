@@ -1,5 +1,6 @@
 package com.lubandj.master.worksheet;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
@@ -13,6 +14,7 @@ import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tablayout.CustomTabLayout;
 import com.example.baselibrary.tablayout.MyViewPagerAdapter;
 import com.lubandj.master.R;
+import com.lubandj.master.activity.MsgCenterActivity;
 import com.lubandj.master.fragment.WorkSheetFragment;
 import com.lubandj.master.my.AboutLuBanActivity;
 import com.lubandj.master.my.AskForLeaveActivity;
@@ -99,7 +101,6 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         view.findViewById(R.id.ll_menu_askforleave).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_aboutus).setOnClickListener(this);
         view.findViewById(R.id.btn_menu_logout).setOnClickListener(this);
-
     }
 
     @Override
@@ -126,6 +127,10 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 startActivity(AboutLuBanActivity.class, null);
                 break;
             case R.id.btn_menu_logout:
+                break;
+            case com.example.baselibrary.R.id.ll_basetitle_back1:
+                Intent intent = new Intent(this, MsgCenterActivity.class);
+                startActivity(intent);
                 break;
         }
     }

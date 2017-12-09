@@ -11,9 +11,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
-                GETUI_APP_ID : "3pa6zWkUC38EM1r0NZBGB8",
-                GETUI_APP_KEY : "PZQ9sBnkny9ilioJHLP247",
-                GETUI_APP_SECRET : "IWxpDINGEnAk0FtFtLh8k7"
+                GETUI_APP_ID    : "3pa6zWkUC38EM1r0NZBGB8",
+                GETUI_APP_KEY   : "PZQ9sBnkny9ilioJHLP247",
+                GETUI_APP_SECRET: "IWxpDINGEnAk0FtFtLh8k7"
         ]
     }
     signingConfigs {
@@ -131,6 +131,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.1'
     compile project(':tuisong')
 }
+
 def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }

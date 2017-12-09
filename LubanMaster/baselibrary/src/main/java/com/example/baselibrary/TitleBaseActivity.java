@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 public abstract class TitleBaseActivity extends BaseActivity {
     private RelativeLayout llRoot;
     private LinearLayout llBasetitleBack;
+    protected LinearLayout titleRightLay ;
     private TextView tvBasetitleTitle;
     private ImageView ivBasetitleOK;
     private TextView tv_basetitle_back;
@@ -49,7 +51,8 @@ public abstract class TitleBaseActivity extends BaseActivity {
         llBasetitleBack = findView(R.id.ll_basetitle_back);
         tvBasetitleTitle = findView(R.id.tv_basetitle_title);
         ivBasetitleOK = findView(R.id.tv_basetitle_ok);
-        ivBasetitleOK.setOnClickListener(this);
+        titleRightLay = findView(R.id.ll_basetitle_back1);
+        titleRightLay.setOnClickListener(this);
         tv_basetitle_back = findView(R.id.tv_basetitle_back);
         llBasetitleBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,9 +133,9 @@ public abstract class TitleBaseActivity extends BaseActivity {
     public void setOkVisibity(boolean visible) {
         if (ivBasetitleOK != null) {
             if (visible)
-                ivBasetitleOK.setVisibility(View.VISIBLE);
+                titleRightLay.setVisibility(View.VISIBLE);
             else
-                ivBasetitleOK.setVisibility(View.INVISIBLE);
+                titleRightLay.setVisibility(View.INVISIBLE);
         }
     }
 
