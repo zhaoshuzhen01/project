@@ -1,8 +1,10 @@
 package com.lubandj.master.web;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.baselibrary.net.CommonInterceptor;
+import com.example.baselibrary.tools.Tools;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/8/29.
@@ -10,11 +12,12 @@ import com.example.baselibrary.net.CommonInterceptor;
 
 public class WebCommonInterceptor extends CommonInterceptor {
 
-    public WebCommonInterceptor(){
-       //token = "07s9VZNF8KLTPsRYEWW5t64H2cxNXguW5d9LWR1N1RTSbClFeir5hB5qfLHowZY2Hw62nc2f7vyd7GHYXYBsCZkfiZw9BJEhUJXuPZYwJ848nd55lnWWDMl64R25PBIzA";
-        /*token = ToolsPreferences.getPreferences(ToolsPreferences.TOKEN);
+    public WebCommonInterceptor(Context context){
+       token = "U5FAFquVTM9oF1yxWB8OpU5FAFquVTM9oF1yxWB8Op";
+//        token = ToolsPreferences.getPreferences(ToolsPreferences.TOKEN);
         Log.e("upload","token  111="+token);
-        version = Tools.getVersionName();
-        os = AppConstant.OS ;*/
+        version = Tools.getVersionName(context);
+
+        deviceId = "";
     }
 }

@@ -8,6 +8,7 @@ import android.widget.Button;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.widget.EditTextWithDel;
 import com.lubandj.master.R;
+import com.lubandj.master.model.LoginModel;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 import butterknife.ButterKnife;
@@ -89,6 +90,8 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                 mHandler.sendEmptyMessage(0);
                 break;
             case R.id.btn_login:
+                /*LoginModel loginModel = new LoginModel();
+                loginModel.getLogin(this);*/
                 startActivity(WorkSheetListActivity.class, null);
                 finish();
                 break;

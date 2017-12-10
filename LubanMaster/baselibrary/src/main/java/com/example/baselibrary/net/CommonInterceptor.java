@@ -14,6 +14,8 @@ import okhttp3.Response;
 public class CommonInterceptor implements Interceptor {
     protected   String token;
     protected   String version;
+    protected   String deviceId;
+    protected   String timestamp;
     protected   String os;
 
     public CommonInterceptor(){
@@ -37,8 +39,8 @@ public class CommonInterceptor implements Interceptor {
                 .host(oldRequest.url().host())
                 .addQueryParameter("token", token)
                 .addQueryParameter("version", version)
-                .addQueryParameter("os", os)
-
+                .addQueryParameter("deviceId", deviceId)
+                .addQueryParameter("timestamp", System.currentTimeMillis()+"")
                 ;
 
         // 新的请求

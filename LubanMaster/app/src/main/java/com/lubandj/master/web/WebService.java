@@ -1,6 +1,10 @@
 package com.lubandj.master.web;
 
 
+import com.lubandj.master.been.LoginBeen;
+
+import org.json.JSONObject;
+
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +25,20 @@ import rx.Observable;
  */
 
 public interface WebService {
+
+
+    /**
+     * 登陆
+     * @param method
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST()
+    Observable<LoginBeen> login(
+            @Field("method") String method,
+            @Field("params") JSONObject params);
+
 /*    *//**
      * 获取温馨提示
      * @param routeID

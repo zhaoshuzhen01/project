@@ -5,5 +5,5 @@ package com.lubandj.master.web;
  */
 
 public class WebUrl {
-    public static final String HOST_URL = "http://dev.banmi.com/api/app/";
+    public static final String HOST_URL = "https://api.luban.eme.net.cn/master/";
 }
