@@ -34,9 +34,8 @@ public interface WebService {
      * @return
      */
     @FormUrlEncoded
-    @POST()
+    @POST("10002")
     Observable<LoginBeen> login(
-            @Field("method") String method,
             @Field("params") JSONObject params);
 
 /*    *//**

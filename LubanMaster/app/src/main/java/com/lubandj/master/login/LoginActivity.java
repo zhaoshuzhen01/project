@@ -90,8 +90,8 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                 mHandler.sendEmptyMessage(0);
                 break;
             case R.id.btn_login:
-                /*LoginModel loginModel = new LoginModel();
-                loginModel.getLogin(this);*/
+                LoginModel loginModel = new LoginModel();
+                loginModel.getLogin(this);
                 startActivity(WorkSheetListActivity.class, null);
                 finish();
                 break;
