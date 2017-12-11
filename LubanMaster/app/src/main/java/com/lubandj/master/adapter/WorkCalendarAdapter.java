@@ -198,13 +198,13 @@ public class WorkCalendarAdapter extends BaseAdapter {
             int secondMonthPos = monthPosList.get(i) + weeksOfMonth + 1;
             monthPosList.add(secondMonthPos);
 
+            firstDayInWeek = (days + firstDayInWeek - 1) % 7 + 1;
             currentMonth++;
             if (currentMonth > 12) {
                 currentYear++;
                 currentMonth -= 12;
             }
             days = getDaysOfMoth(currentYear, currentMonth);
-            firstDayInWeek = (days + firstDayInWeek - 1) % 7 + 1;
             weeksOfMonth = getWeeksOfMonth(days, firstDayInWeek);
         }
     }

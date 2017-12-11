@@ -8,6 +8,7 @@ import android.view.View;
 import com.example.baselibrary.BaseActivity;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.WorkCalendarAdapter;
+import com.lubandj.master.databinding.ActivityAskforleaveBinding;
 import com.lubandj.master.databinding.ActivityWorkcodeBinding;
 
 /**
@@ -18,13 +19,13 @@ import com.lubandj.master.databinding.ActivityWorkcodeBinding;
  */
 
 public class AskForLeaveActivity extends BaseActivity {
-    private ActivityWorkcodeBinding binding;
+    private ActivityAskforleaveBinding binding;
     private WorkCalendarAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_workcode);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_askforleave);
 
         mAdapter = new WorkCalendarAdapter(AskForLeaveActivity.this);
         binding.lvWorkCalendar.setAdapter(mAdapter);

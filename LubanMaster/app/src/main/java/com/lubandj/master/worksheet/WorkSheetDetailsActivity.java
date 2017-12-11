@@ -60,6 +60,8 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
     LinearLayout llCancelReason;
     @InjectView(R.id.ll_detail_items)
     LinearLayout llDetailItems;
+    @InjectView(R.id.ll_state)
+    LinearLayout llState;
 
     public static final String KEY_DETAILS_TYPE = "details_type";
     private static final String TAG = "WorkSheetDetail";
@@ -120,6 +122,14 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                 ivAddressIcon.setEnabled(false);
                 llBtn.setVisibility(View.GONE);
                 llCancelReason.setVisibility(View.VISIBLE);
+                break;
+            case Canstance.TYPE_WORKCALENDAR:
+                llState.setVisibility(View.GONE);
+                btnStartServer.setVisibility(View.GONE);
+                llCancelReason.setVisibility(View.GONE);
+                FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) btnSignException.getLayoutParams();
+                layoutParams2.gravity = Gravity.CENTER;
+                btnSignException.setLayoutParams(layoutParams2);
                 break;
         }
 

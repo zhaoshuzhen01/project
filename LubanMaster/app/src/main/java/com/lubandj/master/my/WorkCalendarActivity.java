@@ -1,17 +1,21 @@
 package com.lubandj.master.my;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.example.baselibrary.BaseActivity;
+import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.WorkCalendarAdapter;
 import com.lubandj.master.adapter.WorkDetailAdapter;
 import com.lubandj.master.adapter.WorkTimeAdapter;
 import com.lubandj.master.databinding.ActivityWorkcalendarBinding;
 import com.lubandj.master.databinding.ActivityWorkcodeBinding;
+import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 
 /**
  * function:
@@ -40,6 +44,15 @@ public class WorkCalendarActivity extends BaseActivity {
             public void onClick(View v) {
                 binding.llWorkcalendarTimeplan.setVisibility(View.INVISIBLE);
                 binding.lvWorkcalendarDetail.setVisibility(View.VISIBLE);
+            }
+        });
+
+        binding.lvWorkcalendarDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(WorkCalendarActivity.this, WorkSheetDetailsActivity.class);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, Canstance.TYPE_WORKCALENDAR);
+                startActivity(intent);
             }
         });
     }

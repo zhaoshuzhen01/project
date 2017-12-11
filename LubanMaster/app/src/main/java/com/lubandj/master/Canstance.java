@@ -10,4 +10,6 @@ public class Canstance {
     public static final int TYPE_IN_SERVICE = 2;//服务中
     public static final int TYPE_COMPLETED = 3;//完成
     public static final int TYPE_CANCELED = 4;//取消
+
+    public static final int TYPE_WORKCALENDAR = 5;//工作日历跳转
 }
