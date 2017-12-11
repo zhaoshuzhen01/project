@@ -32,7 +32,7 @@ public class LoginModel {
             e.printStackTrace();
         }
 
-        RetrofitUtil.startEngin(service.login(object), new Subscriber<LoginBeen>() {
+        RetrofitUtil.startEngin(service.login("10002",object), new Subscriber<LoginBeen>() {
             @Override
             public void onCompleted() {
                 Log.e("deal","完成");
