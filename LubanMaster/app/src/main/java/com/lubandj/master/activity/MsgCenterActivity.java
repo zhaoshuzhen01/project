@@ -39,6 +39,7 @@ public class MsgCenterActivity extends BaseRefreshActivity {
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6)findViewById(R.id.prpt);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         setTitleText(R.string.msg_center);
+        setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
         initData();
     }
