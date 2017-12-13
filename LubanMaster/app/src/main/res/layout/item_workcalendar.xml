@@ -22,31 +22,31 @@
         android:background="@color/white"
         android:orientation="horizontal">
 
-        <com.lubandj.master.my.DayShowView
+        <com.lubandj.master.customview.DayShowView
             android:id="@+id/dsv_first"
             style="@style/week_item_ll"/>
 
-        <com.lubandj.master.my.DayShowView
+        <com.lubandj.master.customview.DayShowView
             android:id="@+id/dsv_second"
             style="@style/week_item_ll"/>
 
-        <com.lubandj.master.my.DayShowView
+        <com.lubandj.master.customview.DayShowView
             android:id="@+id/dsv_third"
             style="@style/week_item_ll"/>
 
-        <com.lubandj.master.my.DayShowView
+        <com.lubandj.master.customview.DayShowView
             android:id="@+id/dsv_forth"
             style="@style/week_item_ll"/>
 
-        <com.lubandj.master.my.DayShowView
+        <com.lubandj.master.customview.DayShowView
             android:id="@+id/dsv_fifth"
             style="@style/week_item_ll"/>
 
-        <com.lubandj.master.my.DayShowView
+        <com.lubandj.master.customview.DayShowView
             android:id="@+id/dsv_sixth"
             style="@style/week_item_ll"/>
 
-        <com.lubandj.master.my.DayShowView
+        <com.lubandj.master.customview.DayShowView
             android:id="@+id/dsv_seventh"
             style="@style/week_item_ll"/>
     </LinearLayout>

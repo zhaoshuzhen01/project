@@ -1,6 +1,10 @@
 package com.lubandj.master.worksheet;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
@@ -13,9 +17,14 @@ import android.widget.TextView;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tablayout.CustomTabLayout;
 import com.example.baselibrary.tablayout.MyViewPagerAdapter;
+import com.example.baselibrary.tools.ToastUtils;
+import com.lubandj.master.MainActivity;
 import com.lubandj.master.R;
 import com.lubandj.master.activity.MsgCenterActivity;
+import com.lubandj.master.customview.RoundImageView;
+import com.lubandj.master.dialog.TipDialog;
 import com.lubandj.master.fragment.WorkSheetFragment;
+import com.lubandj.master.login.LoginActivity;
 import com.lubandj.master.my.AboutLuBanActivity;
 import com.lubandj.master.my.AskForLeaveActivity;
 import com.lubandj.master.my.ModifyPhoneActivity;
@@ -40,11 +49,12 @@ public class WorkSheetListActivity extends TitleBaseActivity {
 
     //menu
     private View view;
-    private ImageView mIvHeadImg;//头像
+    private RoundImageView mIvHeadImg;//头像
     private TextView mTvName;//姓名
     private RatingBar mBar;//评分条
     private TextView mTvRate;//评分
     private TextView mTvPhone;//电话
+    private String serviceNumber;
 
     @Override
     public int getLayout() {
@@ -93,6 +103,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         mBar = view.findViewById(R.id.rb_menu_rate);
         mTvRate = view.findViewById(R.id.tv_menu_rate);
         mTvPhone = view.findViewById(R.id.tv_menu_phone);
+        mIvHeadImg.setOnClickListener(this);
         view.findViewById(R.id.ll_menu_phone).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_address).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_service).setOnClickListener(this);
@@ -101,11 +112,16 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         view.findViewById(R.id.ll_menu_askforleave).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_aboutus).setOnClickListener(this);
         view.findViewById(R.id.btn_menu_logout).setOnClickListener(this);
+
+        serviceNumber = "4008-123-517";
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.iv_menu_headimg:
+
+                break;
             case R.id.ll_menu_phone:
                 startActivity(ModifyPhoneActivity.class, null);
                 break;
@@ -113,6 +129,45 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 startActivity(MyAddressActivity.class, null);
                 break;
             case R.id.ll_menu_service:
+                TipDialog dialog = new TipDialog(WorkSheetListActivity.this);
+                dialog.setPromptTitle("确认提醒");
+                dialog.setTextDes("确定拨打客服热线：" + serviceNumber + "吗?");
+                dialog.setButton1("确定", new TipDialog.DialogButtonOnClickListener() {
+                    @Override
+                    public void onClick(View button, TipDialog dialog) {
+//                        Intent callingIntent = new Intent(Intent.ACTION_CALL,
+//                                Uri.parse("tel:" + serviceNumber));
+//                        int hasWriteContactsPermission = ActivityCompat.checkSelfPermission(WorkSheetListActivity.this, Manifest.permission.CALL_PHONE);
+//                        //权限是否允许
+//                        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+//                            //是否弹出提醒窗
+//                            try {
+//                                ActivityCompat.requestPermissions(WorkSheetListActivity.this, new String[]{Manifest.permission.CALL_PHONE},
+//                                        REQUEST_PERMISSION_CAMERA_CODE);
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                                if (!ActivityCompat.shouldShowRequestPermissionRationale(WorkSheetListActivity.this, Manifest.permission.CALL_PHONE)) {
+//                                    ToastUtils.showShort(WorkSheetListActivity.this, "打电话权限被禁止");
+//                                    return;
+//                                }
+//                            }
+//                            return;
+//                        } else {
+//                            startActivity(callingIntent);
+//                        }
+                        ToastUtils.showShort(WorkSheetListActivity.this, "拨打电话");
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setButton2("取消", new TipDialog.DialogButtonOnClickListener() {
+                    @Override
+                    public void onClick(View button, TipDialog dialog) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
                 break;
             case R.id.ll_menu_workcode:
                 startActivity(WorkCodeActivity.class, null);
@@ -127,6 +182,8 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 startActivity(AboutLuBanActivity.class, null);
                 break;
             case R.id.btn_menu_logout:
+                startActivity(LoginActivity.class, null);
+                finish();
                 break;
             case com.example.baselibrary.R.id.ll_basetitle_back1:
                 Intent intent = new Intent(this, MsgCenterActivity.class);
@@ -167,5 +224,26 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             idTablayout.setupWithViewPager(viewPager);
         }
         viewPager.setOffscreenPageLimit(5);
+    }
+
+    private static final int REQUEST_PERMISSION_CAMERA_CODE = 123;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSION_CAMERA_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission Granted
+                Intent callingIntent = new Intent(Intent.ACTION_CALL,
+                        Uri.parse("tel:" + serviceNumber));
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                startActivity(callingIntent);
+            } else {
+                // Permission Denied
+                ToastUtils.showShort(WorkSheetListActivity.this, "打电话权限被禁止");
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
