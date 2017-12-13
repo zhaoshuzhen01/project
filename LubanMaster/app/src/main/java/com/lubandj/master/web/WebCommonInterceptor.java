@@ -18,6 +18,6 @@ public class WebCommonInterceptor extends CommonInterceptor {
         Log.e("upload","token  111="+token);
         version = Tools.getVersionName(context);
 
-        deviceId = "";
+        deviceId = "7878-uiui-1231-21312";
     }
 }

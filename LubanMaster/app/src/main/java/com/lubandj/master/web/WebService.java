@@ -5,6 +5,8 @@ import com.lubandj.master.been.LoginBeen;
 
 import org.json.JSONObject;
 
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -22,9 +24,10 @@ public interface WebService {
      * @param params
      * @return
      */
-    @POST(".")
-    Observable<LoginBeen> login(@Query("method") String method,
-            @Query("params") JSONObject params);
+    @FormUrlEncoded
+    @POST("10002")
+    Observable<LoginBeen> login(@Field("method") String method,
+            @Field("params") JSONObject params);
 
 /*    *//**
      * 获取温馨提示
