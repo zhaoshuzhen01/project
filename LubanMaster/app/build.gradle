@@ -130,6 +130,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:5.1.1'
     compile project(':tuisong')
+    compile files('libs/library-1.0.19.jar')
+    compile files('libs/multi-part-for-volley-1.0.1.jar')
 }
 
 def releaseTime() {
