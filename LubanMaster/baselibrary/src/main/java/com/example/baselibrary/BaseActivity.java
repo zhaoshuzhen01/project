@@ -1,5 +1,6 @@
 package com.example.baselibrary;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,9 @@ import com.example.baselibrary.tools.ToastUtils;
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener{
+    public ProgressDialog dialog;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
@@ -102,5 +106,18 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             imm.showSoftInputFromInputMethod(getCurrentFocus().getWindowToken(),0);
         }
+    }
+
+    /**
+     * 快捷设置ProgressDialog
+     *
+     * @param context
+     * @param content
+     */
+    public void initProgressDialog(Context context, String content) {
+        dialog = new ProgressDialog(context);
+        dialog.setMessage(content);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
     }
 }
