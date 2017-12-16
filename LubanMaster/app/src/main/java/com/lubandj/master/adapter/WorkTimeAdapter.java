@@ -10,12 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lubandj.master.R;
-import com.lubandj.master.my.DayShowView;
-
-import java.security.spec.PSSParameterSpec;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 /**
  * function:

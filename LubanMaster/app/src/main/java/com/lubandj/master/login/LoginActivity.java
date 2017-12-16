@@ -2,13 +2,19 @@ package com.lubandj.master.login;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.baselibrary.TitleBaseActivity;
+import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.widget.EditTextWithDel;
+import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
-import com.lubandj.master.model.LoginModel;
+import com.lubandj.master.httpbean.SendSmsBean;
+import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 import butterknife.ButterKnife;
@@ -90,10 +96,32 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                 mHandler.sendEmptyMessage(0);
                 break;
             case R.id.btn_login:
-                LoginModel loginModel = new LoginModel();
-                loginModel.getLogin(this);
-                startActivity(WorkSheetListActivity.class, null);
-                finish();
+//                LoginModel loginModel = new LoginModel();
+//                loginModel.getLogin(this);
+
+                SendSmsBean bean = new SendSmsBean("18813003698", "802");
+                initProgressDialog(LoginActivity.this, "正在发送验证码...");
+                dialog.show();
+                TaskEngine.getInstance().commonHttps(Canstance.HTTP_SEND_CODE, bean, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String s) {
+                        dialog.dismiss();
+                        ToastUtils.showShort(LoginActivity.this, s);
+                        startActivity(WorkSheetListActivity.class, null);
+                        finish();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        dialog.dismiss();
+                        if (volleyError != null) {
+                            if (volleyError.networkResponse != null)
+                                ToastUtils.showShort(LoginActivity.this, "网络连接错误（" + volleyError.networkResponse.statusCode + ")");
+                            Log.e("TAG", volleyError.getMessage(), volleyError);
+                        }
+                    }
+                });
                 break;
         }
     }

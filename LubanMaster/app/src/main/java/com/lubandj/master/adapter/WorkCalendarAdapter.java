@@ -1,8 +1,6 @@
 package com.lubandj.master.adapter;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lubandj.master.R;
-import com.lubandj.master.my.DayShowView;
+import com.lubandj.master.customview.DayShowView;
 
 import java.util.ArrayList;
 import java.util.Calendar;

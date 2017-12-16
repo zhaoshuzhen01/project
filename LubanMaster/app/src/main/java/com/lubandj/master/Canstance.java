@@ -12,4 +12,9 @@ public class Canstance {
     public static final int TYPE_CANCELED = 4;//取消
 
     public static final int TYPE_WORKCALENDAR = 5;//工作日历跳转
+
+
+    public static final int HTTP_SEND_CODE = 90001;//发短信
+    public static final int HTTP_UPLOAD_PHOTO = 10005;//上传图片
+
 }

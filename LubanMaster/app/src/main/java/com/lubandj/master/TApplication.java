@@ -10,10 +10,11 @@ import com.igexin.sdk.Tag;
 
 public class TApplication extends Application {
 
-    public static boolean isDebug = true ;
-    public static String APP_NAME  ;
+    public static boolean isDebug = true;
+    public static String APP_NAME;
+    public boolean isActive = true;
 
-    public static Context context ;
+    public static Context context;
 
     @Override
     public void onCreate() {
@@ -23,8 +24,8 @@ public class TApplication extends Application {
         PushManager.getInstance().initialize(this.getApplicationContext(), CustomService.class);
         // com.getui.demo.DemoIntentService 为第三方自定义的推送服务事件接收类
         PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), CusstomIntentService.class);
-       String clientID =  PushManager.getInstance().getClientid(getApplicationContext());
-        String[] tags = new String[] {"45"};
+        String clientID = PushManager.getInstance().getClientid(getApplicationContext());
+        String[] tags = new String[]{"45"};
         Tag[] tagParam = new Tag[tags.length];
 
         for (int i = 0; i < tags.length; i++) {
@@ -34,8 +35,8 @@ public class TApplication extends Application {
             tagParam[i] = t;
         }
 
-        int i = PushManager.getInstance().setTag(context,tagParam,
-                System.currentTimeMillis() +"");
+        int i = PushManager.getInstance().setTag(context, tagParam,
+                System.currentTimeMillis() + "");
         String text = "设置标签失败,未知异常";
 
         switch (i) {
@@ -82,7 +83,7 @@ public class TApplication extends Application {
             default:
                 break;
         }
-        Log.e("deal",text+"");
-        PushManager.getInstance().bindAlias(context,clientID);
+        Log.e("deal", text + "");
+        PushManager.getInstance().bindAlias(context, clientID);
     }
 }

@@ -14,8 +14,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:onClick="onBack"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:onClick="onBack">
 
             <ImageView
                 style="@style/my_title_back"/>
@@ -25,6 +25,8 @@
                 android:text="修改手机号"/>
 
         </RelativeLayout>
+
+        <View style="@style/horizontal_line"/>
 
         <LinearLayout
             android:layout_width="match_parent"
