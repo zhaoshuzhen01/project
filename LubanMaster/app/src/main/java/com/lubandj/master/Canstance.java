@@ -17,6 +17,7 @@ public class Canstance {
 
     public static final int HTTP_SEND_CODE = 90001;//发短信
     public static final int HTTP_LOGIN = 10002;//登陆
+    public static final int HTTP_GETINFO = 10003;//用户信息
     public static final int HTTP_UPLOAD_PHOTO = 10005;//上传图片
     public static final int HTTP_MODIFYPHONE = 10004;//绑定新手机
     public static final int HTTP_GETADDRESS = 10006;//获取住址
@@ -32,5 +33,5 @@ public class Canstance {
     //SharePrefrense 参数
     public static final String DEVIED_ID = "DEVICEID";
     public static final String TOKEN = "TOKEN";
-
+    public static final String UID = "UID";
 }

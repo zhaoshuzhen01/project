@@ -75,7 +75,6 @@ public class CommonUtils {
         return sb.toString();
     }
 
-
     /**
      * 获取deviceid
      *
@@ -87,7 +86,7 @@ public class CommonUtils {
     }
 
     public static BaseResponseBean generateEntityByGson(Context context, String result, BaseResponseBean rb) {
-        BaseResponseBean bean = null;
+        BaseResponseBean bean;
         try {
             bean = new Gson().fromJson(result, rb.getClass());
             if (bean != null) {//解析未错
@@ -101,5 +100,21 @@ public class CommonUtils {
             bean = null;
         }
         return bean;
+    }
+
+    public static int getUid() {
+        return SpfUtil.instance().getInt(Canstance.UID);
+    }
+
+    public static void setUid(int uid) {
+        SpfUtil.instance().putInt(Canstance.UID, uid);
+    }
+
+    public static String getToken() {
+        return SpfUtil.instance().getString(Canstance.TOKEN);
+    }
+
+    public static void setToken(String token) {
+        SpfUtil.instance().putString(Canstance.TOKEN, token);
     }
 }

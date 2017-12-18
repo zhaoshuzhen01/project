@@ -7,14 +7,16 @@ import android.util.Log;
 import com.igexin.sdk.PushConsts;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.Tag;
+import com.lubandj.master.been.UserInfo;
 
 public class TApplication extends Application {
 
     public static boolean isDebug = true;
     public static String APP_NAME;
     public boolean isActive = true;
+    public UserInfo mUserInfo;
 
-    public static Context context;
+    public static TApplication context;
 
     @Override
     public void onCreate() {
@@ -86,5 +88,4 @@ public class TApplication extends Application {
         Log.e("deal", text + "");
         PushManager.getInstance().bindAlias(context, clientID);
     }
-
 }
