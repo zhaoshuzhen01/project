@@ -20,7 +20,7 @@ android {
         config {
             keyAlias 'luban.com'
             keyPassword 'luban.com'
-            storeFile file('D:/copy/project/luban.jks')
+//            storeFile file('D:/copy/project/luban.jks')
             storePassword 'luban.com'
             v2SigningEnabled false
         }
@@ -31,17 +31,19 @@ android {
             zipAlignEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'boolean', 'isDebug', 'false'
 //            signingConfig signingConfigs.config
         }
-//        debug {
-//            minifyEnabled false
-//            zipAlignEnabled false
-//            shrinkResources false
-//            debuggable true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'boolean', 'isDebug', 'true'
 //            signingConfig signingConfigs.config
-//            manifestPlaceholders = [channelID: "testluban"]
-//        }
+            manifestPlaceholders = [channelID: "testluban"]
+        }
     }
     productFlavors {
 

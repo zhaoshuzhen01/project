@@ -37,4 +37,9 @@
     <string name="txt_sign_exception_reason_4">其他</string>
     <string name="txt_sign_exception">在这里写出标记异常原因</string>
     <string name="txt_submit_exception">提交</string>
+    <string name="txt_phone_num_is_not_empty">手机号不能为空</string>
+    <string name="txt_phone_num_is_error">请输入正确的手机号</string>
+    <string name="txt_is_sending_auth_code">正在发送验证码...</string>
+    <string name="txt_is_login">登陆中...</string>
+    <string name="txt_net_connect_error">网络连接错误(%d)</string>
 </resources>

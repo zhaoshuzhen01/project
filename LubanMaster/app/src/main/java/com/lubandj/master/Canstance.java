@@ -15,6 +15,14 @@ public class Canstance {
 
 
     public static final int HTTP_SEND_CODE = 90001;//发短信
+    public static final int HTTP_LOGIN = 10002;//登陆
     public static final int HTTP_UPLOAD_PHOTO = 10005;//上传图片
+
+
+
+//  sp constant
+
+    public static final String KEY_SP_PHONE_NUM = "sp_phone_num";
+    public static final String KEY_SP_USER_INFO = "sp_user_info";
 
 }

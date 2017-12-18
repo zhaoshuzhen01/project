@@ -1,5 +1,10 @@
 package com.lubandj.master.httpbean;
 
+import com.google.gson.Gson;
+import com.lubandj.master.Canstance;
+import com.lubandj.master.utils.Logger;
+import com.lubandj.master.utils.SPUtils;
+
 import java.util.Date;
 
 /**
@@ -14,7 +19,7 @@ public class BaseRequestBean {
     public int method;
     public String deviceId;
     public long timestamp;
-    public String token;
+    public String token = "";
     public Object params;
 
 
@@ -23,10 +28,17 @@ public class BaseRequestBean {
         this.method = method;
         this.deviceId = "7878-uiui-1231-21312";
         this.timestamp = new Date().getTime();
-        if (hastoken)
-            this.token = "U5FAFquVTM9oF1yxWB8OpU5FAFquVTM9oF1yxWB8Op";
-        else
-            this.token = "";
+        if (hastoken) {
+            try {
+                String userInfo = SPUtils.getInstance().getString(Canstance.KEY_SP_USER_INFO);
+                UserInfoEntity userInfoEntity = new Gson().fromJson(userInfo, UserInfoEntity.class);
+                if (userInfoEntity != null) {
+                    this.token = userInfoEntity.getToken();
+                }
+            } catch (Exception e) {
+                Logger.e(e.toString());
+            }
+        }
         this.params = params;
     }
 }

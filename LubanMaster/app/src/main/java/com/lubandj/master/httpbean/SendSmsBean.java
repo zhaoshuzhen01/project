@@ -15,4 +15,9 @@ public class SendSmsBean {
         this.mobile = mobile;
         this.templateId = templateId;
     }
+
+    public static final String KEY_REGISTER_TEMPLATEID = "801";
+    public static final String KEY_LOGIN_TEMPLATEID = "802";
+    public static final String KEY_CHANGE_PASSWORD_TEMPLATEID = "803";
+    public static final String KEY_BINGING_PHONE_TEMPLATEID = "804";
 }

@@ -86,4 +86,5 @@ public class TApplication extends Application {
         Log.e("deal", text + "");
         PushManager.getInstance().bindAlias(context, clientID);
     }
+
 }
