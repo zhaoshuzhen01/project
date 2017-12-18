@@ -115,14 +115,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     /**
      * 快捷设置ProgressDialog
      *
-     * @param context
      * @param content
      */
-    public void initProgressDialog(Context context, String content) {
-        dialog = new ProgressDialog(context);
+    public ProgressDialog initProgressDialog(String content) {
+        dialog = new ProgressDialog(this);
         dialog.setMessage(content);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 
 

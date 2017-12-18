@@ -2,6 +2,7 @@ package com.lubandj.master.httpbean;
 
 import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
+import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.SPUtils;
 
@@ -24,9 +25,9 @@ public class BaseRequestBean {
 
 
     public BaseRequestBean(int method, Object params, boolean hastoken) {
-        this.version = "v1.0";
+        this.version = Canstance.VERSION;
         this.method = method;
-        this.deviceId = "7878-uiui-1231-21312";
+        this.deviceId = CommonUtils.getDeviceid();
         this.timestamp = new Date().getTime();
         if (hastoken) {
             try {

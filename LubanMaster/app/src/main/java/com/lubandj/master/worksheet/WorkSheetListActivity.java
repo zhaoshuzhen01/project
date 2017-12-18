@@ -303,8 +303,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
 //            File file = FileUtils.saveBitmap(headPhoto, "headPhoto.png");
             // 2.将图片传到网上，并回显
             if (NetworkUtils.isNetworkAvailable(WorkSheetListActivity.this)) {
-                initProgressDialog(WorkSheetListActivity.this, "正在上传头像...");
-                dialog.show();
+                initProgressDialog("正在上传头像...").show();
                 UploadPhotoBean bean = new UploadPhotoBean(CommonUtils.Bitmap2StrByBase64(headPhoto));
                 TaskEngine.getInstance().tokenHttps(Canstance.HTTP_UPLOAD_PHOTO, bean, new Response.Listener<String>() {
 

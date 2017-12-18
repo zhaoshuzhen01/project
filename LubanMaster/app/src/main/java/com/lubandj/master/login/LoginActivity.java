@@ -81,6 +81,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
     public void initView() {
         ButterKnife.inject(this);
         setBackImg(R.drawable.ic_login_close);
+        setBackImgVisiable(View.GONE);
         setTitleText(R.string.txt_login_page_title);
         setOkVisibity(false);
         setListener();
@@ -90,7 +91,6 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
         if (!TextUtils.isEmpty(mPhoneNum)) {
             etPhoneNum.setText(mPhoneNum);
         }
-
     }
 
     private void setListener() {
@@ -132,6 +132,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                         BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
                         if (baseEntity != null) {
                             ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
+                            mHandler.sendEmptyMessage(0);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -148,7 +149,6 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                         }
                     }
                 });
-                mHandler.sendEmptyMessage(0);
                 break;
             case R.id.btn_login:
                 initProgressDialog(R.string.txt_is_login).show();
@@ -177,14 +177,11 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                             if (volleyError.networkResponse != null) {
                                 String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
                                 ToastUtils.showShort(LoginActivity.this, format);
-
                             }
                             Logger.e(volleyError.getMessage());
                         }
                     }
                 });
-
-
                 break;
         }
     }
