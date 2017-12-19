@@ -1,25 +1,28 @@
 package com.example.baselibrary;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
-import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.tools.ToastUtils;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/11/26.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener{
+public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
+    public ProgressDialog dialog;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
@@ -39,8 +42,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected <T extends View> T findView(int id) {
         return (T) findViewById(id);
     }
+
     /**
-     *携带数据的页面跳转
+     * 携带数据的页面跳转
+     *
      * @param clz
      * @param bundle
      */
@@ -56,10 +61,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     /**
      * 土司
+     *
      * @param text
      */
-    public void toast(Context context,String text) {
-        ToastUtils.showShort(context,text);
+    public void toast(Context context, String text) {
+        ToastUtils.showShort(context, text);
     }
 
     /**
@@ -71,8 +77,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
+
     /**
      * 点击软键盘之外的空白处，隐藏软件盘
+     *
      * @param ev
      * @return
      */
@@ -97,10 +105,32 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     /**
      * 显示软键盘
      */
-    public void showInputMethod(){
-        if (getCurrentFocus() != null){
+    public void showInputMethod() {
+        if (getCurrentFocus() != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            imm.showSoftInputFromInputMethod(getCurrentFocus().getWindowToken(),0);
+            imm.showSoftInputFromInputMethod(getCurrentFocus().getWindowToken(), 0);
         }
+    }
+
+    /**
+     * 快捷设置ProgressDialog
+     *
+     * @param content
+     */
+    public ProgressDialog initProgressDialog(String content) {
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(content);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
+    }
+
+
+    public ProgressDialog initProgressDialog(@StringRes int content) {
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(getString(content));
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 }

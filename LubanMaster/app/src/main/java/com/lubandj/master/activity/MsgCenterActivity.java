@@ -1,20 +1,14 @@
 package com.lubandj.master.activity;
 
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.baselibrary.BaseRefreshActivity;
-import com.example.baselibrary.TitleBaseActivity;
-import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
-import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.MsgCenterAdapter;
-import com.lubandj.master.adapter.WorkSheetAdapter;
 import com.lubandj.master.been.TestBean;
 
 import java.util.ArrayList;

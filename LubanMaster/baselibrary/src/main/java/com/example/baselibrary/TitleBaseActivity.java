@@ -117,6 +117,17 @@ public abstract class TitleBaseActivity extends BaseActivity {
     }
 
     /**
+     * 设置返回按钮
+     *
+     * @param visiable
+     */
+    public void setBackImgVisiable(int visiable) {
+        if (ivBaseTitleBack != null) {
+            ivBaseTitleBack.setVisibility(visiable);
+        }
+    }
+
+    /**
      * 设置右边标题
      */
     public void setOKImg(@DrawableRes int resId) {
