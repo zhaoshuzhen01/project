@@ -3,13 +3,10 @@ package com.lubandj.master.worksheet;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-<<<<<<< HEAD
 import android.net.Uri;
-=======
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
->>>>>>> 8e381b3fa43b4b087c85fb516c3fe44d5a0f7da1
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -28,27 +25,21 @@ import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tablayout.CustomTabLayout;
 import com.example.baselibrary.tablayout.MyViewPagerAdapter;
 import com.example.baselibrary.tools.ToastUtils;
-<<<<<<< HEAD
-=======
 import com.example.baselibrary.util.PhotoUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lubandj.master.Canstance;
->>>>>>> 8e381b3fa43b4b087c85fb516c3fe44d5a0f7da1
 import com.lubandj.master.MainActivity;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.activity.MsgCenterActivity;
 import com.lubandj.master.customview.RoundImageView;
-<<<<<<< HEAD
 import com.lubandj.master.dialog.TipDialog;
 import com.lubandj.master.fragment.WorkSheetFragment;
-=======
 import com.lubandj.master.dialog.DoubleSelectDialog;
 import com.lubandj.master.dialog.TipDialog;
 import com.lubandj.master.fragment.WorkSheetFragment;
 import com.lubandj.master.httpbean.UploadPhotoBean;
->>>>>>> 8e381b3fa43b4b087c85fb516c3fe44d5a0f7da1
 import com.lubandj.master.login.LoginActivity;
 import com.lubandj.master.my.AboutLuBanActivity;
 import com.lubandj.master.my.AskForLeaveActivity;
@@ -149,11 +140,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_menu_headimg:
-<<<<<<< HEAD
-
-=======
                 onTakePic();
->>>>>>> 8e381b3fa43b4b087c85fb516c3fe44d5a0f7da1
                 break;
             case R.id.ll_menu_phone:
                 startActivity(ModifyPhoneActivity.class, null);
@@ -279,8 +266,6 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-<<<<<<< HEAD
-=======
 
     /**
      * 拍照
@@ -359,5 +344,4 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             }
         }
     }
->>>>>>> 8e381b3fa43b4b087c85fb516c3fe44d5a0f7da1
 }

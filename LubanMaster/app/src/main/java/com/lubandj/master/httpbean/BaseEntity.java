@@ -17,14 +17,14 @@ public class BaseEntity {
 
     private int code;
     private String message;
-    private String info;
+//    private String info;
 
     @Override
     public String toString() {
         return "BaseEntity{" +
                 "code=" + code +
                 ", message='" + message + '\'' +
-                ", info='" + info + '\'' +
+                ", info='"  + '\'' +
                 '}';
     }
 
@@ -45,11 +45,11 @@ public class BaseEntity {
         this.message = message;
     }
 
-    public String getInfo() {
+   /* public String getInfo() {
         return info;
     }
 
     public void setInfo(String info) {
         this.info = info;
-    }
+    }*/
 }

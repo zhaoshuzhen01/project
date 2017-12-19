@@ -16,6 +16,7 @@ import com.example.baselibrary.widget.EditTextWithDel;
 import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
+import com.lubandj.master.been.LoginBeen;
 import com.lubandj.master.httpbean.BaseEntity;
 import com.lubandj.master.httpbean.LoginAppBean;
 import com.lubandj.master.httpbean.SendSmsBean;
@@ -157,16 +158,16 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                     @Override
                     public void onResponse(String s) {
                         dialog.dismiss();
-                        BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
-                        if (baseEntity != null) {
-                            ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
-                            if (baseEntity.getCode() == 0) {
+                        LoginBeen loginBeen = new Gson().fromJson(s, LoginBeen.class);
+                        if (loginBeen != null) {
+                            ToastUtils.showShort(LoginActivity.this, loginBeen.getMessage());
+                            if (loginBeen.getCode() == 0) {
                                 SPUtils.getInstance().put(Canstance.KEY_SP_PHONE_NUM, mPhoneNum);
-                                SPUtils.getInstance().put(Canstance.KEY_SP_USER_INFO, baseEntity.getInfo());
+                                SPUtils.getInstance().put(Canstance.KEY_SP_USER_INFO, loginBeen.getInfo().toString());
                                 startActivity(WorkSheetListActivity.class, null);
                                 finish();
                             }
-                            Logger.e(baseEntity.toString());
+                            Logger.e(loginBeen.toString());
                         }
                     }
                 }, new Response.ErrorListener() {
