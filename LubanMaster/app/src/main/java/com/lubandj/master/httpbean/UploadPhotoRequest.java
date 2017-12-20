@@ -7,10 +7,10 @@ package com.lubandj.master.httpbean;
  * company:九州宏图
  */
 
-public class UploadPhotoBean {
+public class UploadPhotoRequest {
     public String content;
 
-    public UploadPhotoBean(String content) {
+    public UploadPhotoRequest(String content) {
         this.content = content;
     }
 }

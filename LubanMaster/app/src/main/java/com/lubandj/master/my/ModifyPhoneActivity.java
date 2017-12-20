@@ -1,5 +1,6 @@
 package com.lubandj.master.my;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import com.example.baselibrary.util.RegexUtils;
 import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
+import com.lubandj.master.TApplication;
 import com.lubandj.master.been.LoginBeen;
 import com.lubandj.master.databinding.ActivityAboutlubanBinding;
 import com.lubandj.master.databinding.ActivityModifyphoneBinding;
@@ -25,6 +27,8 @@ import com.lubandj.master.httpbean.LoginAppBean;
 import com.lubandj.master.httpbean.ModifyPhoneRequest;
 import com.lubandj.master.httpbean.SendSmsBean;
 import com.lubandj.master.login.LoginActivity;
+import com.lubandj.master.login.SplashActivity;
+import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.SPUtils;
 import com.lubandj.master.utils.TaskEngine;
@@ -103,9 +107,10 @@ public class ModifyPhoneActivity extends BaseActivity {
             @Override
             public void onResponse(String s) {
                 dialog.dismiss();
-                BaseResponseBean baseEntity = new Gson().fromJson(s, BaseResponseBean.class);
-                if (baseEntity != null) {
-                    ToastUtils.showShort(ModifyPhoneActivity.this, baseEntity.message);
+                BaseResponseBean response = new BaseResponseBean();
+                response = CommonUtils.generateEntityByGson(ModifyPhoneActivity.this, s, response);
+                if (response != null) {
+                    ToastUtils.showShort(ModifyPhoneActivity.this, response.message);
                     COUNT_DOWN_TIME = 60;
                     binding.btnSendCode.setEnabled(false);
                     mHandler.sendEmptyMessage(0);
@@ -155,7 +160,7 @@ public class ModifyPhoneActivity extends BaseActivity {
      */
     public void onModifyPhone(View view) {
         initProgressDialog("正在保存修改...").show();
-        String mPhoneNum = binding.etPhoneNum.getText().toString();
+        final String mPhoneNum = binding.etPhoneNum.getText().toString();
         String code = binding.etAuthCode.getText().toString();
         ModifyPhoneRequest request = new ModifyPhoneRequest();
         request.mobile = mPhoneNum;
@@ -165,9 +170,12 @@ public class ModifyPhoneActivity extends BaseActivity {
             @Override
             public void onResponse(String s) {
                 dialog.dismiss();
-                BaseResponseBean baseEntity = new Gson().fromJson(s, BaseResponseBean.class);
-                if (baseEntity != null) {
-                    ToastUtils.showShort(ModifyPhoneActivity.this, baseEntity.message);
+                BaseResponseBean response = new BaseResponseBean();
+                response = CommonUtils.generateEntityByGson(ModifyPhoneActivity.this, s, response);
+                if (response != null) {
+                    ToastUtils.showShort(ModifyPhoneActivity.this, response.message);
+                    TApplication.context.mUserInfo.mobile = mPhoneNum;
+                    setResult(RESULT_OK);
                     finish();
                 }
             }

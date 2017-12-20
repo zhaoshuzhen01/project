@@ -30,15 +30,7 @@ public class BaseRequestBean {
         this.deviceId = CommonUtils.getDeviceid();
         this.timestamp = new Date().getTime();
         if (hastoken) {
-            try {
-                String userInfo = SPUtils.getInstance().getString(Canstance.KEY_SP_USER_INFO);
-                UserInfoEntity userInfoEntity = new Gson().fromJson(userInfo, UserInfoEntity.class);
-                if (userInfoEntity != null) {
-                    this.token = userInfoEntity.getToken();
-                }
-            } catch (Exception e) {
-                Logger.e(e.toString());
-            }
+            token = CommonUtils.getToken();
         }
         this.params = params;
     }

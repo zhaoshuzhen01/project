@@ -58,7 +58,7 @@ public class PhotoUtil {
     public void takePhoto(Activity context) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //在图库创建文件
-        File path = Environment.getExternalStorageDirectory();
+        File path = context.getExternalCacheDir();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA).format(new Date());
         String imageFileName = "JPEG_" + timeStamp;
         File image = new File(path, imageFileName + ".jpg");

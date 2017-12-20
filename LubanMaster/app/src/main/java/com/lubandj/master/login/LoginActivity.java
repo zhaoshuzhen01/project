@@ -16,13 +16,16 @@ import com.example.baselibrary.widget.EditTextWithDel;
 import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
-import com.lubandj.master.been.LoginBeen;
+import com.lubandj.master.TApplication;
 import com.lubandj.master.httpbean.BaseEntity;
 import com.lubandj.master.httpbean.LoginAppBean;
 import com.lubandj.master.httpbean.SendSmsBean;
+import com.lubandj.master.my.UserInfoResponse;
+import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.SPUtils;
 import com.lubandj.master.utils.TaskEngine;
+import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 import butterknife.ButterKnife;
@@ -158,16 +161,25 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                     @Override
                     public void onResponse(String s) {
                         dialog.dismiss();
-                        LoginBeen loginBeen = new Gson().fromJson(s, LoginBeen.class);
-                        if (loginBeen != null) {
-                            ToastUtils.showShort(LoginActivity.this, loginBeen.getMessage());
-                            if (loginBeen.getCode() == 0) {
-                                SPUtils.getInstance().put(Canstance.KEY_SP_PHONE_NUM, mPhoneNum);
-                                SPUtils.getInstance().put(Canstance.KEY_SP_USER_INFO, loginBeen.getInfo().toString());
-                                startActivity(WorkSheetListActivity.class, null);
-                                finish();
-                            }
-                            Logger.e(loginBeen.toString());
+//                        LoginBeen loginBeen = new Gson().fromJson(s, LoginBeen.class);
+//                        if (loginBeen != null) {
+//                            ToastUtils.showShort(LoginActivity.this, loginBeen.getMessage());
+//                            if (loginBeen.getCode() == 0) {
+//                                SPUtils.getInstance().put(Canstance.KEY_SP_PHONE_NUM, mPhoneNum);
+//                                SPUtils.getInstance().put(Canstance.KEY_SP_USER_INFO, loginBeen.getInfo().toString());
+//                                startActivity(WorkSheetListActivity.class, null);
+//                                finish();
+//                            }
+//                            Logger.e(loginBeen.toString());
+//                        }
+                        UserInfoResponse response = new UserInfoResponse();
+                        response = (UserInfoResponse) CommonUtils.generateEntityByGson(LoginActivity.this, s, response);
+                        if (response != null) {
+                            CommonUtils.setUid(response.info.uid);
+                            CommonUtils.setToken(response.info.token);
+                            TApplication.context.mUserInfo = response.info;
+                            startActivity(WorkSheetListActivity.class, null);
+                            finish();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -179,7 +191,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                                 String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
                                 ToastUtils.showShort(LoginActivity.this, format);
                             }
-                            Logger.e(volleyError.getMessage());
+//                            Logger.e(volleyError.getMessage());
                         }
                     }
                 });

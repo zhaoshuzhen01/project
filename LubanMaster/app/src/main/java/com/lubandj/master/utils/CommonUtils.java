@@ -6,6 +6,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.widget.Toast;
 
 import com.example.baselibrary.net.BaseResponse;
 import com.example.baselibrary.tools.ToastUtils;
@@ -35,9 +36,11 @@ public class CommonUtils {
      */
     public static String Bitmap2StrByBase64(Bitmap bit) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bit.compress(Bitmap.CompressFormat.JPEG, 40, bos);//参数100表示不压缩
+        bit.compress(Bitmap.CompressFormat.JPEG, 100, bos);//参数100表示不压缩
         byte[] bytes = bos.toByteArray();
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
+        byte[] encode = Base64.encode(bytes, Base64.DEFAULT);
+        String encodeString = new String(encode);
+        return encodeString;
     }
 
 
@@ -91,7 +94,9 @@ public class CommonUtils {
             bean = new Gson().fromJson(result, rb.getClass());
             if (bean != null) {//解析未错
                 if (bean.code != 0) {
-                    ToastUtils.showShort(context, bean.message);
+//                    ToastUtils.showShort(context, bean.message);
+                    Toast.makeText(context, bean.message, Toast.LENGTH_SHORT).show();
+                    bean = null;
                 }
             }
         } catch (Exception e) {
@@ -103,18 +108,26 @@ public class CommonUtils {
     }
 
     public static int getUid() {
-        return SpfUtil.instance().getInt(Canstance.UID);
+        return SPUtils.getInstance().getInt(Canstance.UID);
     }
 
     public static void setUid(int uid) {
-        SpfUtil.instance().putInt(Canstance.UID, uid);
+        SPUtils.getInstance().put(Canstance.UID, uid);
     }
 
     public static String getToken() {
-        return SpfUtil.instance().getString(Canstance.TOKEN);
+        return SPUtils.getInstance().getString(Canstance.TOKEN);
     }
 
     public static void setToken(String token) {
-        SpfUtil.instance().putString(Canstance.TOKEN, token);
+        SPUtils.getInstance().put(Canstance.TOKEN, token);
+    }
+
+    public static String getPhone() {
+        return SPUtils.getInstance().getString(Canstance.KEY_SP_PHONE_NUM);
+    }
+
+    public static void setPhone(String phone) {
+        SPUtils.getInstance().put(Canstance.KEY_SP_PHONE_NUM, phone);
     }
 }

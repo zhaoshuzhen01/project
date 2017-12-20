@@ -9,7 +9,7 @@ import com.igexin.sdk.PushManager;
 import com.igexin.sdk.Tag;
 import com.lubandj.master.been.UserInfo;
 
-public class TApplication extends Application {
+public class TApplication extends Application implements Thread.UncaughtExceptionHandler {
 
     public static boolean isDebug = true;
     public static String APP_NAME;
@@ -87,5 +87,13 @@ public class TApplication extends Application {
         }
         Log.e("deal", text + "");
         PushManager.getInstance().bindAlias(context, clientID);
+
+        //崩溃捕捉
+        Thread.setDefaultUncaughtExceptionHandler(this);
+    }
+
+    @Override
+    public void uncaughtException(Thread t, Throwable e) {
+        e.printStackTrace();
     }
 }
