@@ -31,6 +31,7 @@
             android:layout_height="45dp"
             android:layout_marginTop="1dp"
             android:background="@color/white"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -47,11 +48,12 @@
                     android:src="@drawable/selectaddress_gps"/>
 
                 <TextView
+                    android:id="@+id/tv_city_selectaddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="9dp"
                     android:gravity="center_vertical"
-                    android:hint="北京"
+                    android:text="北京"
                     android:textColor="#000000"
                     android:textSize="16sp"
                     />
@@ -65,12 +67,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
+                android:layout_weight="1"
                 android:background="@drawable/shape_selectaddress_searchedit"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -85,6 +88,7 @@
                     android:src="@drawable/selectaddress_search"/>
 
                 <EditText
+                    android:id="@+id/et_palce_selectaddress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -93,24 +97,36 @@
                     android:textSize="14sp"/>
 
             </LinearLayout>
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/selector_btn_search_bg"
+                android:onClick="onSearch"
+                android:text="搜索"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
         </LinearLayout>
 
-        <com.lubandj.master.customview.SquareRelativeLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="@color/white">
-            <!--<com.baidu.mapapi.map.TextureMapView-->
-                <!--android:id="@+id/mTexturemap"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent" >-->
-            <!--</com.baidu.mapapi.map.TextureMapView>-->
-        </com.lubandj.master.customview.SquareRelativeLayout>
+
+            <com.baidu.mapapi.map.TextureMapView
+                android:id="@+id/mbaiduMap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </com.baidu.mapapi.map.TextureMapView>
+        </RelativeLayout>
 
 
         <ListView
             android:id="@+id/lv_address"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
             android:divider="#eeeeee"
             android:dividerHeight="0.5dp"/>
     </LinearLayout>

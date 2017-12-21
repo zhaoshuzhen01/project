@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.igexin.sdk.PushConsts;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.Tag;
@@ -90,6 +91,8 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
 
         //崩溃捕捉
         Thread.setDefaultUncaughtExceptionHandler(this);
+        //百度地图
+        SDKInitializer.initialize(getApplicationContext());
     }
 
     @Override
