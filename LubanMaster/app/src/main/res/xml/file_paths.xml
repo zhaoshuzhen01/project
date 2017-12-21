@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <paths>
-        <external-cache-path
+        <cache-path
             name="images"
             path=""/>
     </paths>

@@ -342,6 +342,8 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                         if (response != null) {
                             TApplication.context.mUserInfo.face_url = response.info.face_url;
                             loadFace();
+                            PhotoUtil.getInstance().deleteCache();
+                            ToastUtils.showShort(WorkSheetListActivity.this, "上传成功");
                         }
                     }
                 }, new Response.ErrorListener() {

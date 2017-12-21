@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 
 import com.android.volley.Response;
@@ -46,12 +48,34 @@ import java.util.Timer;
 public class ModifyPhoneActivity extends BaseActivity {
     private ActivityModifyphoneBinding binding;
     private int COUNT_DOWN_TIME;
+    private boolean isSendCode = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_modifyphone);
         binding.btnLogin.setEnabled(false);
+
+        binding.etAuthCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isSendCode && s.length() == 4) {
+                    binding.btnLogin.setEnabled(true);
+                } else {
+                    binding.btnLogin.setEnabled(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -95,7 +119,6 @@ public class ModifyPhoneActivity extends BaseActivity {
             ToastUtils.showShort(this, R.string.txt_phone_num_is_not_empty);
             return;
         }
-
         if (!RegexUtils.isMobileExact(mPhoneNum)) {
             ToastUtils.showShort(this, R.string.txt_phone_num_is_error);
             return;
@@ -114,6 +137,7 @@ public class ModifyPhoneActivity extends BaseActivity {
                     COUNT_DOWN_TIME = 60;
                     binding.btnSendCode.setEnabled(false);
                     mHandler.sendEmptyMessage(0);
+                    isSendCode = true;
                 }
             }
         }, new Response.ErrorListener() {
@@ -124,9 +148,7 @@ public class ModifyPhoneActivity extends BaseActivity {
                     if (volleyError.networkResponse != null) {
                         String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
                         ToastUtils.showShort(ModifyPhoneActivity.this, format);
-
                     }
-                    Logger.e(volleyError.getMessage());
                 }
             }
         });
@@ -188,7 +210,6 @@ public class ModifyPhoneActivity extends BaseActivity {
                         String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
                         ToastUtils.showShort(ModifyPhoneActivity.this, format);
                     }
-                    Logger.e(volleyError.getMessage());
                 }
             }
         });
