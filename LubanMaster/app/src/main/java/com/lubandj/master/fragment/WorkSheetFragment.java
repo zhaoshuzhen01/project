@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.baselibrary.BaseRefreshFragment;
@@ -119,17 +117,17 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         switch (index) {
             case 0://工单服务中
                 Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, position % 5);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, position % 5);
                 startActivity(intent);
                 break;
             case 1://工单完成
                 intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, Canstance.TYPE_COMPLETED);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, Canstance.TYPE_COMPLETED);
                 startActivity(intent);
                 break;
             case 2://工单取消
                 intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, Canstance.TYPE_CANCELED);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, Canstance.TYPE_CANCELED);
                 startActivity(intent);
                 break;
         }

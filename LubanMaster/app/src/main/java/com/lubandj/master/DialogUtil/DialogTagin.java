@@ -41,7 +41,7 @@ public class DialogTagin {
                     public void onClick(View v) {
                         if (dialogSure==null){
                             Intent intent = new Intent(context, WorkSheetDetailsActivity.class);
-                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE,currentType);
+                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID,currentType);
                             context.startActivity(intent);
                         }else {
                             dialogSure.dialogCall();

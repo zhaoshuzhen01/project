@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -21,14 +21,18 @@ import com.android.volley.VolleyError;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.widget.AlertDialog;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
 import com.lubandj.master.baiduUtil.BaiduApi;
+import com.lubandj.master.been.WorkSheetDetailBean;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.widget.WorkSheetDetailItem;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -55,6 +59,10 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
     TextView tvWorkSheetNo;
     @InjectView(R.id.tv_copy)
     TextView tvCopy;
+    @InjectView(R.id.tv_time)
+    TextView tvTime;
+    @InjectView(R.id.tv_remark)
+    TextView tvReMark;
     @InjectView(R.id.btn_sign_exception)
     Button btnSignException;
     @InjectView(R.id.btn_start_server)
@@ -68,9 +76,9 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
     @InjectView(R.id.ll_state)
     LinearLayout llState;
 
-    public static final String KEY_DETAILS_TYPE = "details_type";
-    private static final String TAG = "WorkSheetDetail";
+    public static final String KEY_DETAILS_ID = "details_id";
     private int currentType;
+    private String workSheetId;
 
 
     @Override
@@ -90,102 +98,30 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         setTitleText(R.string.txt_work_sheet_details_title);
         setBackImg(R.drawable.back_mark);
         setOKImg(R.drawable.ic_service);
-        currentType = getIntent().getIntExtra(KEY_DETAILS_TYPE, Canstance.TYPE_TO_PERFORM);
+        workSheetId = getIntent().getStringExtra(KEY_DETAILS_ID);
         initData();
-
-
-        Log.e(TAG, "initView: " + currentType);
-        switch (currentType) {
-            case Canstance.TYPE_TO_PERFORM:
-                ivStateIcon.setImageResource(R.drawable.ic_details_to_perform);
-                tvStateDesc.setText(R.string.txt_sheet_state_to_perform);
-                btnStartServer.setText(R.string.txt_work_sheet_details_on_road);
-                break;
-            case Canstance.TYPE_ON_ROAD:
-                ivStateIcon.setImageResource(R.drawable.ic_details_on_road);
-                tvStateDesc.setText(R.string.txt_sheet_state_on_road);
-                btnStartServer.setText(R.string.txt_work_sheet_details_start_service);
-                break;
-            case Canstance.TYPE_IN_SERVICE:
-                ivStateIcon.setImageResource(R.drawable.ic_details_in_service);
-                tvStateDesc.setText(R.string.txt_sheet_state_in_service);
-                btnStartServer.setText(R.string.txt_work_sheet_details_service_completed);
-                ivPhoneIcon.setEnabled(false);
-                ivAddressIcon.setEnabled(false);
-                break;
-            case Canstance.TYPE_COMPLETED:
-                ivStateIcon.setImageResource(R.drawable.ic_details_completed);
-                tvStateDesc.setText(R.string.txt_sheet_state_completed);
-                ivPhoneIcon.setEnabled(false);
-                ivAddressIcon.setEnabled(false);
-                btnStartServer.setVisibility(View.GONE);
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) btnSignException.getLayoutParams();
-                layoutParams.gravity = Gravity.CENTER;
-                btnSignException.setLayoutParams(layoutParams);
-                break;
-            case Canstance.TYPE_CANCELED:
-                ivStateIcon.setImageResource(R.drawable.ic_details_canceled);
-                tvStateDesc.setText(R.string.txt_sheet_state_canceled);
-                ivPhoneIcon.setEnabled(false);
-                ivAddressIcon.setEnabled(false);
-                llBtn.setVisibility(View.GONE);
-                llCancelReason.setVisibility(View.VISIBLE);
-                break;
-            case Canstance.TYPE_WORKCALENDAR:
-                llState.setVisibility(View.GONE);
-                btnStartServer.setVisibility(View.GONE);
-                llCancelReason.setVisibility(View.GONE);
-                FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) btnSignException.getLayoutParams();
-                layoutParams2.gravity = Gravity.CENTER;
-                btnSignException.setLayoutParams(layoutParams2);
-                break;
-        }
-
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.topMargin = (int) getResources().getDimension(R.dimen.h_8dp);
-        for (int i = 0; i < 3; i++) {
-            WorkSheetDetailItem workSheetDetailItem = new WorkSheetDetailItem(this);
-            workSheetDetailItem.initData("空调保养-挂式", i);
-            if (i != 0) {
-                workSheetDetailItem.setLayoutParams(layoutParams);
-            }
-            llDetailItems.addView(workSheetDetailItem);
-        }
-
     }
 
     @Override
     public void initData() {
         initProgressDialog(R.string.txt_loading).show();
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id",1);
-
-
-        TaskEngine.getInstance().commonHttps(Canstance.HTTP_WORK_SHEET_DETAILS, jsonObject, new Response.Listener<String>() {
+        jsonObject.addProperty("id", workSheetId);
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_DETAILS, jsonObject, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 dialog.dismiss();
                 Logger.e(s);
-//                        LoginBeen loginBeen = new Gson().fromJson(s, LoginBeen.class);
-//                        if (loginBeen != null) {
-//                            ToastUtils.showShort(LoginActivity.this, loginBeen.getMessage());
-//                            if (loginBeen.getCode() == 0) {
-//                                SPUtils.getInstance().put(Canstance.KEY_SP_PHONE_NUM, mPhoneNum);
-//                                SPUtils.getInstance().put(Canstance.KEY_SP_USER_INFO, loginBeen.getInfo().toString());
-//                                startActivity(WorkSheetListActivity.class, null);
-//                                finish();
-//                            }
-//                            Logger.e(loginBeen.toString());
-//                        }
-//                UserInfoResponse response = new UserInfoResponse();
-//                response = (UserInfoResponse) CommonUtils.generateEntityByGson(WorkSheetDetailsActivity.this, s, response);
-//                if (response != null) {
-//                    CommonUtils.setUid(response.info.uid);
-//                    CommonUtils.setToken(response.info.token);
-//                    TApplication.context.mUserInfo = response.info;
-//                    startActivity(WorkSheetListActivity.class, null);
-//                    finish();
-//                }
+                try {
+                    WorkSheetDetailBean workSheetDetailBean = new Gson().fromJson(s, WorkSheetDetailBean.class);
+                    if (workSheetDetailBean.getCode() == 0) {
+                        refreshPage(workSheetDetailBean);
+                    } else {
+                        ToastUtils.showShort(WorkSheetDetailsActivity.this, workSheetDetailBean.getMessage());
+                    }
+                } catch (Exception e) {
+                    Logger.e(e.toString());
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -196,27 +132,31 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                         String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, format);
                     }
-//                            Logger.e(volleyError.getMessage());
                 }
             }
         });
     }
 
+
     @OnClick({R.id.iv_phone_icon, R.id.iv_address_icon, R.id.tv_copy, R.id.btn_sign_exception, R.id.btn_start_server})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_phone_icon:
+                String s = tvPhoneNum.getText().toString();
+                if(TextUtils.isEmpty(s)){
+                    return;
+                }
                 new AlertDialog(this)
                         .builder()
-                        .setTitle("即将拨打电话")
-                        .setMsg("确定拨打电话：" + tvPhoneNum.getText().toString() + "吗？")
-                        .setPositiveButton("确认", new View.OnClickListener() {
+                        .setTitle(getString(R.string.txt_calling))
+                        .setMsg(String.format(getString(R.string.txt_make_sure_phone),s))
+                        .setPositiveButton(getString(R.string.txt_sure), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 callPhone(tvPhoneNum.getText().toString());
                             }
                         })
-                        .setNegativeButton("取消", new View.OnClickListener() {
+                        .setNegativeButton(getString(R.string.txt_cancel), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                             }
@@ -246,8 +186,87 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
             default:
                 break;
         }
-
     }
+
+    private void refreshPage(WorkSheetDetailBean workSheetDetailBean) {
+        if (workSheetDetailBean == null && workSheetDetailBean.getInfo() == null) {
+            return;
+        }
+        WorkSheetDetailBean.InfoBean info = workSheetDetailBean.getInfo();
+
+        String status = info.getStatus();
+        switch (status) {
+            case Canstance.KEY_SHEET_STATUS_TO_PERFORM:
+                ivStateIcon.setImageResource(R.drawable.ic_details_to_perform);
+                tvStateDesc.setText(R.string.txt_sheet_state_to_perform);
+                btnStartServer.setText(R.string.txt_work_sheet_details_on_road);
+                break;
+            case Canstance.KEY_SHEET_STATUS_ON_ROAD:
+                ivStateIcon.setImageResource(R.drawable.ic_details_on_road);
+                tvStateDesc.setText(R.string.txt_sheet_state_on_road);
+                btnStartServer.setText(R.string.txt_work_sheet_details_start_service);
+                break;
+            case Canstance.KEY_SHEET_STATUS_IN_SERVICE:
+                ivStateIcon.setImageResource(R.drawable.ic_details_in_service);
+                tvStateDesc.setText(R.string.txt_sheet_state_in_service);
+                btnStartServer.setText(R.string.txt_work_sheet_details_service_completed);
+                ivPhoneIcon.setEnabled(false);
+                ivAddressIcon.setEnabled(false);
+                break;
+            case Canstance.KEY_SHEET_STATUS_COMPLETED:
+                ivStateIcon.setImageResource(R.drawable.ic_details_completed);
+                tvStateDesc.setText(R.string.txt_sheet_state_completed);
+                ivPhoneIcon.setEnabled(false);
+                ivAddressIcon.setEnabled(false);
+                btnStartServer.setVisibility(View.GONE);
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) btnSignException.getLayoutParams();
+                layoutParams.gravity = Gravity.CENTER;
+                btnSignException.setLayoutParams(layoutParams);
+                break;
+            case Canstance.KEY_SHEET_STATUS_CANCELED:
+                ivStateIcon.setImageResource(R.drawable.ic_details_canceled);
+                tvStateDesc.setText(R.string.txt_sheet_state_canceled);
+                ivPhoneIcon.setEnabled(false);
+                ivAddressIcon.setEnabled(false);
+                llBtn.setVisibility(View.GONE);
+                llCancelReason.setVisibility(View.VISIBLE);
+                break;
+//            case Canstance.TYPE_WORKCALENDAR:
+//                llState.setVisibility(View.GONE);
+//                btnStartServer.setVisibility(View.GONE);
+//                llCancelReason.setVisibility(View.GONE);
+//                FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) btnSignException.getLayoutParams();
+//                layoutParams2.gravity = Gravity.CENTER;
+//                btnSignException.setLayoutParams(layoutParams2);
+//                break;
+            default:
+                break;
+        }
+
+        tvPhoneNum.setText(info.getCustPhone());
+        tvAddressDesc.setText(info.getAddress());
+        tvContactName.setText(info.getCustName());
+        tvTime.setText(info.getOrderTime());
+        tvReMark.setText(info.getRemark());
+        tvWorkSheetNo.setText(info.getTicketSn());
+
+        List<WorkSheetDetailBean.InfoBean.ServiceItemBean> serviceItem = info.getServiceItem();
+        if (serviceItem == null || serviceItem.size() == 0) {
+            return;
+        }
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.topMargin = (int) getResources().getDimension(R.dimen.h_8dp);
+        for (int i = 0; i < serviceItem.size(); i++) {
+            WorkSheetDetailBean.InfoBean.ServiceItemBean serviceItemBean = serviceItem.get(i);
+            WorkSheetDetailItem workSheetDetailItem = new WorkSheetDetailItem(this);
+            workSheetDetailItem.initData(serviceItemBean.getItem(),serviceItemBean.getNum());
+            if (i != 0) {
+                workSheetDetailItem.setLayoutParams(layoutParams);
+            }
+            llDetailItems.addView(workSheetDetailItem);
+        }
+    }
+
 
     @SuppressLint("MissingPermission")
     private void callPhone(String num) {

@@ -10,11 +10,9 @@ import android.widget.AdapterView;
 import com.example.baselibrary.BaseActivity;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
-import com.lubandj.master.adapter.WorkCalendarAdapter;
 import com.lubandj.master.adapter.WorkDetailAdapter;
 import com.lubandj.master.adapter.WorkTimeAdapter;
 import com.lubandj.master.databinding.ActivityWorkcalendarBinding;
-import com.lubandj.master.databinding.ActivityWorkcodeBinding;
 import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 
 /**
@@ -51,7 +49,7 @@ public class WorkCalendarActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(WorkCalendarActivity.this, WorkSheetDetailsActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_TYPE, Canstance.TYPE_WORKCALENDAR);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, Canstance.TYPE_WORKCALENDAR);
                 startActivity(intent);
             }
         });

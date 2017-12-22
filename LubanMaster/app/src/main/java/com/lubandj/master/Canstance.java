@@ -23,6 +23,7 @@ public class Canstance {
     public static final int HTTP_GETADDRESS = 10006;//获取住址
     public static final int HTTP_SAVEADDRESS = 10007;//保存住址
     public static final int HTTP_WORK_SHEET_DETAILS = 20002;//工单详情
+    public static final int HTTP_WORK_SHEET_LIST = 20001;//工单列表
 
 
 //  sp constant
@@ -35,4 +36,11 @@ public class Canstance {
     public static final String DEVIED_ID = "DEVICEID";
     public static final String TOKEN = "TOKEN";
     public static final String UID = "UID";
+
+
+    public static final String KEY_SHEET_STATUS_TO_PERFORM = "待执行";
+    public static final String KEY_SHEET_STATUS_ON_ROAD = "正在上门";
+    public static final String KEY_SHEET_STATUS_IN_SERVICE = "服务中";
+    public static final String KEY_SHEET_STATUS_COMPLETED = "已完成";
+    public static final String KEY_SHEET_STATUS_CANCELED = "已取消";
 }

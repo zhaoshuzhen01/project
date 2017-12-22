@@ -53,7 +53,7 @@ public class WorkSheetDetailItem extends FrameLayout {
     }
 
 
-    public void initData(String item, int count) {
+    public void initData(String item, String count) {
         tvSheetItem.setText(item);
         tvSheetItemCount.setText("×" + count);
     }

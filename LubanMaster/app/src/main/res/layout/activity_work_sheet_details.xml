@@ -60,7 +60,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/h_15dp"
                 android:layout_weight="1"
-                android:text="13811215566"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/sp_15" />
 
@@ -95,7 +94,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/h_15dp"
                 android:layout_weight="1"
-                android:text="北京凯泰物业小区5单元203"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/sp_15" />
 
@@ -137,7 +135,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/h_15dp"
                     android:layout_weight="1"
-                    android:text="胡先生"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/sp_13" />
 
@@ -159,11 +156,11 @@
                     android:textSize="@dimen/sp_13" />
 
                 <TextView
+                    android:id="@+id/tv_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/h_15dp"
                     android:layout_weight="1"
-                    android:text="2017-10-10 18:30-21:00"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/sp_13" />
 
@@ -184,11 +181,11 @@
                     android:textSize="@dimen/sp_13" />
 
                 <TextView
+                    android:id="@+id/tv_remark"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/h_15dp"
                     android:layout_weight="1"
-                    android:text="来之前请给我打电话"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/sp_13" />
             </LinearLayout>
@@ -226,7 +223,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/h_15dp"
                     android:layout_weight="1"
-                    android:text="9159764919201134144"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/sp_13" />
 
@@ -299,7 +295,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/h_23dp"
             android:layout_marginRight="@dimen/h_23dp"
-            android:layout_marginTop="@dimen/h_50dp">
+            android:layout_marginTop="@dimen/h_30dp">
 
             <Button
                 android:id="@+id/btn_sign_exception"
