@@ -16,13 +16,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.widget.AlertDialog;
+import com.google.gson.JsonObject;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
 import com.lubandj.master.baiduUtil.BaiduApi;
+import com.lubandj.master.utils.Logger;
+import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.widget.WorkSheetDetailItem;
 
 import butterknife.ButterKnife;
@@ -86,6 +91,9 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         setBackImg(R.drawable.back_mark);
         setOKImg(R.drawable.ic_service);
         currentType = getIntent().getIntExtra(KEY_DETAILS_TYPE, Canstance.TYPE_TO_PERFORM);
+        initData();
+
+
         Log.e(TAG, "initView: " + currentType);
         switch (currentType) {
             case Canstance.TYPE_TO_PERFORM:
@@ -148,7 +156,50 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
 
     @Override
     public void initData() {
+        initProgressDialog(R.string.txt_loading).show();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id",1);
 
+
+        TaskEngine.getInstance().commonHttps(Canstance.HTTP_WORK_SHEET_DETAILS, jsonObject, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                dialog.dismiss();
+                Logger.e(s);
+//                        LoginBeen loginBeen = new Gson().fromJson(s, LoginBeen.class);
+//                        if (loginBeen != null) {
+//                            ToastUtils.showShort(LoginActivity.this, loginBeen.getMessage());
+//                            if (loginBeen.getCode() == 0) {
+//                                SPUtils.getInstance().put(Canstance.KEY_SP_PHONE_NUM, mPhoneNum);
+//                                SPUtils.getInstance().put(Canstance.KEY_SP_USER_INFO, loginBeen.getInfo().toString());
+//                                startActivity(WorkSheetListActivity.class, null);
+//                                finish();
+//                            }
+//                            Logger.e(loginBeen.toString());
+//                        }
+//                UserInfoResponse response = new UserInfoResponse();
+//                response = (UserInfoResponse) CommonUtils.generateEntityByGson(WorkSheetDetailsActivity.this, s, response);
+//                if (response != null) {
+//                    CommonUtils.setUid(response.info.uid);
+//                    CommonUtils.setToken(response.info.token);
+//                    TApplication.context.mUserInfo = response.info;
+//                    startActivity(WorkSheetListActivity.class, null);
+//                    finish();
+//                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                if (volleyError != null) {
+                    if (volleyError.networkResponse != null) {
+                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
+                        ToastUtils.showShort(WorkSheetDetailsActivity.this, format);
+                    }
+//                            Logger.e(volleyError.getMessage());
+                }
+            }
+        });
     }
 
     @OnClick({R.id.iv_phone_icon, R.id.iv_address_icon, R.id.tv_copy, R.id.btn_sign_exception, R.id.btn_start_server})

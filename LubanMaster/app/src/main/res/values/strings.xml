@@ -42,4 +42,5 @@
     <string name="txt_is_sending_auth_code">正在发送验证码...</string>
     <string name="txt_is_login">登陆中...</string>
     <string name="txt_net_connect_error">网络连接错误(%d)</string>
+    <string name="txt_loading">加载中...</string>
 </resources>

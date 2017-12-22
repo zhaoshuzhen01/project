@@ -22,6 +22,7 @@ public class Canstance {
     public static final int HTTP_MODIFYPHONE = 10004;//绑定新手机
     public static final int HTTP_GETADDRESS = 10006;//获取住址
     public static final int HTTP_SAVEADDRESS = 10007;//保存住址
+    public static final int HTTP_WORK_SHEET_DETAILS = 20002;//工单详情
 
 
 //  sp constant
