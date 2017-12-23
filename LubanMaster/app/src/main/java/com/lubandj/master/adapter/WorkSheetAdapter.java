@@ -30,13 +30,18 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2017/11/26.
  */
 
-public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, BaseViewHolder> {
+public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, BaseViewHolder> implements DialogTagin.DialogSure {
     private Context context;
     private  int modeStyle = 0 ;// 0 未完成  1  已完成  2 已取消
-    public WorkSheetAdapter(@Nullable List<WorkListBeen.InfoBean> data,Context context,int modeStyle) {
+    private int currentIndex = 0 ;
+    private List<WorkListBeen.InfoBean> mdata ;
+    private ClickButton clickButton ;
+    public WorkSheetAdapter(@Nullable List<WorkListBeen.InfoBean> data,Context context,int modeStyle,ClickButton clickButton) {
         super(R.layout.item_worksheet, data);
         this.context = context ;
+        this.mdata = data;
         this.modeStyle = modeStyle ;
+        this.clickButton = clickButton;
     }
 
     @Override
@@ -87,17 +92,18 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
     }
     @Override
     public void childViewClick(int position,View view) {
+        currentIndex= position ;
         switch (view.getId()){
             case R.id.finishState:
-                switch (position){
-                    case 0:
-                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_IN_SERVICE);
+                switch (Integer.parseInt(mdata.get(currentIndex).getStatus())){
+                    case 3:
+                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_IN_SERVICE).setDialogSure(this);
                         break;
                     case 1:
-                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_TO_PERFORM);
+                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_TO_PERFORM).setDialogSure(this);
                         break;
                     default:
-                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_ON_ROAD);
+                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_ON_ROAD).setDialogSure(this);
                         break;
                 }
                 break;
@@ -114,8 +120,8 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
      * @param daohangState
      */
     private void unFinish(String status,int position,TextView serviceState,TextView finishState,TextView daohangState,final BaseViewHolder helper){
-        switch (position){
-            case 0:
+        switch (Integer.parseInt(status)){
+            case 3:
                 ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.workservie);
                 serviceState.setText("服务中");
                 finishState.setText("服务完成");
@@ -127,10 +133,10 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
                 daohangState.setVisibility(View.VISIBLE);
                 break;
 
-            default:
+            case 2:
                 ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.workpath);
                 serviceState.setText("正在上门");
-                finishState.setText("开始上门");
+                finishState.setText("开始服务");
                 daohangState.setVisibility(View.VISIBLE);
                 break;
         }
@@ -145,5 +151,16 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
         serviceState.setText(title);
         RelativeLayout bottomLay =  ((RelativeLayout) (helper.getView(R.id.bottom_lay)));
         bottomLay.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void dialogCall() {
+        WorkListBeen.InfoBean entity = mdata.get(currentIndex);
+        if (clickButton!=null)
+            clickButton.callClick(entity,currentIndex);
+    }
+
+    public interface ClickButton{
+        void callClick(WorkListBeen.InfoBean entity,int currentIndex);
     }
 }

@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.been.WorkListBeen;
+import com.lubandj.master.httpbean.BaseEntity;
+import com.lubandj.master.httpbean.NetClickStateBeen;
 import com.lubandj.master.httpbean.NetWorkListBeen;
 import com.lubandj.master.utils.TaskEngine;
 
@@ -18,30 +20,26 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2017/12/23.
  */
 
-public class UnFinishModel extends BaseModel{
-private IWorkModel iWorkModel ;
+public class WorkListClickModel {
+    private Context context;
+private ClickCallBack clickCallBack;
+    public WorkListClickModel(Context context,ClickCallBack clickCallBack) {
+        this.context = context;
+        this.clickCallBack = clickCallBack;
+    }
 
-public UnFinishModel(Context context,IWorkModel iWorkModel){
-    this.context = context ;
-    this.iWorkModel = iWorkModel;
-}
-
-    @Override
-    public void getReflushData(int type,int startIndex,int pageSize) {
-
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_LIST, new NetWorkListBeen(type, startIndex,pageSize), new Response.Listener<String>() {
+    public void getClickState(final int status, int id) {
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_LIST_CHANGE, new NetClickStateBeen(status, id), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {
 
-                WorkListBeen workListBeen = new Gson().fromJson(s, WorkListBeen.class);
-                        if (workListBeen != null) {
-                            if (workListBeen.getCode() == 0) {
-                                List<WorkListBeen.InfoBean> datas = workListBeen.getInfo();
-                                if (datas!=null&&datas.size()>0)
-                                iWorkModel.getWorkLists(datas);
-                            }
-                        }
+                BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
+                if (baseEntity != null) {
+                    if (baseEntity.getCode() == 0) {
+                      clickCallBack.clickCallback(status);
+                    }
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -57,8 +55,7 @@ public UnFinishModel(Context context,IWorkModel iWorkModel){
         });
     }
 
-    @Override
-    public void getMoreData(int type,int startIndex,int pageSize) {
-
+    public interface ClickCallBack{
+        void clickCallback(int status);
     }
 }

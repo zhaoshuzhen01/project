@@ -54,6 +54,16 @@ public class WorkListBeen extends BaseEntity {
         private String endTime;
         private String timeStr;
         private String status;
+
+        public String getStatusText() {
+            return statusText;
+        }
+
+        public void setStatusText(String statusText) {
+            this.statusText = statusText;
+        }
+
+        private String statusText ;
         private String address;
 
         public String getId() {

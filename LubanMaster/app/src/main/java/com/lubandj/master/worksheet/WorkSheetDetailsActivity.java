@@ -77,6 +77,7 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
     LinearLayout llState;
 
     public static final String KEY_DETAILS_ID = "details_id";
+
     private int currentType;
     private String workSheetId;
 

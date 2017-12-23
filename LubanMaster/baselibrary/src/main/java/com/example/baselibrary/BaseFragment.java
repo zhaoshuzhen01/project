@@ -1,7 +1,9 @@
 package com.example.baselibrary;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
     protected boolean isFirst = true;
     public View view;// 缓存页面
+    public ProgressDialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,5 +63,11 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
     }
-
+    public ProgressDialog initProgressDialog(@StringRes int content) {
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage(getString(content));
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
+    }
 }
