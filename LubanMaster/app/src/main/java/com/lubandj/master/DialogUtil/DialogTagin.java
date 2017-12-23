@@ -24,14 +24,14 @@ public class DialogTagin {
         return dialogTagin;
     }
 
-    public DialogTagin messageShow(int currentType){
+    public DialogTagin messageShow(String currentType){
         finishDialog(currentType);
         return dialogTagin ;
     }
     public void setDialogSure(DialogSure dialogSure) {
         this.dialogSure = dialogSure;
     }
-    public   void finishDialog(final int currentType){
+    public   void finishDialog(final String currentType){
         new AlertDialog(context)
                 .builder()
                 .setTitle("确认提醒")
@@ -41,7 +41,7 @@ public class DialogTagin {
                     public void onClick(View v) {
                         if (dialogSure==null){
                             Intent intent = new Intent(context, WorkSheetDetailsActivity.class);
-                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID,currentType);
+//                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID,currentType);
                             context.startActivity(intent);
                         }else {
                             dialogSure.dialogCall();
@@ -54,16 +54,16 @@ public class DialogTagin {
                     }
                 }).show();
     }
-    private String getRemindContent(int currentType){
+    private String getRemindContent(String currentType){
         String content="";
         switch (currentType) {
-            case Canstance.TYPE_TO_PERFORM:
+            case Canstance.KEY_SHEET_STATUS_TO_PERFORM:
                 content="请确认将开始前往服务地点";
                 break;
-            case Canstance.TYPE_ON_ROAD:
+            case Canstance.KEY_SHEET_STATUS_ON_ROAD:
                 content="请确认开始服务";
                 break;
-            case Canstance.TYPE_IN_SERVICE:
+            case Canstance.KEY_SHEET_STATUS_IN_SERVICE:
                 content="请确认服务已完成";
                 break;
         }

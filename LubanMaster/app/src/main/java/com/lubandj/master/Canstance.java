@@ -29,7 +29,8 @@ public class Canstance {
     public static final int HTTP_WORK_SHEET_DETAILS = 20002;//工单详情
     public static final int HTTP_WORK_SHEET_LIST = 20001;//工单列表
     public static final int HTTP_WORK_SHEET_LIST_CHANGE = 20003;//工单列表更新状态
-
+    public static final int HTTP_SIGN_EXCEPTION = 20004;//标记异常
+    public static final int HTTP_EXCEPTION_LIST = 80001;//异常列表
 //  sp constant
 
     public static final String KEY_SP_PHONE_NUM = "sp_phone_num";
