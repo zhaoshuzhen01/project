@@ -33,8 +33,9 @@ public class BaiduApi {
 
     /**
      * 导航
+     * @param address
      */
-    public void baiduNavigation(){
+    public void baiduNavigation(final String address){
         new ActionSheetDialog(context)
                 .builder()
                 .setCancelable(true)
@@ -44,7 +45,7 @@ public class BaiduApi {
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                openMap(false);
+                                openMap(false,address);
                             }
                         })
                 .addSheetItem("百度地图",
@@ -52,18 +53,18 @@ public class BaiduApi {
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                openMap(true);
+                                openMap(true,address);
                             }
                         }).show();
     }
-    private void openMap(boolean isBaiduMap) {
+    private void openMap(boolean isBaiduMap,String address) {
         if (!checkApkExist(context, isBaiduMap ? "com.baidu.BaiduMap" : "com.autonavi.minimap")) {
             ToastUtils.showShort(context,isBaiduMap ? "请安装百度地图" : "请安装高德地图");
             return;
         }
         Intent intent = null;
         try {
-            intent = isBaiduMap ? Intent.getIntent("intent://map/marker?location=40.047669,116.313082&title=我的位置&content =百度奎科大厦&src=yourCompanyName|yourAppName#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end") :
+            intent = isBaiduMap ? Intent.getIntent("intent://map/marker?location=40.047669,116.313082&title=我的位置&content =&src=yourCompanyName|yourAppName#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end") :
                     Intent.getIntent("androidamap://viewMap?sourceApplication=厦门通&poiname=百度奎科大厦&lat=40.047669&lon=116.313082&dev=0");
         } catch (URISyntaxException e) {
             e.printStackTrace();

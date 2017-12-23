@@ -117,33 +117,6 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                 dialog.dismiss();
                 Logger.e(s);
                 try {
-                    s = "{\n" +
-                            "    \"code\": 0,\n" +
-                            "    \"message\": \"成功\",\n" +
-                            "    \"info\": {\n" +
-                            "        \"id\": \"2\",\n" +
-                            "        \"ticketSn\": \"LB20171221\",\n" +
-                            "        \"beginTime\": \"2017-12-25 12:04:12\",\n" +
-                            "        \"endTime\": \"2017-12-25 12:47:32\",\n" +
-                            "        \"timeStr\": \"2017-12-25(周一) 12:04-12:47\",\n" +
-                            "        \"status\": \"待执行\",\n" +
-                            "        \"custName\": \"dennis\",\n" +
-                            "        \"custPhone\": \"18618495512\",\n" +
-                            "        \"remark\": \"你好n不好啊\",\n" +
-                            "        \"address\": \"北京炸酱面的地方\",\n" +
-                            "        \"orderTime\": \"2017-12-25 12:04-12:47\",\n" +
-                            "        \"serviceItem\": [\n" +
-                            "            {\n" +
-                            "                \"item\": \"暖气服务-暖气水管\",\n" +
-                            "                \"num\": \"1\"\n" +
-                            "            },\n" +
-                            "            {\n" +
-                            "                \"item\": \"暖气服务-暖气片\",\n" +
-                            "                \"num\": \"2\"\n" +
-                            "            }\n" +
-                            "        ]\n" +
-                            "    }\n" +
-                            "}";
                     WorkSheetDetailBean workSheetDetailBean = new Gson().fromJson(s, WorkSheetDetailBean.class);
                     if (workSheetDetailBean.getCode() == 0) {
                         refreshPage(workSheetDetailBean);
@@ -194,7 +167,10 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                         }).show();
                 break;
             case R.id.iv_address_icon:
-                BaiduApi.getBaiduApi(this).baiduNavigation();
+                String address = tvAddressDesc.getText().toString();
+                if(!TextUtils.isEmpty(address)){
+                    BaiduApi.getBaiduApi(this).baiduNavigation(address);
+                }
                 break;
             case R.id.tv_copy:
                 onClickCopy(tvWorkSheetNo.getText().toString());
@@ -274,19 +250,19 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         switch (status) {
             case Canstance.KEY_SHEET_STATUS_TO_PERFORM:
                 ivStateIcon.setImageResource(R.drawable.ic_details_to_perform);
-                tvStateDesc.setText(R.string.txt_sheet_state_to_perform);
+//                tvStateDesc.setText(R.string.txt_sheet_state_to_perform);
                 btnStartServer.setText(R.string.txt_work_sheet_details_on_road);
                 updateStatus = 2;
                 break;
             case Canstance.KEY_SHEET_STATUS_ON_ROAD:
                 ivStateIcon.setImageResource(R.drawable.ic_details_on_road);
-                tvStateDesc.setText(R.string.txt_sheet_state_on_road);
+//                tvStateDesc.setText(R.string.txt_sheet_state_on_road);
                 btnStartServer.setText(R.string.txt_work_sheet_details_start_service);
                 updateStatus = 3;
                 break;
             case Canstance.KEY_SHEET_STATUS_IN_SERVICE:
                 ivStateIcon.setImageResource(R.drawable.ic_details_in_service);
-                tvStateDesc.setText(R.string.txt_sheet_state_in_service);
+//                tvStateDesc.setText(R.string.txt_sheet_state_in_service);
                 btnStartServer.setText(R.string.txt_work_sheet_details_service_completed);
                 updateStatus = 4;
                 ivPhoneIcon.setEnabled(false);
@@ -294,7 +270,7 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                 break;
             case Canstance.KEY_SHEET_STATUS_COMPLETED:
                 ivStateIcon.setImageResource(R.drawable.ic_details_completed);
-                tvStateDesc.setText(R.string.txt_sheet_state_completed);
+//                tvStateDesc.setText(R.string.txt_sheet_state_completed);
                 ivPhoneIcon.setEnabled(false);
                 ivAddressIcon.setEnabled(false);
                 btnStartServer.setVisibility(View.GONE);
@@ -304,7 +280,7 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                 break;
             case Canstance.KEY_SHEET_STATUS_CANCELED:
                 ivStateIcon.setImageResource(R.drawable.ic_details_canceled);
-                tvStateDesc.setText(R.string.txt_sheet_state_canceled);
+//                tvStateDesc.setText(R.string.txt_sheet_state_canceled);
                 ivPhoneIcon.setEnabled(false);
                 ivAddressIcon.setEnabled(false);
                 llBtn.setVisibility(View.GONE);
@@ -322,6 +298,7 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                 break;
         }
 
+        tvStateDesc.setText(info.getStatusText());
         tvPhoneNum.setText(info.getCustPhone());
         tvAddressDesc.setText(info.getAddress());
         tvContactName.setText(info.getCustName());
@@ -332,6 +309,9 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         List<WorkSheetDetailBean.InfoBean.ServiceItemBean> serviceItem = info.getServiceItem();
         if (serviceItem == null || serviceItem.size() == 0) {
             return;
+        }
+        if(llDetailItems.getChildCount()>0){
+            llDetailItems.removeAllViews();
         }
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.topMargin = (int) getResources().getDimension(R.dimen.h_8dp);

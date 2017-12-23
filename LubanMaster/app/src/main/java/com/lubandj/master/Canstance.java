@@ -43,9 +43,9 @@ public class Canstance {
     public static final String UID = "UID";
 
 
-    public static final String KEY_SHEET_STATUS_TO_PERFORM = "待执行";
-    public static final String KEY_SHEET_STATUS_ON_ROAD = "正在上门";
-    public static final String KEY_SHEET_STATUS_IN_SERVICE = "服务中";
-    public static final String KEY_SHEET_STATUS_COMPLETED = "已完成";
-    public static final String KEY_SHEET_STATUS_CANCELED = "已取消";
+    public static final String KEY_SHEET_STATUS_TO_PERFORM = "1";
+    public static final String KEY_SHEET_STATUS_ON_ROAD = "2";
+    public static final String KEY_SHEET_STATUS_IN_SERVICE = "3";
+    public static final String KEY_SHEET_STATUS_COMPLETED = "4";
+    public static final String KEY_SHEET_STATUS_CANCELED = "5";
 }

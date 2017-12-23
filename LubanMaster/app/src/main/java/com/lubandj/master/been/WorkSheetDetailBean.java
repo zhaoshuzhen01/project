@@ -80,6 +80,7 @@ public class WorkSheetDetailBean {
         private String address;
         private String orderTime;
         private List<ServiceItemBean> serviceItem;
+        private String statusText;
 
         @Override
         public String toString() {
@@ -96,8 +97,18 @@ public class WorkSheetDetailBean {
                     ", address='" + address + '\'' +
                     ", orderTime='" + orderTime + '\'' +
                     ", serviceItem=" + serviceItem +
+                    ", statusText='" + statusText + '\'' +
                     '}';
         }
+
+        public String getStatusText() {
+            return statusText;
+        }
+
+        public void setStatusText(String statusText) {
+            this.statusText = statusText;
+        }
+
 
         public String getId() {
             return id;

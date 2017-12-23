@@ -13,9 +13,7 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
 import com.lubandj.master.baiduUtil.BaiduApi;
-import com.lubandj.master.been.TestBean;
 import com.lubandj.master.been.WorkListBeen;
-import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 
 import java.util.List;
 
@@ -101,7 +99,7 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
                 }
                 break;
             case R.id.daohangState:
-                BaiduApi.getBaiduApi(context).baiduNavigation();
+                BaiduApi.getBaiduApi(context).baiduNavigation("address");
                 break;
         }
     }
