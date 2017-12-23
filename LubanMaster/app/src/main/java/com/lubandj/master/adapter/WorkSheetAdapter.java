@@ -1,9 +1,6 @@
 package com.lubandj.master.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,17 +9,12 @@ import android.widget.TextView;
 
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
-import com.example.baselibrary.tools.ToastUtils;
-import com.example.baselibrary.widget.ActionSheetDialog;
-import com.example.baselibrary.widget.AlertDialog;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
 import com.lubandj.master.baiduUtil.BaiduApi;
 import com.lubandj.master.been.TestBean;
-import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -84,13 +76,13 @@ public class WorkSheetAdapter extends BaseQuickAdapter<TestBean, BaseViewHolder>
             case R.id.finishState:
                 switch (position){
                     case 0:
-                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_IN_SERVICE);
+                        DialogTagin.getDialogTagin(context).messageShow(Canstance.KEY_SHEET_STATUS_IN_SERVICE);
                         break;
                     case 1:
-                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_TO_PERFORM);
+                        DialogTagin.getDialogTagin(context).messageShow(Canstance.KEY_SHEET_STATUS_TO_PERFORM);
                         break;
                     default:
-                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_ON_ROAD);
+                        DialogTagin.getDialogTagin(context).messageShow(Canstance.KEY_SHEET_STATUS_ON_ROAD);
                         break;
                 }
                 break;

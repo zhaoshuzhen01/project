@@ -28,6 +28,7 @@ import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
 import com.lubandj.master.baiduUtil.BaiduApi;
 import com.lubandj.master.been.WorkSheetDetailBean;
+import com.lubandj.master.httpbean.BaseEntity;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.widget.WorkSheetDetailItem;
@@ -79,6 +80,8 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
     public static final String KEY_DETAILS_ID = "details_id";
     private int currentType;
     private String workSheetId;
+    private int updateStatus = 0;
+    private String status;
 
 
     @Override
@@ -113,6 +116,33 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                 dialog.dismiss();
                 Logger.e(s);
                 try {
+                    s = "{\n" +
+                            "    \"code\": 0,\n" +
+                            "    \"message\": \"成功\",\n" +
+                            "    \"info\": {\n" +
+                            "        \"id\": \"2\",\n" +
+                            "        \"ticketSn\": \"LB20171221\",\n" +
+                            "        \"beginTime\": \"2017-12-25 12:04:12\",\n" +
+                            "        \"endTime\": \"2017-12-25 12:47:32\",\n" +
+                            "        \"timeStr\": \"2017-12-25(周一) 12:04-12:47\",\n" +
+                            "        \"status\": \"待执行\",\n" +
+                            "        \"custName\": \"dennis\",\n" +
+                            "        \"custPhone\": \"18618495512\",\n" +
+                            "        \"remark\": \"你好n不好啊\",\n" +
+                            "        \"address\": \"北京炸酱面的地方\",\n" +
+                            "        \"orderTime\": \"2017-12-25 12:04-12:47\",\n" +
+                            "        \"serviceItem\": [\n" +
+                            "            {\n" +
+                            "                \"item\": \"暖气服务-暖气水管\",\n" +
+                            "                \"num\": \"1\"\n" +
+                            "            },\n" +
+                            "            {\n" +
+                            "                \"item\": \"暖气服务-暖气片\",\n" +
+                            "                \"num\": \"2\"\n" +
+                            "            }\n" +
+                            "        ]\n" +
+                            "    }\n" +
+                            "}";
                     WorkSheetDetailBean workSheetDetailBean = new Gson().fromJson(s, WorkSheetDetailBean.class);
                     if (workSheetDetailBean.getCode() == 0) {
                         refreshPage(workSheetDetailBean);
@@ -143,13 +173,13 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         switch (view.getId()) {
             case R.id.iv_phone_icon:
                 String s = tvPhoneNum.getText().toString();
-                if(TextUtils.isEmpty(s)){
+                if (TextUtils.isEmpty(s)) {
                     return;
                 }
                 new AlertDialog(this)
                         .builder()
                         .setTitle(getString(R.string.txt_calling))
-                        .setMsg(String.format(getString(R.string.txt_make_sure_phone),s))
+                        .setMsg(String.format(getString(R.string.txt_make_sure_phone), s))
                         .setPositiveButton(getString(R.string.txt_sure), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -169,10 +199,12 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                 onClickCopy(tvWorkSheetNo.getText().toString());
                 break;
             case R.id.btn_sign_exception:
-                startActivity(SignExceptionActivity.class, null);
+                Intent intent = new Intent(this, SignExceptionActivity.class);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID,workSheetId);
+                startActivity(intent);
                 break;
             case R.id.btn_start_server:
-                DialogTagin.getDialogTagin(this).messageShow(currentType).setDialogSure(this);
+                DialogTagin.getDialogTagin(this).messageShow(status).setDialogSure(this);
                 break;
         }
     }
@@ -181,11 +213,54 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_basetitle_ok:
-                toast(this, "客服");
+//                toast(this, "客服");
+                // REFACTOR: 2017/12/23 待重构 联系客服
                 break;
             default:
                 break;
         }
+    }
+
+
+    /**
+     * 更改订单状态
+     */
+    @Override
+    public void dialogCall() {
+        if (updateStatus == 0) {
+            return;
+        }
+        initProgressDialog(R.string.txt_loading).show();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", workSheetId);
+        jsonObject.addProperty("status", updateStatus);
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_UPDATE_STATUS, jsonObject, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                dialog.dismiss();
+                Logger.e(s);
+                try {
+                    BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
+                    if (baseEntity.getCode() == 0) {
+                        initData();
+                    }
+                    ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
+                } catch (Exception e) {
+                    Logger.e(e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                if (volleyError != null) {
+                    if (volleyError.networkResponse != null) {
+                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
+                        ToastUtils.showShort(WorkSheetDetailsActivity.this, format);
+                    }
+                }
+            }
+        });
     }
 
     private void refreshPage(WorkSheetDetailBean workSheetDetailBean) {
@@ -194,22 +269,25 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         }
         WorkSheetDetailBean.InfoBean info = workSheetDetailBean.getInfo();
 
-        String status = info.getStatus();
+        status = info.getStatus();
         switch (status) {
             case Canstance.KEY_SHEET_STATUS_TO_PERFORM:
                 ivStateIcon.setImageResource(R.drawable.ic_details_to_perform);
                 tvStateDesc.setText(R.string.txt_sheet_state_to_perform);
                 btnStartServer.setText(R.string.txt_work_sheet_details_on_road);
+                updateStatus = 2;
                 break;
             case Canstance.KEY_SHEET_STATUS_ON_ROAD:
                 ivStateIcon.setImageResource(R.drawable.ic_details_on_road);
                 tvStateDesc.setText(R.string.txt_sheet_state_on_road);
                 btnStartServer.setText(R.string.txt_work_sheet_details_start_service);
+                updateStatus = 3;
                 break;
             case Canstance.KEY_SHEET_STATUS_IN_SERVICE:
                 ivStateIcon.setImageResource(R.drawable.ic_details_in_service);
                 tvStateDesc.setText(R.string.txt_sheet_state_in_service);
                 btnStartServer.setText(R.string.txt_work_sheet_details_service_completed);
+                updateStatus = 4;
                 ivPhoneIcon.setEnabled(false);
                 ivAddressIcon.setEnabled(false);
                 break;
@@ -259,7 +337,7 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         for (int i = 0; i < serviceItem.size(); i++) {
             WorkSheetDetailBean.InfoBean.ServiceItemBean serviceItemBean = serviceItem.get(i);
             WorkSheetDetailItem workSheetDetailItem = new WorkSheetDetailItem(this);
-            workSheetDetailItem.initData(serviceItemBean.getItem(),serviceItemBean.getNum());
+            workSheetDetailItem.initData(serviceItemBean.getItem(), serviceItemBean.getNum());
             if (i != 0) {
                 workSheetDetailItem.setLayoutParams(layoutParams);
             }
@@ -277,12 +355,8 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
     public void onClickCopy(String selectedText) {
         ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         cm.setPrimaryClip(ClipData.newPlainText(null, selectedText));
-        toast(this, "复制成功");
+        ToastUtils.showShort(this, R.string.txt_copy_success);
     }
 
 
-    @Override
-    public void dialogCall() {
-        ToastUtils.showShort(this, "sdfdsf");
-    }
 }

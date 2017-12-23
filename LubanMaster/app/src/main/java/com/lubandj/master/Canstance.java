@@ -24,6 +24,9 @@ public class Canstance {
     public static final int HTTP_SAVEADDRESS = 10007;//保存住址
     public static final int HTTP_WORK_SHEET_DETAILS = 20002;//工单详情
     public static final int HTTP_WORK_SHEET_LIST = 20001;//工单列表
+    public static final int HTTP_WORK_SHEET_UPDATE_STATUS = 20003;//更新状态
+    public static final int HTTP_SIGN_EXCEPTION = 20004;//标记异常
+    public static final int HTTP_EXCEPTION_LIST = 80001;//异常列表
 
 
 //  sp constant
