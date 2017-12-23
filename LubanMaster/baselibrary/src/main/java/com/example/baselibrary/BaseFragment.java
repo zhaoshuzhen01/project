@@ -43,12 +43,15 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        lazyLoad();
     }
 
     protected abstract void initData();
 
 
     protected abstract void initView(View view);
+
+    protected abstract void lazyLoad();
 
 
     public abstract int getLayout();
