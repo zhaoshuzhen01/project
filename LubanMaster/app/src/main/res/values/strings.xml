@@ -50,6 +50,7 @@
     <string name="txt_copy_success">复制成功</string>
     <string name="txt_submit">提交中...</string>
     <string name="txt_exception_empty">异常原因不能为空哦！~</string>
+    <string name="txt_choose_exception">请选择异常原因哦！~</string>
     <string name="txt_submit_success">提交成功</string>
     <string name="txt_submit_success_service">已成功提交异常工单，请及时联系客服进行审核</string>
     <string name="txt_contact_service">联系客服</string>

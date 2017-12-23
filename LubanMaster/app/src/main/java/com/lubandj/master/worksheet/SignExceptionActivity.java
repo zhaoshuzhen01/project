@@ -46,7 +46,7 @@ public class SignExceptionActivity extends TitleBaseActivity implements RadioGro
     Button btnSubmit;
     private String mStrSeason = "";
     private int infoSize;
-    private int problemId;
+    private int problemId=0;
     private String workSheetId;
 
     @Override
@@ -138,6 +138,11 @@ public class SignExceptionActivity extends TitleBaseActivity implements RadioGro
 
     @OnClick(R.id.btn_submit)
     public void onViewClicked() {
+        if(problemId==0){
+            ToastUtils.showShort(this, R.string.txt_choose_exception);
+            return;
+        }
+
         if (problemId == infoSize && TextUtils.isEmpty(mStrSeason)) {
             ToastUtils.showShort(this, R.string.txt_exception_empty);
             return;
