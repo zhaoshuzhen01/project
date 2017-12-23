@@ -90,18 +90,19 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
             case R.id.finishState:
                 switch (Integer.parseInt(mdata.get(currentIndex).getStatus())) {
                     case 3:
-                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_IN_SERVICE + "").setDialogSure(this);
+                        DialogTagin.getDialogTagin(context).messageShow(Canstance.KEY_SHEET_STATUS_IN_SERVICE + "").setDialogSure(this);
                         break;
                     case 1:
-                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_TO_PERFORM + "").setDialogSure(this);
+                        DialogTagin.getDialogTagin(context).messageShow(Canstance.KEY_SHEET_STATUS_TO_PERFORM + "").setDialogSure(this);
                         break;
-                    default:
-                        DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_ON_ROAD + "").setDialogSure(this);
-                        break;
-                    case R.id.daohangState:
-                        BaiduApi.getBaiduApi(context).baiduNavigation();
+                    case 2:
+                        DialogTagin.getDialogTagin(context).messageShow(Canstance.KEY_SHEET_STATUS_ON_ROAD + "").setDialogSure(this);
                         break;
                 }
+                break;
+            case R.id.daohangState:
+                BaiduApi.getBaiduApi(context).baiduNavigation();
+                break;
         }
     }
     /**

@@ -29,7 +29,7 @@ private ClickCallBack clickCallBack;
     }
 
     public void getClickState(final int status, int id) {
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_LIST_CHANGE, new NetClickStateBeen(status, id), new Response.Listener<String>() {
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_UPDATE_STATUS, new NetClickStateBeen(status, id), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {

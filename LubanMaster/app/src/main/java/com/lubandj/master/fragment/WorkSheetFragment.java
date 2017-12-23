@@ -188,5 +188,8 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
            worklists.remove(currentIndex);
        }
         workSheetAdapter.notifyDataSetChanged();
+
+       if (worklists!=null&&worklists.size()==0)
+           backLayout.setVisibility(View.VISIBLE);
     }
 }
