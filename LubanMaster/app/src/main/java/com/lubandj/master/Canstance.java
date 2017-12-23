@@ -11,6 +11,10 @@ public class Canstance {
     public static final int TYPE_COMPLETED = 3;//完成
     public static final int TYPE_CANCELED = 4;//取消
 
+    public static final int TYPE_LIST_UNFINISH = 1;//工单列表未完成
+    public static final int TYPE_LIST_FINISH = 2;//工单列表已完成
+    public static final int TYPE_LIST_CANCELED = 3;//工单列表已取消
+
     public static final int TYPE_WORKCALENDAR = 5;//工作日历跳转
 
     public static final String VERSION = "v1.0";

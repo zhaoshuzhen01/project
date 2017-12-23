@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -12,11 +13,15 @@ import com.example.baselibrary.BaseRefreshFragment;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
+import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.WorkSheetAdapter;
 import com.lubandj.master.been.TestBean;
+import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.customview.BackLayout;
+import com.lubandj.master.fragment.model.IworkListView;
+import com.lubandj.master.utils.NetworkUtils;
 import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 
 import java.util.ArrayList;
@@ -29,16 +34,17 @@ import butterknife.InjectView;
  * Created by ${zhaoshuzhen} on 2017/9/5.
  */
 
-public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickAdapter.OnItemClickListener ,View.OnClickListener{
+public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickAdapter.OnItemClickListener ,View.OnClickListener,IworkListView {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.work_fragment_contaner)
     RelativeLayout workFragmentContaner;
     private WorkSheetAdapter workSheetAdapter;
-    private List<TestBean> testBeen = new ArrayList<>();
+    private List<WorkListBeen.InfoBean> worklists = new ArrayList<>();
     private boolean isVisible = false;
     private int index;// 0 未完成  1  已完成  2 已取消
     private BackLayout backLayout;
+    private SheetListPresenter sheetListPresenter ;
     public static WorkSheetFragment newInstance(int index) {
         WorkSheetFragment myFragment = new WorkSheetFragment();
         Bundle bundle = new Bundle();
@@ -60,38 +66,54 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6) view.findViewById(R.id.prpt);
         Bundle bundle = getArguments();
         index = bundle.getInt("index");
-        if (index != 0) {
+       /* if (index != 0) {
             backLayout.setVisibility(View.GONE);
             for (int i = 0; i < 20; i++) {
-                testBeen.add(new TestBean("", ""));
+                worklists.add(new WorkListBeen.InfoBean());
             }
-        }
-        workSheetAdapter = new WorkSheetAdapter(testBeen, getActivity(), index);
+        }*/
+        workSheetAdapter = new WorkSheetAdapter(worklists, getActivity(), index);
         workSheetAdapter.setOnItemClickListener(this);
         initRecyclerView(recyclerView, new LinearLayoutManager(view.getContext()), workSheetAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 20, 0));
+        sheetListPresenter = new SheetListPresenter(getActivity(),this);
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint()) {
-            isVisible = true;
-            lazyLoad();
-        } else {
-            isVisible = false;
-        }
+            if (getUserVisibleHint()) {
+                isVisible = true;
+                if (getActivity()!=null)
+                lazyLoad();
+            }else {
+                isVisible = false ;
+            }
     }
 
     protected void lazyLoad() {
         if (isVisible && isFirst) {
-            initData();
+            getWebDatas();
+        }
+    }
+
+    private void getWebDatas() {
+        if (NetworkUtils.isNetworkAvailable(getActivity())){
+           initData();
+        }else {
+            if (worklists!=null&&worklists.size()>0){
+                backLayout.setVisibility(View.GONE);
+            }else {
+                backLayout.setVisibility(View.VISIBLE);
+                ToastUtils.showShort(getActivity(),"网络异常");
+            }
         }
     }
 
     @Override
     protected void initData() {
         isFirst = false;
+        sheetListPresenter.getReflushData(index);
     }
 
 
@@ -104,12 +126,12 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void onRefresh() {
-        pullToRefreshAndPushToLoadView.finishRefreshing();
+        sheetListPresenter.getReflushData(index);
     }
 
     @Override
     public void onLoadMore() {
-        pullToRefreshAndPushToLoadView.finishLoading();
+        sheetListPresenter.getMoreData(index);
     }
 
     @Override
@@ -135,10 +157,16 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void onClick(View view) {
+        getWebDatas();
+    }
+
+    @Override
+    public void getWorkLists(List<WorkListBeen.InfoBean> datas) {
+        pullToRefreshAndPushToLoadView.finishRefreshing();
+        pullToRefreshAndPushToLoadView.finishLoading();
         backLayout.setVisibility(View.GONE);
-        for (int i = 0; i < 20; i++) {
-            testBeen.add(new TestBean("", ""));
-        }
+        worklists.clear();
+        worklists.addAll(datas);
         workSheetAdapter.notifyDataSetChanged();
     }
 }
