@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/lv_workcalendar_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#eeeeee"
+        android:dividerHeight="10dp"
+        android:paddingTop="10dp"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:id="@+id/ll_workcalendar_timeplan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <GridView
+            android:id="@+id/gv_workcalendar_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#cfcfcf"
+            android:cacheColorHint="#00000000"
+            android:horizontalSpacing="0.5dp"
+            android:listSelector="#00000000"
+            android:numColumns="4"
+            android:paddingBottom="0.5dp"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="0.5dp"
+            />
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:id="@+id/btn_workcalendar_detail"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_btn_send_code_bg"
+            android:text="查看详情"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+    </LinearLayout>
+</RelativeLayout>

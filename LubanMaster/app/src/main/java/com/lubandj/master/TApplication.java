@@ -90,9 +90,9 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
         PushManager.getInstance().bindAlias(context, clientID);
 
         //崩溃捕捉
-//        Thread.setDefaultUncaughtExceptionHandler(this);
+        Thread.setDefaultUncaughtExceptionHandler(this);
         //百度地图
-//        SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.initialize(getApplicationContext());
     }
 
     @Override
