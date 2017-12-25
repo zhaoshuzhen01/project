@@ -178,6 +178,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                             CommonUtils.setUid(response.info.uid);
                             CommonUtils.setToken(response.info.token);
                             TApplication.context.mUserInfo = response.info;
+                            TApplication.context.setGetuiTag(response.info.uid);
                             startActivity(WorkSheetListActivity.class, null);
                             finish();
                         }

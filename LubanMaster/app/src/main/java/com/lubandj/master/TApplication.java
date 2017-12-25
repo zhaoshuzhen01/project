@@ -28,7 +28,14 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
         // com.getui.demo.DemoIntentService 为第三方自定义的推送服务事件接收类
         PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), CusstomIntentService.class);
         String clientID = PushManager.getInstance().getClientid(getApplicationContext());
-        String[] tags = new String[]{"45"};
+        //崩溃捕捉
+//        Thread.setDefaultUncaughtExceptionHandler(this);
+        //百度地图
+//        SDKInitializer.initialize(getApplicationContext());
+    }
+
+    public void setGetuiTag(int uid){
+        String[] tags = new String[]{uid+""};
         Tag[] tagParam = new Tag[tags.length];
 
         for (int i = 0; i < tags.length; i++) {
@@ -86,13 +93,8 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
             default:
                 break;
         }
-        Log.e("deal", text + "");
-        PushManager.getInstance().bindAlias(context, clientID);
-
-        //崩溃捕捉
-//        Thread.setDefaultUncaughtExceptionHandler(this);
-        //百度地图
-//        SDKInitializer.initialize(getApplicationContext());
+        Log.e("deal", text + "    uid  = "+uid);
+        PushManager.getInstance().bindAlias(context, uid+"");
     }
 
     @Override
