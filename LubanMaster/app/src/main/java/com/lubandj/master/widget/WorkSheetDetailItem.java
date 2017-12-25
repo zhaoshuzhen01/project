@@ -4,9 +4,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lubandj.master.R;
@@ -17,11 +20,11 @@ import com.lubandj.master.R;
  * @Description: This is WorkSheetDetailItem
  */
 
-public class WorkSheetDetailItem extends FrameLayout {
+public class WorkSheetDetailItem extends LinearLayout {
 
 
     private TextView tvSheetItem;
-    private TextView tvSheetItemCount;
+    private ImageView ivStatus;
 
     public WorkSheetDetailItem(@NonNull Context context) {
         this(context, null);
@@ -37,6 +40,8 @@ public class WorkSheetDetailItem extends FrameLayout {
     }
 
     private void initView(Context context) {
+        setOrientation(HORIZONTAL);
+        setGravity(Gravity.CENTER_VERTICAL);
         int txtColor = ContextCompat.getColor(context, R.color.color_666666);
 
         tvSheetItem = new TextView(context);
@@ -44,17 +49,22 @@ public class WorkSheetDetailItem extends FrameLayout {
         tvSheetItem.setTextSize(13);
         addView(tvSheetItem);
 
-        tvSheetItemCount = new TextView(context);
-        tvSheetItemCount.setTextColor(txtColor);
-        tvSheetItemCount.setTextSize(13);
-        tvSheetItemCount.setGravity(Gravity.RIGHT);
-        addView(tvSheetItemCount);
+        ivStatus = new ImageView(context);
+        ivStatus.setImageResource(R.drawable.selector_item_status);
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.leftMargin= (int) context.getResources().getDimension(R.dimen.h_10dp);
+        addView(ivStatus,layoutParams);
 
     }
 
 
     public void initData(String item, String count) {
+        // REFACTOR: 2017/12/25 待重构 服务条目的状态
         tvSheetItem.setText(item);
-        tvSheetItemCount.setText("×" + count);
+        if(TextUtils.equals(count,"1")){
+            ivStatus.setSelected(false);
+        }else{
+            ivStatus.setSelected(true);
+        }
     }
 }
