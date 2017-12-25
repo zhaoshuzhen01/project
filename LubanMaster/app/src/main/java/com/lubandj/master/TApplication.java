@@ -1,10 +1,8 @@
 package com.lubandj.master;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.igexin.sdk.PushConsts;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.Tag;

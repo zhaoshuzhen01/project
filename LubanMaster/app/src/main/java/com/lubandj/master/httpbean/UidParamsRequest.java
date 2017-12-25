@@ -7,10 +7,10 @@ package com.lubandj.master.httpbean;
  * company:九州宏图
  */
 
-public class GetAddressRequest {
+public class UidParamsRequest {
     public int uid;
 
-    public GetAddressRequest(int uid) {
+    public UidParamsRequest(int uid) {
         this.uid = uid;
     }
 }

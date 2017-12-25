@@ -140,7 +140,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         imageLoader = new ImageLoader(TaskEngine.getInstance().getQueue(), new BitmapCache());
         UserInfo info = TApplication.context.mUserInfo;
         setPhone(info.mobile);
-        mTvName.setText(info.nickname + "");
+        mTvName.setText(info.nickname+"");
         if (!TextUtils.isEmpty(info.face_url)) {
             loadFace();
         }

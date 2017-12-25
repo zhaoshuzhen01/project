@@ -11,5 +11,4 @@ import com.lubandj.master.been.AddressBean;
 
 public class GetAddressReponse extends BaseResponseBean{
     public AddressBean info;
-
 }

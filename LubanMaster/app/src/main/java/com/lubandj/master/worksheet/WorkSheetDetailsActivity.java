@@ -1,11 +1,9 @@
 package com.lubandj.master.worksheet;
 
-import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -18,7 +16,6 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.widget.AlertDialog;
 import com.google.gson.Gson;
@@ -39,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class WorkSheetDetailsActivity extends TitleBaseActivity implements DialogTagin.DialogSure {
+public class WorkSheetDetailsActivity extends PermissionActivity implements DialogTagin.DialogSure {
 
 
     @InjectView(R.id.iv_state_icon)
@@ -78,8 +75,6 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
     LinearLayout llState;
 
     public static final String KEY_DETAILS_ID = "details_id";
-
-    private int currentType;
     private String workSheetId;
     private int updateStatus = 0;
     private String status;
@@ -150,34 +145,20 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                 if (TextUtils.isEmpty(s)) {
                     return;
                 }
-                new AlertDialog(this)
-                        .builder()
-                        .setTitle(getString(R.string.txt_calling))
-                        .setMsg(String.format(getString(R.string.txt_make_sure_phone), s))
-                        .setPositiveButton(getString(R.string.txt_sure), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                callPhone(tvPhoneNum.getText().toString());
-                            }
-                        })
-                        .setNegativeButton(getString(R.string.txt_cancel), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        }).show();
+                callToClient(s);
                 break;
             case R.id.iv_address_icon:
                 String address = tvAddressDesc.getText().toString();
-                if(!TextUtils.isEmpty(address)){
+                if (!TextUtils.isEmpty(address)) {
                     BaiduApi.getBaiduApi(this).baiduNavigation(address);
                 }
                 break;
             case R.id.tv_copy:
-                onClickCopy(tvWorkSheetNo.getText().toString());
+                copy(tvWorkSheetNo.getText().toString());
                 break;
             case R.id.btn_sign_exception:
                 Intent intent = new Intent(this, SignExceptionActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID,workSheetId);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, workSheetId);
                 startActivity(intent);
                 break;
             case R.id.btn_start_server:
@@ -186,11 +167,29 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         }
     }
 
+    public void callToClient(final String s) {
+        new AlertDialog(this)
+                .builder()
+                .setTitle(getString(R.string.txt_calling))
+                .setMsg(String.format(getString(R.string.txt_make_sure_phone), s))
+                .setPositiveButton(getString(R.string.txt_sure), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        call(s);
+                    }
+                })
+                .setNegativeButton(getString(R.string.txt_cancel), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                }).show();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_basetitle_ok:
-//                toast(this, "客服");
+                call("10086");
                 // REFACTOR: 2017/12/23 待重构 联系客服
                 break;
             default:
@@ -240,6 +239,9 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         });
     }
 
+
+
+
     private void refreshPage(WorkSheetDetailBean workSheetDetailBean) {
         if (workSheetDetailBean == null && workSheetDetailBean.getInfo() == null) {
             return;
@@ -250,19 +252,16 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         switch (status) {
             case Canstance.KEY_SHEET_STATUS_TO_PERFORM:
                 ivStateIcon.setImageResource(R.drawable.ic_details_to_perform);
-//                tvStateDesc.setText(R.string.txt_sheet_state_to_perform);
                 btnStartServer.setText(R.string.txt_work_sheet_details_on_road);
                 updateStatus = 2;
                 break;
             case Canstance.KEY_SHEET_STATUS_ON_ROAD:
                 ivStateIcon.setImageResource(R.drawable.ic_details_on_road);
-//                tvStateDesc.setText(R.string.txt_sheet_state_on_road);
                 btnStartServer.setText(R.string.txt_work_sheet_details_start_service);
                 updateStatus = 3;
                 break;
             case Canstance.KEY_SHEET_STATUS_IN_SERVICE:
                 ivStateIcon.setImageResource(R.drawable.ic_details_in_service);
-//                tvStateDesc.setText(R.string.txt_sheet_state_in_service);
                 btnStartServer.setText(R.string.txt_work_sheet_details_service_completed);
                 updateStatus = 4;
                 ivPhoneIcon.setEnabled(false);
@@ -270,7 +269,6 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                 break;
             case Canstance.KEY_SHEET_STATUS_COMPLETED:
                 ivStateIcon.setImageResource(R.drawable.ic_details_completed);
-//                tvStateDesc.setText(R.string.txt_sheet_state_completed);
                 ivPhoneIcon.setEnabled(false);
                 ivAddressIcon.setEnabled(false);
                 btnStartServer.setVisibility(View.GONE);
@@ -280,7 +278,6 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
                 break;
             case Canstance.KEY_SHEET_STATUS_CANCELED:
                 ivStateIcon.setImageResource(R.drawable.ic_details_canceled);
-//                tvStateDesc.setText(R.string.txt_sheet_state_canceled);
                 ivPhoneIcon.setEnabled(false);
                 ivAddressIcon.setEnabled(false);
                 llBtn.setVisibility(View.GONE);
@@ -310,7 +307,7 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
         if (serviceItem == null || serviceItem.size() == 0) {
             return;
         }
-        if(llDetailItems.getChildCount()>0){
+        if (llDetailItems.getChildCount() > 0) {
             llDetailItems.removeAllViews();
         }
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -327,13 +324,9 @@ public class WorkSheetDetailsActivity extends TitleBaseActivity implements Dialo
     }
 
 
-    @SuppressLint("MissingPermission")
-    private void callPhone(String num) {
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + num));
-        startActivity(intent);
-    }
 
-    public void onClickCopy(String selectedText) {
+
+    public void copy(String selectedText) {
         ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         cm.setPrimaryClip(ClipData.newPlainText(null, selectedText));
         ToastUtils.showShort(this, R.string.txt_copy_success);
