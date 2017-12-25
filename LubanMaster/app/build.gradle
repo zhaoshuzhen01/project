@@ -136,6 +136,8 @@ dependencies {
     compile files('libs/multi-part-for-volley-1.0.1.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile 'com.android.support:design:26.1.0'
+    compile 'com.github.hotchemi:permissionsdispatcher:3.1.0'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
 }
 
 def releaseTime() {

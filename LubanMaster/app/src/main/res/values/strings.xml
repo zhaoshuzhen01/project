@@ -55,4 +55,9 @@
     <string name="txt_submit_success_service">已成功提交异常工单，请及时联系客服进行审核</string>
     <string name="txt_contact_service">联系客服</string>
     <string name="txt_later_call">稍后拨打</string>
+    <string name="txt_is_open_permission">是否打开权限</string>
+    <string name="txt_allow">允许</string>
+    <string name="txt_reject">拒绝</string>
+    <string name="txt_permission_fail">获取权限失败</string>
+    <string name="txt_go_setting">请到设置页面打开权限</string>
 </resources>
