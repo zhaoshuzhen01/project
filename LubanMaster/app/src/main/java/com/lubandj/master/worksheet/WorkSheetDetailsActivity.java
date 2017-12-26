@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.baselibrary.tools.ToastUtils;
-import com.example.baselibrary.widget.AlertDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.lubandj.master.Canstance;
@@ -145,9 +143,10 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 if (TextUtils.isEmpty(s)) {
                     return;
                 }
-                callToClient(s);
+                callToClient(s, getString(R.string.txt_calling), String.format(getString(R.string.txt_make_sure_phone), s));
                 break;
             case R.id.iv_address_icon:
+                // REFACTOR: 2017/12/26 待重构 定位
                 String address = tvAddressDesc.getText().toString();
                 if (!TextUtils.isEmpty(address)) {
                     BaiduApi.getBaiduApi(this).baiduNavigation(address);
@@ -167,30 +166,13 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         }
     }
 
-    public void callToClient(final String s) {
-        new AlertDialog(this)
-                .builder()
-                .setTitle(getString(R.string.txt_calling))
-                .setMsg(String.format(getString(R.string.txt_make_sure_phone), s))
-                .setPositiveButton(getString(R.string.txt_sure), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        call(s);
-                    }
-                })
-                .setNegativeButton(getString(R.string.txt_cancel), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    }
-                }).show();
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_basetitle_ok:
-                call("10086");
-                // REFACTOR: 2017/12/23 待重构 联系客服
+                String serviceNum = "10086";
+                callToClient(serviceNum, getString(R.string.txt_confirm_remind), String.format(getString(R.string.txt_confirm_call_service), serviceNum));
                 break;
             default:
                 break;
@@ -240,8 +222,6 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
     }
 
 
-
-
     private void refreshPage(WorkSheetDetailBean workSheetDetailBean) {
         if (workSheetDetailBean == null && workSheetDetailBean.getInfo() == null) {
             return;
@@ -272,9 +252,9 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 ivPhoneIcon.setEnabled(false);
                 ivAddressIcon.setEnabled(false);
                 btnStartServer.setVisibility(View.GONE);
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) btnSignException.getLayoutParams();
-                layoutParams.gravity = Gravity.CENTER;
-                btnSignException.setLayoutParams(layoutParams);
+//                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) btnSignException.getLayoutParams();
+//                layoutParams.gravity = Gravity.CENTER;
+//                btnSignException.setLayoutParams(layoutParams);
                 break;
             case Canstance.KEY_SHEET_STATUS_CANCELED:
                 ivStateIcon.setImageResource(R.drawable.ic_details_canceled);
@@ -322,8 +302,6 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
             llDetailItems.addView(workSheetDetailItem);
         }
     }
-
-
 
 
     public void copy(String selectedText) {

@@ -13,7 +13,6 @@ import android.widget.RadioGroup;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.widget.AlertDialog;
 import com.google.gson.Gson;
@@ -33,7 +32,7 @@ import butterknife.OnClick;
 
 import static com.lubandj.master.worksheet.WorkSheetDetailsActivity.KEY_DETAILS_ID;
 
-public class SignExceptionActivity extends TitleBaseActivity implements RadioGroup.OnCheckedChangeListener, TextWatcher {
+public class SignExceptionActivity extends PermissionActivity implements RadioGroup.OnCheckedChangeListener, TextWatcher {
 
 
     @InjectView(R.id.radio_group)
@@ -170,7 +169,7 @@ public class SignExceptionActivity extends TitleBaseActivity implements RadioGro
                                 .setPositiveButton(getString(R.string.txt_contact_service), new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        // REFACTOR: 2017/12/23 待重构 联系客服
+                                        call("10086");
                                     }
                                 })
                                 .setNegativeButton(getString(R.string.txt_later_call), new View.OnClickListener() {
@@ -228,8 +227,8 @@ public class SignExceptionActivity extends TitleBaseActivity implements RadioGro
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_basetitle_ok:
-//                toast(this, "客服");
-                // REFACTOR: 2017/12/23 待重构 联系客服
+                String serviceNum = "10086";
+                callToClient(serviceNum, getString(R.string.txt_confirm_remind), String.format(getString(R.string.txt_confirm_call_service), serviceNum));
                 break;
             default:
                 break;

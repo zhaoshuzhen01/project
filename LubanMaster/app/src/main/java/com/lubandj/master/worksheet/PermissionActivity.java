@@ -1,7 +1,6 @@
 package com.lubandj.master.worksheet;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
@@ -26,14 +25,34 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public abstract class PermissionActivity extends TitleBaseActivity {
 
+
+
+    public void callToClient(final String phoneNum,String title,String msg) {
+        new AlertDialog(this)
+                .builder()
+                .setTitle(title)
+                .setMsg(msg)
+                .setPositiveButton(getString(R.string.txt_sure), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        call(phoneNum);
+                    }
+                })
+                .setNegativeButton(getString(R.string.txt_cancel), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                }).show();
+    }
+
+
     public void call(String num){
         PermissionActivityPermissionsDispatcher.callPhoneWithPermissionCheck(this,num);
     }
 
     @NeedsPermission(Manifest.permission.CALL_PHONE)
-    @SuppressLint("MissingPermission")
     void callPhone(String num) {
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + num));
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + num));
         startActivity(intent);
     }
 
