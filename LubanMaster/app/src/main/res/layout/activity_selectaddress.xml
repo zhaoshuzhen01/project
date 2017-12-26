@@ -18,7 +18,8 @@
             android:background="@color/white">
 
             <ImageView
-                style="@style/my_title_back"/>
+                style="@style/my_title_back"
+                android:onClick="onBack"/>
 
             <TextView
                 style="@style/my_title_text"
@@ -33,6 +34,7 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -97,16 +99,6 @@
                     android:textSize="14sp"/>
 
             </LinearLayout>
-
-            <Button
-                android:layout_width="60dp"
-                android:layout_height="35dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/selector_btn_search_bg"
-                android:onClick="onSearch"
-                android:text="搜索"
-                android:textColor="@color/white"
-                android:textSize="14sp"/>
         </LinearLayout>
 
         <RelativeLayout
@@ -115,20 +107,50 @@
             android:layout_weight="1"
             android:background="@color/white">
 
-            <com.baidu.mapapi.map.TextureMapView
-                android:id="@+id/mbaiduMap"
+            <LinearLayout
+                android:id="@+id/ll_viewmap"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </com.baidu.mapapi.map.TextureMapView>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <com.baidu.mapapi.map.TextureMapView
+                        android:id="@+id/mbaiduMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </com.baidu.mapapi.map.TextureMapView>
+
+                    <ImageButton
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="85dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/white"
+                        android:onClick="onGps"
+                        android:src="@drawable/gps"/>
+                </RelativeLayout>
+
+                <ListView
+                    android:id="@+id/lv_autoaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:divider="#eeeeee"
+                    android:dividerHeight="0.5dp"/>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_searaddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#999999"
+                android:dividerHeight="0.5dp"></ListView>
         </RelativeLayout>
-
-
-        <ListView
-            android:id="@+id/lv_address"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:divider="#eeeeee"
-            android:dividerHeight="0.5dp"/>
     </LinearLayout>
 
 </layout>

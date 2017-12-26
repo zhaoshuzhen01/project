@@ -3,6 +3,7 @@ package com.lubandj.master;
 import android.app.Application;
 import android.util.Log;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.igexin.sdk.PushConsts;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.Tag;
@@ -27,13 +28,13 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
         PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), CusstomIntentService.class);
         String clientID = PushManager.getInstance().getClientid(getApplicationContext());
         //崩溃捕捉
-//        Thread.setDefaultUncaughtExceptionHandler(this);
+        Thread.setDefaultUncaughtExceptionHandler(this);
         //百度地图
 //        SDKInitializer.initialize(getApplicationContext());
     }
 
-    public void setGetuiTag(int uid){
-        String[] tags = new String[]{uid+""};
+    public void setGetuiTag(int uid) {
+        String[] tags = new String[]{uid + ""};
         Tag[] tagParam = new Tag[tags.length];
 
         for (int i = 0; i < tags.length; i++) {
@@ -91,8 +92,8 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
             default:
                 break;
         }
-        Log.e("deal", text + "    uid  = "+uid);
-        PushManager.getInstance().bindAlias(context, uid+"");
+        Log.e("deal", text + "    uid  = " + uid);
+        PushManager.getInstance().bindAlias(context, uid + "");
     }
 
     @Override

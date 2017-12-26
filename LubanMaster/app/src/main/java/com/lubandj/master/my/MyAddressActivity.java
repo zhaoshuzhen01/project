@@ -142,9 +142,9 @@ public class MyAddressActivity extends BaseActivity {
         if (mBean.address != null) {
             sb.append(mBean.address);
         }
-        if (mBean.housing_estate != null) {
-            sb.append(mBean.housing_estate);
-        }
+//        if (mBean.housing_estate != null) {
+//            sb.append(mBean.housing_estate);
+//        }
         binding.tvAddressArea.setText(sb.toString());
         if (mBean.house_number != null)
             binding.tvAddressHousenum.setText(mBean.house_number);
