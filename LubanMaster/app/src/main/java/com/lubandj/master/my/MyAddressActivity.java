@@ -29,7 +29,7 @@ import com.lubandj.master.utils.TaskEngine;
  * date: 2017-11-30
  * company:九州宏图
  */
-public class MyAddressActivity extends BaseActivity {
+public class MyAddressActivity extends PermissionActivity {
     private ActivityMyaddressBinding binding;
     private AddressBean mBean;
 
@@ -67,24 +67,14 @@ public class MyAddressActivity extends BaseActivity {
      */
     public void onSelectAddress(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            permissionRequests(Manifest.permission.CAMERA, new OnBooleanListener() {
-                @Override
-                public void onClick(boolean bln) {
-                    if (bln) {
-//                    ToastUtils.showShort(MyAddressActivity.this, "权限通过");
-                        Intent intent = new Intent(MyAddressActivity.this, SelectAddressActivity.class);
-                        startActivityForResult(intent, 1010);
-                    } else {
-//                        ToastUtils.showShort(MyAddressActivity.this, "权限拒绝");
-                        Intent intent = new Intent(MyAddressActivity.this, SelectAddressActivity.class);
-                        startActivityForResult(intent, 1010);
-                    }
-                }
-            });
-        } else {
-            Intent intent = new Intent(MyAddressActivity.this, SelectAddressActivity.class);
-            startActivityForResult(intent, 1010);
+            if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, "location")) {
+                setDialogTipUserGoToAppSettting("权限提醒", "应用需要定位权限，请到应用设置中打开");
+                startRequestPermission();
+                return;
+            }
         }
+        Intent intent = new Intent(MyAddressActivity.this, SelectAddressActivity.class);
+        startActivityForResult(intent, 1010);
     }
 
     /**
@@ -199,5 +189,15 @@ public class MyAddressActivity extends BaseActivity {
             mBean = (AddressBean) data.getSerializableExtra("address");
             setAddress();
         }
+    }
+
+    @Override
+    public void onPermissionGranted(String operation) {
+        onSelectAddress(null);
+    }
+
+    @Override
+    public void onPermissionRefuse(String operation) {
+        ToastUtils.showShort(MyAddressActivity.this, "权限未授予，无法进入地址设置界面");
     }
 }

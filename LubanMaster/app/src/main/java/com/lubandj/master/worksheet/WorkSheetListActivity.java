@@ -140,11 +140,11 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         imageLoader = new ImageLoader(TaskEngine.getInstance().getQueue(), new BitmapCache());
         UserInfo info = TApplication.context.mUserInfo;
         setPhone(info.mobile);
-        mTvName.setText(info.nickname+"");
+        mTvName.setText(info.nickname + "");
         if (!TextUtils.isEmpty(info.face_url)) {
             loadFace();
         }
-        serviceNumber = "4008-123-517";
+        serviceNumber = "4006-388-818";
     }
 
     public void setPhone(String phone) {
@@ -171,31 +171,31 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 break;
             case R.id.ll_menu_service:
                 TipDialog dialog = new TipDialog(WorkSheetListActivity.this);
-                dialog.setPromptTitle("确认提醒");
-                dialog.setTextDes("确定拨打客服热线：" + serviceNumber + "吗?");
+                dialog.setNoPomptTitle();
+                dialog.setTextDes("将拨打" + serviceNumber);
                 dialog.setButton1("确定", new TipDialog.DialogButtonOnClickListener() {
                     @Override
                     public void onClick(View button, TipDialog dialog) {
-//                        Intent callingIntent = new Intent(Intent.ACTION_CALL,
-//                                Uri.parse("tel:" + serviceNumber));
-//                        int hasWriteContactsPermission = ActivityCompat.checkSelfPermission(WorkSheetListActivity.this, Manifest.permission.CALL_PHONE);
-//                        //权限是否允许
-//                        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
-//                            //是否弹出提醒窗
-//                            try {
-//                                ActivityCompat.requestPermissions(WorkSheetListActivity.this, new String[]{Manifest.permission.CALL_PHONE},
-//                                        REQUEST_PERMISSION_CAMERA_CODE);
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                                if (!ActivityCompat.shouldShowRequestPermissionRationale(WorkSheetListActivity.this, Manifest.permission.CALL_PHONE)) {
-//                                    ToastUtils.showShort(WorkSheetListActivity.this, "打电话权限被禁止");
-//                                    return;
-//                                }
-//                            }
-//                            return;
-//                        } else {
-//                            startActivity(callingIntent);
-//                        }
+                        Intent callingIntent = new Intent(Intent.ACTION_CALL,
+                                Uri.parse("tel:" + serviceNumber));
+                        int hasWriteContactsPermission = ActivityCompat.checkSelfPermission(WorkSheetListActivity.this, Manifest.permission.CALL_PHONE);
+                        //权限是否允许
+                        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+                            //是否弹出提醒窗
+                            try {
+                                ActivityCompat.requestPermissions(WorkSheetListActivity.this, new String[]{Manifest.permission.CALL_PHONE},
+                                        REQUEST_PERMISSION_CAMERA_CODE);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                if (!ActivityCompat.shouldShowRequestPermissionRationale(WorkSheetListActivity.this, Manifest.permission.CALL_PHONE)) {
+                                    ToastUtils.showShort(WorkSheetListActivity.this, "打电话权限被禁止");
+                                    return;
+                                }
+                            }
+                            return;
+                        } else {
+                            startActivity(callingIntent);
+                        }
                         ToastUtils.showShort(WorkSheetListActivity.this, "拨打电话");
                         dialog.dismiss();
                     }
@@ -223,10 +223,28 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 startActivity(AboutLuBanActivity.class, null);
                 break;
             case R.id.btn_menu_logout:
-                CommonUtils.setToken("");
-                CommonUtils.setUid(-1);
-                startActivity(LoginActivity.class, null);
-                finish();
+                TipDialog outDialog = new TipDialog(WorkSheetListActivity.this);
+                outDialog.setNoPomptTitle();
+                outDialog.setTextDes("退出登录");
+                outDialog.setButton1("确定", new TipDialog.DialogButtonOnClickListener() {
+                    @Override
+                    public void onClick(View button, TipDialog dialog) {
+                        CommonUtils.setToken("");
+                        CommonUtils.setUid(-1);
+                        startActivity(LoginActivity.class, null);
+                        finish();
+                        dialog.dismiss();
+                    }
+                });
+                outDialog.setButton2("取消", new TipDialog.DialogButtonOnClickListener() {
+                    @Override
+                    public void onClick(View button, TipDialog dialog) {
+                        dialog.dismiss();
+                    }
+                });
+                outDialog.setCancelable(false);
+                outDialog.setCanceledOnTouchOutside(false);
+                outDialog.show();
                 break;
             case com.example.baselibrary.R.id.ll_basetitle_back1:
                 Intent intent = new Intent(this, MsgCenterActivity.class);
