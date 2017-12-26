@@ -207,20 +207,36 @@ public class WorkSheetDetailBean {
         }
 
         public static class ServiceItemBean {
-            /**
-             * item : 暖气服务-暖气水管
-             * num : 1
-             */
 
             private String item;
             private String num;
+            private String status;
+            private String statusText;
 
             @Override
             public String toString() {
                 return "ServiceItemBean{" +
                         "item='" + item + '\'' +
                         ", num='" + num + '\'' +
+                        ", status='" + status + '\'' +
+                        ", statusText='" + statusText + '\'' +
                         '}';
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getStatusText() {
+                return statusText;
+            }
+
+            public void setStatusText(String statusText) {
+                this.statusText = statusText;
             }
 
             public String getItem() {
