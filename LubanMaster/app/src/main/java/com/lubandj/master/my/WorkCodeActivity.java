@@ -89,7 +89,7 @@ public class WorkCodeActivity extends BaseActivity {
                 reponse = (GetQrcodeReponse) CommonUtils.generateEntityByGson(WorkCodeActivity.this, s, reponse);
                 if (reponse != null) {
                     ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(binding.ivQrcode, 0, 0);
-                    imageLoader.get(reponse.info.link, imageListener);
+                    imageLoader.get(reponse.info.qrcode, imageListener);
                 }
             }
         }, new Response.ErrorListener() {
