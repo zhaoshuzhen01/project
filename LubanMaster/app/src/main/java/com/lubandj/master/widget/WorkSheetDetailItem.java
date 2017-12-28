@@ -52,18 +52,17 @@ public class WorkSheetDetailItem extends LinearLayout {
         ivStatus = new ImageView(context);
         ivStatus.setImageResource(R.drawable.selector_item_status);
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin= (int) context.getResources().getDimension(R.dimen.h_10dp);
-        addView(ivStatus,layoutParams);
+        layoutParams.leftMargin = (int) context.getResources().getDimension(R.dimen.h_10dp);
+        addView(ivStatus, layoutParams);
 
     }
 
 
     public void initData(String item, String count) {
-        // REFACTOR: 2017/12/25 待重构 服务条目的状态
         tvSheetItem.setText(item);
-        if(TextUtils.equals(count,"1")){
+        if (TextUtils.equals(count, "1")) {
             ivStatus.setSelected(false);
-        }else{
+        } else {
             ivStatus.setSelected(true);
         }
     }
