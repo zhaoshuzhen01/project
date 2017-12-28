@@ -44,7 +44,7 @@
     <string name="txt_net_connect_error">网络连接错误(%d)</string>
     <string name="txt_loading">加载中...</string>
     <string name="txt_calling">即将拨打电话</string>
-    <string name="txt_make_sure_phone">确定拨打电话:%s吗？</string>
+    <string name="txt_make_sure_phone">将拨打%s</string>
     <string name="txt_sure">确认</string>
     <string name="txt_cancel">取消</string>
     <string name="txt_copy_success">复制成功</string>
@@ -61,5 +61,5 @@
     <string name="txt_permission_fail">获取权限失败</string>
     <string name="txt_go_setting">请到设置页面打开权限</string>
     <string name="txt_confirm_remind">确认提醒</string>
-    <string name="txt_confirm_call_service">确定拨打客服热线:%s吗?</string>
+    <string name="txt_confirm_call_service">将拨打%s</string>
 </resources>

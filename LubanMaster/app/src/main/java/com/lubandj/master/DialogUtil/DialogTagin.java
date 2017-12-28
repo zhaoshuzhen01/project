@@ -58,13 +58,13 @@ public class DialogTagin {
         String content="";
         switch (currentType) {
             case Canstance.KEY_SHEET_STATUS_TO_PERFORM:
-                content="请确认将开始前往服务地点";
+                content="开始前往服务地点";
                 break;
             case Canstance.KEY_SHEET_STATUS_ON_ROAD:
-                content="请确认开始服务";
+                content="开始服务";
                 break;
             case Canstance.KEY_SHEET_STATUS_IN_SERVICE:
-                content="请确认服务已完成";
+                content="已完成服务";
                 break;
         }
         return content;
