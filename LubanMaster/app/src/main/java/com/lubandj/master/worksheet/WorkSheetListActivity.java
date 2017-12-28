@@ -87,6 +87,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     @Override
     public void initView() {
         setTitleText("工单列表");
+        msgCount.setVisibility(View.GONE);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         idTablayout = (CustomTabLayout) findViewById(R.id.id_tablayout);
         view = mNavigationView.inflateHeaderView(R.layout.activity_leftmenu);
@@ -246,6 +247,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 outDialog.setCanceledOnTouchOutside(false);
                 outDialog.show();
                 break;
+            case com.example.baselibrary.R.id.tv_basetitle_ok:
             case com.example.baselibrary.R.id.ll_basetitle_back1:
                 Intent intent = new Intent(this, MsgCenterActivity.class);
                 startActivity(intent);

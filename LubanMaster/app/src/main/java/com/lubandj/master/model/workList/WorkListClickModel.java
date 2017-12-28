@@ -1,4 +1,4 @@
-package com.lubandj.master.fragment.model;
+package com.lubandj.master.model.workList;
 
 import android.content.Context;
 
@@ -22,8 +22,9 @@ import java.util.List;
 
 public class WorkListClickModel {
     private Context context;
-private ClickCallBack clickCallBack;
-    public WorkListClickModel(Context context,ClickCallBack clickCallBack) {
+    private ClickCallBack clickCallBack;
+
+    public WorkListClickModel(Context context, ClickCallBack clickCallBack) {
         this.context = context;
         this.clickCallBack = clickCallBack;
     }
@@ -37,7 +38,7 @@ private ClickCallBack clickCallBack;
                 BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
                 if (baseEntity != null) {
                     if (baseEntity.getCode() == 0) {
-                      clickCallBack.clickCallback(status);
+                        clickCallBack.clickCallback(status);
                     }
                 }
 
@@ -55,7 +56,7 @@ private ClickCallBack clickCallBack;
         });
     }
 
-    public interface ClickCallBack{
+    public interface ClickCallBack {
         void clickCallback(int status);
     }
 }

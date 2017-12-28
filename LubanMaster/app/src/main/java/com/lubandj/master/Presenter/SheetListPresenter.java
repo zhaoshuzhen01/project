@@ -1,13 +1,12 @@
-package com.lubandj.master.fragment;
+package com.lubandj.master.Presenter;
 
 import android.content.Context;
 
 import com.lubandj.master.Canstance;
 import com.lubandj.master.been.WorkListBeen;
-import com.lubandj.master.fragment.model.BaseModel;
-import com.lubandj.master.fragment.model.IWorkModel;
-import com.lubandj.master.fragment.model.IworkListView;
-import com.lubandj.master.fragment.model.UnFinishModel;
+import com.lubandj.master.model.workList.IWorkModel;
+import com.lubandj.master.Iview.IworkListView;
+import com.lubandj.master.model.workList.UnFinishModel;
 
 import java.util.ArrayList;
 import java.util.List;

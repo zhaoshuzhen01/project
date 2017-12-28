@@ -1,4 +1,4 @@
-package com.lubandj.master.fragment.model;
+package com.lubandj.master.model;
 
 import android.content.Context;
 
@@ -10,6 +10,4 @@ public abstract class BaseModel {
     protected Context context ;
 
     public abstract void getReflushData(int type,int startIndex,int pageSize);
-
-    public abstract void getMoreData(int type,int startIndex,int pageSize);
 }

@@ -10,7 +10,7 @@ public class Canstance {
     public static final int TYPE_IN_SERVICE = 2;//服务中
     public static final int TYPE_COMPLETED = 3;//完成
     public static final int TYPE_CANCELED = 4;//取消
-
+    public static final int TYPE_LIST_ALL = 0;//所有消息
     public static final int TYPE_LIST_UNFINISH = 1;//工单列表未完成
     public static final int TYPE_LIST_FINISH = 2;//工单列表已完成
     public static final int TYPE_LIST_CANCELED = 3;//工单列表已取消
@@ -32,7 +32,7 @@ public class Canstance {
     public static final int HTTP_WORK_SHEET_UPDATE_STATUS = 20003;//工单列表更新状态
     public static final int HTTP_SIGN_EXCEPTION = 20004;//标记异常
     public static final int HTTP_EXCEPTION_LIST = 80001;//异常列表
-
+    public static final int HTTP_MSGCENTER_LIST = 40001;//消息列表
 //  sp constant
 
     public static final String KEY_SP_PHONE_NUM = "sp_phone_num";

@@ -23,7 +23,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:id="@+id/msgState"
+        android:id="@+id/msgtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/h_14dp"
@@ -33,7 +33,7 @@
         android:textColor="@color/color_333333" />
     <TextView
         android:id="@+id/msgContent"
-        android:layout_below="@+id/msgState"
+        android:layout_below="@+id/msgtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/h_13dp"
@@ -44,7 +44,7 @@
         android:textColor="@color/color_999999" />
     <TextView
         android:id="@+id/msgTime"
-        android:layout_alignBaseline="@+id/msgState"
+        android:layout_alignBaseline="@+id/msgtitle"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

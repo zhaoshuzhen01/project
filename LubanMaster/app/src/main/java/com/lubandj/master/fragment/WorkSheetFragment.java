@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -14,14 +13,13 @@ import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.example.baselibrary.tools.ToastUtils;
-import com.lubandj.master.Canstance;
+import com.lubandj.master.Presenter.SheetListPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.WorkSheetAdapter;
-import com.lubandj.master.been.TestBean;
 import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.customview.BackLayout;
-import com.lubandj.master.fragment.model.IworkListView;
-import com.lubandj.master.fragment.model.WorkListClickModel;
+import com.lubandj.master.Iview.IworkListView;
+import com.lubandj.master.model.workList.WorkListClickModel;
 import com.lubandj.master.utils.NetworkUtils;
 import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 

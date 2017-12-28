@@ -1,4 +1,4 @@
-package com.lubandj.master.fragment.model;
+package com.lubandj.master.model.workList;
 
 import com.lubandj.master.been.WorkListBeen;
 
