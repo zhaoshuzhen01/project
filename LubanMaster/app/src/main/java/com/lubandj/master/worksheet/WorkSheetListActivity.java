@@ -106,6 +106,18 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        int count = CommonUtils.getMsgCount();
+        if (count>0){
+            msgCount.setText(count+"");
+            msgCount.setVisibility(View.VISIBLE);
+        }else {
+            msgCount.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 

@@ -43,6 +43,7 @@ public class Canstance {
     public static final String DEVIED_ID = "DEVICEID";
     public static final String TOKEN = "TOKEN";
     public static final String UID = "UID";
+    public static final String MSG = "MSG";
 
 
     public static final String KEY_SHEET_STATUS_TO_PERFORM = "1";

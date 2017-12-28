@@ -123,6 +123,18 @@ public class CommonUtils {
         SPUtils.getInstance().put(Canstance.TOKEN, token);
     }
 
+    public static int getMsgCount() {
+        return SPUtils.getInstance().getInt(Canstance.MSG);
+    }
+
+    public static void setMsgCount(int msgCount) {
+        int mCount = getMsgCount();
+        mCount = mCount+msgCount;
+        if (msgCount==0)
+            mCount = 0;
+        SPUtils.getInstance().put(Canstance.MSG, mCount);
+    }
+
     public static String getPhone() {
         return SPUtils.getInstance().getString(Canstance.KEY_SP_PHONE_NUM);
     }

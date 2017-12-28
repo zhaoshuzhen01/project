@@ -13,6 +13,7 @@ import com.lubandj.master.R;
 import com.lubandj.master.adapter.MsgCenterAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.TestBean;
+import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
 
     @Override
     public void initView() {
+        CommonUtils.setMsgCount(0);
         ButterKnife.inject(this);
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6)findViewById(R.id.prpt);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
