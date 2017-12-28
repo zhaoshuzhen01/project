@@ -14,6 +14,9 @@ android {
                 GETUI_APP_ID    : "ZbJqKhikIF7d2UEIUDmWq4",
                 GETUI_APP_KEY   : "DwiMI0gzDz8vsXAMmIcfr7",
                 GETUI_APP_SECRET: "Bua63OzXRD8o3n2hoBITk4"
+              /* GETUI_APP_ID    : "3pa6zWkUC38EM1r0NZBGB8",
+               GETUI_APP_KEY   : "PZQ9sBnkny9ilioJHLP247",
+               GETUI_APP_SECRET: "IWxpDINGEnAk0FtFtLh8k7"*/
         ]
     }
     signingConfigs {
