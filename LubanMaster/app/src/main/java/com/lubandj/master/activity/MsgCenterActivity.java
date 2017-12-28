@@ -7,9 +7,13 @@ import android.view.View;
 
 import com.example.baselibrary.BaseRefreshActivity;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
+import com.lubandj.master.Iview.IMsgCenterListview;
+import com.lubandj.master.Presenter.MsgCenterPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.MsgCenterAdapter;
+import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.TestBean;
+import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +21,12 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MsgCenterActivity extends BaseRefreshActivity {
+public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenterListview {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     private MsgCenterAdapter msgCenterAdapter;
-    private List<TestBean> testBeen = new ArrayList<>();
+    private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
+    private MsgCenterPresenter msgCenterPresenter ;
     @Override
     public int getLayout() {
         return R.layout.activity_msg_center;
@@ -29,6 +34,7 @@ public class MsgCenterActivity extends BaseRefreshActivity {
 
     @Override
     public void initView() {
+        CommonUtils.setMsgCount(0);
         ButterKnife.inject(this);
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6)findViewById(R.id.prpt);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -41,11 +47,11 @@ public class MsgCenterActivity extends BaseRefreshActivity {
 
     @Override
     public void initData() {
-        for (int i = 0; i < 20; i++) {
-            testBeen.add(new TestBean("", ""));
-        }
-        msgCenterAdapter = new MsgCenterAdapter(testBeen,this);
+
+        msgCenterAdapter = new MsgCenterAdapter(msgBeens,this);
         initRecyclerView(recyclerView, new LinearLayoutManager(this), msgCenterAdapter);
+        msgCenterPresenter = new MsgCenterPresenter(this,this);
+        msgCenterPresenter.getReflushData(0);
 //        recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 20, 0));
     }
     @Override
@@ -59,13 +65,20 @@ public class MsgCenterActivity extends BaseRefreshActivity {
 
     @Override
     public void onRefresh() {
-        toast(this,"刷新");
-        pullToRefreshAndPushToLoadView.finishRefreshing();
+        msgCenterPresenter.getReflushData(0);
     }
 
     @Override
     public void onLoadMore() {
-        toast(this,"加载更多");
+      msgCenterPresenter.getMoreData(0);
+    }
+
+    @Override
+    public void getMsgCenterLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
+        pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
+        msgBeens.clear();
+        msgBeens.addAll(datas);
+        msgCenterAdapter.notifyDataSetChanged();
     }
 }

@@ -1,4 +1,4 @@
-package com.lubandj.master.fragment.model;
+package com.lubandj.master.model.workList;
 
 import android.content.Context;
 
@@ -10,6 +10,7 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.httpbean.NetWorkListBeen;
+import com.lubandj.master.model.BaseModel;
 import com.lubandj.master.utils.TaskEngine;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2017/12/23.
  */
 
-public class UnFinishModel extends BaseModel{
+public class UnFinishModel extends BaseModel {
 private IWorkModel iWorkModel ;
 
 public UnFinishModel(Context context,IWorkModel iWorkModel){
@@ -58,8 +59,4 @@ public UnFinishModel(Context context,IWorkModel iWorkModel){
         });
     }
 
-    @Override
-    public void getMoreData(int type,int startIndex,int pageSize) {
-
-    }
 }

@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.baselibrary.TitleBaseActivity;
+import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tablayout.CustomTabLayout;
 import com.example.baselibrary.tablayout.MyViewPagerAdapter;
 import com.example.baselibrary.tools.ToastUtils;
@@ -33,6 +34,7 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.activity.MsgCenterActivity;
+import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.UserInfo;
 import com.lubandj.master.customview.RoundImageView;
 import com.lubandj.master.dialog.TipDialog;
@@ -54,6 +56,10 @@ import com.lubandj.master.utils.TaskEngine;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class WorkSheetListActivity extends TitleBaseActivity {
     private ViewPager viewPager;
@@ -78,6 +84,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
 
     private ImageLoader imageLoader;
     private long exitTime = 0;
+    private Observable<MsgCenterBeen> observable ;
 
     @Override
     public int getLayout() {
@@ -87,6 +94,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     @Override
     public void initView() {
         setTitleText("工单列表");
+        msgCount.setVisibility(View.GONE);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         idTablayout = (CustomTabLayout) findViewById(R.id.id_tablayout);
         view = mNavigationView.inflateHeaderView(R.layout.activity_leftmenu);
@@ -102,6 +110,32 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         mTitles.add("已取消");
         onSetupTabData(mTitles);
         onSetViewpager();
+        observable = RxBus.getInstance().register(this);
+        observable.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<MsgCenterBeen>() {
+            @Override
+            public void call(MsgCenterBeen userBean) {
+                Log.e("deal", "received :" + userBean.toString());
+                onResume();
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int count = CommonUtils.getMsgCount();
+        if (count>0){
+            msgCount.setText(count+"");
+            msgCount.setVisibility(View.VISIBLE);
+        }else {
+            msgCount.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().unregister(this);
     }
 
     @Override
@@ -246,6 +280,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 outDialog.setCanceledOnTouchOutside(false);
                 outDialog.show();
                 break;
+            case com.example.baselibrary.R.id.tv_basetitle_ok:
             case com.example.baselibrary.R.id.ll_basetitle_back1:
                 Intent intent = new Intent(this, MsgCenterActivity.class);
                 startActivity(intent);

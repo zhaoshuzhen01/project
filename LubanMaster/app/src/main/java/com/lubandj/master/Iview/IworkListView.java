@@ -1,4 +1,6 @@
-package com.lubandj.master.fragment.model;
+package com.lubandj.master.Iview;
+
+import com.lubandj.master.model.workList.IWorkModel;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/12/23.

@@ -18,10 +18,10 @@ import android.widget.TextView;
 public abstract class TitleBaseActivity extends BaseActivity {
     private RelativeLayout llRoot;
     private LinearLayout llBasetitleBack;
-    protected LinearLayout titleRightLay ;
+    protected RelativeLayout titleRightLay ;
     private TextView tvBasetitleTitle;
     private ImageView ivBasetitleOK;
-    private TextView tv_basetitle_back;
+    protected TextView tv_basetitle_back,msgCount;
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mNavigationView;
     private ImageView ivBaseTitleBack;
@@ -51,6 +51,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
         tvBasetitleTitle = findView(R.id.tv_basetitle_title);
         ivBasetitleOK = findView(R.id.tv_basetitle_ok);
         titleRightLay = findView(R.id.ll_basetitle_back1);
+        msgCount = findView(R.id.msgCount);
         titleRightLay.setOnClickListener(this);
         tv_basetitle_back = findView(R.id.tv_basetitle_back);
         llBasetitleBack.setOnClickListener(new View.OnClickListener() {

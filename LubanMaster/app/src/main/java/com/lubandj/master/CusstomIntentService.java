@@ -7,11 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tools.NotificationUtil;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.message.GTCmdMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
+import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 /**
@@ -69,7 +72,9 @@ public class CusstomIntentService extends GTIntentService {
     }
     // 推送通知栏设置
     public void shownotification(String msg,Context context) {
+        CommonUtils.setMsgCount(1);
 
+        RxBus.getInstance().post(new MsgCenterBeen());
         // 消息存储
 //        MeBill meBill = new Gson().fromJson(msg, MeBill.class);
        /* SQLiteDatabase w_db = FaceDataBase.getInstance()

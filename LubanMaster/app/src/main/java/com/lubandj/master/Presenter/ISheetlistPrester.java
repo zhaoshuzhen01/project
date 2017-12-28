@@ -1,4 +1,4 @@
-package com.lubandj.master.fragment;
+package com.lubandj.master.Presenter;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/12/23.
