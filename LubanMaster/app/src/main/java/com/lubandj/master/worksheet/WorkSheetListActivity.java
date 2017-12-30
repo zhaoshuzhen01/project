@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -47,6 +48,7 @@ import com.lubandj.master.my.AboutLuBanActivity;
 import com.lubandj.master.my.AskForLeaveActivity;
 import com.lubandj.master.my.ModifyPhoneActivity;
 import com.lubandj.master.my.MyAddressActivity;
+import com.lubandj.master.my.MySettingActivity;
 import com.lubandj.master.my.WorkCalendarActivity;
 import com.lubandj.master.my.WorkCodeActivity;
 import com.lubandj.master.utils.BitmapCache;
@@ -79,12 +81,11 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     private TextView mTvName;//姓名
     private RatingBar mBar;//评分条
     private TextView mTvRate;//评分
-    private TextView mTvPhone;//电话
     private String serviceNumber;
 
     private ImageLoader imageLoader;
     private long exitTime = 0;
-    private Observable<MsgCenterBeen> observable ;
+    private Observable<MsgCenterBeen> observable;
 
     @Override
     public int getLayout() {
@@ -124,10 +125,10 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     protected void onResume() {
         super.onResume();
         int count = CommonUtils.getMsgCount();
-        if (count>0){
-            msgCount.setText(count+"");
+        if (count > 0) {
+            msgCount.setText(count + "");
             msgCount.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             msgCount.setVisibility(View.GONE);
         }
     }
@@ -159,31 +160,19 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         mTvName = view.findViewById(R.id.tv_menu_name);
         mBar = view.findViewById(R.id.rb_menu_rate);
         mTvRate = view.findViewById(R.id.tv_menu_rate);
-        mTvPhone = view.findViewById(R.id.tv_menu_phone);
-        mIvHeadImg.setOnClickListener(this);
-        view.findViewById(R.id.ll_menu_phone).setOnClickListener(this);
-        view.findViewById(R.id.ll_menu_address).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_service).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_workcode).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_workcalendar).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_askforleave).setOnClickListener(this);
-        view.findViewById(R.id.ll_menu_aboutus).setOnClickListener(this);
-        view.findViewById(R.id.btn_menu_logout).setOnClickListener(this);
-
+        view.findViewById(R.id.ll_menu_setting).setOnClickListener(this);
 
         imageLoader = new ImageLoader(TaskEngine.getInstance().getQueue(), new BitmapCache());
         UserInfo info = TApplication.context.mUserInfo;
-        setPhone(info.mobile);
         mTvName.setText(info.nickname + "");
         if (!TextUtils.isEmpty(info.face_url)) {
             loadFace();
         }
         serviceNumber = "4006-388-818";
-    }
-
-    public void setPhone(String phone) {
-        if (phone != null && phone.length() != 0)
-            mTvPhone.setText(phone.substring(0, 4) + "****" + phone.substring(8));
     }
 
     public void loadFace() {
@@ -194,15 +183,6 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_menu_headimg:
-                onTakePic();
-                break;
-            case R.id.ll_menu_phone:
-                startActivityForResult(new Intent(WorkSheetListActivity.this, ModifyPhoneActivity.class), 1001);
-                break;
-            case R.id.ll_menu_address:
-                startActivity(MyAddressActivity.class, null);
-                break;
             case R.id.ll_menu_service:
                 TipDialog dialog = new TipDialog(WorkSheetListActivity.this);
                 dialog.setNoPomptTitle();
@@ -230,7 +210,6 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                         } else {
                             startActivity(callingIntent);
                         }
-                        ToastUtils.showShort(WorkSheetListActivity.this, "拨打电话");
                         dialog.dismiss();
                     }
                 });
@@ -253,32 +232,8 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             case R.id.ll_menu_askforleave:
                 startActivity(AskForLeaveActivity.class, null);
                 break;
-            case R.id.ll_menu_aboutus:
-                startActivity(AboutLuBanActivity.class, null);
-                break;
-            case R.id.btn_menu_logout:
-                TipDialog outDialog = new TipDialog(WorkSheetListActivity.this);
-                outDialog.setNoPomptTitle();
-                outDialog.setTextDes("退出登录");
-                outDialog.setButton1("确定", new TipDialog.DialogButtonOnClickListener() {
-                    @Override
-                    public void onClick(View button, TipDialog dialog) {
-                        CommonUtils.setToken("");
-                        CommonUtils.setUid(-1);
-                        startActivity(LoginActivity.class, null);
-                        finish();
-                        dialog.dismiss();
-                    }
-                });
-                outDialog.setButton2("取消", new TipDialog.DialogButtonOnClickListener() {
-                    @Override
-                    public void onClick(View button, TipDialog dialog) {
-                        dialog.dismiss();
-                    }
-                });
-                outDialog.setCancelable(false);
-                outDialog.setCanceledOnTouchOutside(false);
-                outDialog.show();
+            case R.id.ll_menu_setting:
+                startActivity(MySettingActivity.class, null);
                 break;
             case com.example.baselibrary.R.id.tv_basetitle_ok:
             case com.example.baselibrary.R.id.ll_basetitle_back1:
@@ -413,8 +368,6 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             } else {
                 ToastUtils.showShort(WorkSheetListActivity.this, "网络未连接");
             }
-        } else if (requestCode == 1001) {
-            setPhone(TApplication.context.mUserInfo.mobile);
         }
     }
 

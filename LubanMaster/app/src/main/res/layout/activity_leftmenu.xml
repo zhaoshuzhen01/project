@@ -9,8 +9,8 @@
 
     <com.lubandj.master.customview.RoundImageView
         android:id="@+id/iv_menu_headimg"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_marginTop="30dp"
         android:scaleType="fitXY"
         android:src="@drawable/default_header"/>
@@ -20,7 +20,7 @@
         android:id="@+id/tv_menu_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="5dp"
         android:gravity="center_vertical"
         android:text="姓名"
         android:textColor="#333333"
@@ -54,66 +54,9 @@
 
 
     <LinearLayout
-        android:id="@+id/ll_menu_phone"
-        style="@style/leftmenu_linearlayout"
-        android:layout_marginTop="30dp"
-        >
-
-        <ImageView
-            style="@style/leftmenu_icon"
-            android:src="@drawable/menu_phone"/>
-
-        <TextView
-            style="@style/leftmenu_text"
-            android:text="手机号"/>
-
-        <TextView
-            android:id="@+id/tv_menu_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
-            android:text="158****9999"
-            android:textColor="#999999"
-            android:textSize="12sp"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/ll_menu_address"
-        style="@style/leftmenu_linearlayout"
-        >
-
-        <ImageView
-            style="@style/leftmenu_icon"
-            android:src="@drawable/menu_address"/>
-
-        <TextView
-            style="@style/leftmenu_text"
-            android:text="我的住址"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/ll_menu_service"
-        style="@style/leftmenu_linearlayout"
-
-        >
-
-        <ImageView
-            style="@style/leftmenu_icon"
-            android:src="@drawable/menu_service"/>
-
-        <TextView
-            style="@style/leftmenu_text"
-            android:text="联系客服"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
         android:id="@+id/ll_menu_workcode"
         style="@style/leftmenu_linearlayout"
-
+        android:layout_marginTop="25dp"
         >
 
         <ImageView
@@ -158,9 +101,24 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_menu_service"
+        style="@style/leftmenu_linearlayout"
+
+        >
+
+        <ImageView
+            style="@style/leftmenu_icon"
+            android:src="@drawable/menu_service"/>
+
+        <TextView
+            style="@style/leftmenu_text"
+            android:text="联系客服"/>
+
+    </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_menu_aboutus"
+        android:id="@+id/ll_menu_setting"
         style="@style/leftmenu_linearlayout"
         >
 
@@ -170,7 +128,7 @@
 
         <TextView
             style="@style/leftmenu_text"
-            android:text="关于我们"/>
+            android:text="设置"/>
 
     </LinearLayout>
 
@@ -179,22 +137,4 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btn_menu_logout"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="150dp"
-            android:layout_height="45dp"
-            android:background="@drawable/selector_btn_send_code_bg"
-            android:text="退出登录"
-            android:textColor="@color/white"
-            android:textSize="18dp"/>
-    </LinearLayout>
 </LinearLayout>

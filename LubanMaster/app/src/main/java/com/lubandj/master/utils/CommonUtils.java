@@ -8,13 +8,16 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.example.baselibrary.net.BaseResponse;
 import com.example.baselibrary.tools.ToastUtils;
 import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
+import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.httpbean.BaseResponseBean;
 import com.lubandj.master.my.MyAddressActivity;
+import com.lubandj.master.my.MySettingActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
@@ -107,6 +110,16 @@ public class CommonUtils {
         return bean;
     }
 
+    public static void fastShowError(Context context, VolleyError volleyError) {
+        if (volleyError != null) {
+            if (volleyError.networkResponse != null) {
+                String format = String.format(context.getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
+                ToastUtils.showShort(context, format);
+                Logger.e(volleyError.getMessage());
+            }
+        }
+    }
+
     public static int getUid() {
         return SPUtils.getInstance().getInt(Canstance.UID);
     }
@@ -129,8 +142,8 @@ public class CommonUtils {
 
     public static void setMsgCount(int msgCount) {
         int mCount = getMsgCount();
-        mCount = mCount+msgCount;
-        if (msgCount==0)
+        mCount = mCount + msgCount;
+        if (msgCount == 0)
             mCount = 0;
         SPUtils.getInstance().put(Canstance.MSG, mCount);
     }
@@ -142,4 +155,6 @@ public class CommonUtils {
     public static void setPhone(String phone) {
         SPUtils.getInstance().put(Canstance.KEY_SP_PHONE_NUM, phone);
     }
+
+
 }

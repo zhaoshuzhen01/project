@@ -37,7 +37,8 @@ public class MyAddressActivity extends PermissionActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_myaddress);
-        getAddress();
+
+        mBean = (AddressBean) getIntent().getSerializableExtra("address");
     }
 
     @Override
@@ -86,56 +87,10 @@ public class MyAddressActivity extends PermissionActivity {
         finish();
     }
 
-
-    public void getAddress() {
-        initProgressDialog("获取地址中...").show();
-        UidParamsRequest request = new UidParamsRequest(CommonUtils.getUid());
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_GETADDRESS, request, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String s) {
-                dialog.dismiss();
-                GetAddressReponse reponse = new GetAddressReponse();
-                reponse = (GetAddressReponse) CommonUtils.generateEntityByGson(MyAddressActivity.this, s, reponse);
-                if (reponse != null) {
-                    mBean = reponse.info;
-                    setAddress();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                dialog.dismiss();
-                if (volleyError != null) {
-                    if (volleyError.networkResponse != null) {
-                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                        ToastUtils.showShort(MyAddressActivity.this, format);
-                    }
-                    Logger.e(volleyError.getMessage());
-                }
-            }
-        });
-    }
-
     public void setAddress() {
-        StringBuilder sb = new StringBuilder("");
-        if (mBean.province != null && mBean.city != null) {
-            if (mBean.province.equals(mBean.city)) {
-                sb.append(mBean.province);
-            } else {
-                sb.append(mBean.province + mBean.city);
-            }
+        if (mBean.housing_estate != null) {
+            binding.tvAddressArea.setText(mBean.housing_estate);
         }
-        if (mBean.areapublic != null) {
-            sb.append(mBean.areapublic);
-        }
-        if (mBean.address != null) {
-            sb.append(mBean.address);
-        }
-//        if (mBean.housing_estate != null) {
-//            sb.append(mBean.housing_estate);
-//        }
-        binding.tvAddressArea.setText(sb.toString());
         if (mBean.house_number != null)
             binding.tvAddressHousenum.setText(mBean.house_number);
     }
@@ -168,13 +123,7 @@ public class MyAddressActivity extends PermissionActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if (volleyError != null) {
-                    if (volleyError.networkResponse != null) {
-                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                        ToastUtils.showShort(MyAddressActivity.this, format);
-                    }
-                    Logger.e(volleyError.getMessage());
-                }
+                CommonUtils.fastShowError(MyAddressActivity.this, volleyError);
             }
         });
     }

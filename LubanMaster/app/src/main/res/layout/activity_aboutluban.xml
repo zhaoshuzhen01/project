@@ -121,7 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="22dp"
-            android:text="Beijing********** Technology Co.,Ltd"
+            android:text="QindaoLuBandj Technology Co.,Ltd"
             android:textColor="#e94b4e"
             android:textSize="11sp"/>
     </LinearLayout>
