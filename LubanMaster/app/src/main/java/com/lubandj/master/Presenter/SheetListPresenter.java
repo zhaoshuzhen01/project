@@ -72,10 +72,12 @@ public class SheetListPresenter implements ISheetlistPrester , IWorkModel {
 
     @Override
     public void getWorkLists(List<WorkListBeen.InfoBean> datas) {
-        if (loadMore){
-            mdatas.addAll(datas);
-        }else {
-            mdatas = datas ;
+        if (datas!=null){
+            if (loadMore){
+                mdatas.addAll(datas);
+            }else {
+                mdatas = datas ;
+            }
         }
         iworkListView.getWorkLists(mdatas);
     }

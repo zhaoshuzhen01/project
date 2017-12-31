@@ -39,9 +39,9 @@ public UnFinishModel(Context context,IWorkModel iWorkModel){
                         if (workListBeen != null) {
                             if (workListBeen.getCode() == 0) {
                                 List<WorkListBeen.InfoBean> datas = workListBeen.getInfo();
-                                if (datas!=null&&datas.size()>0)
-                                iWorkModel.getWorkLists(datas);
-                                else ToastUtils.showShort(context,"暂无数据");
+                                if (datas!=null){
+                                    iWorkModel.getWorkLists(datas);
+                                }
                             }
                         }
 
