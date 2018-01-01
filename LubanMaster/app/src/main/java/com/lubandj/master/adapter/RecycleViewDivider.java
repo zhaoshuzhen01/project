@@ -77,7 +77,11 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
-        outRect.set(0, 0, mDividerHeight, 0);
+        if (mOrientation == LinearLayoutManager.HORIZONTAL) {
+            outRect.set(0, 0, mDividerHeight, 0);
+        } else {
+            outRect.set(0, 0, 0, mDividerHeight);
+        }
     }
 
     //绘制分割线

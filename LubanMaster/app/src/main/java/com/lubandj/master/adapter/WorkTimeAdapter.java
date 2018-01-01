@@ -56,8 +56,10 @@ public class WorkTimeAdapter extends BaseAdapter {
     public void setBean(WorkDetailResponse.WorkDetailBean newBean) {
         mBean = newBean;
         workList.clear();
-        beginLeave = mBean.leaveTime.begin.split(" ")[0];
-        endLeave = mBean.leaveTime.begin.split(" ")[0];
+        if (mBean.isLeave.equals("1")) {
+            beginLeave = mBean.leaveTime.begin.split(" ")[1];
+            endLeave = mBean.leaveTime.end.split(" ")[1];
+        }
         int count = mBean.list.size();
         for (int i = 0; i < count; i++) {
             WorkTime time = new WorkTime();

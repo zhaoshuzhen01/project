@@ -16,6 +16,7 @@ import com.example.baselibrary.BaseActivity;
 import com.example.baselibrary.BaseRefreshActivity;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.util.DensityUtils;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.Iview.ILeaveRecordListview;
 import com.lubandj.master.Presenter.LeaveRecordPresenter;
@@ -23,6 +24,7 @@ import com.lubandj.master.Presenter.MsgCenterPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.LeaveRecordAdapter;
 import com.lubandj.master.adapter.MsgCenterAdapter;
+import com.lubandj.master.adapter.RecycleViewDivider;
 import com.lubandj.master.been.AddressBean;
 import com.lubandj.master.been.LeaveBean;
 import com.lubandj.master.databinding.ActivityLeavelistBinding;
@@ -53,8 +55,9 @@ public class LeaveListActivity extends BaseActivity implements ILeaveRecordListv
         initRecyclerView(binding.rvLeaverecord, new LinearLayoutManager(this), mAdapter);
         mPresenter = new LeaveRecordPresenter(this, this);
         mPresenter.getReflushData(CommonUtils.getUid());
+        binding.rvLeaverecord.addItemDecoration(new RecycleViewDivider(
+                LeaveListActivity.this, LinearLayoutManager.VERTICAL, DensityUtils.dip2px(LeaveListActivity.this, 10f), getResources().getColor(R.color.color_eeeeee)));
     }
-
 
     private void initRecyclerRefreshLayout() {
 
@@ -97,6 +100,11 @@ public class LeaveListActivity extends BaseActivity implements ILeaveRecordListv
         binding.prptLeaverecord.finishRefreshing();
         binding.prptLeaverecord.finishLoading();
         mAdapter.setData(datas);
+        if (datas.size() == 0) {
+            binding.llNoData.setVisibility(View.VISIBLE);
+        } else {
+            binding.llNoData.setVisibility(View.GONE);
+        }
     }
 
     @Override

@@ -66,7 +66,7 @@ public class WorkCalendarActivity extends BaseActivity {
 
         binding.rvDate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.rvDate.addItemDecoration(new RecycleViewDivider(
-                WorkCalendarActivity.this, LinearLayoutManager.VERTICAL, DensityUtils.dip2px(WorkCalendarActivity.this, 0.5f), getResources().getColor(R.color.color_line)));
+                WorkCalendarActivity.this, LinearLayoutManager.HORIZONTAL, DensityUtils.dip2px(WorkCalendarActivity.this, 0.5f), getResources().getColor(R.color.color_line)));
         titleAdapter = new WorkDateAdapter(WorkCalendarActivity.this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

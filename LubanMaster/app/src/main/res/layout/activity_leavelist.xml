@@ -31,6 +31,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1">
 
             <com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6
@@ -47,10 +48,26 @@
             </com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6>
 
             <LinearLayout
+                android:id="@+id/ll_noData"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="35dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/nowork"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="你很棒！还没有请假记录~"
+                    android:textColor="#333333"
+                    android:textSize="14sp"/>
             </LinearLayout>
         </RelativeLayout>
 

@@ -92,6 +92,7 @@
                 android:id="@+id/tv_address_housenum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="例：10号楼503"
                 android:paddingLeft="5dp"

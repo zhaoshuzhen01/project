@@ -39,6 +39,11 @@ public class MyAddressActivity extends PermissionActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_myaddress);
 
         mBean = (AddressBean) getIntent().getSerializableExtra("address");
+        if (mBean == null) {
+
+        } else {
+            setAddress();
+        }
     }
 
     @Override
@@ -148,5 +153,30 @@ public class MyAddressActivity extends PermissionActivity {
     @Override
     public void onPermissionRefuse(String operation) {
         ToastUtils.showShort(MyAddressActivity.this, "权限未授予，无法进入地址设置界面");
+    }
+
+    public void getAddress() {
+        initProgressDialog("获取地址中...").show();
+        UidParamsRequest request = new UidParamsRequest(CommonUtils.getUid());
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_GETADDRESS, request, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String s) {
+                dialog.dismiss();
+                GetAddressReponse reponse = new GetAddressReponse();
+                reponse = (GetAddressReponse) CommonUtils.generateEntityByGson(MyAddressActivity.this, s, reponse);
+                if (reponse != null) {
+                    mBean = reponse.info;
+                    setAddress();
+                    ;
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                CommonUtils.fastShowError(MyAddressActivity.this, volleyError);
+            }
+        });
     }
 }

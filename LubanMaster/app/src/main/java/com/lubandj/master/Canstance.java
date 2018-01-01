@@ -35,6 +35,7 @@ public class Canstance {
     public static final int HTTP_MSGCENTER_LIST = 40001;//消息列表
     public static final int HTTP_WORKDETAIL = 60001;//工作日历详情
     public static final int HTTP_LEAVERECORD = 50002;//请假列表
+    public static final int HTTP_LEAVEREQUEST = 50001;//请假提交
 //  sp constant
 
     public static final String KEY_SP_PHONE_NUM = "sp_phone_num";

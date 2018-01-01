@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="#eeeeee"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -24,68 +24,103 @@
 
             <TextView
                 style="@style/my_title_text"
-                android:text="我的工作码"/>
+                android:text="请假"/>
 
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="#eeeeee"/>
+        <LinearLayout
+            style="@style/leftmenu_linearlayout"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                style="@style/leftmenu_text"
+                android:text="开始时间"/>
+
+            <TextView
+                android:id="@+id/tv_starttime"
+                style="@style/setting_righttext"
+                android:hint="请选择"
+                android:onClick="onStartTime"/>
+
+            <ImageView
+                style="@style/about_icon"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/leftmenu_linearlayout"
+            android:layout_marginTop="0.5dp"
+            >
+
+            <TextView
+                style="@style/leftmenu_text"
+                android:text="结束时间"/>
+
+            <TextView
+                android:id="@+id/tv_endtime"
+                style="@style/setting_righttext"
+                android:hint="请选择"
+                android:onClick="onEndTime"/>
+
+            <ImageView
+                style="@style/about_icon"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:orientation="horizontal">
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
             <TextView
-                style="@style/week_title_tv"
-                android:text="日"
-                android:textColor="#e94b4e"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="8dp"
+                android:text="请假事由"
+                android:textColor="#333333"
+                android:textSize="14sp"/>
 
-            <TextView
-                style="@style/week_title_tv"
-                android:text="一"
-                android:textColor="#000000"/>
-
-            <TextView
-                style="@style/week_title_tv"
-                android:text="二"
-                android:textColor="#000000"/>
-
-            <TextView
-                style="@style/week_title_tv"
-                android:text="三"
-                android:textColor="#000000"/>
-
-            <TextView
-                style="@style/week_title_tv"
-                android:text="四"
-                android:textColor="#000000"/>
-
-            <TextView
-                style="@style/week_title_tv"
-                android:text="五"
-                android:textColor="#000000"/>
-
-            <TextView
-                style="@style/week_title_tv"
-                android:text="六"
-                android:textColor="#e94b4e"/>
+            <EditText
+                android:id="@+id/et_leave_reason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="top|left"
+                android:hint="请输入请假事由..."
+                android:inputType="textMultiLine"
+                android:minHeight="150dp"
+                android:paddingBottom="12dp"
+                android:paddingLeft="14dp"
+                android:maxLength="255"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp"
+                android:textColor="#333333"
+                android:textSize="14sp"/>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#eeeeee"/>
 
-        <ListView
-            android:id="@+id/lv_work_calendar"
+        <android.support.v4.widget.Space
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@null"
-            android:dividerHeight="0dp"></ListView>
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_address_save"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_btn_send_code_bg"
+            android:onClick="onSubmit"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
     </LinearLayout>
 
 </layout>
