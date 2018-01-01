@@ -46,6 +46,7 @@ import com.lubandj.master.httpbean.UploadPhotoRequest;
 import com.lubandj.master.login.LoginActivity;
 import com.lubandj.master.my.AboutLuBanActivity;
 import com.lubandj.master.my.AskForLeaveActivity;
+import com.lubandj.master.my.LeaveListActivity;
 import com.lubandj.master.my.ModifyPhoneActivity;
 import com.lubandj.master.my.MyAddressActivity;
 import com.lubandj.master.my.MySettingActivity;
@@ -230,7 +231,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 startActivity(WorkCalendarActivity.class, null);
                 break;
             case R.id.ll_menu_askforleave:
-                startActivity(AskForLeaveActivity.class, null);
+                startActivity(LeaveListActivity.class, null);
                 break;
             case R.id.ll_menu_setting:
                 startActivity(MySettingActivity.class, null);

@@ -92,6 +92,9 @@
             android:name=".my.WorkCodeActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".my.LeaveListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".my.AskForLeaveActivity"
             android:screenOrientation="portrait"/>
         <activity

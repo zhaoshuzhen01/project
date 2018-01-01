@@ -33,6 +33,8 @@ public class Canstance {
     public static final int HTTP_SIGN_EXCEPTION = 20004;//标记异常
     public static final int HTTP_EXCEPTION_LIST = 80001;//异常列表
     public static final int HTTP_MSGCENTER_LIST = 40001;//消息列表
+    public static final int HTTP_WORKDETAIL = 60001;//工作日历详情
+    public static final int HTTP_LEAVERECORD = 50002;//请假列表
 //  sp constant
 
     public static final String KEY_SP_PHONE_NUM = "sp_phone_num";

@@ -15,16 +15,28 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ffffff"
-            android:onClick="onBack">
+            android:background="#ffffff">
 
             <ImageView
-                style="@style/my_title_back"/>
+                style="@style/my_title_back"
+                android:onClick="onBack"/>
 
             <TextView
                 style="@style/my_title_text"
                 android:text="工作日历"/>
 
+            <TextView
+                android:id="@+id/tv_changedetail"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:gravity="center"
+                android:onClick="onChangeDetail"
+                android:text="详情"
+                android:textColor="#333333"
+                android:textSize="16sp"/>
         </RelativeLayout>
 
         <View
@@ -33,106 +45,58 @@
             android:layout_marginTop="10dp"
             android:background="#cfcfcf"/>
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_date"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/ll_workcalendar_day1"
-                style="@style/workcanlendar_title_ll">
-
-                <TextView
-                    android:id="@+id/tv1_workcalendar_day1"
-                    style="@style/workcanlendar_title_tv1"/>
-
-                <TextView
-                    android:id="@+id/tv2_workcalendar_day1"
-                    style="@style/workcanlendar_title_tv2"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="#cfcfcf"/>
-
-            <LinearLayout
-                android:id="@+id/ll_workcalendar_day2"
-                style="@style/workcanlendar_title_ll">
-
-                <TextView
-                    android:id="@+id/tv1_workcalendar_day2"
-                    style="@style/workcanlendar_title_tv1"/>
-
-                <TextView
-                    android:id="@+id/tv2_workcalendar_day2"
-                    style="@style/workcanlendar_title_tv2"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="#cfcfcf"/>
-
-            <LinearLayout
-                android:id="@+id/ll_workcalendar_day3"
-                style="@style/workcanlendar_title_ll">
-
-                <TextView
-                    android:id="@+id/tv1_workcalendar_day3"
-                    style="@style/workcanlendar_title_tv1"/>
-
-                <TextView
-                    android:id="@+id/tv2_workcalendar_day3"
-                    style="@style/workcanlendar_title_tv2"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="#cfcfcf"/>
-
-            <LinearLayout
-                android:id="@+id/ll_workcalendar_day4"
-                style="@style/workcanlendar_title_ll">
-
-                <TextView
-                    android:id="@+id/tv1_workcalendar_day4"
-                    style="@style/workcanlendar_title_tv1"/>
-
-                <TextView
-                    android:id="@+id/tv2_workcalendar_day4"
-                    style="@style/workcanlendar_title_tv2"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="#cfcfcf"/>
-
-            <LinearLayout
-                android:id="@+id/ll_workcalendar_day5"
-                style="@style/workcanlendar_title_ll">
-
-                <TextView
-                    android:id="@+id/tv1_workcalendar_day5"
-                    style="@style/workcanlendar_title_tv1"/>
-
-                <TextView
-                    android:id="@+id/tv2_workcalendar_day5"
-                    style="@style/workcanlendar_title_tv2"/>
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="75dp">
+        </android.support.v7.widget.RecyclerView>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="#cfcfcf"/>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/lv_workcalendar_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#eeeeee"
+                android:dividerHeight="10dp"
+                android:paddingTop="10dp"
+                android:visibility="invisible"/>
+
+            <LinearLayout
+                android:id="@+id/ll_workcalendar_timeplan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <GridView
+                    android:id="@+id/gv_workcalendar_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cfcfcf"
+                    android:cacheColorHint="#00000000"
+                    android:horizontalSpacing="0.5dp"
+                    android:listSelector="#00000000"
+                    android:numColumns="4"
+                    android:paddingBottom="0.5dp"
+                    android:scrollbars="none"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="0.5dp"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </layout>
 

@@ -128,7 +128,7 @@ public class MySettingActivity extends PermissionActivity {
      * @param view
      */
     public void onMyAddress(View view) {
-        Intent intent = new Intent(MySettingActivity.this, ModifyPhoneActivity.class);
+        Intent intent = new Intent(MySettingActivity.this, MyAddressActivity.class);
         intent.putExtra("address", mBean);
         startActivity(intent);
     }

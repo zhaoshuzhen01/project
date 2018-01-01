@@ -9,19 +9,37 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.baselibrary.BaseActivity;
+import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.util.DensityUtils;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
+import com.lubandj.master.TApplication;
+import com.lubandj.master.adapter.RecycleViewDivider;
+import com.lubandj.master.adapter.WorkDateAdapter;
 import com.lubandj.master.adapter.WorkDetailAdapter;
 import com.lubandj.master.adapter.WorkTimeAdapter;
+import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.databinding.ActivityWorkcalendarBinding;
 import com.lubandj.master.fragment.WorkCalendarFragment;
+import com.lubandj.master.httpbean.WorkDetailRequest;
+import com.lubandj.master.httpbean.WorkDetailResponse;
+import com.lubandj.master.login.SplashActivity;
+import com.lubandj.master.utils.CommonUtils;
+import com.lubandj.master.utils.Logger;
+import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
+import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,65 +53,54 @@ import java.util.Locale;
  */
 public class WorkCalendarActivity extends BaseActivity {
     private ActivityWorkcalendarBinding binding;
-    private ArrayList<WorkCalendarFragment> mFragments;
-    private DayFragmentPager mPagerAdapter;
-    private ArrayList<TextView> mTextViews;
-    private ArrayList<LinearLayout> mLayouts;
+
+    private WorkDateAdapter titleAdapter;
+
+    private WorkTimeAdapter mAdapter;
+    private WorkDetailAdapter mDetailAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_workcalendar);
 
-        mTextViews = new ArrayList<>();
-        mLayouts = new ArrayList<>();
-        mLayouts.add(binding.llWorkcalendarDay1);
-        mLayouts.add(binding.llWorkcalendarDay2);
-        mLayouts.add(binding.llWorkcalendarDay3);
-        mLayouts.add(binding.llWorkcalendarDay4);
-        mLayouts.add(binding.llWorkcalendarDay5);
-
-        mTextViews.add(binding.tv1WorkcalendarDay1);
-        mTextViews.add(binding.tv2WorkcalendarDay1);
-        mTextViews.add(binding.tv1WorkcalendarDay2);
-        mTextViews.add(binding.tv2WorkcalendarDay2);
-        mTextViews.add(binding.tv1WorkcalendarDay3);
-        mTextViews.add(binding.tv2WorkcalendarDay3);
-        mTextViews.add(binding.tv1WorkcalendarDay4);
-        mTextViews.add(binding.tv2WorkcalendarDay4);
-        mTextViews.add(binding.tv1WorkcalendarDay5);
-        mTextViews.add(binding.tv2WorkcalendarDay5);
-
-        initTitleData();
-
-        mFragments = new ArrayList<>();
-        mFragments.add(new WorkCalendarFragment());
-        mFragments.add(new WorkCalendarFragment());
-        mFragments.add(new WorkCalendarFragment());
-        mFragments.add(new WorkCalendarFragment());
-        mFragments.add(new WorkCalendarFragment());
-
-
-        mPagerAdapter = new DayFragmentPager(getSupportFragmentManager());
-        binding.viewPager.setAdapter(mPagerAdapter);
-        binding.viewPager.setOffscreenPageLimit(mFragments.size());
-        binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        binding.rvDate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        binding.rvDate.addItemDecoration(new RecycleViewDivider(
+                WorkCalendarActivity.this, LinearLayoutManager.VERTICAL, DensityUtils.dip2px(WorkCalendarActivity.this, 0.5f), getResources().getColor(R.color.color_line)));
+        titleAdapter = new WorkDateAdapter(WorkCalendarActivity.this, new View.OnClickListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                initTitleState(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
+            public void onClick(View v) {
+                int pos = (int) v.getTag();
+                if (pos != titleAdapter.getSelectPos()) {
+                    titleAdapter.setSelectPos(pos);
+                    //获取详情
+                    getDayDetail(titleAdapter.getCurrentSelectDay());
+                }
             }
         });
-        initTitleState(0);
+        binding.rvDate.setAdapter(titleAdapter);
+
+
+        mAdapter = new WorkTimeAdapter(WorkCalendarActivity.this);
+        binding.gvWorkcalendarTime.setAdapter(mAdapter);
+
+        mDetailAdapter = new WorkDetailAdapter(WorkCalendarActivity.this);
+        binding.lvWorkcalendarDetail.setAdapter(mDetailAdapter);
+
+        binding.lvWorkcalendarDetail.setVisibility(View.GONE);
+        binding.llWorkcalendarTimeplan.setVisibility(View.VISIBLE);
+
+        binding.lvWorkcalendarDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                WorkListBeen.InfoBean info = (WorkListBeen.InfoBean) mDetailAdapter.getItem(position);
+                Intent intent = new Intent(WorkCalendarActivity.this, WorkSheetDetailsActivity.class);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, info.getId());
+                startActivityForResult(intent, 1001);
+            }
+        });
+
+        getDayDetail(titleAdapter.getCurrentSelectDay());
     }
 
     @Override
@@ -126,94 +133,52 @@ public class WorkCalendarActivity extends BaseActivity {
     }
 
 
-    public class DayFragmentPager extends FragmentPagerAdapter {
-        public DayFragmentPager(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
+    public void onChangeDetail(View view) {
+        if (binding.lvWorkcalendarDetail.getVisibility() == View.GONE) {
+            if (mDetailAdapter.getCount() == 0) {
+                ToastUtils.showShort(WorkCalendarActivity.this, "该天没有任务");
+                return;
+            }
+            binding.lvWorkcalendarDetail.setVisibility(View.VISIBLE);
+            binding.llWorkcalendarTimeplan.setVisibility(View.GONE);
+            ((TextView) view).setText("时间表");
+        } else {
+            binding.lvWorkcalendarDetail.setVisibility(View.GONE);
+            binding.llWorkcalendarTimeplan.setVisibility(View.VISIBLE);
+            ((TextView) view).setText("详情");
         }
     }
 
-    private void initTitleData() {
-        //获取当前日期
-        Calendar mCalendar = Calendar.getInstance(Locale.CHINA);
-        binding.tv1WorkcalendarDay1.setText("今天");
-        binding.tv2WorkcalendarDay1.setText(formatText(mCalendar.get(Calendar.MONTH) + 1) + "-" + formatText(mCalendar.get(Calendar.DAY_OF_MONTH)));
+    public void getDayDetail(String day) {
+        initProgressDialog("正在获取详情...").show();
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORKDETAIL, new WorkDetailRequest(day), new Response.Listener<String>() {
 
-        mCalendar.add(Calendar.DAY_OF_MONTH, 1);
-        binding.tv1WorkcalendarDay2.setText("明天");
-        binding.tv2WorkcalendarDay2.setText(formatText(mCalendar.get(Calendar.MONTH) + 1) + "-" + formatText(mCalendar.get(Calendar.DAY_OF_MONTH)));
-
-        mCalendar.add(Calendar.DAY_OF_MONTH, 1);
-        binding.tv1WorkcalendarDay3.setText(getStringOfWeek(mCalendar.get(Calendar.DAY_OF_WEEK)));
-        binding.tv2WorkcalendarDay3.setText(formatText(mCalendar.get(Calendar.MONTH) + 1) + "-" + formatText(mCalendar.get(Calendar.DAY_OF_MONTH)));
-
-        mCalendar.add(Calendar.DAY_OF_MONTH, 1);
-        binding.tv1WorkcalendarDay4.setText(getStringOfWeek(mCalendar.get(Calendar.DAY_OF_WEEK)));
-        binding.tv2WorkcalendarDay4.setText(formatText(mCalendar.get(Calendar.MONTH) + 1) + "-" + formatText(mCalendar.get(Calendar.DAY_OF_MONTH)));
-
-        mCalendar.add(Calendar.DAY_OF_MONTH, 1);
-        binding.tv1WorkcalendarDay5.setText(getStringOfWeek(mCalendar.get(Calendar.DAY_OF_WEEK)));
-        binding.tv2WorkcalendarDay5.setText(formatText(mCalendar.get(Calendar.MONTH) + 1) + "-" + formatText(mCalendar.get(Calendar.DAY_OF_MONTH)));
-
+            @Override
+            public void onResponse(String s) {
+                fastDismiss();
+                WorkDetailResponse response = new WorkDetailResponse();
+                response = (WorkDetailResponse) CommonUtils.generateEntityByGson(WorkCalendarActivity.this, s, response);
+                if (response != null) {
+                    mAdapter.setBean(response.info);
+                    mDetailAdapter.setData(response.info.list);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                fastDismiss();
+                CommonUtils.fastShowError(WorkCalendarActivity.this, volleyError);
+            }
+        });
     }
 
-    private void initTitleState(int pos) {
-        int count = mFragments.size();
-        for (int i = 0; i < count; i++) {
-            if (i == pos) {
-                mLayouts.get(i).setBackgroundColor(Color.parseColor("#e55c5e"));
-                mTextViews.get(i * 2).setTextColor(Color.WHITE);
-                mTextViews.get(i * 2 + 1).setTextColor(Color.WHITE);
-            } else {
-                mLayouts.get(i).setBackgroundColor(Color.WHITE);
-                mTextViews.get(i * 2).setTextColor(Color.BLACK);
-                mTextViews.get(i * 2 + 1).setTextColor(Color.BLACK);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001) {
+            if (requestCode == RESULT_OK) {
+//                mDetailAdapter.removeId(data.getStringExtra("id"));
             }
         }
-    }
-
-    private String getStringOfWeek(int dayOfWeek) {
-        String week = null;
-        switch (dayOfWeek) {
-            case 1:
-                week = "日";
-                break;
-            case 2:
-                week = "一";
-                break;
-            case 3:
-                week = "二";
-                break;
-            case 4:
-                week = "三";
-                break;
-            case 5:
-                week = "四";
-                break;
-            case 6:
-                week = "五";
-                break;
-            case 7:
-                week = "六";
-                break;
-
-        }
-        return "周" + week;
-    }
-
-    public String formatText(int num) {
-        if (num < 9) {
-            return "0" + num;
-        }
-        return num + "";
     }
 }

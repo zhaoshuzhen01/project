@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lubandj.master.R;
+import com.lubandj.master.been.WorkListBeen;
+
+import java.util.ArrayList;
 
 /**
  * function:
@@ -20,24 +23,42 @@ import com.lubandj.master.R;
 
 public class WorkDetailAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
+    private ArrayList<WorkListBeen.InfoBean> dataList;
 
     public WorkDetailAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
+        dataList = new ArrayList<>();
     }
+
+    public void setData(ArrayList<WorkListBeen.InfoBean> newList) {
+        dataList = newList;
+        notifyDataSetChanged();
+    }
+
+    public void removeId(String id) {
+        for (int i = 0; i < dataList.size(); i++) {
+            if (dataList.get(i).getId().equals(id)) {
+                dataList.remove(i);
+                break;
+            }
+        }
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getCount() {
-        return 3;
+        return dataList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return dataList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -50,20 +71,24 @@ public class WorkDetailAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        WorkListBeen.InfoBean info = dataList.get(position);
+        viewHolder.mTvNum.setText(info.getTicketSn());
+        viewHolder.mTvTime.setText(info.getTimeStr());
+        viewHolder.mTvPlace.setText(info.getAddress());
         return convertView;
     }
 
 
     class ViewHolder {
-//        public LinearLayout mLl;
-//        public TextView mTvTime;
-//        public TextView mTvState;
+        public TextView mTvNum;
+        public TextView mTvTime;
+        public TextView mTvPlace;
 
 
         public ViewHolder(View view) {
-//            mLl = view.findViewById(R.id.ll_worktime);
-//            mTvTime = view.findViewById(R.id.tv_worktime_time);
-//            mTvState = view.findViewById(R.id.tv_worktime_state);
+            mTvNum = view.findViewById(R.id.tv_workdetail_num);
+            mTvTime = view.findViewById(R.id.tv_workdetail_time);
+            mTvPlace = view.findViewById(R.id.tv_workdetail_place);
         }
     }
 }

@@ -129,6 +129,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         return dialog;
     }
 
+    public void fastDismiss() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
+
 
     public ProgressDialog initProgressDialog(@StringRes int content) {
         dialog = new ProgressDialog(this);

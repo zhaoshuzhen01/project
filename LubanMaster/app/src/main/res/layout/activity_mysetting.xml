@@ -16,10 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#ffffff"
-            android:onClick="onBack">
+            >
 
             <ImageView
-                style="@style/my_title_back"/>
+                style="@style/my_title_back"
+                android:onClick="onBack"/>
 
             <TextView
                 style="@style/my_title_text"
@@ -59,7 +60,6 @@
         <LinearLayout
             android:id="@+id/ll_menu_service"
             style="@style/leftmenu_linearlayout"
-            android:onClick="onUserAggrement"
             >
 
 
@@ -78,7 +78,6 @@
         <LinearLayout
             android:id="@+id/ll_menu_workcode"
             style="@style/leftmenu_linearlayout"
-            android:onClick="onGoRate"
             >
 
 
