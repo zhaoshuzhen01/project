@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.View;
 
 import com.android.volley.Response;
@@ -17,6 +18,8 @@ import com.lubandj.master.TApplication;
 import com.lubandj.master.adapter.WorkCalendarAdapter;
 import com.lubandj.master.databinding.ActivityAskforleaveBinding;
 import com.lubandj.master.databinding.ActivityWorkcodeBinding;
+import com.lubandj.master.dialog.ClickListenerInterface;
+import com.lubandj.master.dialog.ScrollSelectDialog;
 import com.lubandj.master.dialog.TipDialog;
 import com.lubandj.master.httpbean.AskForLeaveRequest;
 import com.lubandj.master.httpbean.BaseResponseBean;
@@ -25,6 +28,9 @@ import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * function:
@@ -42,12 +48,6 @@ public class AskForLeaveActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_askforleave);
         mRequest = new AskForLeaveRequest();
-
-        mRequest.beginTime = "2018-01-03";
-        mRequest.beginSign = 1;
-        mRequest.endTime = "2018-01-03";
-        mRequest.endSign = 1;
-        mRequest.reason = "测试";
     }
 
     @Override
@@ -84,13 +84,20 @@ public class AskForLeaveActivity extends BaseActivity {
             ToastUtils.showShort(AskForLeaveActivity.this, "请假时间尚未全部设置");
             return;
         }
-//        mRequest.reason = binding.etLeaveReason.getText().toString();
+        mRequest.reason = binding.etLeaveReason.getText().toString();
         if (TextUtils.isEmpty(mRequest.reason)) {
             ToastUtils.showShort(AskForLeaveActivity.this, "请假事由尚未填写");
             return;
         }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String nowDay = sdf.format(new Date());
+        String begin = mRequest.beginTime + (mRequest.beginSign == 1 ? " 08:00:00" : " 12:00:00");
+        if (begin.compareTo(nowDay) < 0) {
+            ToastUtils.showShort(AskForLeaveActivity.this, "请假时间最早不能早于当前时间");
+            return;
+        }
         if (mRequest.beginTime.compareTo(mRequest.endTime) > 0 || (mRequest.beginTime.compareTo(mRequest.endTime) == 0 && mRequest.beginSign > mRequest.endSign)) {
-            ToastUtils.showShort(AskForLeaveActivity.this, "请假时间设置不正确");
+            ToastUtils.showShort(AskForLeaveActivity.this, "开始时间不能大于结束时间");
             return;
         }
         TipDialog dialog = new TipDialog(AskForLeaveActivity.this);
@@ -115,11 +122,43 @@ public class AskForLeaveActivity extends BaseActivity {
     }
 
     public void onStartTime(View view) {
+        ScrollSelectDialog dialog = new ScrollSelectDialog(AskForLeaveActivity.this, new ClickListenerInterface() {
+            @Override
+            public void doConfirm(String mark) {
+                binding.tvStarttime.setText(mark);
+                String[] strings = mark.split(" ");
+                mRequest.beginTime = strings[0];
+                mRequest.beginSign = strings[1].equals("上午") ? 1 : 2;
+            }
 
+            @Override
+            public void doCancel(String mark) {
+
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     public void onEndTime(View view) {
+        ScrollSelectDialog dialog = new ScrollSelectDialog(AskForLeaveActivity.this, new ClickListenerInterface() {
+            @Override
+            public void doConfirm(String mark) {
+                binding.tvEndtime.setText(mark);
+                String[] strings = mark.split(" ");
+                mRequest.endTime = strings[0];
+                mRequest.endSign = strings[1].equals("上午") ? 1 : 2;
+            }
 
+            @Override
+            public void doCancel(String mark) {
+
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     public void sendRequest() {
@@ -132,6 +171,7 @@ public class AskForLeaveActivity extends BaseActivity {
                 response = (BaseResponseBean) CommonUtils.generateEntityByGson(AskForLeaveActivity.this, s, response);
                 if (response != null) {
                     ToastUtils.showShort(AskForLeaveActivity.this, "提交成功");
+                    setResult(RESULT_OK);
                     finish();
                 }
             }

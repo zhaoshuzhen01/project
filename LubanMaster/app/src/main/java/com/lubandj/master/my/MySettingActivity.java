@@ -241,7 +241,7 @@ public class MySettingActivity extends PermissionActivity {
 
             @Override
             public void onResponse(String s) {
-                dialog.dismiss();
+                fastDismiss();
                 GetAddressReponse reponse = new GetAddressReponse();
                 reponse = (GetAddressReponse) CommonUtils.generateEntityByGson(MySettingActivity.this, s, reponse);
                 if (reponse != null) {
@@ -253,7 +253,7 @@ public class MySettingActivity extends PermissionActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                dialog.dismiss();
+                fastDismiss();
                 CommonUtils.fastShowError(MySettingActivity.this, volleyError);
             }
         });

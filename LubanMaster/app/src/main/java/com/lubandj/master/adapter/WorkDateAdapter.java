@@ -28,7 +28,7 @@ import java.util.Locale;
 public class WorkDateAdapter extends RecyclerView.Adapter<WorkDateAdapter.WorkDateViewHolder> {
     private LayoutInflater mInflater;
     private ArrayList<WorkDayBean> dataList;
-    private final int SHOW_NUM = 7;
+    private final int SHOW_NUM = 30;
     private int selectPos = 0;
     private View.OnClickListener mListener;
 

@@ -128,6 +128,17 @@ public class LeaveListActivity extends BaseActivity implements ILeaveRecordListv
     }
 
     public void onAskForLeave(View view) {
-        startActivity(AskForLeaveActivity.class, null);
+        Intent intent = new Intent(LeaveListActivity.this, AskForLeaveActivity.class);
+        startActivityForResult(intent, 101);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101) {
+            if (resultCode == RESULT_OK) {
+                onRefresh();
+            }
+        }
     }
 }
