@@ -30,7 +30,7 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
         //崩溃捕捉
         Thread.setDefaultUncaughtExceptionHandler(this);
         //百度地图
-        SDKInitializer.initialize(getApplicationContext());
+//        SDKInitializer.initialize(getApplicationContext());
     }
 
     public void setGetuiTag(int uid) {

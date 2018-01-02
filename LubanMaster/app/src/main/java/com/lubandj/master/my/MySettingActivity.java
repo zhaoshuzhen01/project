@@ -130,7 +130,7 @@ public class MySettingActivity extends PermissionActivity {
     public void onMyAddress(View view) {
         Intent intent = new Intent(MySettingActivity.this, MyAddressActivity.class);
         intent.putExtra("address", mBean);
-        startActivity(intent);
+        startActivityForResult(intent, 100);
     }
 
     /**
@@ -222,6 +222,10 @@ public class MySettingActivity extends PermissionActivity {
             }
         } else if (requestCode == 1001) {
             setPhone();
+        } else if (requestCode == 100) {
+            mBean = (AddressBean) data.getSerializableExtra("data");
+            if (mBean.housing_estate != null)
+                binding.tvSettingAddress.setText(mBean.housing_estate + "");
         }
     }
 

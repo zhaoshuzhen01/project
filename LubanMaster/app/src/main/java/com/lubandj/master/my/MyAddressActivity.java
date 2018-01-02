@@ -121,6 +121,9 @@ public class MyAddressActivity extends PermissionActivity {
                 bean = CommonUtils.generateEntityByGson(MyAddressActivity.this, s, bean);
                 if (bean != null) {
                     ToastUtils.showShort(MyAddressActivity.this, "保存成功");
+                    Intent intent = new Intent();
+                    intent.putExtra("data", mBean);
+                    setResult(RESULT_OK, intent);
                     finish();
                 }
             }

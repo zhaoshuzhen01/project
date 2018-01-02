@@ -1,22 +1,18 @@
 package com.lubandj.master.my;
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.location.Poi;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -25,7 +21,6 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
@@ -40,16 +35,10 @@ import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiIndoorResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
-import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
-import com.baidu.mapapi.search.sug.SuggestionResult;
-import com.baidu.mapapi.search.sug.SuggestionSearch;
-import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 import com.example.baselibrary.BaseActivity;
-import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.SelectAddressAdapter;
 import com.lubandj.master.been.AddressBean;
-import com.lubandj.master.databinding.ActivityMyaddressBinding;
 import com.lubandj.master.databinding.ActivitySelectaddressBinding;
 
 import java.util.List;
@@ -104,7 +93,8 @@ public class SelectAddressActivity extends BaseActivity implements BaiduMap.OnMa
         binding.lvAutoaddress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                mInfo = (PoiInfo) mAdapter.getItem(position);
+                returnAddress();
             }
         });
 
@@ -151,14 +141,6 @@ public class SelectAddressActivity extends BaseActivity implements BaiduMap.OnMa
             }
         });
 
-
-        binding.lvAutoaddress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mInfo = (PoiInfo) mAdapter.getItem(position);
-                returnAddress();
-            }
-        });
         binding.lvSearaddress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -346,6 +328,9 @@ public class SelectAddressActivity extends BaseActivity implements BaiduMap.OnMa
                 } else
                     binding.tvCitySelectaddress.setText(currentCity);
                 onGps(null);
+
+                LatLng cenpt = mBaiduMap.getMapStatus().target;
+                mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(cenpt));
             }
 //            String coorType = location.getCoorType();
             //获取经纬度坐标类型，以LocationClientOption中设置过的坐标类型为准
@@ -423,6 +408,7 @@ public class SelectAddressActivity extends BaseActivity implements BaiduMap.OnMa
         if (!acStateIsMap) {
             binding.llViewmap.setVisibility(View.VISIBLE);
             binding.lvSearaddress.setVisibility(View.GONE);
+            binding.etPalceSelectaddress.clearFocus();
             acStateIsMap = true;
         } else {
             super.onBackPressed();
