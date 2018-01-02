@@ -167,8 +167,11 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         worklists.clear();
         worklists.addAll(datas);
         workSheetAdapter.notifyDataSetChanged();
-        if (worklists.size()==0){
+        if (datas!=null&&datas.size()==0){
             ToastUtils.showShort(getActivity(),"暂无数据");
+        }
+        if (worklists.size()==0){
+            backLayout.setVisibility(View.VISIBLE);
         }
     }
 
