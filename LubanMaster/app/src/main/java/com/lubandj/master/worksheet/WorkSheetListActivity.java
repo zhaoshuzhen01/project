@@ -184,6 +184,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
 
     @Override
     public void onClick(View view) {
+        mDrawerLayout.closeDrawer(Gravity.LEFT);
         switch (view.getId()) {
             case R.id.ll_menu_service:
                 TipDialog dialog = new TipDialog(WorkSheetListActivity.this);
