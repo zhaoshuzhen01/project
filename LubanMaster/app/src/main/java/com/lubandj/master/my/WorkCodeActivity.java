@@ -90,21 +90,17 @@ public class WorkCodeActivity extends BaseActivity {
                 GetQrcodeReponse reponse = new GetQrcodeReponse();
                 reponse = (GetQrcodeReponse) CommonUtils.generateEntityByGson(WorkCodeActivity.this, s, reponse);
                 if (reponse != null) {
-                    ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(binding.ivQrcode, 0, 0);
-                    imageLoader.get(reponse.info.qrcode, imageListener);
+                    if (!TextUtils.isEmpty(reponse.info.qrcode)) {
+                        ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(binding.ivQrcode, 0, 0);
+                        imageLoader.get(reponse.info.qrcode, imageListener);
+                    }
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if (volleyError != null) {
-                    if (volleyError.networkResponse != null) {
-                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                        ToastUtils.showShort(WorkCodeActivity.this, format);
-                    }
-                    Logger.e(volleyError.getMessage());
-                }
+                CommonUtils.fastShowError(WorkCodeActivity.this, volleyError);
             }
         });
     }

@@ -144,12 +144,7 @@ public class ModifyPhoneActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if (volleyError != null) {
-                    if (volleyError.networkResponse != null) {
-                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                        ToastUtils.showShort(ModifyPhoneActivity.this, format);
-                    }
-                }
+                CommonUtils.fastShowError(ModifyPhoneActivity.this, volleyError);
             }
         });
     }

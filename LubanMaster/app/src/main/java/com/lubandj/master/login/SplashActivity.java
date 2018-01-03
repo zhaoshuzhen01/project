@@ -16,12 +16,11 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.databinding.ActivitySplashBinding;
-import com.lubandj.master.my.UserInfoRequest;
-import com.lubandj.master.my.UserInfoResponse;
+import com.lubandj.master.httpbean.UserInfoRequest;
+import com.lubandj.master.httpbean.UserInfoResponse;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.TaskEngine;
-import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 /**

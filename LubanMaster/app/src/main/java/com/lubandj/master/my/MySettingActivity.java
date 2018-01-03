@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -235,7 +236,8 @@ public class MySettingActivity extends PermissionActivity {
 
     public void loadFace() {
         ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(binding.ivSetHeadimg, R.drawable.default_header, R.drawable.default_header);
-        imageLoader.get(TApplication.context.mUserInfo.face_url, imageListener);
+        if (!TextUtils.isEmpty(TApplication.context.mUserInfo.face_url))
+            imageLoader.get(TApplication.context.mUserInfo.face_url, imageListener);
     }
 
     public void getAddress() {

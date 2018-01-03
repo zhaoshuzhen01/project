@@ -1,4 +1,4 @@
-package com.lubandj.master.my;
+package com.lubandj.master.httpbean;
 
 /**
  * function:

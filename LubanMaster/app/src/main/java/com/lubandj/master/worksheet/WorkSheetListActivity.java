@@ -180,26 +180,26 @@ public class WorkSheetListActivity extends TitleBaseActivity {
     public void loadFace() {
         ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(mIvHeadImg, R.drawable.default_header, R.drawable.default_header);
         if (!TextUtils.isEmpty(TApplication.context.mUserInfo.face_url))
-        imageLoader.get(TApplication.context.mUserInfo.face_url, imageListener);
+            imageLoader.get(TApplication.context.mUserInfo.face_url, imageListener);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case com.example.baselibrary.R.id.tv_basetitle_ok:
             case com.example.baselibrary.R.id.ll_basetitle_back1:
                 Intent intent = new Intent(this, MsgCenterActivity.class);
                 startActivity(intent);
                 break;
         }
-        leftClick = true ;
-        leftView = view ;
+        leftClick = true;
+        leftView = view;
         mDrawerLayout.closeDrawer(Gravity.LEFT);
     }
 
     @Override
     protected void clickMenu() {
-        leftClick = false ;
+        leftClick = false;
         switch (leftView.getId()) {
             case R.id.ll_menu_service:
                 TipDialog dialog = new TipDialog(WorkSheetListActivity.this);
