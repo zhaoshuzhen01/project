@@ -1,4 +1,4 @@
-package com.lubandj.master.my;
+package com.lubandj.master.httpbean;
 
 import com.lubandj.master.been.UserInfo;
 import com.lubandj.master.httpbean.BaseResponseBean;

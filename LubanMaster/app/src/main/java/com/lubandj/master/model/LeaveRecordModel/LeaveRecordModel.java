@@ -5,22 +5,13 @@ import android.content.Context;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.baselibrary.tools.ToastUtils;
-import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
-import com.lubandj.master.Presenter.LeaveRecordPresenter;
 import com.lubandj.master.R;
-import com.lubandj.master.TApplication;
-import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.httpbean.LeaveRecordResponse;
 import com.lubandj.master.httpbean.NetWorkListBeen;
-import com.lubandj.master.login.SplashActivity;
 import com.lubandj.master.model.BaseModel;
-import com.lubandj.master.my.UserInfoResponse;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
-import com.lubandj.master.worksheet.WorkSheetListActivity;
-
-import java.util.List;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/12/28.

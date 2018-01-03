@@ -20,12 +20,11 @@ import com.lubandj.master.TApplication;
 import com.lubandj.master.httpbean.BaseEntity;
 import com.lubandj.master.httpbean.LoginAppBean;
 import com.lubandj.master.httpbean.SendSmsBean;
-import com.lubandj.master.my.UserInfoResponse;
+import com.lubandj.master.httpbean.UserInfoResponse;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.SPUtils;
 import com.lubandj.master.utils.TaskEngine;
-import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 import butterknife.ButterKnife;
