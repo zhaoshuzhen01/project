@@ -26,6 +26,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
     protected NavigationView mNavigationView;
     private ImageView ivBaseTitleBack;
     protected View leftView ;
+    protected boolean leftClick = false ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -208,6 +209,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                if (leftClick)
                 clickMenu();
 
             }

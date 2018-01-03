@@ -192,12 +192,14 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 startActivity(intent);
                 break;
         }
+        leftClick = true ;
         leftView = view ;
         mDrawerLayout.closeDrawer(Gravity.LEFT);
     }
 
     @Override
     protected void clickMenu() {
+        leftClick = false ;
         switch (leftView.getId()) {
             case R.id.ll_menu_service:
                 TipDialog dialog = new TipDialog(WorkSheetListActivity.this);
