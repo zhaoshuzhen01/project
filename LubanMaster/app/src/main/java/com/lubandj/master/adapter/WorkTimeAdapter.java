@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lubandj.master.R;
@@ -105,6 +106,7 @@ public class WorkTimeAdapter extends BaseAdapter {
                     viewHolder.mTvTime.setTextColor(Color.parseColor("#999999"));
                     viewHolder.mTvState.setVisibility(View.VISIBLE);
                     viewHolder.mLl.setBackgroundColor(Color.WHITE);
+                    viewHolder.mRlRightMark.setVisibility(View.GONE);
                     flag = true;
                 }
             }
@@ -114,11 +116,13 @@ public class WorkTimeAdapter extends BaseAdapter {
                         viewHolder.mLl.setBackgroundColor(Color.parseColor("#e55c5e"));
                         viewHolder.mTvTime.setTextColor(Color.WHITE);
                         viewHolder.mTvState.setVisibility(View.GONE);
+                        viewHolder.mRlRightMark.setVisibility(View.VISIBLE);
                         flag = true;
                     } else if (currentTime.compareTo(workList.get(i).beginTime) > 0 && currentTime.compareTo(workList.get(i).endTime) <= 0) {
                         viewHolder.mLl.setBackgroundColor(Color.parseColor("#e55c5e"));
                         viewHolder.mTvTime.setTextColor(Color.WHITE);
                         viewHolder.mTvState.setVisibility(View.GONE);
+                        viewHolder.mRlRightMark.setVisibility(View.GONE);
                         flag = true;
                     }
                     if (flag) {
@@ -131,19 +135,22 @@ public class WorkTimeAdapter extends BaseAdapter {
             viewHolder.mTvTime.setTextColor(Color.parseColor("#333333"));
             viewHolder.mTvState.setVisibility(View.GONE);
             viewHolder.mLl.setBackgroundColor(Color.WHITE);
+            viewHolder.mRlRightMark.setVisibility(View.GONE);
         }
         return convertView;
     }
 
 
     class ViewHolder {
-        public LinearLayout mLl;
+        public RelativeLayout mLl;
+        public RelativeLayout mRlRightMark;
         public TextView mTvTime;
         public TextView mTvState;
 
 
         public ViewHolder(View view) {
             mLl = view.findViewById(R.id.ll_worktime);
+            mRlRightMark = view.findViewById(R.id.rl_right_mark);
             mTvTime = view.findViewById(R.id.tv_worktime_time);
             mTvState = view.findViewById(R.id.tv_worktime_state);
         }

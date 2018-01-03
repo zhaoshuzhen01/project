@@ -72,7 +72,7 @@ public class WorkDetailAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         WorkListBeen.InfoBean info = dataList.get(position);
-        viewHolder.mTvNum.setText(info.getTicketSn());
+        viewHolder.mTvNum.setText("工单号:    " + info.getTicketSn());
         viewHolder.mTvTime.setText(info.getTimeStr());
         viewHolder.mTvPlace.setText(info.getAddress());
         return convertView;

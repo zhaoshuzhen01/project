@@ -29,6 +29,7 @@ import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tablayout.CustomTabLayout;
 import com.example.baselibrary.tablayout.MyViewPagerAdapter;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.util.ActUtils;
 import com.example.baselibrary.util.PhotoUtil;
 import com.google.gson.JsonSyntaxException;
 import com.lubandj.master.Canstance;
@@ -383,7 +384,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();
-                System.exit(0);
+                ActUtils.getInstance().exitApp(WorkSheetListActivity.this);
             }
         }
     }

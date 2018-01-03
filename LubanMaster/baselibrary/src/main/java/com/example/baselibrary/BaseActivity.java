@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.util.ActUtils;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/11/26.
@@ -32,6 +33,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState, persistentState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
+
+        //将所有Acitivty添加入队列
+        ActUtils.getInstance().createActivity(this);
         /*setContentView(getLayout());
         initView();*/
 
