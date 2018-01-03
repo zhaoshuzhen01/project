@@ -43,7 +43,7 @@ public class MsgCenterPresenter implements ISheetlistPrester, IMsgCenterModel {
     public void getMoreData(int type) {
         loadMore = true ;
         if (mdatas!=null){
-            mstartIndex+=mdatas.size();
+            mstartIndex=mdatas.size()+1;
         }
         msgCenterModel.getReflushData(Canstance.TYPE_LIST_ALL,mstartIndex,PAGESIZE);
     }

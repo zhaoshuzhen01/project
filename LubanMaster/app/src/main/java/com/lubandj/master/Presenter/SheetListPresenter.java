@@ -55,7 +55,7 @@ public class SheetListPresenter implements ISheetlistPrester , IWorkModel {
         ++type;
         loadMore = true ;
         if (mdatas!=null){
-            mstartIndex+=mdatas.size();
+            mstartIndex=mdatas.size()+1;
         }
         switch (type) {
             case Canstance.TYPE_LIST_UNFINISH:
