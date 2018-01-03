@@ -61,7 +61,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
 
     @Override
     protected void clickMenu() {
-        
+
     }
 
     @Override

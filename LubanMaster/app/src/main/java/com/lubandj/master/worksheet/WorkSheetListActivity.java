@@ -185,6 +185,13 @@ public class WorkSheetListActivity extends TitleBaseActivity {
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case com.example.baselibrary.R.id.tv_basetitle_ok:
+            case com.example.baselibrary.R.id.ll_basetitle_back1:
+                Intent intent = new Intent(this, MsgCenterActivity.class);
+                startActivity(intent);
+                break;
+        }
         leftView = view ;
         mDrawerLayout.closeDrawer(Gravity.LEFT);
     }
@@ -243,11 +250,6 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 break;
             case R.id.ll_menu_setting:
                 startActivity(MySettingActivity.class, null);
-                break;
-            case com.example.baselibrary.R.id.tv_basetitle_ok:
-            case com.example.baselibrary.R.id.ll_basetitle_back1:
-                Intent intent = new Intent(this, MsgCenterActivity.class);
-                startActivity(intent);
                 break;
         }
     }
