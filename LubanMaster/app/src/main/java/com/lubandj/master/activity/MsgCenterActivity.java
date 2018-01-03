@@ -58,6 +58,12 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
     public void titleLeftClick() {
         finish();
     }
+
+    @Override
+    protected void clickMenu() {
+        
+    }
+
     @Override
     public void onClick(View view) {
 

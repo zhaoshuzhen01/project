@@ -25,7 +25,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mNavigationView;
     private ImageView ivBaseTitleBack;
-
+    protected View leftView ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +52,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
         ivBasetitleOK = findView(R.id.tv_basetitle_ok);
         titleRightLay = findView(R.id.ll_basetitle_back1);
         msgCount = findView(R.id.msgCount);
+        msgCount.setVisibility(View.GONE);
         titleRightLay.setOnClickListener(this);
         tv_basetitle_back = findView(R.id.tv_basetitle_back);
         llBasetitleBack.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +182,10 @@ public abstract class TitleBaseActivity extends BaseActivity {
         return ivBasetitleOK;
     }
 
+    /**
+     * 点击左边菜单
+     */
+    protected abstract   void clickMenu();
     private void initLeftMenu() {
 //        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
@@ -203,6 +208,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                clickMenu();
 
             }
 

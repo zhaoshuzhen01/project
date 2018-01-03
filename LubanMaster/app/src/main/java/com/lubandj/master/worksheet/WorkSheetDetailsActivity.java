@@ -84,6 +84,11 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
     }
 
     @Override
+    protected void clickMenu() {
+
+    }
+
+    @Override
     public int getLayout() {
         return R.layout.activity_work_sheet_details;
     }

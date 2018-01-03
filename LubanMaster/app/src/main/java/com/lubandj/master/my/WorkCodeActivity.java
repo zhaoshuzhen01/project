@@ -3,6 +3,7 @@ package com.lubandj.master.my;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.android.volley.Response;
@@ -45,7 +46,8 @@ public class WorkCodeActivity extends BaseActivity {
 
     public void loadFace(String url) {
         ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(binding.ivMenuHeadimg, R.drawable.default_header, R.drawable.default_header);
-        imageLoader.get(url, imageListener);
+        if (!TextUtils.isEmpty(url))
+            imageLoader.get(url, imageListener);
     }
 
     @Override

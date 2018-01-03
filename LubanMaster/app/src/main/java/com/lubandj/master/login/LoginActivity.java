@@ -229,4 +229,9 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
     public void titleLeftClick() {
         finish();
     }
+
+    @Override
+    protected void clickMenu() {
+
+    }
 }

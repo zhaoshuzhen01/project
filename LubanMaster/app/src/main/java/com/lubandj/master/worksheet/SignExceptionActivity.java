@@ -54,6 +54,11 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
     }
 
     @Override
+    protected void clickMenu() {
+
+    }
+
+    @Override
     public int getLayout() {
         return R.layout.activity_sign_exception;
     }
