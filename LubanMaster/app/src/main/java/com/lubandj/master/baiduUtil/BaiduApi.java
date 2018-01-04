@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.widget.ActionSheetDialog;
-import com.lubandj.master.utils.OpenLocalMapUtil;
 
 import java.net.URISyntaxException;
 
@@ -67,9 +65,15 @@ public class BaiduApi {
             return;
         }
         Intent intent = null;
+        String baiDuUri="baidumap://map/marker?location=%1$s,%2$s&title=%3$s&content=%4$s&traffic=on";
+        String baiDuUri2="baidumap://map/geocoder?src=openApiDemo&address=北京市海淀区上地信息路9号奎科科技大厦";
+        String baiDuUri3="baidumap://map/geocoder?location=40.047669,116.313082";
+
+        String gaoDeUri="androidamap://viewMap?sourceApplication=鹿班&poiname=百度奎科大厦&lat=40.047669&lon=116.313082&dev=0";
+        String gaoDeUri2="androidamap://keywordNavi?sourceApplication=鹿班&keyword=百度奎科大厦&style=2";
         try {
-            intent = isBaiduMap ? Intent.getIntent("intent://map/marker?location=40.047669,116.313082&title=我的位置&content =&src=yourCompanyName|yourAppName#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end") :
-                    Intent.getIntent("androidamap://viewMap?sourceApplication=鹿班&poiname=百度奎科大厦&lat=40.047669&lon=116.313082&dev=0");
+            intent = isBaiduMap ? Intent.getIntent(String.format(baiDuUri,"40.047669","116.313082",address,address)) :
+                    Intent.getIntent(gaoDeUri2);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -86,46 +90,6 @@ public class BaiduApi {
             return true;
         } catch (PackageManager.NameNotFoundException e) {
             return false;
-        }
-    }
-
-
-    /**
-     * 打开百度地图
-     */
-    private void openBaiduMap(Context context,double slat, double slon, String sname, double dlat, double dlon, String dname, String city) {
-        if (OpenLocalMapUtil.isBaiduMapInstalled()) {
-            try {
-                String uri = OpenLocalMapUtil.getBaiduMapUri(String.valueOf(slat), String.valueOf(slon), sname,
-                        String.valueOf(dlat), String.valueOf(dlon), dname, city, "");
-                Intent intent = Intent.parseUri(uri, 0);
-                context.startActivity(intent); //启动调用
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            ToastUtils.showShort(context, "请安装百度地图");
-        }
-    }
-
-
-    /**
-     * 打开高德地图
-     */
-    private void openGaoDeMap(Context context,double slat, double slon, String sname, double dlat, double dlon, String dname) {
-        if (OpenLocalMapUtil.isGdMapInstalled()) {
-            try {
-                String uri = OpenLocalMapUtil.getGdMapUri("鹿班", String.valueOf(slat), String.valueOf(slon),
-                        sname, String.valueOf(dlat), String.valueOf(dlon), dname);
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setPackage("com.autonavi.minimap");
-                intent.setData(Uri.parse(uri));
-                context.startActivity(intent); //启动调用
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            ToastUtils.showShort(context, "请安装高德地图");
         }
     }
 }
