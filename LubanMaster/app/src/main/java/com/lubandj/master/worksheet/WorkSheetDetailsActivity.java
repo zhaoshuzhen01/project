@@ -154,7 +154,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 // REFACTOR: 2017/12/26 待重构 定位
                 String address = tvAddressDesc.getText().toString();
                 if (!TextUtils.isEmpty(address)) {
-                    BaiduApi.getBaiduApi(this).baiduNavigation(address);
+                    BaiduApi.getBaiduApi().baiduNavigation(this,address);
                 }
                 break;
             case R.id.tv_copy:
@@ -176,7 +176,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_basetitle_ok:
-                String serviceNum = "10086";
+                String serviceNum = "4006-388-818";
                 callToClient(serviceNum, getString(R.string.txt_confirm_remind), String.format(getString(R.string.txt_confirm_call_service), serviceNum));
                 break;
             default:
@@ -292,7 +292,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         for (int i = 0; i < serviceItem.size(); i++) {
             WorkSheetDetailBean.InfoBean.ServiceItemBean serviceItemBean = serviceItem.get(i);
             WorkSheetDetailItem workSheetDetailItem = new WorkSheetDetailItem(this);
-            workSheetDetailItem.initData(serviceItemBean.getItem(), serviceItemBean.getNum());
+            workSheetDetailItem.initData(serviceItemBean.getItem(), serviceItemBean.getStatus());
             if (i != 0) {
                 workSheetDetailItem.setLayoutParams(layoutParams);
             }
