@@ -99,7 +99,7 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
                 }
                 break;
             case R.id.daohangState:
-                BaiduApi.getBaiduApi(context).baiduNavigation("address");
+                BaiduApi.getBaiduApi().baiduNavigation(context,"address");
                 break;
         }
     }

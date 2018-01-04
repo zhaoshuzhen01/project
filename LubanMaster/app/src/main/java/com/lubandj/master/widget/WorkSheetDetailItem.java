@@ -62,8 +62,10 @@ public class WorkSheetDetailItem extends LinearLayout {
         tvSheetItem.setText(item);
         if (TextUtils.equals(count, "1")) {
             ivStatus.setSelected(false);
-        } else {
+        } else if (TextUtils.equals(count, "0")) {
             ivStatus.setSelected(true);
+        } else {
+            ivStatus.setVisibility(GONE);
         }
     }
 }
