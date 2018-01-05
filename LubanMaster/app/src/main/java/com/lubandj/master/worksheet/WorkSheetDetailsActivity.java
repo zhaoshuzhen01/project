@@ -148,7 +148,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 if (TextUtils.isEmpty(s)) {
                     return;
                 }
-                callToClient(s, getString(R.string.txt_calling), String.format(getString(R.string.txt_make_sure_phone), s));
+                callToClient(s,  String.format(getString(R.string.txt_make_sure_phone), s));
                 break;
             case R.id.iv_address_icon:
                 // REFACTOR: 2017/12/26 待重构 定位
@@ -177,7 +177,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         switch (v.getId()) {
             case R.id.tv_basetitle_ok:
                 String serviceNum = "4006-388-818";
-                callToClient(serviceNum, getString(R.string.txt_confirm_remind), String.format(getString(R.string.txt_confirm_call_service), serviceNum));
+                callToClient(serviceNum,  String.format(getString(R.string.txt_confirm_call_service), serviceNum));
                 break;
             default:
                 break;

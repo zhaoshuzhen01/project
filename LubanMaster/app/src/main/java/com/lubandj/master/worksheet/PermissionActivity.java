@@ -27,10 +27,9 @@ public abstract class PermissionActivity extends TitleBaseActivity {
 
 
 
-    public void callToClient(final String phoneNum,String title,String msg) {
+    public void callToClient(final String phoneNum,String msg) {
         new AlertDialog(this)
                 .builder()
-                .setTitle(title)
                 .setMsg(msg)
                 .setPositiveButton(getString(R.string.txt_sure), new View.OnClickListener() {
                     @Override

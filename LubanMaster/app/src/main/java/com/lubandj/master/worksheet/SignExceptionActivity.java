@@ -233,7 +233,7 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
         switch (v.getId()) {
             case R.id.tv_basetitle_ok:
                 String serviceNum = "10086";
-                callToClient(serviceNum, getString(R.string.txt_confirm_remind), String.format(getString(R.string.txt_confirm_call_service), serviceNum));
+                callToClient(serviceNum,  String.format(getString(R.string.txt_confirm_call_service), serviceNum));
                 break;
             default:
                 break;
