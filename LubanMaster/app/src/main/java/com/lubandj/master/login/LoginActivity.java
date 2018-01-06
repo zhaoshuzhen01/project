@@ -134,8 +134,10 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                         dialog.dismiss();
                         BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
                         if (baseEntity != null) {
+                            if (baseEntity.getCode() == 0) {
+                                mHandler.sendEmptyMessage(0);
+                            }
                             ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
-                            mHandler.sendEmptyMessage(0);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -146,9 +148,8 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                             if (volleyError.networkResponse != null) {
                                 String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
                                 ToastUtils.showShort(LoginActivity.this, format);
-
+                                Logger.e(volleyError.getMessage());
                             }
-                            Logger.e(volleyError.getMessage());
                         }
                     }
                 });

@@ -13,4 +13,7 @@ public class UserInfo {
     public String token;
     public String face_url;
     public String nickname;
+    public String uuid;
+    public String link;
+    public String qrcode;
 }

@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.util.ActUtils;
 import com.example.baselibrary.util.PhotoUtil;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
@@ -148,8 +149,8 @@ public class MySettingActivity extends PermissionActivity {
             public void onClick(View button, TipDialog dialog) {
                 CommonUtils.setToken("");
                 CommonUtils.setUid(-1);
+                ActUtils.getInstance().finishAllALiveAcitity();
                 startActivity(LoginActivity.class, null);
-                finish();
                 dialog.dismiss();
             }
         });

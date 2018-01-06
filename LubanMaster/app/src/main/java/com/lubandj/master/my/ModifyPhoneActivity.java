@@ -133,11 +133,15 @@ public class ModifyPhoneActivity extends BaseActivity {
                 BaseResponseBean response = new BaseResponseBean();
                 response = CommonUtils.generateEntityByGson(ModifyPhoneActivity.this, s, response);
                 if (response != null) {
-                    ToastUtils.showShort(ModifyPhoneActivity.this, response.message);
-                    COUNT_DOWN_TIME = 60;
-                    binding.btnSendCode.setEnabled(false);
-                    mHandler.sendEmptyMessage(0);
-                    isSendCode = true;
+                    if (response.code == 0) {
+                        ToastUtils.showShort(ModifyPhoneActivity.this, response.message);
+                        COUNT_DOWN_TIME = 60;
+                        binding.btnSendCode.setEnabled(false);
+                        mHandler.sendEmptyMessage(0);
+                        isSendCode = true;
+                    } else {
+                        ToastUtils.showShort(ModifyPhoneActivity.this, response.message);
+                    }
                 }
             }
         }, new Response.ErrorListener() {

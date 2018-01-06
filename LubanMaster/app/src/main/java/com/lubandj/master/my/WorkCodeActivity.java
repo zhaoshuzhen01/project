@@ -41,7 +41,12 @@ public class WorkCodeActivity extends BaseActivity {
         imageLoader = new ImageLoader(TaskEngine.getInstance().getQueue(), new BitmapCache());
         loadFace(TApplication.context.mUserInfo.face_url);
         binding.tvMenuName.setText(TApplication.context.mUserInfo.nickname + "");
-        getQrcode();
+//        getQrcode();
+
+        if (!TextUtils.isEmpty(TApplication.context.mUserInfo.qrcode)) {
+            ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(binding.ivQrcode, 0, 0);
+            imageLoader.get(TApplication.context.mUserInfo.qrcode, imageListener);
+        }
     }
 
     public void loadFace(String url) {
