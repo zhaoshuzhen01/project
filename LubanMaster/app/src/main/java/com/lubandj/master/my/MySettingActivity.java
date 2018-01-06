@@ -58,9 +58,11 @@ public class MySettingActivity extends PermissionActivity {
         loadFace();
         UserInfo info = TApplication.context.mUserInfo;
         binding.tvSettingName.setText(info.nickname);
-        binding.tvSettingNum.setText("");
+        binding.tvSettingNum.setText(info.uuid);
         setPhone();
         getAddress();
+
+        setResult(RESULT_CANCELED);
     }
 
     @Override
@@ -149,8 +151,9 @@ public class MySettingActivity extends PermissionActivity {
             public void onClick(View button, TipDialog dialog) {
                 CommonUtils.setToken("");
                 CommonUtils.setUid(-1);
-                ActUtils.getInstance().finishAllALiveAcitity();
-                startActivity(LoginActivity.class, null);
+                MySettingActivity.this.setResult(RESULT_OK);
+                MySettingActivity.this.startActivity(LoginActivity.class, null);
+                MySettingActivity.this.finish();
                 dialog.dismiss();
             }
         });
