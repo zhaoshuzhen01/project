@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.baselibrary.util.ActUtils;
+
 /**
  * Created by ${zhaoshuzhen} on 2017/11/26.
  */
@@ -31,7 +33,6 @@ public abstract class TitleBaseActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
-
         findView();
         setContentView(getLayout());
         initView();
