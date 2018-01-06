@@ -251,7 +251,8 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 startActivity(LeaveListActivity.class, null);
                 break;
             case R.id.ll_menu_setting:
-                startActivity(MySettingActivity.class, null);
+                Intent intent = new Intent(WorkSheetListActivity.this, MySettingActivity.class);
+                startActivityForResult(intent, 3030);
                 break;
         }
     }
@@ -378,6 +379,8 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                         }
                     }
                 });
+            } else if (requestCode == 3030) {
+                finish();
             } else {
                 ToastUtils.showShort(WorkSheetListActivity.this, "网络未连接");
             }

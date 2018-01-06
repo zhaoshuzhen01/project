@@ -53,5 +53,5 @@ public class Canstance {
     public static final String KEY_SHEET_STATUS_ON_ROAD = "2";
     public static final String KEY_SHEET_STATUS_IN_SERVICE = "3";
     public static final String KEY_SHEET_STATUS_COMPLETED = "4";
-    public static final String KEY_SHEET_STATUS_CANCELED = "5";
+    public static final String KEY_SHEET_STATUS_CANCELED = "6";
 }

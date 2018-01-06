@@ -6,11 +6,13 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.util.ActUtils;
 import com.example.baselibrary.util.RegexUtils;
 import com.example.baselibrary.widget.EditTextWithDel;
 import com.google.gson.Gson;
@@ -134,8 +136,10 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                         dialog.dismiss();
                         BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
                         if (baseEntity != null) {
+                            if (baseEntity.getCode() == 0) {
+                                mHandler.sendEmptyMessage(0);
+                            }
                             ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
-                            mHandler.sendEmptyMessage(0);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -146,9 +150,8 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                             if (volleyError.networkResponse != null) {
                                 String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
                                 ToastUtils.showShort(LoginActivity.this, format);
-
+                                Logger.e(volleyError.getMessage());
                             }
-                            Logger.e(volleyError.getMessage());
                         }
                     }
                 });
@@ -232,5 +235,19 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
     @Override
     protected void clickMenu() {
 
+    }
+
+    private long exitTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getApplicationContext(), "再按一次退出",
+                    Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            ActUtils.getInstance().exitApp(LoginActivity.this);
+        }
     }
 }

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.example.baselibrary.util.ActUtils;
 import com.igexin.sdk.PushConsts;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.Tag;
@@ -99,5 +100,6 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         e.printStackTrace();
+        ActUtils.getInstance().exitApp(this);
     }
 }

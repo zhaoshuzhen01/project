@@ -15,16 +15,16 @@ import java.net.URISyntaxException;
  */
 
 public class BaiduApi {
-    private static BaiduApi baiduApi = null ;
-    private Context context ;
-    private BaiduApi(Context context){
-        this.context = context ;
+    private static BaiduApi baiduApi = null;
+
+    private BaiduApi() {
     }
-    public static BaiduApi getBaiduApi(Context context){
-        if (baiduApi==null){
-            synchronized (BaiduApi.class){
-                if (baiduApi==null){
-                    baiduApi = new BaiduApi(context);
+
+    public static BaiduApi getBaiduApi() {
+        if (baiduApi == null) {
+            synchronized (BaiduApi.class) {
+                if (baiduApi == null) {
+                    baiduApi = new BaiduApi();
                 }
             }
         }
@@ -33,9 +33,10 @@ public class BaiduApi {
 
     /**
      * 导航
+     *
      * @param address
      */
-    public void baiduNavigation(final String address){
+    public void baiduNavigation(final Context context, final String address) {
         new ActionSheetDialog(context)
                 .builder()
                 .setCancelable(true)
@@ -45,7 +46,7 @@ public class BaiduApi {
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                openMap(false,address);
+                                openMap(context,false, address);
                             }
                         })
                 .addSheetItem("百度地图",
@@ -53,19 +54,26 @@ public class BaiduApi {
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                openMap(true,address);
+                                openMap(context,true, address);
                             }
                         }).show();
     }
-    private void openMap(boolean isBaiduMap,String address) {
+
+    private void openMap(Context context,boolean isBaiduMap, String address) {
         if (!checkApkExist(context, isBaiduMap ? "com.baidu.BaiduMap" : "com.autonavi.minimap")) {
-            ToastUtils.showShort(context,isBaiduMap ? "请安装百度地图" : "请安装高德地图");
+            ToastUtils.showShort(context, isBaiduMap ? "请安装百度地图" : "请安装高德地图");
             return;
         }
         Intent intent = null;
+        String baiDuUri="baidumap://map/marker?location=%1$s,%2$s&title=%3$s&content=%4$s&traffic=on";
+        String baiDuUri2="baidumap://map/geocoder?src=openApiDemo&address=北京市海淀区上地信息路9号奎科科技大厦";
+        String baiDuUri3="baidumap://map/geocoder?location=40.047669,116.313082";
+
+        String gaoDeUri="androidamap://viewMap?sourceApplication=鹿班&poiname=百度奎科大厦&lat=40.047669&lon=116.313082&dev=0";
+        String gaoDeUri2="androidamap://keywordNavi?sourceApplication=鹿班&keyword=百度奎科大厦&style=2";
         try {
-            intent = isBaiduMap ? Intent.getIntent("intent://map/marker?location=40.047669,116.313082&title=我的位置&content =&src=yourCompanyName|yourAppName#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end") :
-                    Intent.getIntent("androidamap://viewMap?sourceApplication=厦门通&poiname=百度奎科大厦&lat=40.047669&lon=116.313082&dev=0");
+            intent = isBaiduMap ? Intent.getIntent(String.format(baiDuUri,"40.047669","116.313082",address,address)) :
+                    Intent.getIntent(gaoDeUri2);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

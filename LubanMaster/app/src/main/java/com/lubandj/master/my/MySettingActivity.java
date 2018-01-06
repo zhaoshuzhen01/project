@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.util.ActUtils;
 import com.example.baselibrary.util.PhotoUtil;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
@@ -57,9 +58,11 @@ public class MySettingActivity extends PermissionActivity {
         loadFace();
         UserInfo info = TApplication.context.mUserInfo;
         binding.tvSettingName.setText(info.nickname);
-        binding.tvSettingNum.setText("");
+        binding.tvSettingNum.setText(info.uuid);
         setPhone();
         getAddress();
+
+        setResult(RESULT_CANCELED);
     }
 
     @Override
@@ -148,8 +151,9 @@ public class MySettingActivity extends PermissionActivity {
             public void onClick(View button, TipDialog dialog) {
                 CommonUtils.setToken("");
                 CommonUtils.setUid(-1);
-                startActivity(LoginActivity.class, null);
-                finish();
+                MySettingActivity.this.setResult(RESULT_OK);
+                MySettingActivity.this.startActivity(LoginActivity.class, null);
+                MySettingActivity.this.finish();
                 dialog.dismiss();
             }
         });
