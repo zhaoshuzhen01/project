@@ -193,11 +193,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                View content = mDrawerLayout.getChildAt(0);
-                View menu = drawerView;
 
-                float scale = 1 - slideOffset;//1~0
-                content.setTranslationX((float) ((menu.getMeasuredWidth() * (1 - scale)) * 0.5));//0~width
             }
 
             @Override
@@ -208,15 +204,13 @@ public abstract class TitleBaseActivity extends BaseActivity {
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 if (leftClick)
-                clickMenu();
-
+                    clickMenu();
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
 
             @Override
             public void onDrawerStateChanged(int newState) {
-
             }
         });
     }

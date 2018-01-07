@@ -194,7 +194,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         }
         leftClick = true;
         leftView = view;
-        mDrawerLayout.closeDrawer(Gravity.LEFT);
+        mDrawerLayout.closeDrawer(Gravity.LEFT,false);
     }
 
     @Override
