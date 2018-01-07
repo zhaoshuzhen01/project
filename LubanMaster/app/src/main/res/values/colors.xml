@@ -128,6 +128,7 @@
     <color name="color_707070">#707070</color>
 
     <color name="color_line">#cfcfcf</color>
+    <color name="splash_status_bar">#FD5177</color>
 
     <color name="menu_item_pressed">#f2f1f1</color>
 </resources>

@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.ActUtils;
+import com.example.baselibrary.util.StatusBarUtils;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/11/26.
@@ -42,6 +43,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtils.setWindowStatusBarColor(this, R.color.white);
+        StatusBarUtils.StatusBarLightMode(this);
         ActUtils.getInstance().createActivity(this);
     }
 
