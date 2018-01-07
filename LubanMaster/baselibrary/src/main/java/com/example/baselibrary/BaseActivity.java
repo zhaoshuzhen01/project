@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.ActUtils;
+import com.example.baselibrary.util.StatusBarUtils;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/11/26.
@@ -27,7 +28,6 @@ import com.example.baselibrary.util.ActUtils;
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
     public ProgressDialog dialog;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
@@ -35,10 +35,17 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         getSupportActionBar().hide();
 
         //将所有Acitivty添加入队列
-        ActUtils.getInstance().createActivity(this);
         /*setContentView(getLayout());
         initView();*/
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatusBarUtils.setWindowStatusBarColor(this, R.color.white);
+        StatusBarUtils.StatusBarLightMode(this);
+        ActUtils.getInstance().createActivity(this);
     }
 
     public abstract int getLayout();

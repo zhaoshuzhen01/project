@@ -95,6 +95,7 @@ public class ActUtils {
      */
     public void exitApp(Context context) {
         finishAllALiveAcitity();
+
         System.exit(0);
     }
 

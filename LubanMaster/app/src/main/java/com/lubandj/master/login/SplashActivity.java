@@ -20,6 +20,7 @@ import com.lubandj.master.httpbean.UserInfoRequest;
 import com.lubandj.master.httpbean.UserInfoResponse;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
+import com.lubandj.master.utils.StatusBarUtils;
 import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
 
@@ -37,7 +38,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
-
+        StatusBarUtils.setWindowStatusBarColor(SplashActivity.this, R.color.splash_status_bar);
         if (TextUtils.isEmpty(CommonUtils.getToken()))//无登录信息
             mHandler.sendMessageDelayed(mHandler.obtainMessage(0), 500);
         else
