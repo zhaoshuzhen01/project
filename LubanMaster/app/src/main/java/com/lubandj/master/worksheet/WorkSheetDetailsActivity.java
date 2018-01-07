@@ -276,7 +276,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         tvPhoneNum.setText(info.getCustPhone());
         tvAddressDesc.setText(info.getAddress());
         tvContactName.setText(info.getCustName());
-        tvTime.setText(info.getOrderTime());
+        tvTime.setText(info.getBeginTime());
         tvReMark.setText(info.getRemark());
         tvWorkSheetNo.setText(info.getTicketSn());
 
