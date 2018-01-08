@@ -266,7 +266,8 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 ivPhoneIcon.setEnabled(false);
                 ivAddressIcon.setEnabled(false);
                 llBtn.setVisibility(View.GONE);
-                llCancelReason.setVisibility(View.VISIBLE);
+                // REFACTOR: 2018/1/8 待重构 取消原因
+                llCancelReason.setVisibility(View.GONE);
                 break;
             default:
                 break;
