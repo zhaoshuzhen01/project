@@ -291,12 +291,14 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         layoutParams.topMargin = (int) getResources().getDimension(R.dimen.h_8dp);
         for (int i = 0; i < serviceItem.size(); i++) {
             WorkSheetDetailBean.InfoBean.ServiceItemBean serviceItemBean = serviceItem.get(i);
-            WorkSheetDetailItem workSheetDetailItem = new WorkSheetDetailItem(this);
-            workSheetDetailItem.initData(serviceItemBean.getItem(), serviceItemBean.getStatus());
-            if (i != 0) {
-                workSheetDetailItem.setLayoutParams(layoutParams);
+            if(serviceItemBean!=null){
+                WorkSheetDetailItem workSheetDetailItem = new WorkSheetDetailItem(this);
+                workSheetDetailItem.initData(serviceItemBean);
+                if (i != 0) {
+                    workSheetDetailItem.setLayoutParams(layoutParams);
+                }
+                llDetailItems.addView(workSheetDetailItem);
             }
-            llDetailItems.addView(workSheetDetailItem);
         }
     }
 
