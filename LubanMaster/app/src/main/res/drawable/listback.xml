@@ -5,7 +5,7 @@
     <!-- 边框 -->
     <stroke
         android:color="@color/color_666"
-        android:width="1dp"/>
+        android:width="0.5dp"/>
 
     <!-- 形状颜色（如果需要的是空心矩形, 则形状颜色设置为透明） -->
     <solid

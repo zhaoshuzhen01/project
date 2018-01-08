@@ -236,17 +236,17 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         status = info.getStatus();
         switch (status) {
             case Canstance.KEY_SHEET_STATUS_TO_PERFORM:
-                ivStateIcon.setImageResource(R.drawable.ic_details_to_perform);
+                ivStateIcon.setImageResource(R.drawable.workwait);
                 btnStartServer.setText(R.string.txt_work_sheet_details_on_road);
                 updateStatus = 2;
                 break;
             case Canstance.KEY_SHEET_STATUS_ON_ROAD:
-                ivStateIcon.setImageResource(R.drawable.ic_details_on_road);
+                ivStateIcon.setImageResource(R.drawable.workpath);
                 btnStartServer.setText(R.string.txt_work_sheet_details_start_service);
                 updateStatus = 3;
                 break;
             case Canstance.KEY_SHEET_STATUS_IN_SERVICE:
-                ivStateIcon.setImageResource(R.drawable.ic_details_in_service);
+                ivStateIcon.setImageResource(R.drawable.workservie);
                 btnStartServer.setText(R.string.txt_work_sheet_details_service_completed);
                 updateStatus = 4;
                 ivPhoneIcon.setEnabled(false);
