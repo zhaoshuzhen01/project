@@ -118,7 +118,7 @@ public class WorkTimeAdapter extends BaseAdapter {
                         viewHolder.mTvState.setVisibility(View.GONE);
                         viewHolder.mRlRightMark.setVisibility(View.VISIBLE);
                         flag = true;
-                    } else if (currentTime.compareTo(workList.get(i).beginTime) > 0 && currentTime.compareTo(workList.get(i).endTime) <= 0) {
+                    } else if (currentTime.compareTo(workList.get(i).beginTime) > 0 && currentTime.compareTo(workList.get(i).endTime) < 0) {
                         viewHolder.mLl.setBackgroundColor(Color.parseColor("#e55c5e"));
                         viewHolder.mTvTime.setTextColor(Color.WHITE);
                         viewHolder.mTvState.setVisibility(View.GONE);
