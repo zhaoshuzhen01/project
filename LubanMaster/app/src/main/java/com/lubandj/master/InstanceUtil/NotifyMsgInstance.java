@@ -11,6 +11,7 @@ import java.util.List;
 
 public class NotifyMsgInstance {
    private List<MsgCenterBeen.InfoBean.ListBean>beens= new ArrayList<MsgCenterBeen.InfoBean.ListBean>();
+   private List<String>msgs = new ArrayList<>();
     private static class SingletonHolder {
         private static NotifyMsgInstance instance = new NotifyMsgInstance();
     }
@@ -34,5 +35,15 @@ public class NotifyMsgInstance {
     }
     public List<MsgCenterBeen.InfoBean.ListBean> getNotifyBeens(){
         return beens ;
+    }
+
+    public void addMsg(String msg){
+        msgs.add(msg);
+    }
+    public List<String> getMsgs(){
+        return msgs;
+    }
+    public void clearMsgs(){
+        msgs.clear();
     }
 }

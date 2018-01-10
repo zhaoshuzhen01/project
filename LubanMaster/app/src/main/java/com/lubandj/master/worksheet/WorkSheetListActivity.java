@@ -41,6 +41,7 @@ import com.lubandj.master.activity.MsgCenterActivity;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.UserInfo;
 import com.lubandj.master.customview.RoundImageView;
+import com.lubandj.master.db.DbInstance;
 import com.lubandj.master.dialog.TipDialog;
 import com.lubandj.master.fragment.WorkSheetFragment;
 import com.lubandj.master.dialog.DoubleSelectDialog;
@@ -195,6 +196,10 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             case com.example.baselibrary.R.id.ll_basetitle_back1:
                 Intent intent = new Intent(this, MsgCenterActivity.class);
                 startActivity(intent);
+                int count = CommonUtils.getMsgCount();
+                if (count>0){
+                    DbInstance.getInstance().insertDatas();
+                }
                 break;
         }
         leftClick = true;

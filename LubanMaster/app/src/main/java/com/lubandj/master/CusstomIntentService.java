@@ -81,6 +81,7 @@ public class CusstomIntentService extends GTIntentService {
     // 推送通知栏设置
     public void shownotification(String msg,Context context) {
         CommonUtils.setMsgCount(1);
+        NotifyMsgInstance.getInstance().addMsg(msg);
         MsgCenterBeen.InfoBean.ListBean listBean = new Gson().fromJson(msg,MsgCenterBeen.InfoBean.ListBean.class);
         NotifyMsgInstance.getInstance().addNotifyBeens(listBean);
         RxBus.getInstance().post(new MsgCenterBeen());

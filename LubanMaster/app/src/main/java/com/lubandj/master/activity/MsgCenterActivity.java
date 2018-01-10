@@ -14,6 +14,7 @@ import com.lubandj.master.R;
 import com.lubandj.master.adapter.MsgCenterAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.TestBean;
+import com.lubandj.master.db.DbInstance;
 import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
 
     @Override
     public void initView() {
+        DbInstance.getInstance().queryDatas();
         msgBeens = NotifyMsgInstance.getInstance().getNotifyBeens();
         CommonUtils.setMsgCount(0);
         ButterKnife.inject(this);
