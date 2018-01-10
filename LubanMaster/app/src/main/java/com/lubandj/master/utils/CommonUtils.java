@@ -177,6 +177,7 @@ public class CommonUtils {
      */
     public static void logOut(Context context) {
         PushManager.getInstance().unBindAlias(context, CommonUtils.getUid() + "", false);
+        TApplication.context.setGetuiTag(-1);
         CommonUtils.setToken("");
         CommonUtils.setUid(-1);
         ActUtils.getInstance().finishAllALiveAcitity();

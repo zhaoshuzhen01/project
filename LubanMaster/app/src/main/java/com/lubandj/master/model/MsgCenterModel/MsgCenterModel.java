@@ -11,6 +11,7 @@ import com.lubandj.master.R;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.model.BaseModel;
 import com.lubandj.master.httpbean.NetWorkListBeen;
+import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
 
 import java.util.List;
@@ -42,8 +43,10 @@ public class MsgCenterModel extends BaseModel {
                         if (datas!=null)
                             iMsgCenterModel.getMsgCenterLists(datas);
                         if (datas.size()==0){
-                            ToastUtils.showShort(context,"暂无数据");
+//                            ToastUtils.showShort(context,"暂无数据");
                         }
+                    }else if (msgCenterBeen.getCode()==104){
+                        CommonUtils.tokenNullDeal(context);
                     }
                 }
 

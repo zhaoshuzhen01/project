@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 
 import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tools.NotificationUtil;
@@ -15,8 +16,11 @@ import com.igexin.sdk.PushManager;
 import com.igexin.sdk.message.GTCmdMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
 import com.lubandj.master.InstanceUtil.NotifyMsgInstance;
+import com.lubandj.master.activity.MsgCenterActivity;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.dialog.TipDialog;
 import com.lubandj.master.utils.CommonUtils;
+import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 import org.json.JSONObject;
@@ -57,7 +61,7 @@ public class CusstomIntentService extends GTIntentService {
         } else {
             String data = new String(payload);
             shownotification(data,context);
-            NotificationUtil.initNotification(this);
+//            NotificationUtil.initNotification(this);
         }
     }
 
@@ -95,9 +99,8 @@ public class CusstomIntentService extends GTIntentService {
         // 点击事件设置
         Intent appIntent = new Intent(Intent.ACTION_MAIN);
         appIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        appIntent.setClass(context, WorkSheetListActivity.class);
-        appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        appIntent.setClass(context, MsgCenterActivity.class);
+        appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
        /* Bundle bundle = new Bundle();
         bundle.putSerializable(Intents.MSG_OBJECT, meBill);
@@ -106,7 +109,7 @@ public class CusstomIntentService extends GTIntentService {
         // 通知生成
         NotificationManager barmanager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        int icon = R.mipmap.ic_launcher;
+        int icon = R.drawable.icon;
 
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -114,8 +117,8 @@ public class CusstomIntentService extends GTIntentService {
         Notification.Builder builder = new Notification.Builder(context);
         builder.setSmallIcon(icon).setTicker("您有新的消息要查看");
 
-        String title = msg;
-        String text = msg;
+        String title = listBean.getTitle();
+        String text = listBean.getContent();
         builder.setContentTitle(title).setContentText(text)
                 .setContentIntent(contentIntent);
 
@@ -128,4 +131,6 @@ public class CusstomIntentService extends GTIntentService {
         barmanager.notify(System.currentTimeMillis() + "", 2008, notice);
 
     }
+
+
 }

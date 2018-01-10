@@ -1,6 +1,7 @@
 package com.lubandj.master.worksheet;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -28,6 +29,7 @@ import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tablayout.CustomTabLayout;
 import com.example.baselibrary.tablayout.MyViewPagerAdapter;
+import com.example.baselibrary.tools.NotificationUtil;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.ActUtils;
 import com.example.baselibrary.util.PhotoUtil;
@@ -119,6 +121,9 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             public void call(MsgCenterBeen userBean) {
                 Log.e("deal", "received :" + userBean.toString());
                 onResume();
+                if (!NotificationUtil.isNotificationEnabled(WorkSheetListActivity.this)){
+                notifyMes(WorkSheetListActivity.this);
+            }
             }
         });
     }
@@ -401,5 +406,26 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 ActUtils.getInstance().exitApp(WorkSheetListActivity.this);
             }
         }
+    }
+    private void notifyMes(final Context context){
+        TipDialog outDialog = new TipDialog(context);
+        outDialog.setNoPomptTitle();
+        outDialog.setTextDes("打开通知权限");
+        outDialog.setButton1("确定", new TipDialog.DialogButtonOnClickListener() {
+            @Override
+            public void onClick(View button, TipDialog dialog) {
+                dialog.dismiss();
+                NotificationUtil.goToSet(context);
+            }
+        });
+        outDialog.setButton2("取消", new TipDialog.DialogButtonOnClickListener() {
+            @Override
+            public void onClick(View button, TipDialog dialog) {
+                dialog.dismiss();
+            }
+        });
+        outDialog.setCancelable(false);
+        outDialog.setCanceledOnTouchOutside(false);
+        outDialog.show();
     }
 }
