@@ -1,6 +1,7 @@
 package com.lubandj.master.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.provider.Settings;
@@ -11,11 +12,14 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.example.baselibrary.net.BaseResponse;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.util.ActUtils;
 import com.google.gson.Gson;
+import com.igexin.sdk.PushManager;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.httpbean.BaseResponseBean;
+import com.lubandj.master.login.LoginActivity;
 import com.lubandj.master.my.MyAddressActivity;
 import com.lubandj.master.my.MySettingActivity;
 
@@ -97,9 +101,12 @@ public class CommonUtils {
             bean = new Gson().fromJson(result, rb.getClass());
             if (bean != null) {//解析未错
                 if (bean.code != 0) {
-//                    ToastUtils.showShort(context, bean.message);
-                    Toast.makeText(context, bean.message, Toast.LENGTH_SHORT).show();
-                    bean = null;
+                    if (bean.code == 104) {
+                        CommonUtils.tokenNullDeal(context);
+                    } else {
+                        Toast.makeText(context, bean.message, Toast.LENGTH_SHORT).show();
+                        bean = null;
+                    }
                 }
             }
         } catch (Exception e) {
@@ -157,4 +164,22 @@ public class CommonUtils {
     }
 
 
+    /**
+     * token失效时处理
+     */
+    public static void tokenNullDeal(Context context) {
+        ToastUtils.showShort(context, "您的登录信息已失效，请重新登录");
+        logOut(context);
+    }
+
+    /**
+     * 登出
+     */
+    public static void logOut(Context context) {
+        PushManager.getInstance().unBindAlias(context, CommonUtils.getUid() + "", false);
+        CommonUtils.setToken("");
+        CommonUtils.setUid(-1);
+        ActUtils.getInstance().finishAllALiveAcitity();
+        TApplication.context.startActivity(new Intent(TApplication.context, LoginActivity.class));
+    }
 }

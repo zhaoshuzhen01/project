@@ -126,7 +126,6 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
         }
         switch (view.getId()) {
             case R.id.btn_send_code:
-                btnSendCode.setEnabled(false);
                 SendSmsBean bean = new SendSmsBean(mPhoneNum, SendSmsBean.KEY_LOGIN_TEMPLATEID);
                 initProgressDialog(R.string.txt_is_sending_auth_code).show();
                 TaskEngine.getInstance().commonHttps(Canstance.HTTP_SEND_CODE, bean, new Response.Listener<String>() {
@@ -137,6 +136,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                         BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
                         if (baseEntity != null) {
                             if (baseEntity.getCode() == 0) {
+                                btnSendCode.setEnabled(false);
                                 mHandler.sendEmptyMessage(0);
                             }
                             ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
@@ -163,17 +163,6 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                     @Override
                     public void onResponse(String s) {
                         dialog.dismiss();
-//                        LoginBeen loginBeen = new Gson().fromJson(s, LoginBeen.class);
-//                        if (loginBeen != null) {
-//                            ToastUtils.showShort(LoginActivity.this, loginBeen.getMessage());
-//                            if (loginBeen.getCode() == 0) {
-//                                SPUtils.getInstance().put(Canstance.KEY_SP_PHONE_NUM, mPhoneNum);
-//                                SPUtils.getInstance().put(Canstance.KEY_SP_USER_INFO, loginBeen.getInfo().toString());
-//                                startActivity(WorkSheetListActivity.class, null);
-//                                finish();
-//                            }
-//                            Logger.e(loginBeen.toString());
-//                        }
                         UserInfoResponse response = new UserInfoResponse();
                         response = (UserInfoResponse) CommonUtils.generateEntityByGson(LoginActivity.this, s, response);
                         if (response != null) {
