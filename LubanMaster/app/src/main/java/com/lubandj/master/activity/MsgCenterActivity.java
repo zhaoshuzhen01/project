@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.example.baselibrary.BaseRefreshActivity;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
+import com.lubandj.master.InstanceUtil.NotifyMsgInstance;
 import com.lubandj.master.Iview.IMsgCenterListview;
 import com.lubandj.master.Presenter.MsgCenterPresenter;
 import com.lubandj.master.R;
@@ -34,6 +35,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
 
     @Override
     public void initView() {
+        msgBeens = NotifyMsgInstance.getInstance().getNotifyBeens();
         CommonUtils.setMsgCount(0);
         ButterKnife.inject(this);
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6)findViewById(R.id.prpt);
@@ -83,6 +85,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
     public void getMsgCenterLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
+        if (datas.size()!=0)
         msgBeens.clear();
         msgBeens.addAll(datas);
         msgCenterAdapter.notifyDataSetChanged();

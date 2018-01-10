@@ -41,7 +41,7 @@ public class MsgCenterModel extends BaseModel {
                         List<MsgCenterBeen.InfoBean.ListBean> datas = msgCenterBeen.getInfo().getList();
                         if (datas!=null)
                             iMsgCenterModel.getMsgCenterLists(datas);
-                        if (datas.size()>0){
+                        if (datas.size()==0){
                             ToastUtils.showShort(context,"暂无数据");
                         }
                     }

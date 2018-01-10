@@ -73,7 +73,11 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
     LinearLayout llState;
 
     public static final String KEY_DETAILS_ID = "details_id";
+    public static final String KEY_DETAIL_LAT = "lat";
+    public static final String KEY_DETAIL_LNG = "lng";
     private String workSheetId;
+    private String lat ;
+    private String lng ;
     private int updateStatus = 0;
     private String status;
 
@@ -101,6 +105,8 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         setBackImg(R.drawable.back_mark);
         setOKImg(R.drawable.ic_service);
         workSheetId = getIntent().getStringExtra(KEY_DETAILS_ID);
+        lat = getIntent().getStringExtra(KEY_DETAIL_LAT);
+        lng = getIntent().getStringExtra(KEY_DETAIL_LNG);
         initData();
     }
 
@@ -154,7 +160,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 // REFACTOR: 2017/12/26 待重构 定位
                 String address = tvAddressDesc.getText().toString();
                 if (!TextUtils.isEmpty(address)) {
-                    BaiduApi.getBaiduApi().baiduNavigation(this,address);
+                    BaiduApi.getBaiduApi().baiduNavigation(this,address,lat,lng);
                 }
                 break;
             case R.id.tv_copy:
