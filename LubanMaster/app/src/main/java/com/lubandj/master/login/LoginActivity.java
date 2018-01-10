@@ -163,17 +163,6 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                     @Override
                     public void onResponse(String s) {
                         dialog.dismiss();
-//                        LoginBeen loginBeen = new Gson().fromJson(s, LoginBeen.class);
-//                        if (loginBeen != null) {
-//                            ToastUtils.showShort(LoginActivity.this, loginBeen.getMessage());
-//                            if (loginBeen.getCode() == 0) {
-//                                SPUtils.getInstance().put(Canstance.KEY_SP_PHONE_NUM, mPhoneNum);
-//                                SPUtils.getInstance().put(Canstance.KEY_SP_USER_INFO, loginBeen.getInfo().toString());
-//                                startActivity(WorkSheetListActivity.class, null);
-//                                finish();
-//                            }
-//                            Logger.e(loginBeen.toString());
-//                        }
                         UserInfoResponse response = new UserInfoResponse();
                         response = (UserInfoResponse) CommonUtils.generateEntityByGson(LoginActivity.this, s, response);
                         if (response != null) {

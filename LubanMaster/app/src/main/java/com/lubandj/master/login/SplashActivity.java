@@ -98,6 +98,7 @@ public class SplashActivity extends BaseActivity {
                 response = (UserInfoResponse) CommonUtils.generateEntityByGson(SplashActivity.this, s, response);
                 if (response != null) {
                     TApplication.context.mUserInfo = response.info;
+                    TApplication.context.setGetuiTag(response.info.uid);
                     startActivity(WorkSheetListActivity.class, null);
 //                    mBinding.ivSplash.setImageBitmap(null);
                     finish();

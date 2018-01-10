@@ -149,11 +149,7 @@ public class MySettingActivity extends PermissionActivity {
         outDialog.setButton1("确定", new TipDialog.DialogButtonOnClickListener() {
             @Override
             public void onClick(View button, TipDialog dialog) {
-                CommonUtils.setToken("");
-                CommonUtils.setUid(-1);
-                MySettingActivity.this.setResult(RESULT_OK);
-                MySettingActivity.this.startActivity(LoginActivity.class, null);
-                MySettingActivity.this.finish();
+                CommonUtils.logOut(MySettingActivity.this);
                 dialog.dismiss();
             }
         });
