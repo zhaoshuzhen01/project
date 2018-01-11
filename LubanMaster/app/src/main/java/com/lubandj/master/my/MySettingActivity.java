@@ -151,7 +151,6 @@ public class MySettingActivity extends PermissionActivity {
             public void onClick(View button, TipDialog dialog) {
                 CommonUtils.logOut(MySettingActivity.this);
                 dialog.dismiss();
-                startActivity(new Intent(MySettingActivity.this, LoginActivity.class));
 
             }
         });
