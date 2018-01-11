@@ -173,6 +173,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         view.findViewById(R.id.ll_menu_workcalendar).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_askforleave).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_setting).setOnClickListener(this);
+        view.findViewById(R.id.iv_menu_headimg).setOnClickListener(this);
 
         imageLoader = new ImageLoader(TaskEngine.getInstance().getQueue(), new BitmapCache());
         UserInfo info = TApplication.context.mUserInfo;
@@ -260,6 +261,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             case R.id.ll_menu_askforleave:
                 startActivity(LeaveListActivity.class, null);
                 break;
+            case R.id.iv_menu_headimg:
             case R.id.ll_menu_setting:
                 Intent intent = new Intent(WorkSheetListActivity.this, MySettingActivity.class);
                 startActivityForResult(intent, 3030);
