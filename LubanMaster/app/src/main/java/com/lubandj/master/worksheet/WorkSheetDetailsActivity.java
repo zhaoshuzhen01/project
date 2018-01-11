@@ -155,7 +155,6 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 callToClient(s,  String.format(getString(R.string.txt_make_sure_phone), s));
                 break;
             case R.id.iv_address_icon:
-                // REFACTOR: 2017/12/26 待重构 定位
                 String address = tvAddressDesc.getText().toString();
                 if (!TextUtils.isEmpty(address)) {
                     BaiduApi.getBaiduApi().baiduNavigation(this,address,lat,lng);
@@ -269,7 +268,6 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 ivPhoneIcon.setEnabled(false);
                 ivAddressIcon.setEnabled(false);
                 llBtn.setVisibility(View.GONE);
-                // REFACTOR: 2018/1/8 待重构 取消原因
                 llCancelReason.setVisibility(View.GONE);
                 break;
             default:

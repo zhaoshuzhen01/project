@@ -69,11 +69,11 @@ public class BaiduApi {
         String baiDuUri2="baidumap://map/geocoder?src=openApiDemo&address=北京市海淀区上地信息路9号奎科科技大厦";
         String baiDuUri3="baidumap://map/geocoder?location=40.047669,116.313082";
 
-        String gaoDeUri="androidamap://viewMap?sourceApplication=鹿班&poiname=百度奎科大厦&lat=40.047669&lon=116.313082&dev=0";
+        String gaoDeUri="androidamap://viewMap?sourceApplication=鹿班&poiname=%1$s&lat=%2$s&lon=%3$s&dev=0";
         String gaoDeUri2="androidamap://keywordNavi?sourceApplication=鹿班&keyword=百度奎科大厦&style=2";
         try {
             intent = isBaiduMap ? Intent.getIntent(String.format(baiDuUri,lat,lng,address,address)) :
-                    Intent.getIntent(gaoDeUri2);
+                    Intent.getIntent(String.format(gaoDeUri,address,lat,lng));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
