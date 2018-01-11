@@ -7,6 +7,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -181,6 +182,6 @@ public class CommonUtils {
         CommonUtils.setToken("");
         CommonUtils.setUid(-1);
         ActUtils.getInstance().finishAllALiveAcitity();
-        TApplication.context.startActivity(new Intent(TApplication.context, LoginActivity.class));
+//        TApplication.context.startActivity(new Intent(TApplication.context, LoginActivity.class));
     }
 }

@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -59,8 +60,10 @@ public class CusstomIntentService extends GTIntentService {
         if (payload == null) {
             Log.e(TAG, "receiver payload = null");
         } else {
-            String data = new String(payload);
-            shownotification(data,context);
+            if (!TextUtils.isEmpty(CommonUtils.getToken())){
+                String data = new String(payload);
+                shownotification(data,context);
+            }
 //            NotificationUtil.initNotification(this);
         }
     }

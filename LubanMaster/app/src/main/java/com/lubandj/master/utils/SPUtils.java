@@ -135,7 +135,7 @@ public final class SPUtils {
      * @return 存在返回对应值，不存在返回默认值-1
      */
     public int getInt(@NonNull final String key) {
-        return getInt(key, -1);
+        return getInt(key, 0);
     }
 
     /**

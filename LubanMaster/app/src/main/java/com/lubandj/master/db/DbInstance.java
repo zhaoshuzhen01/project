@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.lubandj.master.InstanceUtil.NotifyMsgInstance;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.utils.CommonUtils;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class DbInstance {
         List<String>msgs = NotifyMsgInstance.getInstance().getMsgs();
         try {
             for (String msg:msgs){
-                db.execSQL("INSERT INTO "+ msgDatahelper.TABLE_NAME +" VALUES(null, ?)", new Object[]{msg});
+                db.execSQL("INSERT INTO "+ msgDatahelper.TABLE_NAME +" VALUES(null, ?,?)", new Object[]{msg, CommonUtils.getUid()});
             }
             db.setTransactionSuccessful();  //设置事务成功完成
         } finally {
@@ -52,7 +53,8 @@ public class DbInstance {
     public void queryDatas(){
         db = msgDatahelper.getReadableDatabase();
         NotifyMsgInstance.getInstance().clearNotifyBeens();
-        Cursor c = db.rawQuery("SELECT * FROM "+msgDatahelper.TABLE_NAME, null);
+
+        Cursor c = db.rawQuery("SELECT * FROM "+msgDatahelper.TABLE_NAME+" where uid=?", new String[]{CommonUtils.getUid()+""});
         while (c.moveToNext()) {
             String msg = c.getString(c.getColumnIndex("msg"));
             MsgCenterBeen.InfoBean.ListBean listBean = new Gson().fromJson(msg,MsgCenterBeen.InfoBean.ListBean.class);
