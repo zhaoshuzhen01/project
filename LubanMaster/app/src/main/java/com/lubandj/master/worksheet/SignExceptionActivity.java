@@ -21,6 +21,7 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.been.ExceptionListBean;
 import com.lubandj.master.httpbean.BaseEntity;
+import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.TaskEngine;
 
@@ -45,7 +46,7 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
     Button btnSubmit;
     private String mStrSeason = "";
     private int infoSize;
-    private int problemId=0;
+    private int problemId = 0;
     private String workSheetId;
 
     @Override
@@ -89,6 +90,8 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
                     ExceptionListBean exceptionListBean = new Gson().fromJson(s, ExceptionListBean.class);
                     if (exceptionListBean.getCode() == 0) {
                         refreshPage(exceptionListBean);
+                    } else if (exceptionListBean.getCode() == 104) {
+                        CommonUtils.tokenNullDeal(SignExceptionActivity.this);
                     } else {
                         ToastUtils.showShort(SignExceptionActivity.this, exceptionListBean.getMsg());
                     }
@@ -100,12 +103,7 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if (volleyError != null) {
-                    if (volleyError.networkResponse != null) {
-                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                        ToastUtils.showShort(SignExceptionActivity.this, format);
-                    }
-                }
+                CommonUtils.fastShowError(SignExceptionActivity.this, volleyError);
             }
         });
     }
@@ -142,7 +140,7 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
 
     @OnClick(R.id.btn_submit)
     public void onViewClicked() {
-        if(problemId==0){
+        if (problemId == 0) {
             ToastUtils.showShort(this, R.string.txt_choose_exception);
             return;
         }
@@ -182,6 +180,8 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
                                     public void onClick(View v) {
                                     }
                                 }).show();
+                    } else if (baseEntity.getCode() == 104) {
+                        CommonUtils.tokenNullDeal(SignExceptionActivity.this);
                     } else {
                         ToastUtils.showShort(SignExceptionActivity.this, baseEntity.getMessage());
                     }
@@ -193,12 +193,7 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if (volleyError != null) {
-                    if (volleyError.networkResponse != null) {
-                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                        ToastUtils.showShort(SignExceptionActivity.this, format);
-                    }
-                }
+                CommonUtils.fastShowError(SignExceptionActivity.this, volleyError);
             }
         });
     }
@@ -233,7 +228,7 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
         switch (v.getId()) {
             case R.id.tv_basetitle_ok:
                 String serviceNum = "10086";
-                callToClient(serviceNum,  String.format(getString(R.string.txt_confirm_call_service), serviceNum));
+                callToClient(serviceNum, String.format(getString(R.string.txt_confirm_call_service), serviceNum));
                 break;
             default:
                 break;

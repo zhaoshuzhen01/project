@@ -24,6 +24,7 @@ import com.lubandj.master.R;
 import com.lubandj.master.baiduUtil.BaiduApi;
 import com.lubandj.master.been.WorkSheetDetailBean;
 import com.lubandj.master.httpbean.BaseEntity;
+import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.widget.WorkSheetDetailItem;
@@ -124,6 +125,8 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                     WorkSheetDetailBean workSheetDetailBean = new Gson().fromJson(s, WorkSheetDetailBean.class);
                     if (workSheetDetailBean.getCode() == 0) {
                         refreshPage(workSheetDetailBean);
+                    }else if(workSheetDetailBean.getCode()==104){
+                        CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
                     } else {
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, workSheetDetailBean.getMessage());
                     }
@@ -135,12 +138,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if (volleyError != null) {
-                    if (volleyError.networkResponse != null) {
-                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                        ToastUtils.showShort(WorkSheetDetailsActivity.this, format);
-                    }
-                }
+                CommonUtils.fastShowError(WorkSheetDetailsActivity.this,volleyError);
             }
         });
     }
@@ -212,8 +210,12 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                     BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
                     if (baseEntity.getCode() == 0) {
                         initData();
+                        ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
+                    }else if(baseEntity.getCode()==104){
+                        CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
+                    }else{
+                        ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
                     }
-                    ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
                 } catch (Exception e) {
                     Logger.e(e.toString());
                 }
@@ -222,12 +224,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if (volleyError != null) {
-                    if (volleyError.networkResponse != null) {
-                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                        ToastUtils.showShort(WorkSheetDetailsActivity.this, format);
-                    }
-                }
+                CommonUtils.fastShowError(WorkSheetDetailsActivity.this,volleyError);
             }
         });
     }
