@@ -1,6 +1,9 @@
 package com.lubandj.master;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -9,6 +12,8 @@ import com.igexin.sdk.PushConsts;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.Tag;
 import com.lubandj.master.been.UserInfo;
+
+import java.util.List;
 
 public class TApplication extends Application implements Thread.UncaughtExceptionHandler {
 
@@ -23,11 +28,17 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
     public void onCreate() {
         super.onCreate();
         context = this;
+
+        if (!TextUtils.equals(getProcessName(this), "com.lubandj.master")) {
+            return;
+        }
+
         // com.getui.demo.DemoPushService 为第三方自定义推送服务
         PushManager.getInstance().initialize(this.getApplicationContext(), CustomService.class);
         // com.getui.demo.DemoIntentService 为第三方自定义的推送服务事件接收类
         PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), CusstomIntentService.class);
         String clientID = PushManager.getInstance().getClientid(getApplicationContext());
+
         //崩溃捕捉
         Thread.setDefaultUncaughtExceptionHandler(this);
         //百度地图
@@ -101,5 +112,22 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
     public void uncaughtException(Thread t, Throwable e) {
         e.printStackTrace();
         ActUtils.getInstance().exitApp(this);
+    }
+
+
+    private String getProcessName(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo proInfo : runningApps) {
+            if (proInfo.pid == android.os.Process.myPid()) {
+                if (proInfo.processName != null) {
+                    return proInfo.processName;
+                }
+            }
+        }
+        return null;
     }
 }
