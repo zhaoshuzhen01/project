@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.example.baselibrary.eventbus.BusEvent;
 import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tools.NotificationUtil;
 import com.google.gson.Gson;
@@ -87,7 +88,7 @@ public class CusstomIntentService extends GTIntentService {
         NotifyMsgInstance.getInstance().addMsg(msg);
         MsgCenterBeen.InfoBean.ListBean listBean = new Gson().fromJson(msg,MsgCenterBeen.InfoBean.ListBean.class);
         NotifyMsgInstance.getInstance().addNotifyBeens(listBean);
-        RxBus.getInstance().post(new MsgCenterBeen());
+        RxBus.getInstance().post(new BusEvent(BusEvent.NOTIFY_CODE));
         // 消息存储
 //        MeBill meBill = new Gson().fromJson(msg, MeBill.class);
        /* SQLiteDatabase w_db = FaceDataBase.getInstance()

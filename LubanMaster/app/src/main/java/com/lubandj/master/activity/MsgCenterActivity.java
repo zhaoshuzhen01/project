@@ -90,6 +90,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
         if (datas.size()!=0)
         msgBeens.clear();
         msgBeens.addAll(datas);
+        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
         msgCenterAdapter.notifyDataSetChanged();
     }
 }

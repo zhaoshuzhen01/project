@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.baselibrary.TitleBaseActivity;
+import com.example.baselibrary.eventbus.BusEvent;
 import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tablayout.CustomTabLayout;
 import com.example.baselibrary.tablayout.MyViewPagerAdapter;
@@ -90,7 +91,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
 
     private ImageLoader imageLoader;
     private long exitTime = 0;
-    private Observable<MsgCenterBeen> observable;
+    private Observable<BusEvent> observable;
 
     @Override
     public int getLayout() {
@@ -117,14 +118,24 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         onSetupTabData(mTitles);
         onSetViewpager();
         observable = RxBus.getInstance().register(this);
-        observable.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<MsgCenterBeen>() {
+        observable.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<BusEvent>() {
             @Override
-            public void call(MsgCenterBeen userBean) {
-                Log.e("deal", "received :" + userBean.toString());
-                onResume();
-                if (!NotificationUtil.isNotificationEnabled(WorkSheetListActivity.this)){
-                notifyMes(WorkSheetListActivity.this);
-            }
+            public void call(BusEvent busEvent) {
+                switch (busEvent.getCode()){
+                    case BusEvent.IMG_CODE:
+                        UserInfo info = TApplication.context.mUserInfo;
+                        mTvName.setText(info.nickname + "");
+                        if (!TextUtils.isEmpty(info.face_url)) {
+                            loadFace();
+                        }
+                        break;
+                    case BusEvent.NOTIFY_CODE:
+                        onResume();
+                        if (!NotificationUtil.isNotificationEnabled(WorkSheetListActivity.this)){
+                            notifyMes(WorkSheetListActivity.this);
+                        }
+                        break;
+                }
             }
         });
     }
@@ -173,6 +184,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         view.findViewById(R.id.ll_menu_workcalendar).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_askforleave).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_setting).setOnClickListener(this);
+        view.findViewById(R.id.iv_menu_headimg).setOnClickListener(this);
 
         imageLoader = new ImageLoader(TaskEngine.getInstance().getQueue(), new BitmapCache());
         UserInfo info = TApplication.context.mUserInfo;
@@ -260,6 +272,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             case R.id.ll_menu_askforleave:
                 startActivity(LeaveListActivity.class, null);
                 break;
+            case R.id.iv_menu_headimg:
             case R.id.ll_menu_setting:
                 Intent intent = new Intent(WorkSheetListActivity.this, MySettingActivity.class);
                 startActivityForResult(intent, 3030);
