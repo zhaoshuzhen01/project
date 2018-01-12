@@ -24,7 +24,6 @@ import com.lubandj.master.httpbean.LoginAppBean;
 import com.lubandj.master.httpbean.SendSmsBean;
 import com.lubandj.master.httpbean.UserInfoResponse;
 import com.lubandj.master.utils.CommonUtils;
-import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.SPUtils;
 import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
@@ -138,21 +137,19 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                             if (baseEntity.getCode() == 0) {
                                 btnSendCode.setEnabled(false);
                                 mHandler.sendEmptyMessage(0);
+                                ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
+                            } else if (baseEntity.getCode() == 104) {
+                                CommonUtils.tokenNullDeal(LoginActivity.this);
+                            }else {
+                                ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
                             }
-                            ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
                         }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         dialog.dismiss();
-                        if (volleyError != null) {
-                            if (volleyError.networkResponse != null) {
-                                String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                                ToastUtils.showShort(LoginActivity.this, format);
-                                Logger.e(volleyError.getMessage());
-                            }
-                        }
+                        CommonUtils.fastShowError(LoginActivity.this, volleyError);
                     }
                 });
                 break;
@@ -178,13 +175,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         dialog.dismiss();
-                        if (volleyError != null) {
-                            if (volleyError.networkResponse != null) {
-                                String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                                ToastUtils.showShort(LoginActivity.this, format);
-                            }
-//                            Logger.e(volleyError.getMessage());
-                        }
+                        CommonUtils.fastShowError(LoginActivity.this, volleyError);
                     }
                 });
                 break;

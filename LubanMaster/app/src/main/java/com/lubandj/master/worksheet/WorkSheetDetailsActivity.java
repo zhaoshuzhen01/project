@@ -24,6 +24,7 @@ import com.lubandj.master.R;
 import com.lubandj.master.baiduUtil.BaiduApi;
 import com.lubandj.master.been.WorkSheetDetailBean;
 import com.lubandj.master.httpbean.BaseEntity;
+import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.widget.WorkSheetDetailItem;
@@ -73,7 +74,11 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
     LinearLayout llState;
 
     public static final String KEY_DETAILS_ID = "details_id";
+    public static final String KEY_DETAIL_LAT = "lat";
+    public static final String KEY_DETAIL_LNG = "lng";
     private String workSheetId;
+    private String lat ;
+    private String lng ;
     private int updateStatus = 0;
     private String status;
 
@@ -101,6 +106,8 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         setBackImg(R.drawable.back_mark);
         setOKImg(R.drawable.ic_service);
         workSheetId = getIntent().getStringExtra(KEY_DETAILS_ID);
+        lat = getIntent().getStringExtra(KEY_DETAIL_LAT);
+        lng = getIntent().getStringExtra(KEY_DETAIL_LNG);
         initData();
     }
 
@@ -118,6 +125,8 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                     WorkSheetDetailBean workSheetDetailBean = new Gson().fromJson(s, WorkSheetDetailBean.class);
                     if (workSheetDetailBean.getCode() == 0) {
                         refreshPage(workSheetDetailBean);
+                    }else if(workSheetDetailBean.getCode()==104){
+                        CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
                     } else {
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, workSheetDetailBean.getMessage());
                     }
@@ -129,12 +138,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if (volleyError != null) {
-                    if (volleyError.networkResponse != null) {
-                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                        ToastUtils.showShort(WorkSheetDetailsActivity.this, format);
-                    }
-                }
+                CommonUtils.fastShowError(WorkSheetDetailsActivity.this,volleyError);
             }
         });
     }
@@ -151,10 +155,9 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 callToClient(s,  String.format(getString(R.string.txt_make_sure_phone), s));
                 break;
             case R.id.iv_address_icon:
-                // REFACTOR: 2017/12/26 待重构 定位
                 String address = tvAddressDesc.getText().toString();
                 if (!TextUtils.isEmpty(address)) {
-                    BaiduApi.getBaiduApi().baiduNavigation(this,address);
+                    BaiduApi.getBaiduApi().baiduNavigation(this,address,lat,lng);
                 }
                 break;
             case R.id.tv_copy:
@@ -206,8 +209,12 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                     BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
                     if (baseEntity.getCode() == 0) {
                         initData();
+                        ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
+                    }else if(baseEntity.getCode()==104){
+                        CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
+                    }else{
+                        ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
                     }
-                    ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
                 } catch (Exception e) {
                     Logger.e(e.toString());
                 }
@@ -216,12 +223,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if (volleyError != null) {
-                    if (volleyError.networkResponse != null) {
-                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                        ToastUtils.showShort(WorkSheetDetailsActivity.this, format);
-                    }
-                }
+                CommonUtils.fastShowError(WorkSheetDetailsActivity.this,volleyError);
             }
         });
     }
@@ -236,17 +238,17 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         status = info.getStatus();
         switch (status) {
             case Canstance.KEY_SHEET_STATUS_TO_PERFORM:
-                ivStateIcon.setImageResource(R.drawable.ic_details_to_perform);
+                ivStateIcon.setImageResource(R.drawable.workwait);
                 btnStartServer.setText(R.string.txt_work_sheet_details_on_road);
                 updateStatus = 2;
                 break;
             case Canstance.KEY_SHEET_STATUS_ON_ROAD:
-                ivStateIcon.setImageResource(R.drawable.ic_details_on_road);
+                ivStateIcon.setImageResource(R.drawable.workpath);
                 btnStartServer.setText(R.string.txt_work_sheet_details_start_service);
                 updateStatus = 3;
                 break;
             case Canstance.KEY_SHEET_STATUS_IN_SERVICE:
-                ivStateIcon.setImageResource(R.drawable.ic_details_in_service);
+                ivStateIcon.setImageResource(R.drawable.workservie);
                 btnStartServer.setText(R.string.txt_work_sheet_details_service_completed);
                 updateStatus = 4;
                 ivPhoneIcon.setEnabled(false);
@@ -266,7 +268,6 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 ivPhoneIcon.setEnabled(false);
                 ivAddressIcon.setEnabled(false);
                 llBtn.setVisibility(View.GONE);
-                // REFACTOR: 2018/1/8 待重构 取消原因
                 llCancelReason.setVisibility(View.GONE);
                 break;
             default:

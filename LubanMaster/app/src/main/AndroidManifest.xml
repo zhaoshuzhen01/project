@@ -171,7 +171,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <!-- 个推SDK配置结束 -->
-        <activity android:name=".activity.MsgCenterActivity"></activity>
+        <activity android:name=".activity.MsgCenterActivity"
+            android:launchMode="singleTask"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

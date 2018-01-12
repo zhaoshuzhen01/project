@@ -137,6 +137,8 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
             case 0://工单未完成
                 Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
                 intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LAT,worklists.get(position).getLat());
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LNG,worklists.get(position).getLng());
                 startActivity(intent);
                 break;
             case 1://工单已完成

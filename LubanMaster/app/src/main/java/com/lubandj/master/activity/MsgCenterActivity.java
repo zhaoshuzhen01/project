@@ -7,12 +7,14 @@ import android.view.View;
 
 import com.example.baselibrary.BaseRefreshActivity;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
+import com.lubandj.master.InstanceUtil.NotifyMsgInstance;
 import com.lubandj.master.Iview.IMsgCenterListview;
 import com.lubandj.master.Presenter.MsgCenterPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.MsgCenterAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.TestBean;
+import com.lubandj.master.db.DbInstance;
 import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -34,6 +36,8 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
 
     @Override
     public void initView() {
+        DbInstance.getInstance().queryDatas();
+        msgBeens = NotifyMsgInstance.getInstance().getNotifyBeens();
         CommonUtils.setMsgCount(0);
         ButterKnife.inject(this);
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6)findViewById(R.id.prpt);
@@ -83,8 +87,10 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
     public void getMsgCenterLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
+        if (datas.size()!=0)
         msgBeens.clear();
         msgBeens.addAll(datas);
+        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
         msgCenterAdapter.notifyDataSetChanged();
     }
 }

@@ -11,6 +11,7 @@ import com.lubandj.master.R;
 import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.httpbean.NetWorkListBeen;
 import com.lubandj.master.model.BaseModel;
+import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
 
 import java.util.List;
@@ -42,6 +43,8 @@ public UnFinishModel(Context context,IWorkModel iWorkModel){
                                 if (datas!=null){
                                     iWorkModel.getWorkLists(datas);
                                 }
+                            }else if (workListBeen.getCode()==104){
+                                CommonUtils.tokenNullDeal(context);
                             }
                         }
 

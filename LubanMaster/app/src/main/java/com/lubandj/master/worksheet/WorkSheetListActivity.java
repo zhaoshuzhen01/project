@@ -1,6 +1,7 @@
 package com.lubandj.master.worksheet;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -25,9 +26,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.baselibrary.TitleBaseActivity;
+import com.example.baselibrary.eventbus.BusEvent;
 import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tablayout.CustomTabLayout;
 import com.example.baselibrary.tablayout.MyViewPagerAdapter;
+import com.example.baselibrary.tools.NotificationUtil;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.ActUtils;
 import com.example.baselibrary.util.PhotoUtil;
@@ -39,6 +42,7 @@ import com.lubandj.master.activity.MsgCenterActivity;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.UserInfo;
 import com.lubandj.master.customview.RoundImageView;
+import com.lubandj.master.db.DbInstance;
 import com.lubandj.master.dialog.TipDialog;
 import com.lubandj.master.fragment.WorkSheetFragment;
 import com.lubandj.master.dialog.DoubleSelectDialog;
@@ -87,7 +91,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
 
     private ImageLoader imageLoader;
     private long exitTime = 0;
-    private Observable<MsgCenterBeen> observable;
+    private Observable<BusEvent> observable;
 
     @Override
     public int getLayout() {
@@ -114,11 +118,24 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         onSetupTabData(mTitles);
         onSetViewpager();
         observable = RxBus.getInstance().register(this);
-        observable.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<MsgCenterBeen>() {
+        observable.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<BusEvent>() {
             @Override
-            public void call(MsgCenterBeen userBean) {
-                Log.e("deal", "received :" + userBean.toString());
-                onResume();
+            public void call(BusEvent busEvent) {
+                switch (busEvent.getCode()){
+                    case BusEvent.IMG_CODE:
+                        UserInfo info = TApplication.context.mUserInfo;
+                        mTvName.setText(info.nickname + "");
+                        if (!TextUtils.isEmpty(info.face_url)) {
+                            loadFace();
+                        }
+                        break;
+                    case BusEvent.NOTIFY_CODE:
+                        onResume();
+                        if (!NotificationUtil.isNotificationEnabled(WorkSheetListActivity.this)){
+                            notifyMes(WorkSheetListActivity.this);
+                        }
+                        break;
+                }
             }
         });
     }
@@ -167,6 +184,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         view.findViewById(R.id.ll_menu_workcalendar).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_askforleave).setOnClickListener(this);
         view.findViewById(R.id.ll_menu_setting).setOnClickListener(this);
+        view.findViewById(R.id.iv_menu_headimg).setOnClickListener(this);
 
         imageLoader = new ImageLoader(TaskEngine.getInstance().getQueue(), new BitmapCache());
         UserInfo info = TApplication.context.mUserInfo;
@@ -190,6 +208,10 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             case com.example.baselibrary.R.id.ll_basetitle_back1:
                 Intent intent = new Intent(this, MsgCenterActivity.class);
                 startActivity(intent);
+                int count = CommonUtils.getMsgCount();
+                if (count>0){
+                    DbInstance.getInstance().insertDatas();
+                }
                 break;
         }
         leftClick = true;
@@ -250,6 +272,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             case R.id.ll_menu_askforleave:
                 startActivity(LeaveListActivity.class, null);
                 break;
+            case R.id.iv_menu_headimg:
             case R.id.ll_menu_setting:
                 Intent intent = new Intent(WorkSheetListActivity.this, MySettingActivity.class);
                 startActivityForResult(intent, 3030);
@@ -401,5 +424,26 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 ActUtils.getInstance().exitApp(WorkSheetListActivity.this);
             }
         }
+    }
+    private void notifyMes(final Context context){
+        TipDialog outDialog = new TipDialog(context);
+        outDialog.setNoPomptTitle();
+        outDialog.setTextDes("打开通知权限");
+        outDialog.setButton1("确定", new TipDialog.DialogButtonOnClickListener() {
+            @Override
+            public void onClick(View button, TipDialog dialog) {
+                dialog.dismiss();
+                NotificationUtil.goToSet(context);
+            }
+        });
+        outDialog.setButton2("取消", new TipDialog.DialogButtonOnClickListener() {
+            @Override
+            public void onClick(View button, TipDialog dialog) {
+                dialog.dismiss();
+            }
+        });
+        outDialog.setCancelable(false);
+        outDialog.setCanceledOnTouchOutside(false);
+        outDialog.show();
     }
 }

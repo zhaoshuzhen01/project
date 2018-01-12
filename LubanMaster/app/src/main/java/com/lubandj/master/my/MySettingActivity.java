@@ -14,6 +14,8 @@ import android.view.View;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.example.baselibrary.eventbus.BusEvent;
+import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.ActUtils;
 import com.example.baselibrary.util.PhotoUtil;
@@ -21,6 +23,7 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.been.AddressBean;
+import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.UserInfo;
 import com.lubandj.master.databinding.ActivityMysettingBinding;
 import com.lubandj.master.dialog.DoubleSelectDialog;
@@ -151,6 +154,7 @@ public class MySettingActivity extends PermissionActivity {
             public void onClick(View button, TipDialog dialog) {
                 CommonUtils.logOut(MySettingActivity.this);
                 dialog.dismiss();
+
             }
         });
         outDialog.setButton2("取消", new TipDialog.DialogButtonOnClickListener() {
@@ -207,6 +211,7 @@ public class MySettingActivity extends PermissionActivity {
                         UploadPhotoReponse response = new UploadPhotoReponse();
                         response = (UploadPhotoReponse) CommonUtils.generateEntityByGson(MySettingActivity.this, s, response);
                         if (response != null) {
+                            RxBus.getInstance().post(new BusEvent(BusEvent.IMG_CODE));
                             TApplication.context.mUserInfo.face_url = response.info.face_url;
                             loadFace();
                             PhotoUtil.getInstance().deleteCache();

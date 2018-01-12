@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.view.View;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -23,7 +24,7 @@ public class NotificationUtil {
             goToSet(context);
         }
     }
-    private  static boolean isNotificationEnabled(Context context) {
+    public   static boolean isNotificationEnabled(Context context) {
 
         String CHECK_OP_NO_THROW = "checkOpNoThrow";
         String OP_POST_NOTIFICATION = "OP_POST_NOTIFICATION";
@@ -62,7 +63,7 @@ public class NotificationUtil {
      * 应用通知管理界面
      * @param context
      */
-    private static void goToSet(Context context){
+    public static void goToSet(Context context){
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Intent intent = new Intent();
             intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
@@ -95,4 +96,5 @@ public class NotificationUtil {
         }
         context.startActivity(localIntent);
     }
+
 }

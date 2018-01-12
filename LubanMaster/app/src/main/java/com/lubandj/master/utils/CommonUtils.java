@@ -7,6 +7,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -103,6 +104,7 @@ public class CommonUtils {
                 if (bean.code != 0) {
                     if (bean.code == 104) {
                         CommonUtils.tokenNullDeal(context);
+//                        context.startActivity(new Intent(context, LoginActivity.class));
                     } else {
                         Toast.makeText(context, bean.message, Toast.LENGTH_SHORT).show();
                         bean = null;
@@ -177,9 +179,10 @@ public class CommonUtils {
      */
     public static void logOut(Context context) {
         PushManager.getInstance().unBindAlias(context, CommonUtils.getUid() + "", false);
+        TApplication.context.setGetuiTag(-1);
         CommonUtils.setToken("");
         CommonUtils.setUid(-1);
         ActUtils.getInstance().finishAllALiveAcitity();
-        TApplication.context.startActivity(new Intent(TApplication.context, LoginActivity.class));
+        context.startActivity(new Intent(context, LoginActivity.class));
     }
 }
