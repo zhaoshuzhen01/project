@@ -13,11 +13,14 @@ android {
         manifestPlaceholders = [
                 GETUI_APP_ID    : "ZbJqKhikIF7d2UEIUDmWq4",
                 GETUI_APP_KEY   : "DwiMI0gzDz8vsXAMmIcfr7",
-                GETUI_APP_SECRET: "Bua63OzXRD8o3n2hoBITk4"
-              /* GETUI_APP_ID    : "3pa6zWkUC38EM1r0NZBGB8",
-               GETUI_APP_KEY   : "PZQ9sBnkny9ilioJHLP247",
-               GETUI_APP_SECRET: "IWxpDINGEnAk0FtFtLh8k7"*/
+                GETUI_APP_SECRET: "Bua63OzXRD8o3n2hoBITk4",
+                /* GETUI_APP_ID    : "3pa6zWkUC38EM1r0NZBGB8",
+                 GETUI_APP_KEY   : "PZQ9sBnkny9ilioJHLP247",
+                 GETUI_APP_SECRET: "IWxpDINGEnAk0FtFtLh8k7"*/
         ]
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86_64"
+        }
     }
     signingConfigs {
         config {
@@ -134,7 +137,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:5.1.1'
-    compile project(':tuisong')
+//    compile project(':tuisong')
     compile files('libs/library-1.0.19.jar')
     compile files('libs/multi-part-for-volley-1.0.1.jar')
     compile files('libs/BaiduLBS_Android.jar')
@@ -142,6 +145,7 @@ dependencies {
     compile 'com.github.hotchemi:permissionsdispatcher:3.1.0'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
     compile 'com.wx.wheelview:wheelview:1.3.3'
+    compile 'com.getui:sdk:2.11.1.0'
 }
 
 def releaseTime() {

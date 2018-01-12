@@ -178,8 +178,8 @@ public class CommonUtils {
      * 登出
      */
     public static void logOut(Context context) {
-        PushManager.getInstance().unBindAlias(context, CommonUtils.getUid() + "", false);
-        TApplication.context.setGetuiTag(-1);
+        PushManager.getInstance().unBindAlias(context, CommonUtils.getUid() + "", true, CommonUtils.getUid() + "");
+//        TApplication.context.setGetuiTag(-1);
         CommonUtils.setToken("");
         CommonUtils.setUid(-1);
         ActUtils.getInstance().finishAllALiveAcitity();
