@@ -87,7 +87,6 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
     public void getMsgCenterLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
-        if (datas.size()!=0)
         msgBeens.clear();
         msgBeens.addAll(datas);
         msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
