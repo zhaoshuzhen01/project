@@ -16,6 +16,8 @@ import com.lubandj.master.utils.CommonUtils;
 
 import java.util.List;
 
+import java.util.List;
+
 public class TApplication extends Application implements Thread.UncaughtExceptionHandler {
 
     public static boolean isDebug = true;
@@ -39,7 +41,7 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
         // com.getui.demo.DemoIntentService 为第三方自定义的推送服务事件接收类
 //        String clientID = PushManager.getInstance().getClientid(getApplicationContext());
         PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), CusstomIntentService.class);
-
+        String clientID = PushManager.getInstance().getClientid(getApplicationContext());
         //崩溃捕捉
         Thread.setDefaultUncaughtExceptionHandler(this);
         //百度地图

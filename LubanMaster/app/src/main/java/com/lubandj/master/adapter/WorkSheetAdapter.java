@@ -57,6 +57,7 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
         worklist_code.setText("工单号："+item.getTicketSn());
         worklist_time.setText(item.getBeginTime());
         daohangState.setVisibility(View.GONE);
+        ((ImageView) (helper.getView(R.id.pic_finish))).setVisibility(View.GONE);
         daohangState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,12 +139,14 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
      * @param position
      * @param serviceState
      */
-    private void finishOrCancle(String title,int position,TextView serviceState,final BaseViewHolder helper){
+    private void finishOrCancle(String title,int position,TextView serviceState,final BaseViewHolder helper) {
         serviceState.setText(title);
-        RelativeLayout bottomLay =  ((RelativeLayout) (helper.getView(R.id.bottom_lay)));
+        RelativeLayout bottomLay = ((RelativeLayout) (helper.getView(R.id.bottom_lay)));
         bottomLay.setVisibility(View.GONE);
-        if (title.equals("已完成"))
+        if (title.equals("已完成")) {
+            ((ImageView) (helper.getView(R.id.pic_finish))).setVisibility(View.VISIBLE);
         ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.ic_details_completed);
+    }
         else
             ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.ic_details_canceled);
 

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_f4f4f4"
+    android:background="@color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -71,8 +71,6 @@
     <LinearLayout
         android:id="@+id/ll_menu_workcalendar"
         style="@style/leftmenu_linearlayout"
-        android:layout_marginTop="@dimen/h_6dp"
-
         >
 
         <ImageView
@@ -88,8 +86,6 @@
     <LinearLayout
         android:id="@+id/ll_menu_askforleave"
         style="@style/leftmenu_linearlayout"
-        android:layout_marginTop="@dimen/h_6dp"
-
         >
 
         <ImageView
@@ -105,8 +101,6 @@
     <LinearLayout
         android:id="@+id/ll_menu_service"
         style="@style/leftmenu_linearlayout"
-        android:layout_marginTop="@dimen/h_6dp"
-
         >
 
         <ImageView
@@ -121,8 +115,6 @@
 
     <LinearLayout
         android:id="@+id/ll_menu_setting"
-        android:layout_marginTop="@dimen/h_6dp"
-
         style="@style/leftmenu_linearlayout">
 
         <ImageView

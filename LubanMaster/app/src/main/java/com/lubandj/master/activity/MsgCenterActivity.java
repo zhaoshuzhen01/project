@@ -16,8 +16,11 @@ import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.TestBean;
 import com.lubandj.master.db.DbInstance;
 import com.lubandj.master.utils.CommonUtils;
+import com.lubandj.master.utils.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -37,7 +40,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
     @Override
     public void initView() {
         DbInstance.getInstance().queryDatas();
-        msgBeens = NotifyMsgInstance.getInstance().getNotifyBeens();
+        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
         CommonUtils.setMsgCount(0);
         ButterKnife.inject(this);
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6)findViewById(R.id.prpt);
@@ -87,10 +90,25 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
     public void getMsgCenterLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
-        if (datas.size()!=0)
         msgBeens.clear();
         msgBeens.addAll(datas);
         msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
+        sort(msgBeens);
         msgCenterAdapter.notifyDataSetChanged();
+    }
+
+    private void sort(List<MsgCenterBeen.InfoBean.ListBean> msgBeens) {
+        //排序规则，这里是以年龄先排序，如果年龄相同
+        Comparator<MsgCenterBeen.InfoBean.ListBean> comparator = new Comparator<MsgCenterBeen.InfoBean.ListBean>() {
+            public int compare(MsgCenterBeen.InfoBean.ListBean s1, MsgCenterBeen.InfoBean.ListBean s2) {
+                String time1 = s1.getDatatime();
+                String time2 = s2.getDatatime();
+
+             return (-(int) (StringUtil.getTimeMill(time1)-StringUtil.getTimeMill(time2)));
+            }
+        };
+
+        //这里就会自动根据规则进行排序
+        Collections.sort(msgBeens, comparator);
     }
 }
