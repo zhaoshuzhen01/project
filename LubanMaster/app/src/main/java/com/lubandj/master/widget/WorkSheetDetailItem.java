@@ -27,8 +27,8 @@ public class WorkSheetDetailItem extends FrameLayout {
     private TextView tvSheetItem;
     private ImageView ivStatus;
     private TextView tvStatus;
-    private static final String KEY_STATUS_CANCEL = "7";
-    private static final String KEY_STATUS_NORMAL = "2";
+    private static final String KEY_STATUS_CANCEL = "1";
+    private static final String KEY_STATUS_NORMAL = "0";
 
     public WorkSheetDetailItem(@NonNull Context context) {
         this(context, null);
