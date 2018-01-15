@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.baselibrary.BaseActivity;
 import com.example.baselibrary.net.BaseResponse;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.ActUtils;
@@ -106,6 +107,9 @@ public class CommonUtils {
                         CommonUtils.tokenNullDeal(context);
 //                        context.startActivity(new Intent(context, LoginActivity.class));
                     } else {
+                        if (context instanceof BaseActivity) {
+                            ((BaseActivity) context).fastDismiss();
+                        }
                         Toast.makeText(context, bean.message, Toast.LENGTH_SHORT).show();
                         bean = null;
                     }
