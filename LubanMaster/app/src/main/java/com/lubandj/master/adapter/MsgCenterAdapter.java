@@ -43,10 +43,10 @@ public class MsgCenterAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.Li
                 iconMsg.setImageResource(R.drawable.msg_sys);
                 break;
             case 3:
-                iconMsg.setImageResource(R.drawable.msg_sys);
+                iconMsg.setImageResource(R.drawable.xinxireset);
                 break;
             case 4:
-                iconMsg.setImageResource(R.drawable.msg_sys);
+                iconMsg.setImageResource(R.drawable.xinxfinish);
                 break;
             case 5:
                 iconMsg.setImageResource(R.drawable.msg_finish);
