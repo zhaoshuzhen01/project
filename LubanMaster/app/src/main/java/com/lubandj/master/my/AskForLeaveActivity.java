@@ -167,6 +167,7 @@ public class AskForLeaveActivity extends BaseActivity {
 
             @Override
             public void onResponse(String s) {
+                fastDismiss();
                 BaseResponseBean response = new BaseResponseBean();
                 response = (BaseResponseBean) CommonUtils.generateEntityByGson(AskForLeaveActivity.this, s, response);
                 if (response != null) {
