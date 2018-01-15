@@ -14,6 +14,7 @@ import java.util.List;
 public class ActUtils {
     private List<WeakReference<Activity>> mALiveActivity = null;
     private static ActUtils instance;
+    public static boolean isFirstIn = false;//该字段用于判断程序是否被回收
 
     public static ActUtils getInstance() {
         if (instance == null)

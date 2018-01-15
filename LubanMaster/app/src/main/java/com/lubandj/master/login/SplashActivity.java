@@ -1,5 +1,7 @@
 package com.lubandj.master.login;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.baselibrary.BaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.util.ActUtils;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
@@ -31,7 +34,7 @@ import com.lubandj.master.worksheet.WorkSheetListActivity;
  * company:九州宏图
  */
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends Activity {
     private ActivitySplashBinding mBinding;
 
     @Override
@@ -39,30 +42,11 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         StatusBarUtils.setWindowStatusBarColor(SplashActivity.this, R.color.splash_status_bar);
+        ActUtils.isFirstIn = true;//设置为入口正常进入
         if (TextUtils.isEmpty(CommonUtils.getToken()))//无登录信息
             mHandler.sendMessageDelayed(mHandler.obtainMessage(0), 500);
         else
             mHandler.sendMessageDelayed(mHandler.obtainMessage(1), 1000);
-    }
-
-    @Override
-    public int getLayout() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
-    }
-
-    @Override
-    public void initData() {
-
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
     private Handler mHandler = new Handler() {
@@ -72,7 +56,8 @@ public class SplashActivity extends BaseActivity {
             switch (msg.what) {
                 case 0:
                     mBinding.ivSplash.setImageBitmap(null);
-                    startActivity(LoginActivity.class, null);
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
                     finish();
                     break;
                 case 1:
@@ -99,7 +84,8 @@ public class SplashActivity extends BaseActivity {
                 if (response != null) {
                     TApplication.context.mUserInfo = response.info;
                     TApplication.context.setGetuiTag(response.info.uid);
-                    startActivity(WorkSheetListActivity.class, null);
+                    Intent intent = new Intent(SplashActivity.this, WorkSheetListActivity.class);
+                    startActivity(intent);
 //                    mBinding.ivSplash.setImageBitmap(null);
                     finish();
                 }
@@ -107,14 +93,7 @@ public class SplashActivity extends BaseActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                dialog.dismiss();
-                if (volleyError != null) {
-                    if (volleyError.networkResponse != null) {
-                        String format = String.format(getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                        ToastUtils.showShort(SplashActivity.this, format);
-                        Logger.e(volleyError.getMessage());
-                    }
-                }
+                CommonUtils.fastShowError(SplashActivity.this, volleyError);
             }
         });
     }

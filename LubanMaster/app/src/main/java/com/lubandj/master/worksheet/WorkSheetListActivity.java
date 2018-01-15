@@ -121,7 +121,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         observable.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<BusEvent>() {
             @Override
             public void call(BusEvent busEvent) {
-                switch (busEvent.getCode()){
+                switch (busEvent.getCode()) {
                     case BusEvent.IMG_CODE:
                         UserInfo info = TApplication.context.mUserInfo;
                         mTvName.setText(info.nickname + "");
@@ -131,7 +131,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                         break;
                     case BusEvent.NOTIFY_CODE:
                         onResume();
-                        if (!NotificationUtil.isNotificationEnabled(WorkSheetListActivity.this)){
+                        if (!NotificationUtil.isNotificationEnabled(WorkSheetListActivity.this)) {
                             notifyMes(WorkSheetListActivity.this);
                         }
                         break;
@@ -209,14 +209,14 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 Intent intent = new Intent(this, MsgCenterActivity.class);
                 startActivity(intent);
                 int count = CommonUtils.getMsgCount();
-                if (count>0){
+                if (count > 0) {
                     DbInstance.getInstance().insertDatas();
                 }
                 break;
         }
         leftClick = true;
         leftView = view;
-        mDrawerLayout.closeDrawer(Gravity.LEFT,false);
+        mDrawerLayout.closeDrawer(Gravity.LEFT, false);
     }
 
     @Override
@@ -335,25 +335,6 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    /**
-     * 拍照
-     */
-    private void onTakePic() {
-        DoubleSelectDialog dialog = new DoubleSelectDialog(WorkSheetListActivity.this, "拍照", "从手机相册选择", new DoubleSelectDialog.DoubleClickListenerInterface() {
-            @Override
-            public void doFirstClick() {
-                PhotoUtil.getInstance().takePhoto(WorkSheetListActivity.this);
-            }
-
-            @Override
-            public void doSecondClick() {
-                PhotoUtil.getInstance().pickPhoto(WorkSheetListActivity.this);
-            }
-        });
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-    }
 
     @Override
     protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
@@ -363,52 +344,13 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         if (resultCode != RESULT_OK) {
             return;
         }
-        if (requestCode == PhotoUtil.TAKE_PICTURE) {
-            PhotoUtil.getInstance().dealPhoto(this, data, true);
-        } else if (requestCode == PhotoUtil.SELECT_PIC_BY_PICK_PHOTO) {
-            PhotoUtil.getInstance().dealPhoto(this, data, false);
-        } else if (requestCode == 200) {
-            Bundle bundle = data.getExtras();
-            Bitmap headPhoto = (Bitmap) bundle.get("data");
-            // 1.将裁减头像保存到文件
-//            File file = FileUtils.saveBitmap(headPhoto, "headPhoto.png");
-            // 2.将图片传到网上，并回显
-            mIvHeadImg.setImageBitmap(headPhoto);
-            if (NetworkUtils.isNetworkAvailable(WorkSheetListActivity.this)) {
-                initProgressDialog("正在上传头像...").show();
-                UploadPhotoRequest bean = new UploadPhotoRequest(CommonUtils.Bitmap2StrByBase64(headPhoto));
-                TaskEngine.getInstance().tokenHttps(Canstance.HTTP_UPLOAD_PHOTO, bean, new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String s) {
-                        dialog.dismiss();
-                        UploadPhotoReponse response = new UploadPhotoReponse();
-                        response = (UploadPhotoReponse) CommonUtils.generateEntityByGson(WorkSheetListActivity.this, s, response);
-                        if (response != null) {
-                            TApplication.context.mUserInfo.face_url = response.info.face_url;
-                            loadFace();
-                            PhotoUtil.getInstance().deleteCache();
-                            ToastUtils.showShort(WorkSheetListActivity.this, "上传成功");
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        dialog.dismiss();
-                        if (volleyError != null) {
-                            if (volleyError.networkResponse != null)
-                                ToastUtils.showShort(WorkSheetListActivity.this, "网络连接错误（" + volleyError.networkResponse.statusCode + ")");
-                            Log.e("TAG", volleyError.getMessage(), volleyError);
-                        }
-                    }
-                });
-            } else if (requestCode == 3030) {
-                finish();
-            } else {
-                ToastUtils.showShort(WorkSheetListActivity.this, "网络未连接");
-            }
+        if (requestCode == 3030) {
+            loadFace();
+        } else {
+            ToastUtils.showShort(WorkSheetListActivity.this, "网络未连接");
         }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -425,7 +367,8 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             }
         }
     }
-    private void notifyMes(final Context context){
+
+    private void notifyMes(final Context context) {
         TipDialog outDialog = new TipDialog(context);
         outDialog.setNoPomptTitle();
         outDialog.setTextDes("打开通知权限");
