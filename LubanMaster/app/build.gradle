@@ -11,12 +11,18 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
-                GETUI_APP_ID    : "ZbJqKhikIF7d2UEIUDmWq4",
-                GETUI_APP_KEY   : "DwiMI0gzDz8vsXAMmIcfr7",
-                GETUI_APP_SECRET: "Bua63OzXRD8o3n2hoBITk4",
+                GETUI_APP_ID    : "XmlBZrIsPQ86zhZH25CSt",
+                GETUI_APP_KEY   : "aKlcvzLahI7yjVb78VqjM1",
+                GETUI_APP_SECRET: "XHqKjIwziq6ZrUnF20SDn",
                 /* GETUI_APP_ID    : "3pa6zWkUC38EM1r0NZBGB8",
                  GETUI_APP_KEY   : "PZQ9sBnkny9ilioJHLP247",
-                 GETUI_APP_SECRET: "IWxpDINGEnAk0FtFtLh8k7"*/
+                 GETUI_APP_SECRET: "IWxpDINGEnAk0FtFtLh8k7"
+
+                 AppID： XmlBZrIsPQ86zhZH25CSt
+AppSecret： XHqKjIwziq6ZrUnF20SDn
+AppKey： aKlcvzLahI7yjVb78VqjM1
+MasterSecret： be2mClT9kU5PWNhyqz39YA重置
+                 */
         ]
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86_64"
