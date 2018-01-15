@@ -251,13 +251,13 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 ivStateIcon.setImageResource(R.drawable.workservie);
                 btnStartServer.setText(R.string.txt_work_sheet_details_service_completed);
                 updateStatus = 4;
-                ivPhoneIcon.setEnabled(false);
-                ivAddressIcon.setEnabled(false);
+//                ivPhoneIcon.setEnabled(false);
+//                ivAddressIcon.setEnabled(false);
                 break;
             case Canstance.KEY_SHEET_STATUS_COMPLETED:
                 ivStateIcon.setImageResource(R.drawable.ic_details_completed);
-                ivPhoneIcon.setEnabled(false);
-                ivAddressIcon.setEnabled(false);
+//                ivPhoneIcon.setEnabled(false);
+//                ivAddressIcon.setEnabled(false);
                 btnStartServer.setVisibility(View.GONE);
 //                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) btnSignException.getLayoutParams();
 //                layoutParams.gravity = Gravity.CENTER;
@@ -265,8 +265,8 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 break;
             case Canstance.KEY_SHEET_STATUS_CANCELED:
                 ivStateIcon.setImageResource(R.drawable.ic_details_canceled);
-                ivPhoneIcon.setEnabled(false);
-                ivAddressIcon.setEnabled(false);
+//                ivPhoneIcon.setEnabled(false);
+//                ivAddressIcon.setEnabled(false);
                 llBtn.setVisibility(View.GONE);
                 llCancelReason.setVisibility(View.GONE);
                 break;
