@@ -44,7 +44,8 @@
                 android:onClick="onStartTime"/>
 
             <ImageView
-                style="@style/about_icon"/>
+                style="@style/about_icon"
+                android:onClick="onStartTime"/>
         </LinearLayout>
 
         <LinearLayout
@@ -63,7 +64,8 @@
                 android:onClick="onEndTime"/>
 
             <ImageView
-                style="@style/about_icon"/>
+                style="@style/about_icon"
+                android:onClick="onEndTime"/>
         </LinearLayout>
 
         <LinearLayout

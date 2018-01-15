@@ -215,6 +215,8 @@ public class MySettingActivity extends PermissionActivity {
                             TApplication.context.mUserInfo.face_url = response.info.face_url;
                             loadFace();
                             PhotoUtil.getInstance().deleteCache();
+
+                            setResult(RESULT_OK);
                             ToastUtils.showShort(MySettingActivity.this, "上传成功");
                         }
                     }
