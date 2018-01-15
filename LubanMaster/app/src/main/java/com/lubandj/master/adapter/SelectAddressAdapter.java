@@ -35,6 +35,7 @@ public class SelectAddressAdapter extends BaseAdapter {
 
     public void clearData() {
         dataLit.clear();
+        notifyDataSetChanged();
     }
 
     public void setData(List<PoiInfo> newList) {

@@ -97,6 +97,8 @@
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:hint="查找小区/大厦/学校等"
+                    android:inputType="text"
+                    android:lines="1"
                     android:textColor="#000000"
                     android:textSize="14sp"/>
 

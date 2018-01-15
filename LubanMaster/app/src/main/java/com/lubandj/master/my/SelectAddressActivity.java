@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -109,16 +110,21 @@ public class SelectAddressActivity extends BaseActivity implements BaiduMap.OnMa
         mPoiSearch = PoiSearch.newInstance();
         mPoiSearch.setOnGetPoiSearchResultListener(this);
 
-        binding.etPalceSelectaddress.setOnClickListener(new View.OnClickListener() {
+        binding.etPalceSelectaddress.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                if (acStateIsMap) {
-                    binding.llViewmap.setVisibility(View.GONE);
-                    binding.lvSearaddress.setVisibility(View.VISIBLE);
-                    acStateIsMap = false;
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (acStateIsMap) {
+                        binding.llViewmap.setVisibility(View.GONE);
+                        binding.lvSearaddress.setVisibility(View.VISIBLE);
+                        acStateIsMap = false;
+                    }
                 }
+                return false;
             }
         });
+
+
         binding.etPalceSelectaddress.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -129,6 +135,7 @@ public class SelectAddressActivity extends BaseActivity implements BaiduMap.OnMa
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //当EditText控件中文字状态发生改变时调用
                 if (s.length() <= 0) {
+                    mSearchAdapter.clearData();
                     return;
                 }
                 //根据关键字搜索poi信息

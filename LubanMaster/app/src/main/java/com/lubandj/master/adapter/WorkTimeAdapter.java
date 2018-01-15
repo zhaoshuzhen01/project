@@ -102,7 +102,7 @@ public class WorkTimeAdapter extends BaseAdapter {
         boolean flag = false;
         if (mBean != null) {
             if ("1".equals(mBean.isLeave)) {
-                if (currentTime.compareTo(beginLeave) >= 0 && currentTime.compareTo(endLeave) <= 0) {//请假状态
+                if (currentTime.compareTo(beginLeave) >= 0 && currentTime.compareTo(endLeave) < 0) {//请假状态
                     viewHolder.mTvTime.setTextColor(Color.parseColor("#999999"));
                     viewHolder.mTvState.setVisibility(View.VISIBLE);
                     viewHolder.mLl.setBackgroundColor(Color.WHITE);
