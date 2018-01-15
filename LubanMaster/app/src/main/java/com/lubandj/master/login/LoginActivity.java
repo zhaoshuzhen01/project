@@ -3,6 +3,7 @@ package com.lubandj.master.login;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -84,6 +85,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
     @Override
     public void initView() {
         ButterKnife.inject(this);
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         setBackImg(R.drawable.ic_login_close);
         setBackImgVisiable(View.GONE);
         setTitleText(R.string.txt_login_page_title);
