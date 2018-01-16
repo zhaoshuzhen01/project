@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -49,11 +50,13 @@ public class SplashActivity extends PermissionActivity {
     }
 
     public void onLogin() {
-//        if (checkPermission(Manifest.permission.ACCESS_NOTIFICATION_POLICY, "notice")) {
-//            setDialogTipUserGoToAppSettting("权限提醒", "应用需要通知权限，请到应用设置中打开");
-//            startRequestPermission();
-//            return;
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, "location")) {
+                setDialogTipUserGoToAppSettting("权限提醒", "应用需要定位权限，请到应用设置中打开");
+                startRequestPermission();
+                return;
+            }
+        }
 
         if (TextUtils.isEmpty(CommonUtils.getToken()))//无登录信息
             mHandler.sendMessageDelayed(mHandler.obtainMessage(0), 500);
