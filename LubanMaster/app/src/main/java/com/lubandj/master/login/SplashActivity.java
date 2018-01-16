@@ -1,5 +1,6 @@
 package com.lubandj.master.login;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -21,6 +22,7 @@ import com.lubandj.master.TApplication;
 import com.lubandj.master.databinding.ActivitySplashBinding;
 import com.lubandj.master.httpbean.UserInfoRequest;
 import com.lubandj.master.httpbean.UserInfoResponse;
+import com.lubandj.master.my.PermissionActivity;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.StatusBarUtils;
@@ -34,19 +36,45 @@ import com.lubandj.master.worksheet.WorkSheetListActivity;
  * company:九州宏图
  */
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends PermissionActivity {
     private ActivitySplashBinding mBinding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        ActUtils.isFirstIn = true;//设置为入口正常进入
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         StatusBarUtils.setWindowStatusBarColor(SplashActivity.this, R.color.splash_status_bar);
-        ActUtils.isFirstIn = true;//设置为入口正常进入
+        onLogin();
+    }
+
+    public void onLogin() {
+//        if (checkPermission(Manifest.permission.ACCESS_NOTIFICATION_POLICY, "notice")) {
+//            setDialogTipUserGoToAppSettting("权限提醒", "应用需要通知权限，请到应用设置中打开");
+//            startRequestPermission();
+//            return;
+//        }
+
         if (TextUtils.isEmpty(CommonUtils.getToken()))//无登录信息
             mHandler.sendMessageDelayed(mHandler.obtainMessage(0), 500);
         else
             mHandler.sendMessageDelayed(mHandler.obtainMessage(1), 1000);
+    }
+
+
+    @Override
+    public int getLayout() {
+        return R.layout.activity_splash;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     private Handler mHandler = new Handler() {
@@ -96,5 +124,21 @@ public class SplashActivity extends Activity {
                 CommonUtils.fastShowError(SplashActivity.this, volleyError);
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onPermissionGranted(String operation) {
+        onLogin();
+    }
+
+    @Override
+    public void onPermissionRefuse(String operation) {
+        ToastUtils.showShort(SplashActivity.this, "拒绝权限，将退出程序");
+        finish();
     }
 }
