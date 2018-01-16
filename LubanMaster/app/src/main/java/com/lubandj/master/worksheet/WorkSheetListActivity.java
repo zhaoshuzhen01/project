@@ -210,7 +210,7 @@ public class WorkSheetListActivity extends TitleBaseActivity {
                 startActivity(intent);
                 int count = CommonUtils.getMsgCount();
                 if (count > 0) {
-                    DbInstance.getInstance().insertDatas();
+//                    DbInstance.getInstance().insertDatas();
                 }
                 break;
         }

@@ -40,7 +40,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
     @Override
     public void initView() {
         DbInstance.getInstance().queryDatas();
-        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
+//        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
         CommonUtils.setMsgCount(0);
         ButterKnife.inject(this);
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6)findViewById(R.id.prpt);
@@ -92,7 +92,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
         pullToRefreshAndPushToLoadView.finishLoading();
         msgBeens.clear();
         msgBeens.addAll(datas);
-        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
+//        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
         sort(msgBeens);
         msgCenterAdapter.notifyDataSetChanged();
     }
