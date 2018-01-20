@@ -67,9 +67,9 @@ public class MainCantainActivity extends BaseMainActivity {
     //初始化底部导航条
     public void initBottomNavigationBar() {
         super.initBottomNavigationBar();
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "首页").setActiveColorResource(R.color.black).setInActiveColorResource(R.color.white).setInactiveIcon(getResources().getDrawable(R.drawable.icon)))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "订单").setActiveColorResource(R.color.black).setInActiveColorResource(R.color.white).setInactiveIcon(getResources().getDrawable(R.drawable.icon)))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "我的").setActiveColorResource(R.color.black).setInActiveColorResource(R.color.white).setInactiveIcon(getResources().getDrawable(R.drawable.icon)))
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.icon, "首页").setActiveColorResource(R.color.black).setInActiveColorResource(R.color.white).setInactiveIcon(getResources().getDrawable(R.drawable.icon)))
+                .addItem(new BottomNavigationItem(R.drawable.icon, "订单").setActiveColorResource(R.color.black).setInActiveColorResource(R.color.white).setInactiveIcon(getResources().getDrawable(R.drawable.icon)))
+                .addItem(new BottomNavigationItem(R.drawable.icon, "我的").setActiveColorResource(R.color.black).setInActiveColorResource(R.color.white).setInactiveIcon(getResources().getDrawable(R.drawable.icon)))
 //                .addItem(new BottomNavigationItem(R.drawable.icon, "我的").setActiveColorResource(R.color.white).setBadgeItem(badgeItem))
                 .setFirstSelectedPosition(0)
                 .initialise(); //所有的设置需在调用该方法前完成

@@ -49,5 +49,5 @@
     <dimen name="sp_16">16sp</dimen>
     <dimen name="sp_18">18sp</dimen>
     <dimen name="dp_22">22dp</dimen>
-
+    <dimen name="badge_text_size">24sp</dimen><!-- 10 -->
 </resources>
