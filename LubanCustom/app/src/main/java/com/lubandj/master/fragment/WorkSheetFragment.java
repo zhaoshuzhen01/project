@@ -20,13 +20,12 @@ import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.customview.BackLayout;
 import com.lubandj.master.Iview.IworkListView;
 import com.lubandj.master.model.workList.WorkListClickModel;
-import com.lubandj.master.utils.NetworkUtils;
+import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
@@ -40,7 +39,6 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     RelativeLayout workFragmentContaner;
     private WorkSheetAdapter workSheetAdapter;
     private List<WorkListBeen.InfoBean> worklists = new ArrayList<>();
-    private boolean isVisible = false;
     private int index;// 0 未完成  1  已完成  2 已取消
     private BackLayout backLayout;
     private SheetListPresenter sheetListPresenter;
@@ -111,15 +109,6 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         isFirst = false;
         sheetListPresenter.getReflushData(index);
     }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
-
     @Override
     public void onRefresh() {
         sheetListPresenter.getReflushData(index);

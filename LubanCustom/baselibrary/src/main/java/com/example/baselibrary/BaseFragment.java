@@ -70,4 +70,9 @@ public abstract class BaseFragment extends Fragment {
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
 }

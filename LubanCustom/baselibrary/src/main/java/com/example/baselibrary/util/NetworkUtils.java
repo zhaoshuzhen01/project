@@ -1,4 +1,4 @@
-package com.lubandj.master.utils;
+package com.example.baselibrary.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

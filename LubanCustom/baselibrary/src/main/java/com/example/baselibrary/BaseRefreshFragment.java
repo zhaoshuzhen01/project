@@ -8,14 +8,18 @@ import android.view.View;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.RefreshLayout;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
+import com.example.baselibrary.util.NetworkUtils;
+
+import butterknife.ButterKnife;
 
 
 /**
- * Created by dingboyang on 2017/5/27.//
+ * Created //
  */
 
 public abstract class BaseRefreshFragment extends BaseFragment implements PullToRefreshAndPushToLoadView6.PullToRefreshAndPushToLoadMoreListener {
     protected RefreshLayout refreshLayout;
+    protected  boolean isVisible = false;
     protected PullToRefreshAndPushToLoadView6 pullToRefreshAndPushToLoadView;
     private BaseQuickAdapter mOriginAdapter;
 
@@ -51,5 +55,28 @@ public abstract class BaseRefreshFragment extends BaseFragment implements PullTo
         recyclerView.setAdapter(mOriginAdapter);
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()) {
+            isVisible = true;
+            if (getActivity() != null)
+                lazyLoad();
+        } else {
+            isVisible = false;
+        }
+    }
+    @Override
+    protected void lazyLoad() {
+        if (isVisible && isFirst) {
+            getWebDatas();
+        }
+    }
+    private void getWebDatas() {
+        if (NetworkUtils.isNetworkAvailable(getActivity())) {
+            initData();
+        } else {
+        }
+    }
 
 }

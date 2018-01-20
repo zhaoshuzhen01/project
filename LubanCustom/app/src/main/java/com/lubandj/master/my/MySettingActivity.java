@@ -1,14 +1,11 @@
 package com.lubandj.master.my;
 
-import android.Manifest;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.android.volley.Response;
@@ -17,13 +14,11 @@ import com.android.volley.toolbox.ImageLoader;
 import com.example.baselibrary.eventbus.BusEvent;
 import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tools.ToastUtils;
-import com.example.baselibrary.util.ActUtils;
 import com.example.baselibrary.util.PhotoUtil;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.been.AddressBean;
-import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.UserInfo;
 import com.lubandj.master.databinding.ActivityMysettingBinding;
 import com.lubandj.master.dialog.DoubleSelectDialog;
@@ -32,13 +27,10 @@ import com.lubandj.master.httpbean.GetAddressReponse;
 import com.lubandj.master.httpbean.UidParamsRequest;
 import com.lubandj.master.httpbean.UploadPhotoReponse;
 import com.lubandj.master.httpbean.UploadPhotoRequest;
-import com.lubandj.master.login.LoginActivity;
 import com.lubandj.master.utils.BitmapCache;
 import com.lubandj.master.utils.CommonUtils;
-import com.lubandj.master.utils.Logger;
-import com.lubandj.master.utils.NetworkUtils;
+import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.master.utils.TaskEngine;
-import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 /**
  * function:设置界面

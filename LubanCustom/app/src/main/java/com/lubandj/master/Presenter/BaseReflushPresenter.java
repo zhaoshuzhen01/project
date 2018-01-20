@@ -1,18 +1,11 @@
 package com.lubandj.master.Presenter;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.lubandj.master.Canstance;
-import com.lubandj.master.Iview.IMsgCenterListview;
 import com.lubandj.master.Iview.IbaseView;
-import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.model.BaseModel;
-import com.lubandj.master.model.IbaseModel;
-import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
-import com.lubandj.master.utils.NetworkUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
