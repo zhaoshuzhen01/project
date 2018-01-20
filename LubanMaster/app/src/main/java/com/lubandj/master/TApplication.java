@@ -107,7 +107,7 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
 //            default:
 //                break;
 //        }
-//        Log.e("deal", text + "    uid  = " + uid);
+        Log.e("deal",  "    uid  = " + uid);
         PushManager.getInstance().bindAlias(context, uid + "", CommonUtils.getUid() + "");
     }
 

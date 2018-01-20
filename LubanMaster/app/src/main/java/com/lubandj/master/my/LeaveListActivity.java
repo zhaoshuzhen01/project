@@ -1,37 +1,24 @@
 package com.lubandj.master.my;
 
-import android.Manifest;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.example.baselibrary.BaseActivity;
-import com.example.baselibrary.BaseRefreshActivity;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
-import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.DensityUtils;
-import com.lubandj.master.Canstance;
 import com.lubandj.master.Iview.ILeaveRecordListview;
 import com.lubandj.master.Presenter.LeaveRecordPresenter;
-import com.lubandj.master.Presenter.MsgCenterPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.LeaveRecordAdapter;
-import com.lubandj.master.adapter.MsgCenterAdapter;
 import com.lubandj.master.adapter.RecycleViewDivider;
-import com.lubandj.master.been.AddressBean;
 import com.lubandj.master.been.LeaveBean;
 import com.lubandj.master.databinding.ActivityLeavelistBinding;
-import com.lubandj.master.databinding.ActivityMyaddressBinding;
-import com.lubandj.master.httpbean.BaseResponseBean;
 import com.lubandj.master.utils.CommonUtils;
-import com.lubandj.master.utils.TaskEngine;
 
 import java.util.List;
 

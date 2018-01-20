@@ -15,10 +15,10 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2017/12/23.
  */
 
-public class SheetListPresenter implements ISheetlistPrester , IWorkModel {
+public class SheetListPresenter implements IRefleshLoadMorePrester, IWorkModel {
     private UnFinishModel unFinishModel;
     private static final int STARTINDEX = 1;//从第一条开始请求
-    private static final int PAGESIZE = 10;//一次请求十条数据
+    private static final int PAGESIZE = 11;//一次请求十条数据
 
     private int mstartIndex = 1;
     private IworkListView iworkListView;
@@ -37,6 +37,7 @@ public class SheetListPresenter implements ISheetlistPrester , IWorkModel {
     public void getReflushData(int type) {
         ++type;
         loadMore = false ;
+        mstartIndex = 1 ;
         switch (type) {
             case Canstance.TYPE_LIST_UNFINISH:
                 unFinishModel.getReflushData(Canstance.TYPE_LIST_UNFINISH,STARTINDEX,PAGESIZE);
@@ -55,7 +56,7 @@ public class SheetListPresenter implements ISheetlistPrester , IWorkModel {
         ++type;
         loadMore = true ;
         if (mdatas!=null){
-            mstartIndex=mdatas.size()+1;
+            mstartIndex=mstartIndex+1;
         }
         switch (type) {
             case Canstance.TYPE_LIST_UNFINISH:

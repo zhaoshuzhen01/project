@@ -102,7 +102,6 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
                 backLayout.setVisibility(View.GONE);
             } else {
                 backLayout.setVisibility(View.VISIBLE);
-                ToastUtils.showShort(getActivity(), "网络异常");
             }
         }
     }
@@ -123,11 +122,21 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void onRefresh() {
+        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+            pullToRefreshAndPushToLoadView.finishRefreshing();
+            pullToRefreshAndPushToLoadView.finishLoading();
+            return;
+        }
         sheetListPresenter.getReflushData(index);
     }
 
     @Override
     public void onLoadMore() {
+        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+            pullToRefreshAndPushToLoadView.finishRefreshing();
+            pullToRefreshAndPushToLoadView.finishLoading();
+            return;
+        }
         sheetListPresenter.getMoreData(index);
     }
 

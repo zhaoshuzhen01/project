@@ -8,6 +8,9 @@ import android.content.Context;
 
 public abstract class BaseModel {
     protected Context context ;
-
+    protected IbaseModel ibaseModel ;
+    public void setIBaseMode(IbaseModel ibaseModel){
+        this.ibaseModel = ibaseModel;
+    }
     public abstract void getReflushData(int type,int startIndex,int pageSize);
 }

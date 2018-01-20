@@ -11,6 +11,7 @@ import com.lubandj.master.R;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.model.BaseModel;
 import com.lubandj.master.httpbean.NetWorkListBeen;
+import com.lubandj.master.model.IbaseModel;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
 
@@ -21,13 +22,9 @@ import java.util.List;
  */
 
 public class MsgCenterModel extends BaseModel {
-    private IMsgCenterModel iMsgCenterModel ;
-
-    public MsgCenterModel(Context context,IMsgCenterModel iMsgCenterModel){
+    public MsgCenterModel(Context context){
         this.context = context ;
-        this.iMsgCenterModel = iMsgCenterModel;
     }
-
     @Override
     public void getReflushData(int type,int startIndex,int pageSize) {
 
@@ -41,7 +38,7 @@ public class MsgCenterModel extends BaseModel {
                     if (msgCenterBeen.getCode() == 0) {
                         List<MsgCenterBeen.InfoBean.ListBean> datas = msgCenterBeen.getInfo().getList();
                         if (datas!=null)
-                            iMsgCenterModel.getMsgCenterLists(datas);
+                            ibaseModel.getDataLists(datas);
                         if (datas.size()==0){
 //                            ToastUtils.showShort(context,"暂无数据");
                         }

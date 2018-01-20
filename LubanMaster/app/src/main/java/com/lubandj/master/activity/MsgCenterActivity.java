@@ -7,14 +7,13 @@ import android.view.View;
 
 import com.example.baselibrary.BaseRefreshActivity;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
-import com.lubandj.master.InstanceUtil.NotifyMsgInstance;
-import com.lubandj.master.Iview.IMsgCenterListview;
-import com.lubandj.master.Presenter.MsgCenterPresenter;
+import com.lubandj.master.Iview.IbaseView;
+import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.MsgCenterAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
-import com.lubandj.master.been.TestBean;
 import com.lubandj.master.db.DbInstance;
+import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.StringUtil;
 
@@ -26,12 +25,12 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenterListview {
+public class MsgCenterActivity extends BaseRefreshActivity implements IbaseView<MsgCenterBeen.InfoBean.ListBean> {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     private MsgCenterAdapter msgCenterAdapter;
     private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
-    private MsgCenterPresenter msgCenterPresenter ;
+    private BaseReflushPresenter msgCenterPresenter ;
     @Override
     public int getLayout() {
         return R.layout.activity_msg_center;
@@ -57,7 +56,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
 
         msgCenterAdapter = new MsgCenterAdapter(msgBeens,this);
         initRecyclerView(recyclerView, new LinearLayoutManager(this), msgCenterAdapter);
-        msgCenterPresenter = new MsgCenterPresenter(this,this);
+        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this,this,new MsgCenterModel(this));
         msgCenterPresenter.getReflushData(0);
 //        recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 20, 0));
     }
@@ -85,18 +84,6 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
     public void onLoadMore() {
       msgCenterPresenter.getMoreData(0);
     }
-
-    @Override
-    public void getMsgCenterLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
-        pullToRefreshAndPushToLoadView.finishRefreshing();
-        pullToRefreshAndPushToLoadView.finishLoading();
-        msgBeens.clear();
-        msgBeens.addAll(datas);
-//        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
-        sort(msgBeens);
-        msgCenterAdapter.notifyDataSetChanged();
-    }
-
     private void sort(List<MsgCenterBeen.InfoBean.ListBean> msgBeens) {
         //排序规则，这里是以年龄先排序，如果年龄相同
         Comparator<MsgCenterBeen.InfoBean.ListBean> comparator = new Comparator<MsgCenterBeen.InfoBean.ListBean>() {
@@ -110,5 +97,17 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IMsgCenter
 
         //这里就会自动根据规则进行排序
         Collections.sort(msgBeens, comparator);
+    }
+
+
+    @Override
+    public void getDataLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
+        pullToRefreshAndPushToLoadView.finishRefreshing();
+        pullToRefreshAndPushToLoadView.finishLoading();
+        msgBeens.clear();
+        msgBeens.addAll(datas);
+//        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
+        sort(msgBeens);
+        msgCenterAdapter.notifyDataSetChanged();
     }
 }

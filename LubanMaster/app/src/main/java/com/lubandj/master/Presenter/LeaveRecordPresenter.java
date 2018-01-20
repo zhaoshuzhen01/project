@@ -2,15 +2,10 @@ package com.lubandj.master.Presenter;
 
 import android.content.Context;
 
-import com.lubandj.master.Canstance;
 import com.lubandj.master.Iview.ILeaveRecordListview;
-import com.lubandj.master.Iview.IMsgCenterListview;
 import com.lubandj.master.been.LeaveBean;
-import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.model.LeaveRecordModel.ILeaveRecordModel;
 import com.lubandj.master.model.LeaveRecordModel.LeaveRecordModel;
-import com.lubandj.master.model.MsgCenterModel.IMsgCenterModel;
-import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +14,7 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2017/12/28.
  */
 
-public class LeaveRecordPresenter implements ISheetlistPrester, ILeaveRecordModel {
+public class LeaveRecordPresenter implements IRefleshLoadMorePrester, ILeaveRecordModel {
     private LeaveRecordModel msgCenterModel;
     private static final int STARTINDEX = 1;//从第一条开始请求
     private static final int PAGESIZE = 10;//一次请求十条数据
@@ -40,6 +35,7 @@ public class LeaveRecordPresenter implements ISheetlistPrester, ILeaveRecordMode
     @Override
     public void getReflushData(int type) {
         loadMore = false;
+        mstartIndex = 1 ;
         msgCenterModel.getReflushData(type, STARTINDEX, PAGESIZE);
     }
 
@@ -47,7 +43,7 @@ public class LeaveRecordPresenter implements ISheetlistPrester, ILeaveRecordMode
     public void getMoreData(int type) {
         loadMore = true;
         if (mdatas != null) {
-            mstartIndex= mdatas.size()+1;
+            mstartIndex= mstartIndex+1;
         }
         msgCenterModel.getReflushData(type, mstartIndex, PAGESIZE);
     }
