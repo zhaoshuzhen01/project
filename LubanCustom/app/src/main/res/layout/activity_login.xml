@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_ffffff"
+              android:orientation="vertical"
+
+              tools:context="com.lubandj.master.login.LoginActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeeeee"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/h_23dp"
+        android:paddingRight="@dimen/h_23dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/h_25dp"
+            android:text="@string/txt_login_page_desc"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_13"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/h_44dp"
+            android:layout_marginTop="@dimen/h_20dp"
+            android:background="@drawable/shape_edit_text_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/h_20dp"
+                android:src="@drawable/ic_login_phone"/>
+
+
+            <com.example.baselibrary.widget.EditTextWithDel
+                android:id="@+id/et_phone_num"
+                style="@style/editTextStyles"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/h_9dp"
+                android:layout_marginRight="@dimen/h_20dp"
+                android:hint="@string/txt_login_page_phone_hint"
+                android:inputType="phone"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/h_26dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="175dp"
+                android:layout_height="@dimen/h_44dp"
+                android:background="@drawable/shape_edit_text_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/h_20dp"
+                    android:src="@drawable/ic_auth_code"/>
+
+
+                <com.example.baselibrary.widget.EditTextWithDel
+                    android:id="@+id/et_auth_code"
+                    style="@style/editTextStyles"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/h_9dp"
+                    android:layout_marginRight="@dimen/h_20dp"
+                    android:hint="@string/txt_login_page_code_hint"
+                    android:inputType="number"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_send_code"
+                style="@style/btn_login"
+                android:layout_width="@dimen/h_0dp"
+                android:layout_marginLeft="@dimen/h_19dp"
+                android:layout_weight="1"
+                android:text="@string/txt_login_page_send_code"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/btn_login"
+            android:layout_marginTop="@dimen/h_26dp"
+            android:enabled="false"
+            android:text="@string/txt_login_page_title"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_11"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="登录代表你已同意"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="《鹿班到家工程师协议》"
+                    android:textColor="@color/actionsheet_red"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
+

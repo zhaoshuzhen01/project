@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eeeeee"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#ffffff"
+            >
+
+            <ImageView
+                style="@style/my_title_back"
+                android:onClick="onBack"/>
+
+            <TextView
+                style="@style/my_title_text"
+                android:text="设置"/>
+
+        </RelativeLayout>
+
+        <View
+            style="@style/horizontal_line"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_menu_address"
+            style="@style/leftmenu_linearlayout"
+            >
+
+            <TextView
+                style="@style/leftmenu_text"
+                android:text="头像"/>
+
+            <com.lubandj.master.customview.RoundImageView
+                android:id="@+id/iv_set_headimg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:onClick="onHeadPhoto"
+                android:scaleType="fitXY"
+                android:src="@drawable/default_header"/>
+
+            <ImageView
+                style="@style/about_icon"/>
+        </LinearLayout>
+
+        <View
+            style="@style/horizontal_line"/>
+
+        <LinearLayout
+            android:id="@+id/ll_menu_service"
+            style="@style/leftmenu_linearlayout"
+            >
+
+
+            <TextView
+                style="@style/leftmenu_text"
+                android:text="姓名"/>
+
+            <TextView
+                android:id="@+id/tv_setting_name"
+                style="@style/setting_righttext"/>
+        </LinearLayout>
+
+        <View
+            style="@style/horizontal_line"/>
+
+        <LinearLayout
+            android:id="@+id/ll_menu_workcode"
+            style="@style/leftmenu_linearlayout"
+            >
+
+
+            <TextView
+                style="@style/leftmenu_text"
+                android:text="工号"/>
+
+            <TextView
+                android:id="@+id/tv_setting_num"
+                style="@style/setting_righttext"/>
+        </LinearLayout>
+
+        <View
+            style="@style/horizontal_line"/>
+
+        <LinearLayout
+            style="@style/leftmenu_linearlayout"
+            android:onClick="onModifyPhone"
+            >
+
+
+            <TextView
+                style="@style/leftmenu_text"
+                android:text="手机号"/>
+
+            <TextView
+                android:id="@+id/tv_setting_phone"
+                style="@style/setting_righttext"/>
+
+            <ImageView
+                style="@style/about_icon"/>
+        </LinearLayout>
+
+        <View
+            style="@style/horizontal_line"/>
+
+        <LinearLayout
+            style="@style/leftmenu_linearlayout"
+            android:onClick="onMyAddress"
+            >
+
+
+            <TextView
+                style="@style/leftmenu_text"
+                android:text="住址"/>
+
+            <TextView
+                android:id="@+id/tv_setting_address"
+                style="@style/setting_righttext"/>
+
+            <ImageView
+                style="@style/about_icon"/>
+        </LinearLayout>
+
+        <View
+            style="@style/horizontal_line"/>
+
+        <View
+            style="@style/horizontal_line"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            style="@style/leftmenu_linearlayout"
+            android:onClick="onAbout"
+            >
+
+
+            <TextView
+                style="@style/leftmenu_text"
+                android:text="关于鹿班"/>
+            <ImageView
+                style="@style/about_icon"/>
+        </LinearLayout>
+
+        <View
+            style="@style/horizontal_line"/>
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_address_save"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_btn_send_code_bg"
+            android:onClick="onLogout"
+            android:text="退出登录"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+</layout>
+

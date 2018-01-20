@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_eeeeee"
+    tools:context="com.lubandj.master.worksheet.SignExceptionActivity">
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/h_10dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/h_15dp"
+        android:paddingLeft="@dimen/h_12dp"
+        android:paddingRight="@dimen/h_12dp"
+        android:paddingTop="@dimen/h_15dp">
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/radio_btn_1"-->
+            <!--style="@style/radio_btn_style"-->
+            <!--android:text="@string/txt_sign_exception_reason_1" />-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/radio_btn_2"-->
+            <!--style="@style/radio_btn_style"-->
+            <!--android:layout_marginTop="@dimen/h_11dp"-->
+            <!--android:text="@string/txt_sign_exception_reason_2" />-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/radio_btn_3"-->
+            <!--style="@style/radio_btn_style"-->
+            <!--android:layout_marginTop="@dimen/h_11dp"-->
+            <!--android:text="@string/txt_sign_exception_reason_3" />-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/radio_btn_4"-->
+            <!--style="@style/radio_btn_style"-->
+            <!--android:layout_marginTop="@dimen/h_11dp"-->
+            <!--android:text="@string/txt_sign_exception_reason_4" />-->
+
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/fl_reason"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_165.5dp"
+        android:layout_below="@+id/radio_group"
+        android:layout_marginLeft="@dimen/h_12dp"
+        android:layout_marginRight="@dimen/h_12dp"
+        android:layout_marginTop="@dimen/h_10dp"
+        android:background="@drawable/shape_sign_exception_edit_bg"
+        android:paddingBottom="@dimen/h_12dp"
+        android:paddingTop="@dimen/h_12dp"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/edit_reason"
+            style="@style/editTextStyles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/h_12dp"
+            android:hint="@string/txt_sign_exception"
+            android:maxLength="200"
+            android:textSize="@dimen/sp_13" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="@dimen/h_15dp"
+            android:text="200"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_13" />
+    </FrameLayout>
+
+
+    <Button
+        android:id="@+id/btn_submit"
+        style="@style/btn_login"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/h_49dp"
+        android:layout_marginLeft="@dimen/h_23dp"
+        android:layout_marginRight="@dimen/h_23dp"
+        android:text="@string/txt_submit_exception" />
+
+</RelativeLayout>

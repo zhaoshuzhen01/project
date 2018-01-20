@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/work_fragment_contaner"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f4f4f4"
+    android:orientation="vertical">
+
+    <com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6
+        android:id="@+id/prpt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+    </com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6>
+</RelativeLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eeeeee"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            >
+
+            <ImageView
+                style="@style/my_title_back"
+                android:onClick="onBack"/>
+
+            <TextView
+                style="@style/my_title_text"
+                android:text="请假记录"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1">
+
+            <com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6
+                android:id="@+id/prpt_leaverecord"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_leaverecord"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"/>
+            </com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6>
+
+            <LinearLayout
+                android:id="@+id/ll_noData"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="35dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/nowork"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="你很棒！还没有请假记录~"
+                    android:textColor="#333333"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_address_save"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_btn_send_code_bg"
+            android:onClick="onAskForLeave"
+            android:text="请假"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+</layout>
+

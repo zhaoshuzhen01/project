@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <com.lubandj.master.customview.RoundImageView
+        android:id="@+id/iv_menu_headimg"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="30dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/default_header" />
+
+
+    <TextView
+        android:id="@+id/tv_menu_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:text="姓名"
+        android:textColor="#333333"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RatingBar
+            android:id="@+id/rb_menu_rate"
+            style="@android:style/Widget.Holo.Light.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:rating="4.1" />
+
+        <TextView
+            android:id="@+id/tv_menu_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:text="4.1分"
+            android:textColor="#fcb159"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_menu_workcode"
+        style="@style/leftmenu_linearlayout"
+        android:layout_marginTop="25dp">
+
+        <ImageView
+            style="@style/leftmenu_icon"
+            android:src="@drawable/menu_workcode" />
+
+        <TextView
+            style="@style/leftmenu_text"
+            android:text="我的工作码" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_menu_workcalendar"
+        style="@style/leftmenu_linearlayout"
+        >
+
+        <ImageView
+            style="@style/leftmenu_icon"
+            android:src="@drawable/menu_calendar" />
+
+        <TextView
+            style="@style/leftmenu_text"
+            android:text="工作日历" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_menu_askforleave"
+        style="@style/leftmenu_linearlayout"
+        >
+
+        <ImageView
+            style="@style/leftmenu_icon"
+            android:src="@drawable/menu_askforleave" />
+
+        <TextView
+            style="@style/leftmenu_text"
+            android:text="我要请假" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_menu_service"
+        style="@style/leftmenu_linearlayout"
+        >
+
+        <ImageView
+            style="@style/leftmenu_icon"
+            android:src="@drawable/menu_service" />
+
+        <TextView
+            style="@style/leftmenu_text"
+            android:text="联系客服" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_menu_setting"
+        style="@style/leftmenu_linearlayout">
+
+        <ImageView
+            style="@style/leftmenu_icon"
+            android:src="@drawable/menu_aboutus" />
+
+        <TextView
+            style="@style/leftmenu_text"
+            android:text="设置" />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

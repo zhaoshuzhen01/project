@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eeeeee"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/my_title_back"
+                android:onClick="onBack"/>
+
+            <TextView
+                style="@style/my_title_text"
+                android:text="我的住址"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="@dimen/h_12dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/selectaddress_gps"/>
+
+                <TextView
+                    android:id="@+id/tv_city_selectaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="9dp"
+                    android:gravity="center_vertical"
+                    android:text="北京"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    />
+
+                <ImageView
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:layout_marginLeft="6dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/selectaddress_gps_down"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_selectaddress_searchedit"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginRight="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/selectaddress_search"/>
+
+                <EditText
+                    android:id="@+id/et_palce_selectaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="查找小区/大厦/学校等"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:textColor="#000000"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:id="@+id/ll_viewmap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <com.baidu.mapapi.map.TextureMapView
+                        android:id="@+id/mbaiduMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </com.baidu.mapapi.map.TextureMapView>
+
+                    <ImageButton
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="85dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/white"
+                        android:onClick="onGps"
+                        android:src="@drawable/gps"/>
+                </RelativeLayout>
+
+                <ListView
+                    android:id="@+id/lv_autoaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:divider="#eeeeee"
+                    android:dividerHeight="0.5dp"/>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_searaddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#999999"
+                android:dividerHeight="0.5dp"></ListView>
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>
+
