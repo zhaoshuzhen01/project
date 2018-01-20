@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- state_enabled="true" 是可用不可用； -->
+
+    <item android:drawable="@drawable/shape_1" android:state_enabled="true"/>
+
+    <item android:drawable="@drawable/shape_2"/>
+
+</selector>

@@ -54,7 +54,12 @@ public abstract class BaseRefreshFragment extends BaseFragment implements PullTo
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mOriginAdapter);
     }
-
+    public void initRawRecyclerView(RecyclerView recyclerView, RecyclerView.LayoutManager layoutManager, BaseQuickAdapter adapter) {
+        mOriginAdapter =adapter;
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mOriginAdapter);
+    }
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

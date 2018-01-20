@@ -1,0 +1,308 @@
+package com.example.baselibrary.widget;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.example.baselibrary.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * ViewPager实现的轮播图,支持自动轮播,手势滑动切换页面
+ */
+
+public class SlideShowView extends FrameLayout{
+
+    private final int LOOPTIME = 5000;//轮询时间
+
+    private CustomViewPager mViewPager;
+
+    private LinearLayout llContainer; // 小圆点的容器
+
+    private Context context;
+    //数据集合
+    //    private List<GameBanners> m_AdvImgs=new ArrayList<>();
+    private List<String> m_AdvImgs = new ArrayList<>();
+    private MyAdatper adatper;
+
+    private float oldX;
+    private Runnable mRunnable;
+    private boolean isDarged;
+    private boolean isScroll;
+    private Handler mHandler = new Handler();
+    private int clickPos;
+
+
+    public SlideShowView(Context context) {
+        this(context, null);
+    }
+
+    public SlideShowView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public SlideShowView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        this.context = context;
+        initUI(context);
+    }
+
+    public void setData(List<String> m_AdvImgs) {
+
+        stopLoopAdv();
+
+        this.m_AdvImgs.clear();
+        this.m_AdvImgs.addAll(m_AdvImgs);
+
+
+        adatper.notifyDataSetChanged();
+
+        setListener();
+
+    }
+
+    public void startLoopAdv() {
+        if (m_AdvImgs.size() > 1) {//轮播图的个数大于1的时候才能滑动
+            mHandler.postDelayed(mRunnable, LOOPTIME);
+        }
+    }
+
+    public void stopLoopAdv() {
+
+        mHandler.removeCallbacksAndMessages(null);
+    }
+
+
+    private void initUI(Context context) {
+
+        LayoutInflater.from(context).inflate(R.layout.viewpager, this, true);
+
+        mViewPager = (CustomViewPager) findViewById(R.id.vp_pager);
+
+        llContainer = (LinearLayout) findViewById(R.id.ll_container);
+        adatper = new MyAdatper();
+
+        mViewPager.setAdapter(adatper);
+
+        mViewPager.setScrollable(true);
+
+
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                int currentItem = mViewPager.getCurrentItem(); // 获取当前页面
+                mViewPager.setCurrentItem(++currentItem);
+                mHandler.postDelayed(this, LOOPTIME);
+
+            }
+        };
+    }
+
+
+    private void setListener() {
+
+        if (m_AdvImgs.size() <= 1) {
+            mHandler.removeCallbacksAndMessages(null);
+            mViewPager.setScrollable(false);
+            if (llContainer != null) {
+                llContainer.setVisibility(View.GONE);
+            }
+        } else {
+            startLoopAdv();
+            mViewPager.setScrollable(true);
+
+            if (llContainer != null) {
+                llContainer.setVisibility(View.VISIBLE);
+            }
+        }
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                if (m_AdvImgs.size() == 0) {
+                    return;
+                }
+                position = position % m_AdvImgs.size();
+                clickPos = position;
+                for (int i = 0; i < llContainer.getChildCount(); i++) {
+                    llContainer.getChildAt(i).setEnabled(false);
+                }
+
+                llContainer.getChildAt(position).setEnabled(true);
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset,
+                                       int positionOffsetPixels) {
+                isScroll = true;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                switch (state) {
+                    case ViewPager.SCROLL_STATE_IDLE:
+                        isScroll = false;
+                        if (isDarged) {
+                            isDarged = false;
+
+                            startLoopAdv();
+                        }
+                        break;
+                    case ViewPager.SCROLL_STATE_SETTLING:
+                        break;
+                    case ViewPager.SCROLL_STATE_DRAGGING:
+                        isDarged = true;
+
+                        stopLoopAdv();
+                        break;
+                }
+
+            }
+        });
+        mViewPager.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                        break;
+                }
+                return false;
+            }
+        });
+
+        // 动态添加小圆点
+        llContainer.removeAllViews();
+        for (int i = 0; i < m_AdvImgs.size(); i++) {
+            ImageView point = new ImageView(context);
+
+            point.setScaleType(ImageView.ScaleType.FIT_XY);
+
+            point.setImageResource(R.drawable.select_pot);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(40, 5);
+            if (i > 0) {
+                params.leftMargin = 10;
+                point.setEnabled(false);
+            }
+            point.setLayoutParams(params);
+            llContainer.addView(point);
+        }
+    }
+
+    class MyAdatper extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+
+            return Integer.MAX_VALUE;
+
+
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+
+        @Override
+        public Object instantiateItem(ViewGroup view, final int position) {
+
+            View imageLayout = LayoutInflater.from(context).inflate(R.layout.adver_banner_item, view, false);
+            ImageView imageView = (ImageView) imageLayout.findViewById(R.id.bi_imageView);
+            if (m_AdvImgs.size() > 0) {
+                final int pos = position % m_AdvImgs.size(); // 为了避免角标越界，进行取余运算
+                //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos).getPic(), 0, 0, null);
+                //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos), 0, 0, null);
+                ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+//                layoutParams.height =getResources().getDisplayMetrics().widthPixels/2;
+//                GlideUtils.loadDefaultGameList(imageView, m_AdvImgs.get(pos).getImage());
+                imageView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+
+                imageView.setOnTouchListener(new OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+
+                                oldX = event.getX();
+
+                                break;
+
+                            case MotionEvent.ACTION_MOVE:
+                                break;
+
+                            case MotionEvent.ACTION_UP:
+
+                                break;
+
+                            case MotionEvent.ACTION_CANCEL:
+
+                                break;
+                        }
+
+                        return false;
+                    }
+                });
+
+
+                view.addView(imageLayout, 0);
+                return imageLayout;
+            } else {
+                //
+                //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos).getPic(), 0, 0, null);
+                //                container.addView(imageLayout, 0);
+                return imageLayout;
+            }
+
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        stopLoopAdv();
+        if (hasWindowFocus) {
+            startLoopAdv();
+        } else {
+            stopLoopAdv();
+        }
+    }
+
+
+}

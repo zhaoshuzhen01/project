@@ -1,6 +1,7 @@
 package com.lubandj.master.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,8 +11,10 @@ import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.lubandj.master.Iview.IbaseView;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
+import com.lubandj.master.adapter.HomeListAdapter;
 import com.lubandj.master.adapter.MsgCenterAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.customview.HomeTopView;
 import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
 
 import java.util.ArrayList;
@@ -26,9 +29,10 @@ import butterknife.InjectView;
 public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCenterBeen.InfoBean.ListBean> {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
-    private MsgCenterAdapter msgCenterAdapter;
+    private HomeListAdapter homeListAdapter;
     private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
     private BaseReflushPresenter msgCenterPresenter ;
+    private HomeTopView homeTopView ;
     public static HomeFragment newInstance(int index) {
         HomeFragment myFragment = new HomeFragment();
         Bundle bundle = new Bundle();
@@ -39,14 +43,18 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
 
     @Override
     public int getLayout() {
-        return R.layout.activity_msg_center;
+        return R.layout.fragment_home;
     }
     @Override
     protected void initView(View view) {
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6) view.findViewById(R.id.prpt);
 
-        msgCenterAdapter = new MsgCenterAdapter(msgBeens,getActivity());
-        initRecyclerView(recyclerView, new LinearLayoutManager(getActivity()), msgCenterAdapter);
+        homeListAdapter = new HomeListAdapter(msgBeens,getActivity());
+        homeTopView = new HomeTopView(getActivity());
+        homeListAdapter.addHeaderView(homeTopView);
+        homeTopView.initViewPager(getActivity());
+      GridLayoutManager manager = new  GridLayoutManager(getActivity(),2); //spanCount为列数，默认方向vertical
+        initRawRecyclerView(recyclerView, manager, homeListAdapter);
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(),this,new MsgCenterModel(getActivity()));
     }
     @Override
@@ -70,6 +78,6 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
         pullToRefreshAndPushToLoadView.finishLoading();
         msgBeens.clear();
         msgBeens.addAll(datas);
-        msgCenterAdapter.notifyDataSetChanged();
+        homeListAdapter.notifyDataSetChanged();
     }
 }
