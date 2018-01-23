@@ -9,7 +9,7 @@
         android:id="@+id/ll_basetitle_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"
+        android:background="#ffffff"
         android:clipToPadding="true"
         android:fitsSystemWindows="true">
 
@@ -39,7 +39,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout

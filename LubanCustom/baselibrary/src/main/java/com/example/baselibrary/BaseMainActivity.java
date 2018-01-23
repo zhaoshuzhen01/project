@@ -16,7 +16,7 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2018/1/20.
  */
 
-public abstract class BaseMainActivity extends NotitleBaseActivity implements BottomNavigationBar.OnTabSelectedListener, ViewPager.OnPageChangeListener {
+public abstract class BaseMainActivity extends TitleBaseActivity implements BottomNavigationBar.OnTabSelectedListener, ViewPager.OnPageChangeListener {
     protected ViewPagerSlide viewPager;
     protected BottomNavigationBar bottomNavigationBar;
     protected BadgeItem badgeItem; //添加角标
@@ -79,6 +79,20 @@ public abstract class BaseMainActivity extends NotitleBaseActivity implements Bo
 
     @Override
     public void onTabReselected(int position) {
+        switch (position){
+            case 0:
+                setTitleText("首页");
+
+                break;
+            case 1:
+                setTitleText("订单");
+
+                break;
+            case 2:
+                setTitleText("我的");
+
+                break;
+        }
 
     }
 

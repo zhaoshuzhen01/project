@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.HomeListAdapter;
+import com.lubandj.master.adapter.HomePagerAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class TableView extends LinearLayout {
 
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
-    private HomeListAdapter homeListAdapter;
+    private HomePagerAdapter homeListAdapter;
     private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
 
     public TableView(Context context) {
@@ -53,7 +54,7 @@ public class TableView extends LinearLayout {
         for (int i=0;i<6;i++){
             msgBeens.add(new MsgCenterBeen.InfoBean.ListBean());
         }
-        homeListAdapter = new HomeListAdapter(msgBeens,context);
+        homeListAdapter = new HomePagerAdapter(msgBeens,context);
         GridLayoutManager manager = new  GridLayoutManager(context,3); //spanCount为列数，默认方向vertical
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);

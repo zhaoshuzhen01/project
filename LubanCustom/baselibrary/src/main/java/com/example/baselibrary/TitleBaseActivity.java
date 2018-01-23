@@ -26,7 +26,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
     protected TextView tv_basetitle_back,msgCount;
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mNavigationView;
-    private ImageView ivBaseTitleBack;
+    protected ImageView ivBaseTitleBack;
     protected View leftView ;
     protected boolean leftClick = false ;
     @Override
@@ -57,6 +57,12 @@ public abstract class TitleBaseActivity extends BaseActivity {
         msgCount.setVisibility(View.GONE);
         titleRightLay.setOnClickListener(this);
         tv_basetitle_back = findView(R.id.tv_basetitle_back);
+        tv_basetitle_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titleLeftClick();
+            }
+        });
         llBasetitleBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

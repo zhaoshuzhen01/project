@@ -29,15 +29,16 @@ import butterknife.InjectView;
  * Created by ${zhaoshuzhen} on 2018/1/20.
  */
 
-public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeListener {
+public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeListener ,SlideShowView.LayoutView{
 
     @InjectView(R.id.banner_view)
     SlideShowView bannerView;
     @InjectView(R.id.viewPager)
-    CustomViewPager viewPager;
+    SlideShowView viewPager;
     protected List<View> mList=new ArrayList<>(); //ViewPager的数据源
     private List<String> list = new ArrayList<>();
-
+    private List<String> contentlist = new ArrayList<>();
+private Context mcontext ;
     public HomeTopView(Context context) {
         super(context);
         initView(context);
@@ -54,6 +55,7 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
     }
 
     private void initView(Context context) {
+        mcontext = context ;
         View view = LayoutInflater.from(context).inflate(R.layout.view_home_top, this);
         ButterKnife.inject(this, view);
         list.add("1");
@@ -61,9 +63,12 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
         list.add("1");
         list.add("1");
         list.add("1");
-        bannerView.setData(list);
+        bannerView.setData(list,SlideShowView.GUANG,null);
         LinearLayout.LayoutParams params = (LayoutParams) viewPager.getLayoutParams();
-        params.height = getResources().getDisplayMetrics().widthPixels / 3;
+        params.height = getResources().getDisplayMetrics().widthPixels/2;
+        viewPager.setPadding(0,30,0,0);
+        LinearLayout.LayoutParams params1 = (LayoutParams) bannerView.getLayoutParams();
+        params1.height = getResources().getDisplayMetrics().widthPixels/ 3;
     }
 
 
@@ -71,9 +76,12 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
     public void initViewPager(Context context) {
         mList.add(new TableView(context));
         mList.add(new TableView(context));
-        MyViewPagerAdapter  adapter = new MyViewPagerAdapter(mList);
+       /* MyViewPagerAdapter  adapter = new MyViewPagerAdapter(mList);
         viewPager.setAdapter(adapter);
-        viewPager.setScrollable(true);
+        viewPager.setScrollable(true);*/
+        contentlist.add("1");
+        contentlist.add("1");
+        viewPager.setData(contentlist,SlideShowView.TOPCONTENT,this);
 
     }
 
@@ -90,6 +98,11 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public View getView() {
+        return new TableView(mcontext);
     }
 }
 

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.baselibrary.R;
 
@@ -24,7 +25,7 @@ import java.util.List;
  * ViewPager实现的轮播图,支持自动轮播,手势滑动切换页面
  */
 
-public class SlideShowView extends FrameLayout{
+public class SlideShowView extends FrameLayout {
 
     private final int LOOPTIME = 5000;//轮询时间
 
@@ -44,7 +45,10 @@ public class SlideShowView extends FrameLayout{
     private boolean isScroll;
     private Handler mHandler = new Handler();
     private int clickPos;
-
+    public static int GUANG = 1;//广告
+    public static int TOPCONTENT = 2;//分类内容
+    private int mtype;
+    private LayoutView mlayoutView;
 
     public SlideShowView(Context context) {
         this(context, null);
@@ -60,8 +64,9 @@ public class SlideShowView extends FrameLayout{
         initUI(context);
     }
 
-    public void setData(List<String> m_AdvImgs) {
-
+    public void setData(List<String> m_AdvImgs, int type, LayoutView layoutView) {
+        mtype = type;
+        mlayoutView = layoutView;
         stopLoopAdv();
 
         this.m_AdvImgs.clear();
@@ -71,6 +76,10 @@ public class SlideShowView extends FrameLayout{
         adatper.notifyDataSetChanged();
 
         setListener();
+        if (mtype == TOPCONTENT) {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) llContainer.getLayoutParams();
+            params.width = getResources().getDisplayMetrics().widthPixels;
+        }
 
     }
 
@@ -195,9 +204,11 @@ public class SlideShowView extends FrameLayout{
             ImageView point = new ImageView(context);
 
             point.setScaleType(ImageView.ScaleType.FIT_XY);
-
-            point.setImageResource(R.drawable.select_pot);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(40, 5);
+            if (mtype == GUANG)
+                point.setImageResource(R.drawable.select_pot);
+            else
+                point.setImageResource(R.drawable.select_pot1);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             if (i > 0) {
                 params.leftMargin = 10;
                 point.setEnabled(false);
@@ -225,51 +236,54 @@ public class SlideShowView extends FrameLayout{
 
         @Override
         public Object instantiateItem(ViewGroup view, final int position) {
-
-            View imageLayout = LayoutInflater.from(context).inflate(R.layout.adver_banner_item, view, false);
-            ImageView imageView = (ImageView) imageLayout.findViewById(R.id.bi_imageView);
+            View imageLayout = null;
             if (m_AdvImgs.size() > 0) {
-                final int pos = position % m_AdvImgs.size(); // 为了避免角标越界，进行取余运算
-                //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos).getPic(), 0, 0, null);
-                //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos), 0, 0, null);
-                ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
-//                layoutParams.height =getResources().getDisplayMetrics().widthPixels/2;
+                if (mtype == GUANG) {
+                    imageLayout = LayoutInflater.from(context).inflate(R.layout.adver_banner_item, view, false);
+                    ImageView imageView = (ImageView) imageLayout.findViewById(R.id.bi_imageView);
+                    final int pos = position % m_AdvImgs.size(); // 为了避免角标越界，进行取余运算
+                    //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos).getPic(), 0, 0, null);
+                    //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos), 0, 0, null);
+                    ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+//                layoutParams.height =getResources().getDisplayMetrics().widthPixels*2;
 //                GlideUtils.loadDefaultGameList(imageView, m_AdvImgs.get(pos).getImage());
-                imageView.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    imageView.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                    }
-                });
-
-
-                imageView.setOnTouchListener(new OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        switch (event.getAction()) {
-                            case MotionEvent.ACTION_DOWN:
-
-                                oldX = event.getX();
-
-                                break;
-
-                            case MotionEvent.ACTION_MOVE:
-                                break;
-
-                            case MotionEvent.ACTION_UP:
-
-                                break;
-
-                            case MotionEvent.ACTION_CANCEL:
-
-                                break;
                         }
-
-                        return false;
-                    }
-                });
+                    });
 
 
+                    imageView.setOnTouchListener(new OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            switch (event.getAction()) {
+                                case MotionEvent.ACTION_DOWN:
+
+                                    oldX = event.getX();
+
+                                    break;
+
+                                case MotionEvent.ACTION_MOVE:
+                                    break;
+
+                                case MotionEvent.ACTION_UP:
+
+                                    break;
+
+                                case MotionEvent.ACTION_CANCEL:
+
+                                    break;
+                            }
+
+                            return false;
+                        }
+                    });
+                } else {
+                    int mposition = position % m_AdvImgs.size();
+                    imageLayout = mlayoutView.getView();
+                }
                 view.addView(imageLayout, 0);
                 return imageLayout;
             } else {
@@ -304,5 +318,8 @@ public class SlideShowView extends FrameLayout{
         }
     }
 
+    public interface LayoutView {
+        View getView();
+    }
 
 }

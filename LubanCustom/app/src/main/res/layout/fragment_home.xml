@@ -4,15 +4,8 @@
     android:id="@+id/work_center_lay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_f4f4f4"
+    android:background="@color/white"
     android:orientation="vertical">
-    <View
-        android:background="@color/color_e1e1e1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0.5"></View>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/h_10dp"></View>
     <com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6
         android:id="@+id/prpt"
         android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.baselibrary.BaseRefreshFragment;
+import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.lubandj.master.Iview.IbaseView;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
@@ -31,8 +32,9 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
     RecyclerView recyclerView;
     private HomeListAdapter homeListAdapter;
     private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
-    private BaseReflushPresenter msgCenterPresenter ;
-    private HomeTopView homeTopView ;
+    private BaseReflushPresenter msgCenterPresenter;
+    private HomeTopView homeTopView;
+
     public static HomeFragment newInstance(int index) {
         HomeFragment myFragment = new HomeFragment();
         Bundle bundle = new Bundle();
@@ -45,24 +47,28 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
     public int getLayout() {
         return R.layout.fragment_home;
     }
+
     @Override
     protected void initView(View view) {
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6) view.findViewById(R.id.prpt);
 
-        homeListAdapter = new HomeListAdapter(msgBeens,getActivity());
+        homeListAdapter = new HomeListAdapter(msgBeens, getActivity());
         homeTopView = new HomeTopView(getActivity());
         homeListAdapter.addHeaderView(homeTopView);
         homeTopView.initViewPager(getActivity());
-      GridLayoutManager manager = new  GridLayoutManager(getActivity(),2); //spanCount为列数，默认方向vertical
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2); //spanCount为列数，默认方向vertical
         initRawRecyclerView(recyclerView, manager, homeListAdapter);
-        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(),this,new MsgCenterModel(getActivity()));
+//        recyclerView.addItemDecoration(new SpacesItemDecoration(50,50,0,0));
+        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(), this, new MsgCenterModel(getActivity()));
     }
+
     @Override
     protected void initData() {
         isFirst = false;
         msgCenterPresenter.getReflushData(0);
 
     }
+
     @Override
     public void onRefresh() {
         msgCenterPresenter.getReflushData(0);
@@ -72,6 +78,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
     public void onLoadMore() {
         msgCenterPresenter.getMoreData(0);
     }
+
     @Override
     public void getDataLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();

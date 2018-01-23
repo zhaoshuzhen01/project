@@ -9,7 +9,7 @@
         android:id="@+id/bi_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/shape_1"
+        android:src="@drawable/lunbo"
         android:scaleType="fitXY" />
 
 </LinearLayout>

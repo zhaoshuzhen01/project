@@ -9,18 +9,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitXY" />
-    <com.example.baselibrary.widget.CustomViewPager
+    <com.example.baselibrary.widget.SlideShowView
         android:id="@+id/viewPager"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-         />
+        android:scaleType="fitXY" />
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/color_f4f4f4"
+        android:layout_height="@dimen/h_12dp"></View>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="热销服务"
-        android:layout_marginBottom="@dimen/h_5dp"
-        android:layout_marginTop="@dimen/h_5dp"
+        android:text="--- 热销服务 ---"
+        android:paddingBottom="@dimen/h_5dp"
+        android:paddingTop="@dimen/h_5dp"
+        android:background="@color/white"
         android:textColor="@color/black"
         android:textSize="@dimen/h_14dp" />
 </LinearLayout>
