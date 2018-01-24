@@ -115,21 +115,21 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
         switch (Integer.parseInt(status)){
             case 3:
                 ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.workservie);
-                serviceState.setText("服务中");
-                finishState.setText("服务完成");
+                serviceState.setText("派单中");
+                finishState.setText("取消订单");
                 break;
             case 1:
                 ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.workwait);
-                serviceState.setText("待执行");
-                finishState.setText("开始上门");
-                daohangState.setVisibility(View.VISIBLE);
+                serviceState.setText("派单中");
+                finishState.setText("取消订单");
+                daohangState.setVisibility(View.GONE);
                 break;
 
             case 2:
                 ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.workpath);
-                serviceState.setText("正在上门");
-                finishState.setText("开始服务");
-                daohangState.setVisibility(View.VISIBLE);
+                serviceState.setText("派单中");
+                finishState.setText("取消订单");
+                daohangState.setVisibility(View.GONE);
                 break;
         }
     }

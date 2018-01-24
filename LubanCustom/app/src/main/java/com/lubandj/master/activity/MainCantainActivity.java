@@ -1,6 +1,7 @@
 package com.lubandj.master.activity;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -8,21 +9,26 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.baselibrary.BaseActivity;
 import com.example.baselibrary.BaseMainActivity;
 import com.example.baselibrary.adapter.MainAdapter;
 import com.example.baselibrary.widget.BottomNavigationViewHelper;
+import com.example.baselibrary.widget.MainBottomTab;
+import com.example.baselibrary.widget.MainBottomView;
 import com.example.baselibrary.widget.NotitleBaseActivity;
 import com.example.baselibrary.widget.ViewPagerSlide;
 import com.lubandj.master.R;
 import com.lubandj.master.fragment.HomeFragment;
 import com.lubandj.master.fragment.OrderFragment;
 import com.lubandj.master.fragment.WorkSheetFragment;
+import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +38,7 @@ import java.util.List;
  */
 
 public class MainCantainActivity extends BaseMainActivity {
+    private RelativeLayout main_car_lay ;
     @Override
     public int getLayout() {
         return R.layout.activity_main_containt;
@@ -39,7 +46,9 @@ public class MainCantainActivity extends BaseMainActivity {
 
     @Override
     public void initView() {
-        bottomNavigationBar = (BottomNavigationBar) findViewById(com.example.baselibrary.R.id.bottom_navigation_bar);
+        bottomNavigationBar = (MainBottomView) findViewById(com.example.baselibrary.R.id.bottom_navigation_bar);
+        main_car_lay = findView(R.id.main_car_lay);
+        main_car_lay.setOnClickListener(this);
         initBottomNavigationBar();
         initViewPager();
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -59,12 +68,6 @@ public class MainCantainActivity extends BaseMainActivity {
     public void initData() {
 
     }
-
-    @Override
-    public void onClick(View view) {
-
-    }
-
     //初始化ViewPager
     private void initViewPager() {
         mList = new ArrayList<>();
@@ -82,25 +85,38 @@ public class MainCantainActivity extends BaseMainActivity {
     //初始化底部导航条
     public void initBottomNavigationBar() {
         super.initBottomNavigationBar();
-        bottomNavigationBar.setBarBackgroundColor(R.color.color_827C7D);//背景颜色
-        bottomNavigationBar.setInActiveColor(R.color.white);//未选中时的颜色
-        bottomNavigationBar.setActiveColor(R.color.white);//选中时的颜色
-
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.home_button2, "首页").setInactiveIcon(getResources().getDrawable(R.drawable.home_button1)))
-                .addItem(new BottomNavigationItem(R.drawable.order_button2, "订单").setInactiveIcon(getResources().getDrawable(R.drawable.order_button1)))
-                .addItem(new BottomNavigationItem(R.drawable.my_button2, "我的").setInactiveIcon(getResources().getDrawable(R.drawable.my_button1)))
-//                .addItem(new BottomNavigationItem(R.drawable.icon, "我的").setActiveColorResource(R.color.white).setBadgeItem(badgeItem))
-                .setFirstSelectedPosition(0)
-                .initialise(); //所有的设置需在调用该方法前完成
+        bottomNavigationBar.setBackgroundResource(R.drawable.main_back_bottom);
+        bottomNavigationBar.addItem(new MainBottomTab(this, "首页").setActiviIcon(R.drawable.home_button2).setInActiviIcon(R.drawable.home_button1).setActiviColor(R.color.white).setInActiviColor(R.color.white))
+                .addItem(new MainBottomTab(this, "订单").setActiviIcon(R.drawable.order_button2).setInActiviIcon(R.drawable.order_button1).setActiviColor(R.color.white).setInActiviColor(R.color.white))
+                .addItem(new MainBottomTab(this, "我的").setActiviIcon(R.drawable.my_button2).setInActiviIcon(R.drawable.my_button1).setActiviColor(R.color.white).setInActiviColor(R.color.white))
+                .setSelectTab(0);
     }
 
     @Override
     public void titleLeftClick() {
-toast(this,"选择城市");
+        toast(this, "选择城市");
     }
 
     @Override
     protected void clickMenu() {
 
     }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case com.example.baselibrary.R.id.tv_basetitle_ok:
+            case com.example.baselibrary.R.id.ll_basetitle_back1:
+                Intent intent = new Intent(this, MsgCenterActivity.class);
+                startActivity(intent);
+                int count = CommonUtils.getMsgCount();
+                if (count > 0) {
+//                    DbInstance.getInstance().insertDatas();
+                }
+                break;
+            case R.id.main_car_lay:
+                toast(this,"购物车");
+                break;
+        }
+    }
+
 }

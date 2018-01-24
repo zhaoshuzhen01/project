@@ -12,10 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
-
-    <com.ashokvarma.bottomnavigation.BottomNavigationBar
+    <com.example.baselibrary.widget.MainBottomView
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="@dimen/dp_60" />
 
 </LinearLayout>

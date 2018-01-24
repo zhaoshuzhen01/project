@@ -66,7 +66,7 @@ private Context mcontext ;
         bannerView.setData(list,SlideShowView.GUANG,null);
         LinearLayout.LayoutParams params = (LayoutParams) viewPager.getLayoutParams();
         params.height = getResources().getDisplayMetrics().widthPixels/2;
-        viewPager.setPadding(0,30,0,0);
+        viewPager.setPadding(0,0,0,0);
         LinearLayout.LayoutParams params1 = (LayoutParams) bannerView.getLayoutParams();
         params1.height = getResources().getDisplayMetrics().widthPixels/ 3;
     }

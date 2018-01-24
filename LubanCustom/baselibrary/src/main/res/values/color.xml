@@ -11,10 +11,11 @@
     <color name="colorAccent">#eeeeee</color>
     <color name="DDBC84">#DDBC84</color>
     <color name="yinbo">#7ED321</color>
-
+    <color name="FB8F10">#FB8F10</color>
     <color name="yinbo_curse">#31C27C</color>
     <color name="white">#ffffff</color>
     <color name="color_827C7D">#827C7D</color>
+    <color name="color_878282">#94878282</color>
     <color name="white_90">#e6ffffff</color>
     <color name="white_80">#ccffffff</color>
     <color name="white_60">#99ffffff</color>
@@ -88,8 +89,6 @@
     <color name="F9F9F9">#F9F9F9</color>
     <color name="EDEDED">#EDEDED</color>
     <color name="B8E986">#B8E986</color>
-
-
     <color name="F4F4F4">#F4F4F4</color>
     <color name="F8E81C">#F8E81C</color>
     <color name="F6F6F6">#F6F6F6</color>
@@ -100,6 +99,7 @@
     <color name="FFE456">#FFE456</color>
     <color name="color_31C27C">#31C27C</color>
     <color name="color_e94b4e">#e94b4e</color>
+    <color name="color_50e94b4e">#50e94b4e</color>
     <color name="FF6DC1">#FF6DC1</color>
     <color name="color_454C57">#454C57</color>
     <color name="FC7A56">#FC7A56</color>

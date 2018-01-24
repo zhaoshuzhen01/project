@@ -10,7 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.example.baselibrary.recycleview.SpacesItemDecoration;
+import com.example.baselibrary.refresh.BaseQuickAdapter;
+import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
+import com.lubandj.master.TApplication;
 import com.lubandj.master.adapter.HomeListAdapter;
 import com.lubandj.master.adapter.HomePagerAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
@@ -25,7 +29,7 @@ import butterknife.InjectView;
  * Created by ${zhaoshuzhen} on 2018/1/20.
  */
 
-public class TableView extends LinearLayout {
+public class TableView extends LinearLayout implements BaseQuickAdapter.OnItemClickListener{
 
 
     @InjectView(R.id.recyclerView)
@@ -55,8 +59,10 @@ public class TableView extends LinearLayout {
             msgBeens.add(new MsgCenterBeen.InfoBean.ListBean());
         }
         homeListAdapter = new HomePagerAdapter(msgBeens,context);
+        homeListAdapter.setOnItemClickListener(this);
         GridLayoutManager manager = new  GridLayoutManager(context,3); //spanCount为列数，默认方向vertical
         recyclerView.setLayoutManager(manager);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(0,0,20,10));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(homeListAdapter);
     }
@@ -65,5 +71,10 @@ public class TableView extends LinearLayout {
     //初始化ViewPager
     public void initViewPager(FragmentManager fm) {
 
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        ToastUtils.showShort(TApplication.context,position+"");
     }
 }
