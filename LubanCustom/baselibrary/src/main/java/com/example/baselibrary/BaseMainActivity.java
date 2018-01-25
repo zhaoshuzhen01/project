@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -20,10 +21,12 @@ import java.util.List;
  */
 
 public abstract class BaseMainActivity extends TitleBaseActivity implements  ViewPager.OnPageChangeListener,MainBottomView.BottomTabSelect {
-    protected ViewPagerSlide viewPager;
+    protected static ViewPagerSlide viewPager;
     protected MainBottomView bottomNavigationBar;
     protected List<Fragment> mList; //ViewPager的数据源
     private long exitTime = 0;
+    protected RelativeLayout main_car_lay ;
+
 
     //初始化底部导航条
     public void initBottomNavigationBar() {
@@ -42,8 +45,10 @@ public abstract class BaseMainActivity extends TitleBaseActivity implements  Vie
     public void onPageSelected(int position) {
         //ViewPager滑动
         bottomNavigationBar.setSelectTab(position);
+        main_car_lay.setVisibility(View.GONE);
         switch (position){
             case 0:
+                main_car_lay.setVisibility(View.VISIBLE);
                 setTitleText("首页");
                 tv_basetitle_back.setVisibility(View.VISIBLE);
                 break;

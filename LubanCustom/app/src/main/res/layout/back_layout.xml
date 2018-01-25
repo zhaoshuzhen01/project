@@ -19,6 +19,7 @@
         android:id="@+id/no_work_tip1"
         android:text="@string/nowork_tip"
         android:textSize="@dimen/text_size_13"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/h_19dp"
         android:textColor="@color/color_333333"
         android:layout_centerHorizontal="true"
@@ -38,21 +39,23 @@
     <LinearLayout
         android:id="@+id/work_reflush_lay"
         android:clickable="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/no_work_tip2"
+        android:layout_width="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@color/color_e94b4e"
-        android:layout_height="@dimen/h_49dp">
-        <ImageView
-            android:src="@drawable/work_reflush"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:layout_marginTop="@dimen/h_12dp"
+        android:paddingTop="@dimen/h_6dp"
+        android:paddingBottom="@dimen/h_6dp"
+        android:paddingRight="@dimen/h_15dp"
+        android:paddingLeft="@dimen/h_15dp"
+        android:background="@drawable/selector_btn_send_code_bg"
+        android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/button_text"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16"
             android:text="@string/work_list_reflush"
-            android:layout_marginLeft="@dimen/h_12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

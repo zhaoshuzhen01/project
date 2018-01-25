@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,13 +12,16 @@ import com.lubandj.master.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/12/9.
  */
 
 public class BackLayout extends LinearLayout {
+    @InjectView(R.id.no_work_tip2)
+    TextView noWorkTip2;
+    @InjectView(R.id.button_text)
+    TextView buttonText;
     private LinearLayout reflush;
 
     public BackLayout(Context context) {
@@ -40,8 +42,18 @@ public class BackLayout extends LinearLayout {
     private void initView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.back_layout, this);
         reflush = view.findViewById(R.id.work_reflush_lay);
+        ButterKnife.inject(this);
+
     }
-    public void setOnclick(OnClickListener listener){
+    public void setNodataText(String text){
+        noWorkTip2.setText(text);
+    }
+
+    public void setButtonText(String text){
+        buttonText.setText(text);
+    }
+
+    public void setOnclick(OnClickListener listener) {
         reflush.setOnClickListener(listener);
     }
 

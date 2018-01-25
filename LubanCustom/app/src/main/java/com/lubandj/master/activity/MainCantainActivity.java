@@ -1,6 +1,7 @@
 package com.lubandj.master.activity;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -38,12 +39,16 @@ import java.util.List;
  */
 
 public class MainCantainActivity extends BaseMainActivity {
-    private RelativeLayout main_car_lay ;
     @Override
     public int getLayout() {
         return R.layout.activity_main_containt;
     }
 
+    public  static  void startActivity(Context context){
+        Intent intent = new Intent(context, MainCantainActivity.class);
+        context.startActivity(intent);
+        viewPager.setCurrentItem(0);
+    }
     @Override
     public void initView() {
         bottomNavigationBar = (MainBottomView) findViewById(com.example.baselibrary.R.id.bottom_navigation_bar);
@@ -114,7 +119,7 @@ public class MainCantainActivity extends BaseMainActivity {
                 }
                 break;
             case R.id.main_car_lay:
-                toast(this,"购物车");
+                CarActivity.startActivity(this);
                 break;
         }
     }

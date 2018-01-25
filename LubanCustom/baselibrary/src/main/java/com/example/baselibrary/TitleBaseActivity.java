@@ -21,12 +21,12 @@ public abstract class TitleBaseActivity extends BaseActivity {
     private RelativeLayout llRoot;
     private LinearLayout llBasetitleBack;
     protected RelativeLayout titleRightLay ;
-    private TextView tvBasetitleTitle;
+    private TextView tvBasetitleTitle,tv_basetitle_right;
     private ImageView ivBasetitleOK;
     protected TextView tv_basetitle_back,msgCount;
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mNavigationView;
-    protected ImageView ivBaseTitleBack;
+    protected ImageView ivBaseTitleBack,tv_basetitle_ok;
     protected View leftView ;
     protected boolean leftClick = false ;
     @Override
@@ -36,6 +36,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
         findView();
         setContentView(getLayout());
         initView();
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -53,6 +54,9 @@ public abstract class TitleBaseActivity extends BaseActivity {
         tvBasetitleTitle = findView(R.id.tv_basetitle_title);
         ivBasetitleOK = findView(R.id.tv_basetitle_ok);
         titleRightLay = findView(R.id.ll_basetitle_back1);
+        tv_basetitle_right = findView(R.id.tv_basetitle_right);
+        tv_basetitle_right.setOnClickListener(this);
+        tv_basetitle_ok = findView(R.id.tv_basetitle_ok);
         msgCount = findView(R.id.msgCount);
         msgCount.setVisibility(View.GONE);
         titleRightLay.setOnClickListener(this);
@@ -105,6 +109,11 @@ public abstract class TitleBaseActivity extends BaseActivity {
             tvBasetitleTitle.setText(c);
     }
 
+    public void setRightText(String text){
+        tv_basetitle_right.setVisibility(View.VISIBLE);
+        tv_basetitle_right.setText(text);
+    }
+
     /**
      * 设置中间标题文字
      *
@@ -153,10 +162,14 @@ public abstract class TitleBaseActivity extends BaseActivity {
      */
     public void setOkVisibity(boolean visible) {
         if (ivBasetitleOK != null) {
-            if (visible)
-                titleRightLay.setVisibility(View.VISIBLE);
-            else
-                titleRightLay.setVisibility(View.INVISIBLE);
+            if (visible){
+                tv_basetitle_ok.setVisibility(View.VISIBLE);
+                msgCount.setVisibility(View.VISIBLE);
+            }
+            else{
+                tv_basetitle_ok.setVisibility(View.INVISIBLE);
+                msgCount.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
