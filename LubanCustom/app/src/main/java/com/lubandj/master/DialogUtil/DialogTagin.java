@@ -36,27 +36,6 @@ public class DialogTagin {
         this.dialogSure = dialogSure;
     }
     public   void finishDialog(final String currentType){
-       /* new AlertDialog(context)
-                .builder()
-                .setTitle("")
-                .setMsg(getRemindContent(currentType))
-                .setPositiveButton("确认", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (dialogSure==null){
-                            Intent intent = new Intent(context, WorkSheetDetailsActivity.class);
-//                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID,currentType);
-                            context.startActivity(intent);
-                        }else {
-                            dialogSure.dialogCall();
-                        }
-                    }
-                })
-                .setNegativeButton("取消", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    }
-                }).show();*/
         TipDialog outDialog = new TipDialog(context);
         outDialog.setNoPomptTitle();
         outDialog.setTextDes(getRemindContent(currentType));
@@ -82,6 +61,30 @@ public class DialogTagin {
         outDialog.setCancelable(false);
         outDialog.setCanceledOnTouchOutside(false);
         outDialog.show();
+    }
+
+    public DialogTagin showDialog(String text){
+        TipDialog outDialog = new TipDialog(context);
+        outDialog.setNoPomptTitle();
+        outDialog.setTextDes(text);
+        outDialog.setButton1("确定", new TipDialog.DialogButtonOnClickListener() {
+            @Override
+            public void onClick(View button, TipDialog dialog) {
+                dialog.dismiss();
+                if (dialogTagin!=null)
+                    dialogSure.dialogCall();
+            }
+        });
+        outDialog.setButton2("取消", new TipDialog.DialogButtonOnClickListener() {
+            @Override
+            public void onClick(View button, TipDialog dialog) {
+                dialog.dismiss();
+            }
+        });
+        outDialog.setCancelable(false);
+        outDialog.setCanceledOnTouchOutside(false);
+        outDialog.show();
+        return dialogTagin;
     }
     private String getRemindContent(String currentType){
         String content="";

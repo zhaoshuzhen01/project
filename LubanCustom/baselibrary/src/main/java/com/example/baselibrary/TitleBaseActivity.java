@@ -21,7 +21,8 @@ public abstract class TitleBaseActivity extends BaseActivity {
     private RelativeLayout llRoot;
     private LinearLayout llBasetitleBack;
     protected RelativeLayout titleRightLay ;
-    private TextView tvBasetitleTitle,tv_basetitle_right;
+    private TextView tvBasetitleTitle;
+    protected TextView tv_basetitle_right;
     private ImageView ivBasetitleOK;
     protected TextView tv_basetitle_back,msgCount;
     protected DrawerLayout mDrawerLayout;
