@@ -3,7 +3,7 @@
 
     <!-- state_enabled="true" 是可用不可用； -->
 
-    <item android:drawable="@drawable/shape_1" android:state_enabled="true"/>
+    <item android:drawable="@drawable/shape_cici" android:state_enabled="true"/>
 
     <item android:drawable="@drawable/circle_red"/>
 

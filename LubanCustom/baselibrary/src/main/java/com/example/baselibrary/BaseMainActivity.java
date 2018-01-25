@@ -4,9 +4,11 @@ import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.baselibrary.util.ActUtils;
 import com.example.baselibrary.widget.MainBottomView;
 import com.example.baselibrary.widget.NotitleBaseActivity;
 import com.example.baselibrary.widget.ViewPagerSlide;
@@ -21,6 +23,8 @@ public abstract class BaseMainActivity extends TitleBaseActivity implements  Vie
     protected ViewPagerSlide viewPager;
     protected MainBottomView bottomNavigationBar;
     protected List<Fragment> mList; //ViewPager的数据源
+    private long exitTime = 0;
+
     //初始化底部导航条
     public void initBottomNavigationBar() {
         bottomNavigationBar.setBottomTabSelect(this);
@@ -59,5 +63,16 @@ public abstract class BaseMainActivity extends TitleBaseActivity implements  Vie
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+    @Override
+    public void onBackPressed() {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(getApplicationContext(), "再按一次退出",
+                        Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                ActUtils.getInstance().exitApp(BaseMainActivity.this);
+            }
     }
 }
