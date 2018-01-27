@@ -99,7 +99,7 @@ public class MainCantainActivity extends BaseMainActivity {
 
     @Override
     public void titleLeftClick() {
-        toast(this, "选择城市");
+        ChooseCityActivity.startActivity(this);
     }
 
     @Override

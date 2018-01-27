@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cotainer"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/color_f4f4f4"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:padding="@dimen/h_3dp">
+        <TextView
+            android:id="@+id/tv_show_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center|right"
+            android:padding="5dp"
+            android:text="购物车为空"
+            android:layout_marginLeft="@dimen/h_70dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_settlement"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/xiadan"
+            android:gravity="center"
+            android:text="预约下单"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+    <!-- 第一部分:CoordinatorLayout -->
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/scrollview"
+        android:layout_width="fill_parent"
+        android:layout_above="@+id/rl_bottom"
+        android:layout_height="match_parent"
+        >
+        <!-- 第二部分:缩放控件-->
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/id_appbarlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_tool_bar_test_ctl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll">
+                <RelativeLayout
+                    android:id="@+id/userScroreRe"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    app:layout_scrollFlags="enterAlwaysCollapsed">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/lunbo"/>
+                </RelativeLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/h_70dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/top_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥ 150-180"
+                    android:layout_marginLeft="@dimen/h_10dp"
+                    android:textColor="@color/color_ff0000" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/top_name"
+                        android:layout_marginLeft="@dimen/h_10dp"
+                        android:layout_width="@dimen/h_0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="空调"
+                        android:layout_below="@+id/top_price"
+                        android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/button_text"
+                        android:layout_marginRight="@dimen/h_10dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_12"
+                        android:paddingRight="@dimen/h_14dp"
+                        android:paddingLeft="@dimen/h_14dp"
+                        android:paddingTop="@dimen/h_5dp"
+                        android:paddingBottom="@dimen/h_5dp"
+                        android:background="@drawable/selector_btn_send_code_bg"
+                        android:text="选中型号"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+        <!-- 第三部分:Your Scroll View-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:scrollbars="none" />
+    </android.support.design.widget.CoordinatorLayout>
+    <RelativeLayout
+        android:id="@+id/main_car_lay"
+        android:layout_width="@dimen/h_70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/h_14dp"
+        android:layout_marginLeft="@dimen/h_10dp"
+        android:layout_alignParentBottom="true"
+        >
+        <ImageView
+            android:id="@+id/main_car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/car" />
+
+        <TextView
+            android:id="@+id/car_msgCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/yello_circle"
+            android:gravity="center"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/h_3dp"
+            android:text="1"
+            android:textSize="@dimen/dp_11"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</RelativeLayout>

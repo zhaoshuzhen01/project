@@ -44,6 +44,11 @@ public abstract class BaseRefreshFragment extends BaseFragment implements PullTo
         return true;
     }
 
+    public void setNoAllowPull(){
+        pullToRefreshAndPushToLoadView.setCanRefresh(false);
+        pullToRefreshAndPushToLoadView.setCanAutoLoadMore(false);
+    }
+
     public boolean isFirstPage() {
         return mOriginAdapter==null || mOriginAdapter.getItemCount() <= 0;
     }

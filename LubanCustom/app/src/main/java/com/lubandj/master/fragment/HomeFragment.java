@@ -8,10 +8,12 @@ import android.view.View;
 
 import com.example.baselibrary.BaseRefreshFragment;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
+import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.lubandj.master.Iview.IbaseView;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
+import com.lubandj.master.activity.ServiceDetailActivity;
 import com.lubandj.master.adapter.HomeListAdapter;
 import com.lubandj.master.adapter.MsgCenterAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
@@ -27,7 +29,7 @@ import butterknife.InjectView;
  * Created by ${zhaoshuzhen} on 2018/1/20.
  */
 
-public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCenterBeen.InfoBean.ListBean> {
+public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCenterBeen.InfoBean.ListBean> , BaseQuickAdapter.OnItemClickListener{
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     private HomeListAdapter homeListAdapter;
@@ -53,6 +55,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6) view.findViewById(R.id.prpt);
 
         homeListAdapter = new HomeListAdapter(msgBeens, getActivity());
+        homeListAdapter.setOnItemClickListener(this);
         homeTopView = new HomeTopView(getActivity());
         homeListAdapter.addHeaderView(homeTopView);
         homeTopView.initViewPager(getActivity());
@@ -86,5 +89,10 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
         msgBeens.clear();
         msgBeens.addAll(datas);
         homeListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        ServiceDetailActivity.startActivity(getActivity());
     }
 }

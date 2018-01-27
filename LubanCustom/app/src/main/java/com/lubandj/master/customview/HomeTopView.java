@@ -29,16 +29,17 @@ import butterknife.InjectView;
  * Created by ${zhaoshuzhen} on 2018/1/20.
  */
 
-public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeListener ,SlideShowView.LayoutView{
+public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeListener, SlideShowView.LayoutView {
 
     @InjectView(R.id.banner_view)
     SlideShowView bannerView;
     @InjectView(R.id.viewPager)
     SlideShowView viewPager;
-    protected List<View> mList=new ArrayList<>(); //ViewPager的数据源
+    protected List<View> mList = new ArrayList<>(); //ViewPager的数据源
     private List<String> list = new ArrayList<>();
     private List<String> contentlist = new ArrayList<>();
-private Context mcontext ;
+    private Context mcontext;
+
     public HomeTopView(Context context) {
         super(context);
         initView(context);
@@ -55,7 +56,7 @@ private Context mcontext ;
     }
 
     private void initView(Context context) {
-        mcontext = context ;
+        mcontext = context;
         View view = LayoutInflater.from(context).inflate(R.layout.view_home_top, this);
         ButterKnife.inject(this, view);
         list.add("1");
@@ -63,12 +64,12 @@ private Context mcontext ;
         list.add("1");
         list.add("1");
         list.add("1");
-        bannerView.setData(list,SlideShowView.GUANG,null);
+        bannerView.setData(list, SlideShowView.GUANG, null);
         LinearLayout.LayoutParams params = (LayoutParams) viewPager.getLayoutParams();
-        params.height = getResources().getDisplayMetrics().widthPixels/2;
-        viewPager.setPadding(0,0,0,0);
+        params.height = getResources().getDisplayMetrics().widthPixels / 2;
+        viewPager.setPadding(0, 0, 0, 0);
         LinearLayout.LayoutParams params1 = (LayoutParams) bannerView.getLayoutParams();
-        params1.height = getResources().getDisplayMetrics().widthPixels/ 3;
+        params1.height = getResources().getDisplayMetrics().widthPixels / 3;
     }
 
 
@@ -81,7 +82,7 @@ private Context mcontext ;
         viewPager.setScrollable(true);*/
         contentlist.add("1");
         contentlist.add("1");
-        viewPager.setData(contentlist,SlideShowView.TOPCONTENT,this);
+        viewPager.setData(contentlist, SlideShowView.TOPCONTENT, this);
 
     }
 

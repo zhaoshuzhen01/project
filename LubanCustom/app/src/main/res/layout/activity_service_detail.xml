@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <View
+        android:background="@color/color_e1e1e1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_ffffff"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/ll_basetitle_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/iv_basetitle_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/back_mark" />
+
+            <TextView
+                android:id="@+id/tv_basetitle_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+        </LinearLayout>
+        <com.example.baselibrary.tablayout.CustomTabLayout
+            android:id="@+id/id_tablayout"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            tl:CustomAnimatedIndicator="dachshund"
+            tl:CustomIndicatorColor="@color/color_e94b4e"
+            tl:tabBackground="@color/color_ffffff"
+            tl:tabMode="fixed"
+            tl:tabSelectedTextColor="@color/color_e94b4e"
+            tl:tabTextAppearance="@style/TabLayoutTextStyle"
+            tl:tabTextColor="@color/color_333333"/>
+        <RelativeLayout
+            android:id="@+id/ll_basetitle_back1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <ImageView
+                android:id="@+id/tv_basetitle_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/titleright" />
+
+            <TextView
+                android:id="@+id/msgCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:gravity="center"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_alignTop="@+id/tv_basetitle_ok"
+                android:layout_marginTop="-5dp"
+                android:text="1"
+                android:textSize="@dimen/dp_11"
+                android:textColor="@color/white" />
+            <TextView
+                android:id="@+id/tv_basetitle_right"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="标题"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_1div"
+        android:background="@color/color_e1e1e1"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/id_tablayout"
+        />
+</LinearLayout>

@@ -201,7 +201,9 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="DAVEsAlVNQR0HvCGP5fQ4QZnM4jkeeft" />
 
-        <activity android:name=".activity.CarActivity"></activity>
+        <activity android:name=".activity.CarActivity" />
+        <activity android:name=".activity.ChooseCityActivity" />
+        <activity android:name=".activity.ServiceDetailActivity"></activity>
     </application>
 
 </manifest>

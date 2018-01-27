@@ -83,6 +83,7 @@
             android:background="@color/alertdialog_line"
             android:gravity="center"
             android:text="删除"
+            android:visibility="gone"
             android:textColor="@color/black" />
 </RelativeLayout>
 </LinearLayout>
