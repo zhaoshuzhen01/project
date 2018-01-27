@@ -29,20 +29,20 @@ public class PingJIaAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.List
     public PingJIaAdapter(@Nullable List<MsgCenterBeen.InfoBean.ListBean> data, Context context) {
         super(R.layout.item_pingjia, data);
         this.context = context ;
+        for (int i = 0; i < 6; i++) {
+            msgBeens.add(new MsgCenterBeen.InfoBean.ListBean());
+        }
     }
 
     @Override
     protected void convert(BaseViewHolder helper, MsgCenterBeen.InfoBean.ListBean item) {
         int position = helper.getAdapterPosition();
-        for (int i = 0; i < 6; i++) {
-            msgBeens.add(new MsgCenterBeen.InfoBean.ListBean());
-        }
         recyclerView =  ((RecyclerView) (helper.getView(R.id.recyclerView)));
         pingJiaPicAdapter = new PingJiaPicAdapter(msgBeens,context);
         LinearLayoutManager layoutManager =   new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(10,10,0,0));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(0,5,0,0));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(pingJiaPicAdapter);
 

@@ -16,6 +16,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:paddingTop="@dimen/h_10dp"
+        android:background="@color/white"
         android:paddingBottom="@dimen/h_10dp"
         android:layout_height="wrap_content">
         <TextView
@@ -54,10 +55,6 @@
         android:id="@+id/prpt"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -65,6 +62,5 @@
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
                 android:scrollbars="none" />
-        </LinearLayout>
     </com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6>
 </LinearLayout>

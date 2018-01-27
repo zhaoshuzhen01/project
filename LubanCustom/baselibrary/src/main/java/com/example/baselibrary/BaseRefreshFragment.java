@@ -26,6 +26,7 @@ public abstract class BaseRefreshFragment extends BaseFragment implements PullTo
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (pullToRefreshAndPushToLoadView!=null)
         initRecyclerRefreshLayout(view);
     }
 

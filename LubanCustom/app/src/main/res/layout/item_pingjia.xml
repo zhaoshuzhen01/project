@@ -4,7 +4,7 @@
     android:id="@+id/work_center_lay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_f4f4f4"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -49,13 +49,27 @@
         android:layout_alignParentRight="true"
         android:layout_marginLeft="@dimen/h_14dp"
         android:text="挺好的服务很周到" />
-
+    <TextView
+        android:id="@+id/pingjia_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:layout_marginTop="@dimen/h_6dp"
+        android:layout_marginBottom="@dimen/h_6dp"
+        android:layout_marginRight="@dimen/h_14dp"
+        android:text="2017-12-12" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_marginRight="@dimen/h_14dp"
         android:layout_marginLeft="@dimen/h_14dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h_100dp"
+        android:layout_height="wrap_content"
         android:overScrollMode="never"
         android:scrollbars="none" />
+    <View
+        android:layout_marginTop="@dimen/h_14dp"
+        android:background="@color/color_e1e1e1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"></View>
 </LinearLayout>
