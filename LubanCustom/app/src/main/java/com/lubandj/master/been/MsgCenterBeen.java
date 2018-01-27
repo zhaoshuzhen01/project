@@ -66,6 +66,17 @@ public class MsgCenterBeen extends BaseEntity {
             private String is_read;
             private String datatime;
 
+            public boolean isSelect() {
+                return select;
+            }
+
+            public void setSelect(boolean select) {
+                this.select = select;
+            }
+
+            private boolean select ;
+
+
             public String getTitle() {
                 return title;
             }

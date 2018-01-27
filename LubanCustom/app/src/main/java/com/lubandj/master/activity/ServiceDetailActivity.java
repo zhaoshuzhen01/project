@@ -15,6 +15,7 @@ import com.example.baselibrary.tablayout.MyViewPagerAdapter;
 import com.example.baselibrary.widget.NotitleBaseActivity;
 import com.lubandj.master.R;
 import com.lubandj.master.fragment.IntroduceFragment;
+import com.lubandj.master.fragment.PingJiaFragment;
 import com.lubandj.master.fragment.WorkSheetFragment;
 
 import java.util.ArrayList;
@@ -73,8 +74,15 @@ public class ServiceDetailActivity extends NotitleBaseActivity {
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
         for (int i = 0; i < Titles.length; i++) {
-            IntroduceFragment mFragment = IntroduceFragment.newInstance(i);
-            mFragments.add(i, mFragment);
+            if (i==0){
+                IntroduceFragment mFragment = IntroduceFragment.newInstance(i);
+                mFragments.add(i, mFragment);
+
+            }else {
+                PingJiaFragment mFragment = PingJiaFragment.newInstance(i);
+                mFragments.add(i, mFragment);
+
+            }
             idTablayout.removeAllTabs();
             idTablayout.addTab(idTablayout.newTab().setText(Titles[i]));
         }

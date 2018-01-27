@@ -80,7 +80,7 @@
     <color name="Blue">#4674e7</color>
     <color name="Green">#0ba62c</color>
     <color name="color_lookall">#9b9b9b</color>
-    <drawable name="country_code">#33000000</drawable>
+    <color name="country_code">#F4F4F4</color>
     <drawable name="bottom_pop_text">#33ffffff</drawable>
     <drawable name="bottom_pop_text_normal">#ffffff</drawable>
     <color name="bg_color">#F4F3F3</color>

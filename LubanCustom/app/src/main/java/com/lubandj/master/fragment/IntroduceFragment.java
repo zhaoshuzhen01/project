@@ -1,46 +1,40 @@
 package com.lubandj.master.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.baselibrary.BaseFragment;
-import com.example.baselibrary.BaseRefreshFragment;
-import com.example.baselibrary.recycleview.SpacesItemDecoration;
-import com.example.baselibrary.refresh.BaseQuickAdapter;
-import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
-import com.example.baselibrary.tools.ToastUtils;
-import com.example.baselibrary.util.NetworkUtils;
-import com.lubandj.master.Iview.IworkListView;
-import com.lubandj.master.Presenter.SheetListPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.IntroduceAdapter;
-import com.lubandj.master.adapter.WorkSheetAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
-import com.lubandj.master.been.WorkListBeen;
-import com.lubandj.master.customview.BackLayout;
-import com.lubandj.master.model.workList.WorkListClickModel;
-import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
+import com.lubandj.master.dialog.IntroduceDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by ${zhaoshuzhen} on 2018/1/27.
  */
 
-public class IntroduceFragment extends BaseFragment  {
+public class IntroduceFragment extends BaseFragment {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @InjectView(R.id.button_text)
+    TextView buttonText;
     private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
-    private IntroduceAdapter introduceAdapter ;
-    protected  boolean isVisible = false;
+    private IntroduceAdapter introduceAdapter;
+    protected boolean isVisible = false;
+    private IntroduceDialog introduceDialog;
+
     public static IntroduceFragment newInstance(int index) {
         IntroduceFragment myFragment = new IntroduceFragment();
         Bundle bundle = new Bundle();
@@ -56,11 +50,12 @@ public class IntroduceFragment extends BaseFragment  {
 
     @Override
     protected void initView(View view) {
-        ButterKnife.inject(this,view);
-        introduceAdapter = new IntroduceAdapter(msgBeens,getActivity());
+        ButterKnife.inject(this, view);
+        introduceAdapter = new IntroduceAdapter(msgBeens, getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(introduceAdapter);
+        introduceDialog = new IntroduceDialog();
     }
 
     @Override
@@ -91,5 +86,27 @@ public class IntroduceFragment extends BaseFragment  {
     }
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.inject(this, rootView);
+        return rootView;
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+
+    @OnClick({R.id.button_text})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_text:
+                introduceDialog.show(getChildFragmentManager(),"");
+                break;
+        }
+    }
 }
