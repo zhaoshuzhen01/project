@@ -6,12 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.baselibrary.BaseFragment;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.IntroduceAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.customview.CarView;
 import com.lubandj.master.dialog.IntroduceDialog;
 
 import java.util.ArrayList;
@@ -25,16 +27,18 @@ import butterknife.OnClick;
  * Created by ${zhaoshuzhen} on 2018/1/27.
  */
 
-public class IntroduceFragment extends BaseFragment {
+public class IntroduceFragment extends BaseFragment{
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.button_text)
     TextView buttonText;
+    @InjectView(R.id.main_car_lay)
+    RelativeLayout main_car_lay;
+    private RelativeLayout carView ;
     private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
     private IntroduceAdapter introduceAdapter;
     protected boolean isVisible = false;
     private IntroduceDialog introduceDialog;
-
     public static IntroduceFragment newInstance(int index) {
         IntroduceFragment myFragment = new IntroduceFragment();
         Bundle bundle = new Bundle();
@@ -51,6 +55,7 @@ public class IntroduceFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         ButterKnife.inject(this, view);
+        carView = view.findViewById(R.id.carview);
         introduceAdapter = new IntroduceAdapter(msgBeens, getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
@@ -101,11 +106,18 @@ public class IntroduceFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.button_text})
+    @OnClick({R.id.button_text,R.id.main_car_lay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_text:
                 introduceDialog.show(getChildFragmentManager(),"");
+                break;
+            case R.id.main_car_lay:
+                if (carView.getVisibility()==View.VISIBLE){
+                    carView.setVisibility(View.GONE);
+                }else {
+                    carView.setVisibility(View.VISIBLE);
+                }
                 break;
         }
     }

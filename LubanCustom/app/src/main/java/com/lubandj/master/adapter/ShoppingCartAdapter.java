@@ -82,7 +82,6 @@ public class ShoppingCartAdapter extends BaseAdapter {
      */
     public void isShow(boolean flag) {
         isShow = flag;
-        notifyDataSetChanged();
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -164,29 +163,29 @@ public class ShoppingCartAdapter extends BaseAdapter {
         //判断是否在编辑状态下
         if (isShow) {
 //            holder.tvCommodityName.setVisibility(View.VISIBLE);
-            holder.rlEdit.setVisibility(View.GONE);
-            holder.tvCommodityNum.setVisibility(View.VISIBLE);
-            holder.tvCommodityDelete.setVisibility(View.GONE);
+            holder.tvCommodityPrice.setVisibility(View.GONE);
+            holder.rlEdit.setVisibility(View.VISIBLE);
         } else {
 //            holder.tvCommodityName.setVisibility(View.VISIBLE);
-            holder.rlEdit.setVisibility(View.VISIBLE);
-            holder.tvCommodityNum.setVisibility(View.GONE);
-            holder.tvCommodityDelete.setVisibility(View.VISIBLE);
+            holder.rlEdit.setVisibility(View.GONE);
+            holder.tvCommodityPrice.setVisibility(View.VISIBLE);
         }
+        holder.tvCommodityNum.setVisibility(View.VISIBLE);
+        holder.tvCommodityDelete.setVisibility(View.GONE);
 
         return convertView;
     }
     //初始化控件
     class ViewHolder {
-        ImageView ivShowPic,tvCommodityDelete;
-        TextView tvCommodityName, tvCommodityAttr, tvCommodityPrice, tvCommodityNum, tvCommodityShowNum,ivSub, ivAdd;
+        ImageView ivShowPic,tvCommodityDelete,ivSub, ivAdd;
+        TextView tvCommodityName, tvCommodityAttr, tvCommodityPrice, tvCommodityNum, tvCommodityShowNum;
         CheckBox ckOneChose;
         LinearLayout rlEdit;
         public ViewHolder(View itemView) {
             ckOneChose = (CheckBox) itemView.findViewById(R.id.ck_chose);
             ivShowPic = (ImageView) itemView.findViewById(R.id.iv_show_pic);
-            ivSub = (TextView) itemView.findViewById(R.id.iv_sub);
-            ivAdd = (TextView) itemView.findViewById(R.id.iv_add);
+            ivSub = (ImageView) itemView.findViewById(R.id.iv_sub);
+            ivAdd = (ImageView) itemView.findViewById(R.id.iv_add);
             tvCommodityName = (TextView) itemView.findViewById(R.id.tv_commodity_name);
             tvCommodityAttr = (TextView) itemView.findViewById(R.id.tv_commodity_attr);
             tvCommodityPrice = (TextView) itemView.findViewById(R.id.tv_commodity_price);

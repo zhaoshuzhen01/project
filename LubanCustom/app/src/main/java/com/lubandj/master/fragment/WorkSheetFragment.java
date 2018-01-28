@@ -62,6 +62,9 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     protected void initView(View view) {
         backLayout = new BackLayout(getActivity());
         backLayout.setOnclick(this);
+        backLayout.setNodataText("您还没有登录,请登录后查看订单");
+        backLayout.setImg(R.drawable.nodingdan);
+        backLayout.setButtonText("登录/注册");
         workFragmentContaner.addView(backLayout);
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6) view.findViewById(R.id.prpt);
         Bundle bundle = getArguments();
@@ -97,7 +100,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
             initData();
         } else {
             if (worklists != null && worklists.size() > 0) {
-                backLayout.setVisibility(View.GONE);
+//                backLayout.setVisibility(View.GONE);
             } else {
                 backLayout.setVisibility(View.VISIBLE);
             }

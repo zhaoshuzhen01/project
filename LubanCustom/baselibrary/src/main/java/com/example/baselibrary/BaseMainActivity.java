@@ -25,9 +25,6 @@ public abstract class BaseMainActivity extends TitleBaseActivity implements  Vie
     protected MainBottomView bottomNavigationBar;
     protected List<Fragment> mList; //ViewPager的数据源
     private long exitTime = 0;
-    protected RelativeLayout main_car_lay ;
-
-
     //初始化底部导航条
     public void initBottomNavigationBar() {
         bottomNavigationBar.setBottomTabSelect(this);
@@ -45,10 +42,8 @@ public abstract class BaseMainActivity extends TitleBaseActivity implements  Vie
     public void onPageSelected(int position) {
         //ViewPager滑动
         bottomNavigationBar.setSelectTab(position);
-        main_car_lay.setVisibility(View.GONE);
         switch (position){
             case 0:
-                main_car_lay.setVisibility(View.VISIBLE);
                 setTitleText("首页");
                 tv_basetitle_back.setVisibility(View.VISIBLE);
                 break;

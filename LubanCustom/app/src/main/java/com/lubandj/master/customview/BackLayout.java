@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,8 @@ public class BackLayout extends LinearLayout {
     TextView noWorkTip2;
     @InjectView(R.id.button_text)
     TextView buttonText;
+    @InjectView(R.id.no_work)
+    ImageView no_work ;
     private LinearLayout reflush;
 
     public BackLayout(Context context) {
@@ -47,6 +50,10 @@ public class BackLayout extends LinearLayout {
     }
     public void setNodataText(String text){
         noWorkTip2.setText(text);
+    }
+
+    public void setImg(int drawable){
+        no_work.setImageResource(drawable);
     }
 
     public void setButtonText(String text){

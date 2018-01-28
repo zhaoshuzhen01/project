@@ -499,7 +499,7 @@ public class PullToRefreshAndPushToLoadView6 extends ViewGroup {
                         //当滑动距离大于可滚动距离时，进行调整
                         dy= Math.abs(getScrollY());
                     }
-                    scrollBy(0, -dy);
+                    scrollBy(0, -dy/2);
                     return true;
                 }else if ((showTop&&canRefresh)||hideTop) {
                     //说明头部显示，自己处理滑动，无论上滑下滑均同步移动（==0代表滑动到顶部可以继续下拉）
