@@ -1,24 +1,22 @@
-package com.lubandj.master.activity;
+package com.lubandj.master.customview;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.baselibrary.TitleBaseActivity;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
+import com.lubandj.master.activity.MainCantainActivity;
 import com.lubandj.master.adapter.ShoppingCartAdapter;
 import com.lubandj.master.been.ShoppingCartBean;
-import com.lubandj.master.customview.BackLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,20 +24,14 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapter.CheckInterface, ShoppingCartAdapter.ModifyCountInterface,DialogTagin.DialogSure{
-    private BackLayout backLayout;
-    @InjectView(R.id.car_contaner)
-    LinearLayout workFragmentContaner;
-    Button btnBack;
-    //全选
-    CheckBox ckAll;
-    //总额
-    TextView tvShowPrice;
-    //结算
-    TextView tvSettlement;
-    //删除
-    TextView tv_clear;//tv_edit
+/**
+ * Created by ${zhaoshuzhen} on 2018/1/28.
+ */
 
+public class CarView extends LinearLayout implements View.OnClickListener,  ShoppingCartAdapter.CheckInterface, ShoppingCartAdapter.ModifyCountInterface,DialogTagin.DialogSure{
+
+    //全选
+    private  CheckBox ckAll;
 
     ListView list_shopping_cart;
     private ShoppingCartAdapter shoppingCartAdapter;
@@ -48,54 +40,33 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
     private boolean mSelect;
     private double totalPrice = 0.00;// 购买的商品总价
     private int totalCount = 0;// 购买的商品总数量
-    public  static  void startActivity(Context context){
-        Intent intent = new Intent(context, CarActivity.class);
-        context.startActivity(intent);
+    private Context context ;
+    public CarView(Context context) {
+        super(context);
+        initView(context);
     }
 
-    @Override
-    public void titleLeftClick() {
-        finish();
+    public CarView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        initView(context);
     }
 
-    @Override
-    protected void clickMenu() {
-
+    public CarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initView(context);
     }
 
-    @Override
-    public int getLayout() {
-        return R.layout.activity_car;
-    }
-
-    @Override
-    public void initView() {
+    private void initView(Context context) {
+        this.context = context ;
+        View view = LayoutInflater.from(context).inflate(R.layout.view_car, this);
         ButterKnife.inject(this);
-        setTitleText(R.string.car_center);
-        setBackImg(R.drawable.back_mark);
-        setOkVisibity(false);
-        backLayout = new BackLayout(this);
-        backLayout.setOnclick(this);
-        workFragmentContaner.addView(backLayout);
-        backLayout.setOnclick(this);
-        backLayout.setNodataText("购物车空空如也,快去逛逛吧");
-        backLayout.setButtonText("进入首页");
-        setRightText("编辑");
-        tv_clear = findView(R.id.tv_clear);
-        tv_clear.setOnClickListener(this);
-        tv_clear.setVisibility(View.GONE);
-        ckAll= (CheckBox) findViewById(R.id.ck_all);
-        tvShowPrice= (TextView) findViewById(R.id.tv_show_price);
-        tvSettlement= (TextView) findViewById(R.id.tv_settlement);
-        list_shopping_cart= (ListView) findViewById(R.id.list_shopping_cart);
 
+        ckAll= (CheckBox) view.findViewById(R.id.ck_all);
+        list_shopping_cart= (ListView) view.findViewById(R.id.list_shopping_cart);
         ckAll.setOnClickListener(this);
-        tvSettlement.setOnClickListener(this);
-        initData();
+        initData(context);
     }
-
-    @Override
-    public void initData() {
+    public void initData(Context context) {
         for (int i = 0; i < 2; i++) {
             ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
             shoppingCartBean.setShoppingName("空调保养");
@@ -116,13 +87,12 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
             shoppingCartBean.setImageUrl("https://gd1.alicdn.com/imgextra/i1/2160089910/TB2M_NSbB0kpuFjSsppXXcGTXXa_!!2160089910.jpg");
             shoppingCartBeanList.add(shoppingCartBean);
         }
-        shoppingCartAdapter = new ShoppingCartAdapter(this);
-        shoppingCartAdapter.isShow(false);
+        shoppingCartAdapter = new ShoppingCartAdapter(context);
+        shoppingCartAdapter.isShow(true);
         shoppingCartAdapter.setCheckInterface(this);
         shoppingCartAdapter.setModifyCountInterface(this);
         list_shopping_cart.setAdapter(shoppingCartAdapter);
         shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
-        backLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -145,42 +115,12 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
                 }
                 statistics();
                 break;
-            case R.id.tv_basetitle_right:
-                flag = !flag;
-                if (flag) {
-                    tv_clear.setVisibility(View.VISIBLE);
-                    tv_basetitle_right.setText("取消");
-//                    ckAll.setChecked(true);
-//                    shoppingCartAdapter.isShow(false);
-                } else {
-                    tv_clear.setVisibility(View.GONE);
-                    tv_basetitle_right.setText("编辑");
-//                    ckAll.setChecked(false);
-//                    shoppingCartAdapter.isShow(true);
-                }
-               /* if (shoppingCartBeanList.size() != 0) {
-                    if (ckAll.isChecked()) {
-                        for (int i = 0; i < shoppingCartBeanList.size(); i++) {
-                            shoppingCartBeanList.get(i).setChoosed(true);
-                        }
-                        shoppingCartAdapter.notifyDataSetChanged();
-                    } else {
-                        for (int i = 0; i < shoppingCartBeanList.size(); i++) {
-                            shoppingCartBeanList.get(i).setChoosed(false);
-                        }
-                        shoppingCartAdapter.notifyDataSetChanged();
-                    }
-                }*/
-                break;
             case R.id.tv_settlement: //结算
                 lementOnder();
                 break;
             case R.id.tv_clear:
-                DialogTagin.getDialogTagin(this).showDialog("删除服务").setDialogSure(this);
+                DialogTagin.getDialogTagin(context).showDialog("删除服务").setDialogSure(this);
                 break;
-                default:
-                    MainCantainActivity.startActivity(this);
-                    break;
         }
     }
 
@@ -201,7 +141,7 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
                 Log.d("deal",id+"----id---"+shoppingName+"---"+count+"---"+price+"--size----"+size+"--attr---"+attribute);
             }
         }
-        toast(this,"总价："+totalPrice);
+//        toast(this,"总价："+totalPrice);
         //跳转到支付界面
     }
     /**
@@ -247,8 +187,8 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
                 totalPrice += shoppingCartBean.getPrice() * shoppingCartBean.getCount();
             }
         }
-        tvShowPrice.setText("合计: ¥" + totalPrice);
-        tvSettlement.setText("预约下单");
+       /* tvShowPrice.setText("合计: ¥" + totalPrice);
+        tvSettlement.setText("预约下单");*/
     }
     /**
      * 增加
@@ -300,6 +240,7 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
 
     @Override
     public void dialogCall() {
-        toast(this,"删除");
+//        toast(this,"删除");
     }
 }
+

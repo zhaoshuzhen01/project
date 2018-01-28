@@ -44,7 +44,9 @@ public class SplashActivity extends PermissionActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         StatusBarUtils.setWindowStatusBarColor(SplashActivity.this, R.color.splash_status_bar);
-        onLogin();
+//        onLogin();
+        Intent intent = new Intent(SplashActivity.this, MainCantainActivity.class);
+        startActivity(intent);
     }
 
     public void onLogin() {

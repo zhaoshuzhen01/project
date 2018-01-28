@@ -52,8 +52,6 @@ public class MainCantainActivity extends BaseMainActivity {
     @Override
     public void initView() {
         bottomNavigationBar = (MainBottomView) findViewById(com.example.baselibrary.R.id.bottom_navigation_bar);
-        main_car_lay = findView(R.id.main_car_lay);
-        main_car_lay.setOnClickListener(this);
         initBottomNavigationBar();
         initViewPager();
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -117,9 +115,6 @@ public class MainCantainActivity extends BaseMainActivity {
                 if (count > 0) {
 //                    DbInstance.getInstance().insertDatas();
                 }
-                break;
-            case R.id.main_car_lay:
-                CarActivity.startActivity(this);
                 break;
         }
     }
