@@ -212,4 +212,33 @@
         <item name="android:maxWidth">25dp</item>
         <item name="android:maxHeight">25dp</item>
     </style>
+
+
+    <style name="linear_layout_order_details">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">@dimen/h_12dp</item>
+        <item name="android:paddingRight">@dimen/h_12dp</item>
+        <item name="android:paddingBottom">@dimen/h_14dp</item>
+        <item name="android:paddingTop">@dimen/h_14dp</item>
+    </style>
+
+    <style name="text_view_1_order_details">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:textColor">@color/color_999999</item>
+    </style>
+
+    <style name="text_view_2_order_details">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:textColor">@color/color_666666</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/h_9dp</item>
+    </style>
 </resources>

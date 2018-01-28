@@ -7,11 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.example.baselibrary.eventbus.BusEvent;
 import com.example.baselibrary.eventbus.RxBus;
-import com.example.baselibrary.tools.NotificationUtil;
 import com.google.gson.Gson;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.PushManager;
@@ -20,12 +18,7 @@ import com.igexin.sdk.message.GTTransmitMessage;
 import com.lubandj.master.InstanceUtil.NotifyMsgInstance;
 import com.lubandj.master.activity.MsgCenterActivity;
 import com.lubandj.master.been.MsgCenterBeen;
-import com.lubandj.master.dialog.TipDialog;
 import com.lubandj.master.utils.CommonUtils;
-import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
-import com.lubandj.master.worksheet.WorkSheetListActivity;
-
-import org.json.JSONObject;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/12/3.

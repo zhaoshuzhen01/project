@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.example.baselibrary.tools.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.lubandj.customer.base.PhonePermissionActivity;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
@@ -35,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class WorkSheetDetailsActivity extends PermissionActivity implements DialogTagin.DialogSure {
+public class WorkSheetDetailsActivityPhone extends PhonePermissionActivity implements DialogTagin.DialogSure {
 
 
     @InjectView(R.id.iv_state_icon)
@@ -126,9 +127,9 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                     if (workSheetDetailBean.getCode() == 0) {
                         refreshPage(workSheetDetailBean);
                     }else if(workSheetDetailBean.getCode()==104){
-                        CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
+                        CommonUtils.tokenNullDeal(WorkSheetDetailsActivityPhone.this);
                     } else {
-                        ToastUtils.showShort(WorkSheetDetailsActivity.this, workSheetDetailBean.getMessage());
+                        ToastUtils.showShort(WorkSheetDetailsActivityPhone.this, workSheetDetailBean.getMessage());
                     }
                 } catch (Exception e) {
                     Logger.e(e.toString());
@@ -138,7 +139,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                CommonUtils.fastShowError(WorkSheetDetailsActivity.this,volleyError);
+                CommonUtils.fastShowError(WorkSheetDetailsActivityPhone.this,volleyError);
             }
         });
     }
@@ -164,8 +165,8 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 copy(tvWorkSheetNo.getText().toString());
                 break;
             case R.id.btn_sign_exception:
-                Intent intent = new Intent(this, SignExceptionActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, workSheetId);
+                Intent intent = new Intent(this, SignExceptionActivityPhone.class);
+                intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, workSheetId);
                 startActivity(intent);
                 break;
             case R.id.btn_start_server:
@@ -209,11 +210,11 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                     BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
                     if (baseEntity.getCode() == 0) {
                         initData();
-                        ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
+                        ToastUtils.showShort(WorkSheetDetailsActivityPhone.this, baseEntity.getMessage());
                     }else if(baseEntity.getCode()==104){
-                        CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
+                        CommonUtils.tokenNullDeal(WorkSheetDetailsActivityPhone.this);
                     }else{
-                        ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
+                        ToastUtils.showShort(WorkSheetDetailsActivityPhone.this, baseEntity.getMessage());
                     }
                 } catch (Exception e) {
                     Logger.e(e.toString());
@@ -223,7 +224,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                CommonUtils.fastShowError(WorkSheetDetailsActivity.this,volleyError);
+                CommonUtils.fastShowError(WorkSheetDetailsActivityPhone.this,volleyError);
             }
         });
     }

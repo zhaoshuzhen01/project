@@ -6,7 +6,7 @@
     android:background="@color/color_eeeeee"
     android:overScrollMode="never"
     android:scrollbars="none"
-    tools:context="com.lubandj.master.worksheet.WorkSheetDetailsActivity">
+    tools:context="com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone">
 
     <LinearLayout
         android:layout_width="match_parent"

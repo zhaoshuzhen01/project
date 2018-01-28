@@ -4,13 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.example.baselibrary.widget.AlertDialog;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.dialog.TipDialog;
-import com.lubandj.master.login.LoginActivity;
-import com.lubandj.master.utils.CommonUtils;
-import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
-import com.lubandj.master.worksheet.WorkSheetListActivity;
+import com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/12/3.
@@ -44,8 +40,8 @@ public class DialogTagin {
             public void onClick(View button, TipDialog dialog) {
                 dialog.dismiss();
                 if (dialogSure==null){
-                    Intent intent = new Intent(context, WorkSheetDetailsActivity.class);
-//                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID,currentType);
+                    Intent intent = new Intent(context, WorkSheetDetailsActivityPhone.class);
+//                            intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID,currentType);
                     context.startActivity(intent);
                 }else {
                     dialogSure.dialogCall();

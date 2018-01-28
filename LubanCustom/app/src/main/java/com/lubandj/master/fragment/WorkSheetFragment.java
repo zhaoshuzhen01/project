@@ -21,7 +21,7 @@ import com.lubandj.master.customview.BackLayout;
 import com.lubandj.master.Iview.IworkListView;
 import com.lubandj.master.model.workList.WorkListClickModel;
 import com.example.baselibrary.util.NetworkUtils;
-import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
+import com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,20 +123,20 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         switch (index) {
             case 0://工单未完成
-                Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LAT,worklists.get(position).getLat());
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LNG,worklists.get(position).getLng());
+                Intent intent = new Intent(getActivity(), WorkSheetDetailsActivityPhone.class);
+                intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, worklists.get(position).getId());
+                intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAIL_LAT,worklists.get(position).getLat());
+                intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAIL_LNG,worklists.get(position).getLng());
                 startActivity(intent);
                 break;
             case 1://工单已完成
-                intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
+                intent = new Intent(getActivity(), WorkSheetDetailsActivityPhone.class);
+                intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, worklists.get(position).getId());
                 startActivity(intent);
                 break;
             case 2://工单已取消
-                intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
+                intent = new Intent(getActivity(), WorkSheetDetailsActivityPhone.class);
+                intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, worklists.get(position).getId());
                 startActivity(intent);
                 break;
         }

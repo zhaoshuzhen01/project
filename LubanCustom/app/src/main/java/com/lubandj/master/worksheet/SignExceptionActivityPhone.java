@@ -17,6 +17,7 @@ import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.widget.AlertDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.lubandj.customer.base.PhonePermissionActivity;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.been.ExceptionListBean;
@@ -31,9 +32,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-import static com.lubandj.master.worksheet.WorkSheetDetailsActivity.KEY_DETAILS_ID;
+import static com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone.KEY_DETAILS_ID;
 
-public class SignExceptionActivity extends PermissionActivity implements RadioGroup.OnCheckedChangeListener, TextWatcher {
+public class SignExceptionActivityPhone extends PhonePermissionActivity implements RadioGroup.OnCheckedChangeListener, TextWatcher {
 
 
     @InjectView(R.id.radio_group)
@@ -91,9 +92,9 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
                     if (exceptionListBean.getCode() == 0) {
                         refreshPage(exceptionListBean);
                     } else if (exceptionListBean.getCode() == 104) {
-                        CommonUtils.tokenNullDeal(SignExceptionActivity.this);
+                        CommonUtils.tokenNullDeal(SignExceptionActivityPhone.this);
                     } else {
-                        ToastUtils.showShort(SignExceptionActivity.this, exceptionListBean.getMsg());
+                        ToastUtils.showShort(SignExceptionActivityPhone.this, exceptionListBean.getMsg());
                     }
                 } catch (Exception e) {
                     Logger.e(e.toString());
@@ -103,7 +104,7 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                CommonUtils.fastShowError(SignExceptionActivity.this, volleyError);
+                CommonUtils.fastShowError(SignExceptionActivityPhone.this, volleyError);
             }
         });
     }
@@ -165,7 +166,7 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
                 try {
                     BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
                     if (baseEntity.getCode() == 0) {
-                        new AlertDialog(SignExceptionActivity.this)
+                        new AlertDialog(SignExceptionActivityPhone.this)
                                 .builder()
                                 .setTitle(getString(R.string.txt_submit_success))
                                 .setMsg(getString(R.string.txt_submit_success_service))
@@ -181,9 +182,9 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
                                     }
                                 }).show();
                     } else if (baseEntity.getCode() == 104) {
-                        CommonUtils.tokenNullDeal(SignExceptionActivity.this);
+                        CommonUtils.tokenNullDeal(SignExceptionActivityPhone.this);
                     } else {
-                        ToastUtils.showShort(SignExceptionActivity.this, baseEntity.getMessage());
+                        ToastUtils.showShort(SignExceptionActivityPhone.this, baseEntity.getMessage());
                     }
                 } catch (Exception e) {
                     Logger.e(e.toString());
@@ -193,7 +194,7 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                CommonUtils.fastShowError(SignExceptionActivity.this, volleyError);
+                CommonUtils.fastShowError(SignExceptionActivityPhone.this, volleyError);
             }
         });
     }

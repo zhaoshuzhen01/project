@@ -2,19 +2,11 @@ package com.lubandj.master.my;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -24,26 +16,17 @@ import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.DensityUtils;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
-import com.lubandj.master.TApplication;
 import com.lubandj.master.adapter.RecycleViewDivider;
 import com.lubandj.master.adapter.WorkDateAdapter;
 import com.lubandj.master.adapter.WorkDetailAdapter;
 import com.lubandj.master.adapter.WorkTimeAdapter;
 import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.databinding.ActivityWorkcalendarBinding;
-import com.lubandj.master.fragment.WorkCalendarFragment;
 import com.lubandj.master.httpbean.WorkDetailRequest;
 import com.lubandj.master.httpbean.WorkDetailResponse;
-import com.lubandj.master.login.SplashActivity;
 import com.lubandj.master.utils.CommonUtils;
-import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.TaskEngine;
-import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
-import com.lubandj.master.worksheet.WorkSheetListActivity;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
+import com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone;
 
 /**
  * function:
@@ -94,8 +77,8 @@ public class WorkCalendarActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WorkListBeen.InfoBean info = (WorkListBeen.InfoBean) mDetailAdapter.getItem(position);
-                Intent intent = new Intent(WorkCalendarActivity.this, WorkSheetDetailsActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, info.getId());
+                Intent intent = new Intent(WorkCalendarActivity.this, WorkSheetDetailsActivityPhone.class);
+                intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, info.getId());
                 startActivityForResult(intent, 1001);
             }
         });

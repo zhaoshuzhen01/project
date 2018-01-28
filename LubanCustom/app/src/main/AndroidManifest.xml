@@ -72,16 +72,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".worksheet.WorkSheetDetailsActivity"
+            android:name=".worksheet.WorkSheetDetailsActivityPhone"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".worksheet.SignExceptionActivity"
+            android:name=".worksheet.SignExceptionActivityPhone"
             android:screenOrientation="portrait" />
         <activity
             android:name=".my.AboutLuBanActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".login.LoginActivity"
+            android:name="com.lubandj.customer.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".my.ModifyPhoneActivity"
@@ -203,7 +203,9 @@
 
         <activity android:name=".activity.CarActivity" />
         <activity android:name=".activity.ChooseCityActivity" />
-        <activity android:name=".activity.ServiceDetailActivity"></activity>
+        <activity android:name=".activity.ServiceDetailActivity" />
+        <activity android:name="com.lubandj.customer.login.BindPhoneNumActivity" />
+        <activity android:name="com.lubandj.customer.order.OrderDetailsActivity"></activity>
     </application>
 
 </manifest>

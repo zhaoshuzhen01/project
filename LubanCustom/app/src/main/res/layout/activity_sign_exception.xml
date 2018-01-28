@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_eeeeee"
-    tools:context="com.lubandj.master.worksheet.SignExceptionActivity">
+    tools:context="com.lubandj.master.worksheet.SignExceptionActivityPhone">
 
     <RadioGroup
         android:id="@+id/radio_group"

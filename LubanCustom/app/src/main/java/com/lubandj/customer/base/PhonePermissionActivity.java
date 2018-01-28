@@ -1,4 +1,4 @@
-package com.lubandj.master.worksheet;
+package com.lubandj.customer.base;
 
 import android.Manifest;
 import android.content.Intent;
@@ -20,10 +20,10 @@ import permissions.dispatcher.RuntimePermissions;
 /**
  * @author: lj
  * @Time: 2017/12/25 14:53
- * @Description: This is PermissionActivity
+ * @Description: This is PhonePermissionActivity
  */
 @RuntimePermissions
-public abstract class PermissionActivity extends TitleBaseActivity {
+public abstract class PhonePermissionActivity extends TitleBaseActivity {
 
 
 
@@ -46,18 +46,14 @@ public abstract class PermissionActivity extends TitleBaseActivity {
 
 
     public void call(String num){
-        PermissionActivityPermissionsDispatcher.callPhoneWithPermissionCheck(this,num);
+        PhonePermissionActivityPermissionsDispatcher.callPhoneWithPermissionCheck(this,num);
+
     }
 
     @NeedsPermission(Manifest.permission.CALL_PHONE)
     void callPhone(String num) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + num));
         startActivity(intent);
-    }
-
-    @NeedsPermission(Manifest.permission.CAMERA)
-    void camera(){
-
     }
 
 
@@ -96,6 +92,6 @@ public abstract class PermissionActivity extends TitleBaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionActivityPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+        PhonePermissionActivityPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
     }
 }

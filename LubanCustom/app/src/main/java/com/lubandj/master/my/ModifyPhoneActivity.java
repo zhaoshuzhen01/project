@@ -1,6 +1,5 @@
 package com.lubandj.master.my;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,27 +15,15 @@ import com.android.volley.VolleyError;
 import com.example.baselibrary.BaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.RegexUtils;
-import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
-import com.lubandj.master.been.LoginBeen;
-import com.lubandj.master.databinding.ActivityAboutlubanBinding;
 import com.lubandj.master.databinding.ActivityModifyphoneBinding;
-import com.lubandj.master.httpbean.BaseEntity;
 import com.lubandj.master.httpbean.BaseResponseBean;
-import com.lubandj.master.httpbean.LoginAppBean;
 import com.lubandj.master.httpbean.ModifyPhoneRequest;
 import com.lubandj.master.httpbean.SendSmsBean;
-import com.lubandj.master.login.LoginActivity;
-import com.lubandj.master.login.SplashActivity;
 import com.lubandj.master.utils.CommonUtils;
-import com.lubandj.master.utils.Logger;
-import com.lubandj.master.utils.SPUtils;
 import com.lubandj.master.utils.TaskEngine;
-import com.lubandj.master.worksheet.WorkSheetListActivity;
-
-import java.util.Timer;
 
 /**
  * function:

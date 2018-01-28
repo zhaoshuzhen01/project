@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/h_12dp"
+    android:paddingRight="@dimen/h_12dp"
+    >
+
+
+    <ImageView
+        android:id="@+id/iv_item_photo"
+        android:layout_width="@dimen/h_75dp"
+        android:layout_height="@dimen/h_75dp"
+        android:src="@drawable/nowork"
+        android:layout_centerVertical="true"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/h_15dp"
+        android:layout_toRightOf="@+id/iv_item_photo"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/black"
+            android:text="空调保养-挂式"
+            />
+
+        <TextView
+            android:id="@+id/tv_item_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/color_999999"
+            android:layout_marginTop="@dimen/h_10dp"
+            android:text="X2"
+            />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/color_e94b4e"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12.5dp"
+        android:text="¥ 150"/>
+</RelativeLayout>

@@ -18,7 +18,7 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.httpbean.BaseResponseBean;
-import com.lubandj.master.login.LoginActivity;
+import com.lubandj.customer.login.LoginActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;

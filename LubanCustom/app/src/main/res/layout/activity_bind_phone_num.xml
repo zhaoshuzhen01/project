@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ffffff"
-    >
+    tools:context="com.lubandj.master.com.lubandj.customer.login.LoginActivity">
 
     <View
         android:id="@+id/view_line"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/h_25dp"
-            android:text="@string/txt_login_page_desc"
+            android:text="@string/txt_bind_page_desc"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/sp_13" />
 
@@ -126,68 +126,4 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/h_35dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="50dp"
-                android:layout_height="@dimen/dp_0.5"
-                android:background="@color/color_d6d6d6" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_17dp"
-                android:text="@string/txt_third_login"
-                android:textColor="@color/color_999999"
-                android:textSize="@dimen/sp_13" />
-
-            <View
-                android:layout_width="50dp"
-                android:layout_height="@dimen/dp_0.5"
-                android:layout_marginLeft="@dimen/h_17dp"
-                android:background="@color/color_d6d6d6" />
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ll_login_we_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/h_35dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_login_we_chat"/>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h_17dp"
-                android:textColor="@color/color_999999"
-                android:textSize="@dimen/sp_14"
-                android:text="@string/txt_login_we_chat"/>
-
-        </LinearLayout>
-    </LinearLayout>
 </RelativeLayout>
-

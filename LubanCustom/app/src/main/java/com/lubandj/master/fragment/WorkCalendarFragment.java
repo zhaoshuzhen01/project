@@ -17,7 +17,7 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.WorkDetailAdapter;
 import com.lubandj.master.adapter.WorkTimeAdapter;
-import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
+import com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone;
 
 /**
  * function:
@@ -61,8 +61,8 @@ public class WorkCalendarFragment extends Fragment {
         mLvDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, Canstance.TYPE_WORKCALENDAR);
+                Intent intent = new Intent(getActivity(), WorkSheetDetailsActivityPhone.class);
+                intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, Canstance.TYPE_WORKCALENDAR);
                 startActivity(intent);
             }
         });
