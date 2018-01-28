@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/color_ffffff"
-              android:orientation="vertical"
-
-              tools:context="com.lubandj.master.login.LoginActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff"
+    tools:context="com.lubandj.master.login.LoginActivity">
 
     <View
+        android:id="@+id/view_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#eeeeee"/>
+        android:background="#eeeeee" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/view_line"
         android:orientation="vertical"
         android:paddingLeft="@dimen/h_23dp"
         android:paddingRight="@dimen/h_23dp">
@@ -26,7 +26,7 @@
             android:layout_marginTop="@dimen/h_25dp"
             android:text="@string/txt_login_page_desc"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/sp_13"/>
+            android:textSize="@dimen/sp_13" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/h_20dp"
-                android:src="@drawable/ic_login_phone"/>
+                android:src="@drawable/ic_login_phone" />
 
 
             <com.example.baselibrary.widget.EditTextWithDel
@@ -50,7 +50,7 @@
                 android:layout_marginLeft="@dimen/h_9dp"
                 android:layout_marginRight="@dimen/h_20dp"
                 android:hint="@string/txt_login_page_phone_hint"
-                android:inputType="phone"/>
+                android:inputType="phone" />
         </LinearLayout>
 
         <LinearLayout
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/h_20dp"
-                    android:src="@drawable/ic_auth_code"/>
+                    android:src="@drawable/ic_auth_code" />
 
 
                 <com.example.baselibrary.widget.EditTextWithDel
@@ -81,7 +81,7 @@
                     android:layout_marginLeft="@dimen/h_9dp"
                     android:layout_marginRight="@dimen/h_20dp"
                     android:hint="@string/txt_login_page_code_hint"
-                    android:inputType="number"/>
+                    android:inputType="number" />
             </LinearLayout>
 
             <Button
@@ -90,7 +90,7 @@
                 android:layout_width="@dimen/h_0dp"
                 android:layout_marginLeft="@dimen/h_19dp"
                 android:layout_weight="1"
-                android:text="@string/txt_login_page_send_code"/>
+                android:text="@string/txt_login_page_send_code" />
         </LinearLayout>
 
         <Button
@@ -98,32 +98,96 @@
             style="@style/btn_login"
             android:layout_marginTop="@dimen/h_26dp"
             android:enabled="false"
-            android:text="@string/txt_login_page_title"/>
+            android:text="@string/txt_login" />
 
-        <RelativeLayout
+
+        <LinearLayout
+            android:id="@+id/ll_agreement"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/h_25dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/dp_11"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:text="@string/txt_login_agreement_1"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_13" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="登录代表你已同意"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="《鹿班到家工程师协议》"
-                    android:textColor="@color/actionsheet_red"/>
-            </LinearLayout>
-        </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_login_agreement_2"
+                android:textColor="#e94b4e"
+                android:textSize="@dimen/sp_13" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/h_35dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="50dp"
+                android:layout_height="@dimen/dp_0.5"
+                android:background="@color/color_d6d6d6" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/h_17dp"
+                android:text="@string/txt_third_login"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_13" />
+
+            <View
+                android:layout_width="50dp"
+                android:layout_height="@dimen/dp_0.5"
+                android:layout_marginLeft="@dimen/h_17dp"
+                android:background="@color/color_d6d6d6" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_login_we_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/h_35dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_login_we_chat"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/h_17dp"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_14"
+                android:text="@string/txt_login_we_chat"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
 

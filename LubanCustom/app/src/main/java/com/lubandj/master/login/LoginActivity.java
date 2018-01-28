@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -29,7 +30,6 @@ import com.lubandj.master.httpbean.UserInfoResponse;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.SPUtils;
 import com.lubandj.master.utils.TaskEngine;
-import com.lubandj.master.worksheet.WorkSheetListActivity;
 import com.umeng.socialize.UMShareAPI;
 
 import butterknife.ButterKnife;
@@ -48,6 +48,10 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
     Button btnSendCode;
     @InjectView(R.id.btn_login)
     Button btnLogin;
+    @InjectView(R.id.ll_agreement)
+    LinearLayout llAgreement;
+    @InjectView(R.id.ll_login_we_chat)
+    LinearLayout llLoginWeChat;
     private int COUNT_DOWN_TIME = 60;
     private String mPhoneNum;
     private String mAuthCode;
@@ -92,10 +96,12 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         setBackImg(R.drawable.ic_login_close);
         setBackImgVisiable(View.GONE);
-        setTitleText(R.string.txt_login_page_title);
+        setTitleText(R.string.txt_login_title);
         setOkVisibity(false);
         setListener();
         initData();
+        btnSendCode.setEnabled(false);
+
 
         mPhoneNum = SPUtils.getInstance().getString(Canstance.KEY_SP_PHONE_NUM);
         if (!TextUtils.isEmpty(mPhoneNum)) {
@@ -118,20 +124,11 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
 
     }
 
-    @OnClick({R.id.btn_send_code, R.id.btn_login})
+    @OnClick({R.id.btn_send_code, R.id.btn_login, R.id.ll_agreement, R.id.ll_login_we_chat})
     public void onViewClicked(View view) {
-//        LoginUtil.getLoginUtil(LoginActivity.this).setAuthWeixin(LoginActivity.this);
-        if (TextUtils.isEmpty(mPhoneNum)) {
-            ToastUtils.showShort(this, R.string.txt_phone_num_is_not_empty);
-            return;
-        }
-
-        if (!RegexUtils.isMobileExact(mPhoneNum)) {
-            ToastUtils.showShort(this, R.string.txt_phone_num_is_error);
-            return;
-        }
         switch (view.getId()) {
             case R.id.btn_send_code:
+                if (checkPhoneNum()) return;
                 SendSmsBean bean = new SendSmsBean(mPhoneNum, SendSmsBean.KEY_LOGIN_TEMPLATEID);
                 initProgressDialog(R.string.txt_is_sending_auth_code).show();
                 TaskEngine.getInstance().commonHttps(Canstance.HTTP_SEND_CODE, bean, new Response.Listener<String>() {
@@ -147,7 +144,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                                 ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
                             } else if (baseEntity.getCode() == 104) {
                                 CommonUtils.tokenNullDeal(LoginActivity.this);
-                            }else {
+                            } else {
                                 ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
                             }
                         }
@@ -161,6 +158,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                 });
                 break;
             case R.id.btn_login:
+                if (checkPhoneNum()) return;
                 initProgressDialog(R.string.txt_is_login).show();
                 TaskEngine.getInstance().commonHttps(Canstance.HTTP_LOGIN, new LoginAppBean(mPhoneNum, mAuthCode), new Response.Listener<String>() {
 
@@ -186,7 +184,25 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                     }
                 });
                 break;
+            case R.id.ll_agreement:
+                break;
+            case R.id.ll_login_we_chat:
+                LoginUtil.getLoginUtil(LoginActivity.this).setAuthWeixin(LoginActivity.this);
+                break;
         }
+    }
+
+    private boolean checkPhoneNum() {
+        if (TextUtils.isEmpty(mPhoneNum)) {
+            ToastUtils.showShort(this, R.string.txt_phone_num_is_not_empty);
+            return true;
+        }
+
+        if (!RegexUtils.isMobileExact(mPhoneNum)) {
+            ToastUtils.showShort(this, R.string.txt_phone_num_is_error);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -194,6 +210,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
         switch (view.getId()) {
             case R.id.et_phone_num:
                 this.mPhoneNum = content;
+                btnSendCode.setEnabled(!TextUtils.isEmpty(content));
                 break;
             case R.id.et_auth_code:
                 this.mAuthCode = content;
@@ -237,6 +254,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
             ActUtils.getInstance().exitApp(LoginActivity.this);
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

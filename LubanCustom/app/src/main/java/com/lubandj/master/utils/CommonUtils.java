@@ -7,12 +7,9 @@ import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.example.baselibrary.BaseActivity;
-import com.example.baselibrary.net.BaseResponse;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.ActUtils;
 import com.google.gson.Gson;
@@ -22,8 +19,6 @@ import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.httpbean.BaseResponseBean;
 import com.lubandj.master.login.LoginActivity;
-import com.lubandj.master.my.MyAddressActivity;
-import com.lubandj.master.my.MySettingActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
@@ -121,13 +116,19 @@ public class CommonUtils {
     }
 
     public static void fastShowError(Context context, VolleyError volleyError) {
-        if (volleyError != null) {
-            if (volleyError.networkResponse != null) {
-                String format = String.format(context.getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
-                ToastUtils.showShort(context, format);
-                Logger.e(volleyError.getMessage());
+        try{
+            if (volleyError != null) {
+                if (volleyError.networkResponse != null) {
+                    String format = String.format(context.getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
+                    ToastUtils.showShort(context, format);
+                    Logger.e(volleyError.getMessage());
+                }
             }
+
+        }catch (Exception e){
+            Logger.e(e.toString());
         }
+
     }
 
     public static int getUid() {
