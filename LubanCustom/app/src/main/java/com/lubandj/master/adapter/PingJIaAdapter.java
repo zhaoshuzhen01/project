@@ -1,6 +1,8 @@
 package com.lubandj.master.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,7 @@ import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
+import com.lubandj.master.activity.PhotoViewActivity;
 import com.lubandj.master.been.MsgCenterBeen;
 
 import java.util.ArrayList;
@@ -59,6 +62,12 @@ public class PingJIaAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.List
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         ToastUtils.showShort(context,position+""+adapter.getIndex());
+        Intent intent = new Intent(context, PhotoViewActivity.class);
+       /* Bundle bundle = new Bundle();
+        bundle.putSerializable("dataBean", mData);
+        intent.putExtras(bundle);*/
+        intent.putExtra("currentPosition", position);
+        context.startActivity(intent);
     }
 }
 

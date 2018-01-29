@@ -68,7 +68,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
         homeTopView.initViewPager(getActivity());
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2); //spanCount为列数，默认方向vertical
         initRawRecyclerView(recyclerView, manager, homeListAdapter);
-//        recyclerView.addItemDecoration(new SpacesItemDecoration(50,50,0,0));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(0,0,20,0));
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(), this, new MsgCenterModel(getActivity()));
         main_car_lay = view.findViewById(R.id.main_car_lay);
         main_car_lay.setOnClickListener(this);

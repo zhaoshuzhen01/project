@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.baselibrary.BaseFragment;
 import com.lubandj.master.R;
+import com.lubandj.master.activity.BookOrderActivity;
 import com.lubandj.master.adapter.IntroduceAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.customview.CarView;
@@ -34,6 +35,8 @@ public class IntroduceFragment extends BaseFragment{
     TextView buttonText;
     @InjectView(R.id.main_car_lay)
     RelativeLayout main_car_lay;
+    @InjectView(R.id.tv_settlement)
+    TextView tv_settlement;
     private RelativeLayout carView ;
     private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
     private IntroduceAdapter introduceAdapter;
@@ -106,7 +109,7 @@ public class IntroduceFragment extends BaseFragment{
     }
 
 
-    @OnClick({R.id.button_text,R.id.main_car_lay})
+    @OnClick({R.id.button_text,R.id.main_car_lay,R.id.tv_settlement})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_text:
@@ -118,6 +121,9 @@ public class IntroduceFragment extends BaseFragment{
                 }else {
                     carView.setVisibility(View.VISIBLE);
                 }
+                break;
+            case R.id.tv_settlement:
+                BookOrderActivity.startActivity(getActivity());
                 break;
         }
     }

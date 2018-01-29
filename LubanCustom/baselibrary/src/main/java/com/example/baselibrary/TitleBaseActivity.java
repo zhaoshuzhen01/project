@@ -6,6 +6,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -30,12 +32,18 @@ public abstract class TitleBaseActivity extends BaseActivity {
     protected ImageView ivBaseTitleBack,tv_basetitle_ok;
     protected View leftView ;
     protected boolean leftClick = false ;
+    protected  Window window ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
         findView();
         setContentView(getLayout());
+        window = getWindow();
+        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         initView();
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -77,7 +85,9 @@ public abstract class TitleBaseActivity extends BaseActivity {
         ivBasetitleOK.setOnClickListener(this);
         initLeftMenu();
     }
-
+public void setTitleColor(int color){
+    llRoot.setBackgroundColor(color);
+}
     public void MenuShow() {
         ViewGroup.LayoutParams params = mNavigationView.getLayoutParams();
         params.width = getResources().getDisplayMetrics().widthPixels * 3 / 4;
