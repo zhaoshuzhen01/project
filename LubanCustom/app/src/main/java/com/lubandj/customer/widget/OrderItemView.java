@@ -32,6 +32,7 @@ public class OrderItemView extends FrameLayout {
     @InjectView(R.id.tv_item_price)
     TextView tvItemPrice;
 
+
     public OrderItemView(@NonNull Context context) {
         this(context, null);
     }
@@ -49,4 +50,7 @@ public class OrderItemView extends FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.view_order_item, this);
         ButterKnife.inject(this);
     }
+
+
+
 }

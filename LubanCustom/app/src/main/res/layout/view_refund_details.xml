@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/linear_layout_order_details">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_view_1_order_details"
+            android:text="@string/txt_order_refund_num" />
+
+        <TextView
+            android:id="@+id/tv_refund_num"
+            style="@style/text_view_2_order_details"
+            android:text="9159764919201134114" />
+
+        <TextView
+            android:id="@+id/tv_refund_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_order_refunded"
+            android:textColor="@color/color_e94b4e"
+            android:textSize="@dimen/sp_13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/h_8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_view_1_order_details"
+            android:text="@string/txt_order_refund_cancel_service" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_cancel_service"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/h_9dp"
+            android:orientation="vertical"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/h_8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_view_1_order_details"
+            android:text="@string/txt_order_refund_penal_sum" />
+
+        <TextView
+            android:id="@+id/tv_refund_penal_sum"
+            style="@style/text_view_2_order_details"
+            android:text="¥0.00" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/h_8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_view_1_order_details"
+            android:text="@string/txt_order_refund_sum" />
+
+        <TextView
+            android:id="@+id/tv_refund_sum"
+            style="@style/text_view_2_order_details"
+            android:text="¥200.00" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/h_8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_view_1_order_details"
+            android:text="@string/txt_order_refund_start_time" />
+
+        <TextView
+            android:id="@+id/tv_refund_start_time"
+            style="@style/text_view_2_order_details"
+            android:text="2017-10-04 10:16:31" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/h_8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_view_1_order_details"
+            android:text="@string/txt_order_refund_complete_time" />
+
+        <TextView
+            android:id="@+id/tv_refund_complete_time"
+            style="@style/text_view_2_order_details"
+            android:text="2017-10-06 16:36:58" />
+
+    </LinearLayout>
+
+</LinearLayout>

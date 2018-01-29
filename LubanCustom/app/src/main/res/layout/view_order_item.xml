@@ -55,4 +55,5 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="12.5dp"
         android:text="¥ 150"/>
+
 </RelativeLayout>

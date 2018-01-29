@@ -68,18 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/h_5dp"
-            android:orientation="vertical">
-
-            <com.lubandj.customer.widget.OrderItemView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.lubandj.customer.widget.OrderItemView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_0.5" />
-
-        </LinearLayout>
+            android:orientation="vertical"/>
 
         <!--3.订单价格-->
         <LinearLayout
@@ -196,125 +185,10 @@
             android:textSize="@dimen/sp_15" />
 
         <LinearLayout
-            style="@style/linear_layout_order_details"
-            android:layout_marginTop="@dimen/dp_0.5">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/text_view_1_order_details"
-                    android:text="@string/txt_order_refund_num" />
-
-                <TextView
-                    android:id="@+id/tv_refund_num"
-                    style="@style/text_view_2_order_details"
-                    android:text="9159764919201134114" />
-
-                <TextView
-                    android:id="@+id/tv_refund_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/txt_order_refunded"
-                    android:textColor="@color/color_e94b4e"
-                    android:textSize="@dimen/sp_13" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/h_8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/text_view_1_order_details"
-                    android:text="@string/txt_order_refund_cancel_service" />
-
-                <TextView
-                    android:id="@+id/tv_refund_cancel_service"
-                    style="@style/text_view_2_order_details"
-                    android:text="无" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/h_8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/text_view_1_order_details"
-                    android:text="@string/txt_order_refund_penal_sum" />
-
-                <TextView
-                    android:id="@+id/tv_refund_penal_sum"
-                    style="@style/text_view_2_order_details"
-                    android:text="¥0.00" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/h_8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/text_view_1_order_details"
-                    android:text="@string/txt_order_refund_sum" />
-
-                <TextView
-                    android:id="@+id/tv_refund_sum"
-                    style="@style/text_view_2_order_details"
-                    android:text="¥200.00" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/h_8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/text_view_1_order_details"
-                    android:text="@string/txt_order_refund_start_time" />
-
-                <TextView
-                    android:id="@+id/tv_refund_start_time"
-                    style="@style/text_view_2_order_details"
-                    android:text="2017-10-04 10:16:31" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/h_8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/text_view_1_order_details"
-                    android:text="@string/txt_order_refund_complete_time" />
-
-                <TextView
-                    android:id="@+id/tv_refund_complete_time"
-                    style="@style/text_view_2_order_details"
-                    android:text="2017-10-06 16:36:58" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+            android:id="@+id/ll_refund_details"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"/>
 
 
         <!--客户信息-->
@@ -403,7 +277,6 @@
             </LinearLayout>
         </LinearLayout>
 
-
         <!--订单编号-->
         <LinearLayout
             style="@style/linear_layout_order_details"
@@ -482,8 +355,7 @@
 
         </LinearLayout>
 
-
-
+        <!--button-->
         <FrameLayout
             android:id="@+id/ll_btn"
             android:layout_width="match_parent"
