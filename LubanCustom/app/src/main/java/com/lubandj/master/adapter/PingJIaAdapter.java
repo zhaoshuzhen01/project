@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
+import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
 import com.lubandj.master.been.MsgCenterBeen;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2018/1/27.
  */
 
-public class PingJIaAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.ListBean, BaseViewHolder> {
+public class PingJIaAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.ListBean, BaseViewHolder> implements BaseQuickAdapter.OnItemClickListener{
     private Context context;
     private RecyclerView recyclerView ;
     private PingJiaPicAdapter pingJiaPicAdapter ;
@@ -39,6 +40,8 @@ public class PingJIaAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.List
         int position = helper.getAdapterPosition();
         recyclerView =  ((RecyclerView) (helper.getView(R.id.recyclerView)));
         pingJiaPicAdapter = new PingJiaPicAdapter(msgBeens,context);
+        pingJiaPicAdapter.setIndex(position);
+        pingJiaPicAdapter.setOnItemClickListener(this);
         LinearLayoutManager layoutManager =   new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -51,6 +54,11 @@ public class PingJIaAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.List
     @Override
     public void childViewClick(int position, View view) {
 
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        ToastUtils.showShort(context,position+""+adapter.getIndex());
     }
 }
 

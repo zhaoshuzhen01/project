@@ -134,6 +134,10 @@ public class CommonUtils {
     public static int getUid() {
         return SPUtils.getInstance().getInt(Canstance.UID);
     }
+    //大于零是登陆状态
+    public static boolean isLogin(){
+       return getUid()>0;
+    }
 
     public static void setUid(int uid) {
         SPUtils.getInstance().put(Canstance.UID, uid);

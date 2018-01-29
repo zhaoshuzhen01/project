@@ -244,7 +244,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
 
     private long exitTime = 0;
 
-    @Override
+  /*  @Override
     public void onBackPressed() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             Toast.makeText(getApplicationContext(), "再按一次退出",
@@ -254,7 +254,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
             finish();
             ActUtils.getInstance().exitApp(LoginActivity.this);
         }
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
