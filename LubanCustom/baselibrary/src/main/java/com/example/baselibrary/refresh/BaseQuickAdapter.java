@@ -74,6 +74,16 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
     private LoadMoreView mLoadMoreView = new SimpleLoadMoreView();
     private RequestLoadMoreListener mRequestLoadMoreListener;
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    private int index ;
+
     //Animation
     /**
      * Use with {@link #openLoadAnimation}

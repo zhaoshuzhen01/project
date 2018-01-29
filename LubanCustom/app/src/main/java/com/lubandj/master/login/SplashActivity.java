@@ -44,9 +44,7 @@ public class SplashActivity extends PermissionActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         StatusBarUtils.setWindowStatusBarColor(SplashActivity.this, R.color.splash_status_bar);
-//        onLogin();
-        Intent intent = new Intent(SplashActivity.this, MainCantainActivity.class);
-        startActivity(intent);
+        onLogin();
     }
 
     public void onLogin() {
@@ -58,10 +56,12 @@ public class SplashActivity extends PermissionActivity {
             }
         }
 
-        if (TextUtils.isEmpty(CommonUtils.getToken()))//无登录信息
+       /* if (TextUtils.isEmpty(CommonUtils.getToken()))//无登录信息
             mHandler.sendMessageDelayed(mHandler.obtainMessage(0), 500);
         else
-            mHandler.sendMessageDelayed(mHandler.obtainMessage(1), 1000);
+            mHandler.sendMessageDelayed(mHandler.obtainMessage(1), 1000);*/
+        Intent intent = new Intent(SplashActivity.this, MainCantainActivity.class);
+        startActivity(intent);
     }
 
 

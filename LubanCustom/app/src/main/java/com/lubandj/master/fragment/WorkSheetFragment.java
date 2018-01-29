@@ -13,14 +13,18 @@ import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.example.baselibrary.tools.ToastUtils;
+import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.master.Presenter.SheetListPresenter;
 import com.lubandj.master.R;
+import com.lubandj.master.activity.MainCantainActivity;
 import com.lubandj.master.adapter.WorkSheetAdapter;
 import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.customview.BackLayout;
 import com.lubandj.master.Iview.IworkListView;
+import com.lubandj.master.login.SplashActivity;
 import com.lubandj.master.model.workList.WorkListClickModel;
 import com.example.baselibrary.util.NetworkUtils;
+import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone;
 
 import java.util.ArrayList;
@@ -63,7 +67,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         backLayout = new BackLayout(getActivity());
         backLayout.setOnclick(this);
         backLayout.setNodataText("您还没有登录,请登录后查看订单");
-        backLayout.setImg(R.drawable.nodingdan);
+        backLayout.setImg(R.drawable.nologin);
         backLayout.setButtonText("登录/注册");
         workFragmentContaner.addView(backLayout);
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6) view.findViewById(R.id.prpt);
@@ -96,7 +100,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     }
 
     private void getWebDatas() {
-        if (NetworkUtils.isNetworkAvailable(getActivity())) {
+        if (NetworkUtils.isNetworkAvailable(getActivity())&& CommonUtils.isLogin()) {
             initData();
         } else {
             if (worklists != null && worklists.size() > 0) {
@@ -147,7 +151,13 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void onClick(View view) {
-        getWebDatas();
+        if (CommonUtils.isLogin()){
+            getWebDatas();
+        }else {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+
+        }
     }
 
     @Override
@@ -164,6 +174,9 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
             ToastUtils.showShort(getActivity(),"暂无数据");
         }
         if (worklists.size()==0){
+            backLayout.setNodataText("您还没有相关订单");
+            backLayout.setImg(R.drawable.nodingdan);
+            backLayout.setButtonText("立即预约");
             backLayout.setVisibility(View.VISIBLE);
         }
     }
