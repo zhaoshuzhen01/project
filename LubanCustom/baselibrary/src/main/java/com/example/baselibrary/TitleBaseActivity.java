@@ -54,8 +54,8 @@ public abstract class TitleBaseActivity extends BaseActivity {
     }
 
     private void findView() {
-        mNavigationView = (NavigationView) findViewById(R.id.id_nv_menu);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.id_nv_menu1);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout1);
         mNavigationView.setItemIconTintList(null);
         llRoot = findView(R.id.ll_basetitle_root);
         ivBaseTitleBack = findView(R.id.iv_basetitle_back);

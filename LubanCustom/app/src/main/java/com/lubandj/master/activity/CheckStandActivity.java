@@ -3,6 +3,7 @@ package com.lubandj.master.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,11 +16,14 @@ import android.widget.RelativeLayout;
 import com.example.baselibrary.TitleBaseActivity;
 import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.master.R;
+import com.lubandj.master.pay.Pay;
+import com.lubandj.master.pay.PayHelper;
+import com.lubandj.master.pay.PayResultCallbackImpl;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class CheckStandActivity extends TitleBaseActivity implements CompoundButton.OnCheckedChangeListener{
+public class CheckStandActivity extends TitleBaseActivity implements CompoundButton.OnCheckedChangeListener {
     @InjectView(R.id.top_img)
     ImageView topImg;
     @InjectView(R.id.top_lay)
@@ -29,7 +33,11 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
     @InjectView(R.id.zfbcheckout)
     CheckBox zfbcheckout;
     private LinearLayout sure_pay;
-
+    public Pay pay;
+    /**
+     * 充值结果,0为未充值状态;1为成功;2为失败
+     */
+    public static int mRechargeResult = 0;
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CheckStandActivity.class);
         context.startActivity(intent);
@@ -53,7 +61,18 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
         weixinchekcout.setOnCheckedChangeListener(this);
         zfbcheckout.setOnCheckedChangeListener(this);
         window.setStatusBarColor(getResources().getColor(R.color.weixin));
+        pay = new Pay(this, new PayResultCallbackImpl() {
+            @Override
+            public void onPaySuccess(String result, String payType) {
 
+            }
+
+            @Override
+            public void onPayFail(String result, String payType) {
+                //ToastUtils.showShort(result);
+                //支付失败弹窗
+            }
+        });
     }
 
     @Override
@@ -77,8 +96,11 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
         switch (view.getId()) {
             case R.id.sure_pay:
                 toast(this, "确认支付");
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
+                if (weixinchekcout.isChecked()) {
+                    pay.pay(PayHelper.WXPAY, "10");
+                } else {
+                    pay.pay(PayHelper.ALIPAY, "10");
+                }
                 break;
         }
     }
@@ -92,7 +114,7 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-        switch (compoundButton.getId()){
+        switch (compoundButton.getId()) {
             case R.id.zfbcheckout:
                 if (check)
                     weixinchekcout.setChecked(false);
