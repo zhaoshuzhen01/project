@@ -2,6 +2,7 @@ package com.lubandj.master.fragment;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,8 @@ import com.example.baselibrary.BaseRefreshFragment;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
+import com.example.baselibrary.util.NetworkUtils;
+import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.master.Iview.IbaseView;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
@@ -24,6 +27,7 @@ import com.lubandj.master.adapter.MsgCenterAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.customview.HomeTopView;
 import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
+import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,28 +101,41 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
 
     @Override
     protected void initData() {
-        isFirst = false;
         msgCenterPresenter.getReflushData(0);
 
     }
 
     @Override
     public void onRefresh() {
-        msgCenterPresenter.getReflushData(0);
+        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+            pullToRefreshAndPushToLoadView.finishRefreshing();
+        }else {
+            msgCenterPresenter.getReflushData(0);
+        }
     }
 
     @Override
     public void onLoadMore() {
-        msgCenterPresenter.getMoreData(0);
+        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+            pullToRefreshAndPushToLoadView.finishLoading();
+        }else {
+            msgCenterPresenter.getMoreData(0);
+        }
     }
 
     @Override
     public void getDataLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
+        if (msgBeens.size()==0&&datas==null){
+            return;
+        }
         msgBeens.clear();
         msgBeens.addAll(datas);
         homeListAdapter.notifyDataSetChanged();
+        if (msgBeens.size()>0){
+            isFirst = false;
+        }
     }
 
     @Override
@@ -128,7 +145,13 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
 
     @Override
     public void onClick(View view) {
-        CarActivity.startActivity(getActivity());
+        if (CommonUtils.isLogin()){
+            CarActivity.startActivity(getActivity());
+        }else {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+
+        }
     }
 
     private void carAnimal() {
