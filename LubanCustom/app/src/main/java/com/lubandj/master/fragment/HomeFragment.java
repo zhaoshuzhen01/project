@@ -100,6 +100,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
 
     @Override
     protected void initData() {
+        pullToRefreshAndPushToLoadView.finishRefreshing();
         msgCenterPresenter.getReflushData(0);
 
     }
