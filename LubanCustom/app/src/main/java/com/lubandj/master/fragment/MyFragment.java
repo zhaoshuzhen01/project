@@ -2,6 +2,7 @@ package com.lubandj.master.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
 import com.example.baselibrary.BaseFragment;
 import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.customer.login.LoginActivity;
+import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
+import com.lubandj.master.TApplication;
+import com.lubandj.master.activity.MainCantainActivity;
+import com.lubandj.master.httpbean.UserInfoRequest;
+import com.lubandj.master.httpbean.UserInfoResponse;
+import com.lubandj.master.login.SplashActivity;
 import com.lubandj.master.utils.CommonUtils;
+import com.lubandj.master.utils.TaskEngine;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -67,7 +78,7 @@ public class MyFragment extends BaseFragment {
     @Override
     protected void initData() {
         isFirst = false ;
-
+        onTokenLogin();
     }
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -124,5 +135,32 @@ public class MyFragment extends BaseFragment {
             case R.id.my_guanyu:
                 break;
         }
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public void onTokenLogin() {
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_GETINFO, new UserInfoRequest(CommonUtils.getUid()), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String s) {
+                UserInfoResponse response = new UserInfoResponse();
+                response = (UserInfoResponse) CommonUtils.generateEntityByGson(getActivity(), s, response);
+                if (response != null) {
+                    TApplication.context.mUserInfo = response.info;
+                    TApplication.context.setGetuiTag(response.info.uid);
+                  headtext.setText(response.info.mobile);
+                  if (!TextUtils.isEmpty(response.info.face_url)){
+                      Glide.with(getActivity()).load(response.info.face_url).skipMemoryCache(false).into(headicon);
+
+                  }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+        });
     }
 }
