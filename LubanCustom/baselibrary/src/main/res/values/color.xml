@@ -56,7 +56,7 @@
     <color name="def_tab_text_selector_color">#31C27C</color>
     <color name="appColor">#1CD39B</color>
     <!-- home -->
-
+    <color name="redm">#FE5862</color>
     <color name="avatarBoderColor">#FFFFFF</color>
     <color name="text_user_name_color">#525252</color>
     <color name="text_title_color">#454C57</color>

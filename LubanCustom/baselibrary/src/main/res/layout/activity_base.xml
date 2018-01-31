@@ -8,10 +8,9 @@
     <RelativeLayout
         android:id="@+id/ll_basetitle_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:background="#ffffff"
-        android:clipToPadding="true"
-        android:fitsSystemWindows="true">
+       >
 
         <LinearLayout
             android:id="@+id/ll_basetitle"

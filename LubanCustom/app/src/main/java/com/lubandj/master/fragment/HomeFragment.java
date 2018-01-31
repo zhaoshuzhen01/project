@@ -47,6 +47,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
     private HomeTopView homeTopView;
     protected RelativeLayout main_car_lay;
     private boolean mY = false;
+    private int mdex = 0 ;
 
     public static HomeFragment newInstance(int index) {
         HomeFragment myFragment = new HomeFragment();
@@ -86,15 +87,13 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 Log.e("deal", dy + "     dy");
-                if (!mY){
-                    synchronized (this){
-                       if (!mY){
-                           mY = true;
+                       if ((mdex*dy)<0||mdex==0){
+                           mdex = dy;
+                           if (dy>0)
                            carAnimal();
+                           else
+                               upAnimal();
                        }
-                    }
-
-                }
             }
         });
     }
@@ -155,33 +154,14 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
     }
 
     private void carAnimal() {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(main_car_lay, "translationX", 0f,150f);
-        animator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                    mY = false;
-                ObjectAnimator animator1 = ObjectAnimator.ofFloat(main_car_lay, "translationX", 150f,0f);
-                animator1.setDuration(500);
-
-                animator1.start();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        });
+        ObjectAnimator animator = ObjectAnimator.ofFloat(main_car_lay, "translationX", 0f,120f);
         animator.setDuration(500);
         animator.start();
+    }
+    private void upAnimal(){
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(main_car_lay, "translationX", 120f,0f);
+        animator1.setDuration(500);
+
+        animator1.start();
     }
 }

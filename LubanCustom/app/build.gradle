@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "com.moli.jasmine"
+        applicationId "com.lubandj.customer"
         //com.lubandj.customer
         minSdkVersion 21
         targetSdkVersion 22
@@ -33,7 +33,7 @@ MasterSecret： be2mClT9kU5PWNhyqz39YA重置
         config {
             keyAlias 'luban.com'
             keyPassword 'luban.com'
-//            storeFile file('D:/copy/project/luban.jks')
+            storeFile file('D:/work/project/luban.jks')
             storePassword 'luban.com'
             v2SigningEnabled false
         }
@@ -54,7 +54,7 @@ MasterSecret： be2mClT9kU5PWNhyqz39YA重置
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'boolean', 'isDebug', 'true'
-//            signingConfig signingConfigs.config
+            signingConfig signingConfigs.config
             manifestPlaceholders = [channelID: "testluban"]
         }
     }

@@ -21,18 +21,19 @@ import com.example.baselibrary.util.ActUtils;
 
 public abstract class TitleBaseActivity extends BaseActivity {
     private RelativeLayout llRoot;
-    private LinearLayout llBasetitleBack;
-    protected RelativeLayout titleRightLay ;
+    private LinearLayout llBasetitleBack, ll_basetitle;
+    protected RelativeLayout titleRightLay;
     private TextView tvBasetitleTitle;
     protected TextView tv_basetitle_right;
     private ImageView ivBasetitleOK;
-    protected TextView tv_basetitle_back,msgCount;
+    protected TextView tv_basetitle_back, msgCount;
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mNavigationView;
-    protected ImageView ivBaseTitleBack,tv_basetitle_ok;
-    protected View leftView ;
-    protected boolean leftClick = false ;
-    protected  Window window ;
+    protected ImageView ivBaseTitleBack, tv_basetitle_ok;
+    protected View leftView;
+    protected boolean leftClick = false;
+    protected Window window;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +64,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
         tvBasetitleTitle = findView(R.id.tv_basetitle_title);
         ivBasetitleOK = findView(R.id.tv_basetitle_ok);
         titleRightLay = findView(R.id.ll_basetitle_back1);
+        ll_basetitle = findView(R.id.ll_basetitle);
         tv_basetitle_right = findView(R.id.tv_basetitle_right);
         tv_basetitle_right.setOnClickListener(this);
         tv_basetitle_ok = findView(R.id.tv_basetitle_ok);
@@ -85,9 +87,11 @@ public abstract class TitleBaseActivity extends BaseActivity {
         ivBasetitleOK.setOnClickListener(this);
         initLeftMenu();
     }
-public void setTitleColor(int color){
-    llRoot.setBackgroundColor(color);
-}
+
+    public void setTitleColor(int color) {
+        ll_basetitle.setBackgroundColor(color);
+    }
+
     public void MenuShow() {
         ViewGroup.LayoutParams params = mNavigationView.getLayoutParams();
         params.width = getResources().getDisplayMetrics().widthPixels * 3 / 4;
@@ -120,7 +124,7 @@ public void setTitleColor(int color){
             tvBasetitleTitle.setText(c);
     }
 
-    public void setRightText(String text){
+    public void setRightText(String text) {
         tv_basetitle_right.setVisibility(View.VISIBLE);
         tv_basetitle_right.setText(text);
     }
@@ -173,11 +177,10 @@ public void setTitleColor(int color){
      */
     public void setOkVisibity(boolean visible) {
         if (ivBasetitleOK != null) {
-            if (visible){
+            if (visible) {
                 tv_basetitle_ok.setVisibility(View.VISIBLE);
                 msgCount.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 tv_basetitle_ok.setVisibility(View.INVISIBLE);
                 msgCount.setVisibility(View.INVISIBLE);
             }
@@ -217,7 +220,8 @@ public void setTitleColor(int color){
     /**
      * 点击左边菜单
      */
-    protected abstract   void clickMenu();
+    protected abstract void clickMenu();
+
     private void initLeftMenu() {
 //        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
