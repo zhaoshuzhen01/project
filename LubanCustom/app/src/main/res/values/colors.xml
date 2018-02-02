@@ -9,6 +9,8 @@
     <drawable name="blank">#00ffffff</drawable>
     <drawable name="color141517">#141517</drawable>
     <color name="white">#ffffffff</color>
+    <color name="weixin">#4CB358</color>
+    <color name="zfb">#269FD6</color>
     <color name="background">#17181a</color>
     <color name="color_050505">#050505</color>
     <color name="color_080808">#080808</color>

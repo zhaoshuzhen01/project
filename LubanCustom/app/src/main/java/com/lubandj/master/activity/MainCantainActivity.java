@@ -27,6 +27,7 @@ import com.example.baselibrary.widget.NotitleBaseActivity;
 import com.example.baselibrary.widget.ViewPagerSlide;
 import com.lubandj.master.R;
 import com.lubandj.master.fragment.HomeFragment;
+import com.lubandj.master.fragment.MyFragment;
 import com.lubandj.master.fragment.OrderFragment;
 import com.lubandj.master.fragment.WorkSheetFragment;
 import com.lubandj.master.utils.CommonUtils;
@@ -76,7 +77,7 @@ public class MainCantainActivity extends BaseMainActivity {
         mList = new ArrayList<>();
         mList.add(HomeFragment.newInstance(0));
         mList.add(OrderFragment.newInstance(1));
-        mList.add(HomeFragment.newInstance(2));
+        mList.add(MyFragment.newInstance(2));
         viewPager = (ViewPagerSlide) findViewById(R.id.viewPager);
         viewPager.setSlide(false);
         viewPager.setOffscreenPageLimit(3);

@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -196,18 +197,50 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.lubandj.customer.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
         <!-- 百地图度配置 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="DAVEsAlVNQR0HvCGP5fQ4QZnM4jkeeft" />
 
-        <activity android:name=".activity.CarActivity" />
-        <activity android:name=".activity.ChooseCityActivity" />
-        <activity android:name=".activity.ServiceDetailActivity" />
-        <activity android:name="com.lubandj.customer.login.BindPhoneNumActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.lubandj.customer.order.OrderDetailsActivity"
+        <activity
+            android:name=".activity.CarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ChooseCityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ServiceDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.lubandj.customer.login.BindPhoneNumActivity" />
+        <activity android:name="com.lubandj.customer.order.OrderDetailsActivity" />
+        <activity
+            android:name=".activity.PhotoViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BookOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.CheckStandActivity"
             android:screenOrientation="portrait"></activity>
+        <!--支付宝支付-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!--支付宝支付-->
     </application>
 
 </manifest>

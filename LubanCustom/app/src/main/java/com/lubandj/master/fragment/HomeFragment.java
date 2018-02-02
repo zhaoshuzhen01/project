@@ -2,6 +2,7 @@ package com.lubandj.master.fragment;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,8 @@ import com.example.baselibrary.BaseRefreshFragment;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
+import com.example.baselibrary.util.NetworkUtils;
+import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.master.Iview.IbaseView;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
@@ -24,6 +27,7 @@ import com.lubandj.master.adapter.MsgCenterAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.customview.HomeTopView;
 import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
+import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +47,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
     private HomeTopView homeTopView;
     protected RelativeLayout main_car_lay;
     private boolean mY = false;
+    private int mdex = 0 ;
 
     public static HomeFragment newInstance(int index) {
         HomeFragment myFragment = new HomeFragment();
@@ -68,7 +73,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
         homeTopView.initViewPager(getActivity());
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2); //spanCount为列数，默认方向vertical
         initRawRecyclerView(recyclerView, manager, homeListAdapter);
-//        recyclerView.addItemDecoration(new SpacesItemDecoration(50,50,0,0));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(0,0,20,0));
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(), this, new MsgCenterModel(getActivity()));
         main_car_lay = view.findViewById(R.id.main_car_lay);
         main_car_lay.setOnClickListener(this);
@@ -82,43 +87,55 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 Log.e("deal", dy + "     dy");
-                if (!mY){
-                    synchronized (this){
-                       if (!mY){
-                           mY = true;
+                       if ((mdex*dy)<0||mdex==0){
+                           mdex = dy;
+                           if (dy>0)
                            carAnimal();
+                           else
+                               upAnimal();
                        }
-                    }
-
-                }
             }
         });
     }
 
     @Override
     protected void initData() {
-        isFirst = false;
+        pullToRefreshAndPushToLoadView.finishRefreshing();
         msgCenterPresenter.getReflushData(0);
 
     }
 
     @Override
     public void onRefresh() {
-        msgCenterPresenter.getReflushData(0);
+        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+            pullToRefreshAndPushToLoadView.finishRefreshing();
+        }else {
+            msgCenterPresenter.getReflushData(0);
+        }
     }
 
     @Override
     public void onLoadMore() {
-        msgCenterPresenter.getMoreData(0);
+        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+            pullToRefreshAndPushToLoadView.finishLoading();
+        }else {
+            msgCenterPresenter.getMoreData(0);
+        }
     }
 
     @Override
     public void getDataLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
+        if (msgBeens.size()==0&&datas==null){
+            return;
+        }
         msgBeens.clear();
         msgBeens.addAll(datas);
         homeListAdapter.notifyDataSetChanged();
+        if (msgBeens.size()>0){
+            isFirst = false;
+        }
     }
 
     @Override
@@ -128,37 +145,24 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
 
     @Override
     public void onClick(View view) {
-        CarActivity.startActivity(getActivity());
+        if (CommonUtils.isLogin()){
+            CarActivity.startActivity(getActivity());
+        }else {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+
+        }
     }
 
     private void carAnimal() {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(main_car_lay, "translationX", 0f,150f);
-        animator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                    mY = false;
-                ObjectAnimator animator1 = ObjectAnimator.ofFloat(main_car_lay, "translationX", 150f,0f);
-                animator1.setDuration(500);
-
-                animator1.start();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        });
+        ObjectAnimator animator = ObjectAnimator.ofFloat(main_car_lay, "translationX", 0f,120f);
         animator.setDuration(500);
         animator.start();
+    }
+    private void upAnimal(){
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(main_car_lay, "translationX", 120f,0f);
+        animator1.setDuration(500);
+
+        animator1.start();
     }
 }

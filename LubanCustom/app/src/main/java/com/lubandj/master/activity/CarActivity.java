@@ -174,6 +174,7 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
                 break;
             case R.id.tv_settlement: //结算
                 lementOnder();
+            BookOrderActivity.startActivity(this);
                 break;
             case R.id.tv_clear:
                 DialogTagin.getDialogTagin(this).showDialog("删除服务").setDialogSure(this);

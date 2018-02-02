@@ -52,7 +52,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IbaseView<
 
     @Override
     public void initData() {
-
+        pullToRefreshAndPushToLoadView.finishRefreshing();
         msgCenterAdapter = new MsgCenterAdapter(msgBeens,this);
         initRecyclerView(recyclerView, new LinearLayoutManager(this), msgCenterAdapter);
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this,this,new MsgCenterModel(this));

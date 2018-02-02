@@ -42,6 +42,8 @@ public abstract class BaseMainActivity extends TitleBaseActivity implements  Vie
     public void onPageSelected(int position) {
         //ViewPager滑动
         bottomNavigationBar.setSelectTab(position);
+        window.setStatusBarColor(getResources().getColor(R.color.white));
+        setTitleColor(getResources().getColor(R.color.white));
         switch (position){
             case 0:
                 setTitleText("首页");
@@ -53,7 +55,9 @@ public abstract class BaseMainActivity extends TitleBaseActivity implements  Vie
 
                 break;
             case 2:
-                setTitleText("我的");
+                setTitleText("");
+                setTitleColor(getResources().getColor(R.color.redm));
+                window.setStatusBarColor(getResources().getColor(R.color.redm));
                 tv_basetitle_back.setVisibility(View.GONE);
 
                 break;

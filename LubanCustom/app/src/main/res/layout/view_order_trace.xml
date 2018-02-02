@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="47.5dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="@string/txt_order_trace"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/sp_15" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/color_e1e1e1" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_order_trace_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/h_30dp"
+        android:paddingTop="@dimen/h_28dp" />
+
+
+    <TextView
+        android:id="@+id/tv_close_order_trace"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_49dp"
+        android:background="@color/color_e94b4e"
+        android:gravity="center"
+        android:text="@string/txt_close"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16" />
+</LinearLayout>

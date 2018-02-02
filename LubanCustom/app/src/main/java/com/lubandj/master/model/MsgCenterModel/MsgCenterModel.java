@@ -44,6 +44,8 @@ public class MsgCenterModel extends BaseModel {
                         }
                     }else if (msgCenterBeen.getCode()==104){
                         CommonUtils.tokenNullDeal(context);
+                    }else if (msgCenterBeen.getCode()==103){
+                        ibaseModel.getDataLists(null);
                     }
                 }
 

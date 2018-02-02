@@ -107,6 +107,10 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 //                backLayout.setVisibility(View.GONE);
             } else {
                 backLayout.setVisibility(View.VISIBLE);
+                if (!NetworkUtils.isNetworkAvailable(getActivity())){
+                    pullToRefreshAndPushToLoadView.finishRefreshing();
+                    pullToRefreshAndPushToLoadView.finishLoading();
+                }
             }
         }
     }
@@ -118,12 +122,20 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     }
     @Override
     public void onRefresh() {
-        sheetListPresenter.getReflushData(index);
+        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+            pullToRefreshAndPushToLoadView.finishRefreshing();
+        }else {
+            sheetListPresenter.getReflushData(index);
+        }
     }
 
     @Override
     public void onLoadMore() {
-        sheetListPresenter.getMoreData(index);
+        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+            pullToRefreshAndPushToLoadView.finishLoading();
+        }else {
+            sheetListPresenter.getMoreData(index);
+        }
     }
 
     @Override

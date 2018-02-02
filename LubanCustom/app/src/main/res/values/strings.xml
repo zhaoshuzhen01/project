@@ -90,5 +90,7 @@
     <string name="txt_order_place_time">下单时间:</string>
     <string name="txt_order_pay_type">支付方式:</string>
     <string name="txt_order_refunded">已退款</string>
+    <string name="txt_order_trace">订单跟踪</string>
+    <string name="txt_close">关闭</string>
 
 </resources>

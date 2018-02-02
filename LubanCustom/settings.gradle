@@ -1,1 +1,1 @@
-include ':app', ':baselibrary', ':tuisong', ':loginpaylibrary'
+include ':app', ':baselibrary', ':tuisong', ':loginpaylibrary', ':PhotoViewlibrary'

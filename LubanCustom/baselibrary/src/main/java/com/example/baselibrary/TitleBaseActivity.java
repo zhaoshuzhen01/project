@@ -6,6 +6,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,23 +21,30 @@ import com.example.baselibrary.util.ActUtils;
 
 public abstract class TitleBaseActivity extends BaseActivity {
     private RelativeLayout llRoot;
-    private LinearLayout llBasetitleBack;
-    protected RelativeLayout titleRightLay ;
+    private LinearLayout llBasetitleBack, ll_basetitle;
+    protected RelativeLayout titleRightLay;
     private TextView tvBasetitleTitle;
     protected TextView tv_basetitle_right;
     private ImageView ivBasetitleOK;
-    protected TextView tv_basetitle_back,msgCount;
+    protected TextView tv_basetitle_back, msgCount;
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mNavigationView;
-    protected ImageView ivBaseTitleBack,tv_basetitle_ok;
-    protected View leftView ;
-    protected boolean leftClick = false ;
+    protected ImageView ivBaseTitleBack, tv_basetitle_ok;
+    protected View leftView;
+    protected boolean leftClick = false;
+    protected Window window;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
         findView();
         setContentView(getLayout());
+        window = getWindow();
+        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         initView();
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -46,8 +55,8 @@ public abstract class TitleBaseActivity extends BaseActivity {
     }
 
     private void findView() {
-        mNavigationView = (NavigationView) findViewById(R.id.id_nv_menu);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.id_nv_menu1);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout1);
         mNavigationView.setItemIconTintList(null);
         llRoot = findView(R.id.ll_basetitle_root);
         ivBaseTitleBack = findView(R.id.iv_basetitle_back);
@@ -55,6 +64,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
         tvBasetitleTitle = findView(R.id.tv_basetitle_title);
         ivBasetitleOK = findView(R.id.tv_basetitle_ok);
         titleRightLay = findView(R.id.ll_basetitle_back1);
+        ll_basetitle = findView(R.id.ll_basetitle);
         tv_basetitle_right = findView(R.id.tv_basetitle_right);
         tv_basetitle_right.setOnClickListener(this);
         tv_basetitle_ok = findView(R.id.tv_basetitle_ok);
@@ -76,6 +86,10 @@ public abstract class TitleBaseActivity extends BaseActivity {
         });
         ivBasetitleOK.setOnClickListener(this);
         initLeftMenu();
+    }
+
+    public void setTitleColor(int color) {
+        ll_basetitle.setBackgroundColor(color);
     }
 
     public void MenuShow() {
@@ -110,7 +124,7 @@ public abstract class TitleBaseActivity extends BaseActivity {
             tvBasetitleTitle.setText(c);
     }
 
-    public void setRightText(String text){
+    public void setRightText(String text) {
         tv_basetitle_right.setVisibility(View.VISIBLE);
         tv_basetitle_right.setText(text);
     }
@@ -163,11 +177,10 @@ public abstract class TitleBaseActivity extends BaseActivity {
      */
     public void setOkVisibity(boolean visible) {
         if (ivBasetitleOK != null) {
-            if (visible){
+            if (visible) {
                 tv_basetitle_ok.setVisibility(View.VISIBLE);
                 msgCount.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 tv_basetitle_ok.setVisibility(View.INVISIBLE);
                 msgCount.setVisibility(View.INVISIBLE);
             }
@@ -207,7 +220,8 @@ public abstract class TitleBaseActivity extends BaseActivity {
     /**
      * 点击左边菜单
      */
-    protected abstract   void clickMenu();
+    protected abstract void clickMenu();
+
     private void initLeftMenu() {
 //        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
