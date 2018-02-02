@@ -2,22 +2,23 @@ package com.lubandj.customer.order;
 
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
-import android.view.View;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.PopupWindow;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.example.baselibrary.tools.ToastUtils;
+
 import com.lubandj.customer.base.PhonePermissionActivity;
-import com.lubandj.customer.widget.OrderTraceView;
 import com.lubandj.customer.widget.OrderItemView;
-import com.lubandj.customer.widget.RefundDetailsView;import com.lubandj.master.R;
+import com.lubandj.customer.widget.OrderTraceView;
+import com.lubandj.customer.widget.RefundDetailsView;
+import com.lubandj.master.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -134,7 +135,7 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_state:
-                ToastUtils.showShort(this, "订单追踪");
+                showOrderTracePop();
                 break;
             case R.id.iv_phone_icon:
                 callToClient("10086",String.format(getString(R.string.txt_make_sure_phone), "10086"));

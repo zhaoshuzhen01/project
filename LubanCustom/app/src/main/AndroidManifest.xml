@@ -215,8 +215,10 @@
         <activity
             android:name=".activity.ServiceDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.lubandj.customer.login.BindPhoneNumActivity" />
-        <activity android:name="com.lubandj.customer.order.OrderDetailsActivity" />
+        <activity android:name="com.lubandj.customer.login.BindPhoneNumActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.lubandj.customer.order.OrderDetailsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.PhotoViewActivity"
             android:screenOrientation="portrait" />
