@@ -1,6 +1,7 @@
 package com.lubandj.customer.order;
 
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +15,13 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.widget.AlertDialog;
 import com.lubandj.customer.base.PhonePermissionActivity;
 import com.lubandj.customer.widget.OrderItemView;
 import com.lubandj.customer.widget.OrderTraceView;
 import com.lubandj.customer.widget.RefundDetailsView;
+import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 
 import butterknife.ButterKnife;
@@ -39,6 +43,8 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
     RelativeLayout llState;
     @InjectView(R.id.ll_order_item)
     LinearLayout llOrderItem;
+    @InjectView(R.id.ll_engineer_info)
+    LinearLayout llEngineerInfo;
     @InjectView(R.id.tv_sale_price)
     TextView tvSalePrice;
     @InjectView(R.id.tv_order_price_total)
@@ -63,19 +69,26 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
     TextView tvOrderNum;
     @InjectView(R.id.tv_copy)
     TextView tvCopy;
+    @InjectView(R.id.tv_refund_details)
+    TextView tvRefundDetails;
     @InjectView(R.id.tv_place_time)
     TextView tvPlaceTime;
     @InjectView(R.id.tv_pay_type)
     TextView tvPayType;
-    @InjectView(R.id.btn_sign_exception)
-    Button btnSignException;
-    @InjectView(R.id.btn_start_server)
-    Button btnStartServer;
-    @InjectView(R.id.ll_btn)
-    FrameLayout llBtn;
+    @InjectView(R.id.btn_cancel_order)
+    Button btnCancelOrder;
+    @InjectView(R.id.btn_go_to_pay)
+    Button btnGoToPay;
+    @InjectView(R.id.ll_small_btn)
+    FrameLayout llSmallBtn;
+    @InjectView(R.id.btn_buy_again)
+    Button btnBuyAgain;
 
 
-    private PopupWindow orderTracePop;    @Override
+    private PopupWindow orderTracePop;
+    private int mStatus = Canstance.TYPE_ORDER_DETAILS_IN_THE_SINGLE;
+
+    @Override
     public void titleLeftClick() {
         finish();
     }
@@ -97,6 +110,7 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
         setTitleText(R.string.txt_order_details);
         setBackImg(R.drawable.back_mark);
         setOKImg(R.drawable.ic_service);
+        setStatus(mStatus);
         initData();
     }
 
@@ -105,13 +119,66 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
         for (int i = 0; i < 2; i++) {
             OrderItemView orderItemView = new OrderItemView(this);
             llOrderItem.addView(orderItemView);
-            if(i!=1){
+            if (i != 1) {
                 LayoutInflater.from(this).inflate(R.layout.line_cutting, llOrderItem);
             }
 
+        }
+
+        for (int j = 0; j < refundCount; j++) {
             RefundDetailsView refundDetailsView = new RefundDetailsView(this);
             llRefundDetails.addView(refundDetailsView);
         }
+
+    }
+
+    private int refundCount = 1;
+
+    private void setStatus(int status) {
+        switch (status) {
+            case Canstance.TYPE_ORDER_DETAILS_CANCELED:
+                llEngineerInfo.setVisibility(View.GONE);
+                break;
+            case Canstance.TYPE_ORDER_DETAILS_IN_THE_SINGLE:
+                llEngineerInfo.setVisibility(View.GONE);
+                refundCount = 2;
+                break;
+            case Canstance.TYPE_ORDER_DETAILS_COMPLETED:
+                break;
+            case Canstance.TYPE_ORDER_DETAILS_PAY_OVERTIME:
+                llEngineerInfo.setVisibility(View.GONE);
+                refundCount = 0;
+                tvRefundDetails.setVisibility(View.GONE);
+                break;
+            case Canstance.TYPE_ORDER_DETAILS_NO_PAYMENT:
+                llEngineerInfo.setVisibility(View.GONE);
+                refundCount = 0;
+                tvRefundDetails.setVisibility(View.GONE);
+                llSmallBtn.setVisibility(View.VISIBLE);
+                btnBuyAgain.setVisibility(View.GONE);
+                break;
+            case Canstance.TYPE_ORDER_DETAILS_WAIT_SERVICE:
+                llEngineerInfo.setVisibility(View.GONE);
+                refundCount = 0;
+                tvRefundDetails.setVisibility(View.GONE);
+                btnBuyAgain.setText(R.string.txt_cancel_order);
+                break;
+            case Canstance.TYPE_ORDER_DETAILS_ON_ROAD:
+                refundCount = 0;
+                tvRefundDetails.setVisibility(View.GONE);
+                btnBuyAgain.setText(R.string.txt_cancel_order);
+                break;
+            case Canstance.TYPE_ORDER_DETAILS_IN_SERVICE:
+                llEngineerInfo.setVisibility(View.GONE);
+                refundCount = 0;
+                tvRefundDetails.setVisibility(View.GONE);
+                btnBuyAgain.setText(R.string.txt_cancel_order);
+                break;
+            default:
+                break;
+        }
+
+
     }
 
     @Override
@@ -131,26 +198,52 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
         }
     }
 
-    @OnClick({R.id.ll_state, R.id.iv_phone_icon,R.id.tv_copy})
+
+    @OnClick({R.id.ll_state, R.id.iv_phone_icon, R.id.tv_copy, R.id.btn_cancel_order, R.id.btn_go_to_pay, R.id.btn_buy_again})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_state:
                 showOrderTracePop();
                 break;
             case R.id.iv_phone_icon:
-                callToClient("10086",String.format(getString(R.string.txt_make_sure_phone), "10086"));
+                callToClient("10086", String.format(getString(R.string.txt_make_sure_phone), "10086"));
                 break;
             case R.id.tv_copy:
                 copy("10086");
                 break;
-            default:
+            case R.id.btn_cancel_order:
+                ToastUtils.showShort(this, R.string.txt_cancel_order);
                 break;
+            case R.id.btn_go_to_pay:
+                ToastUtils.showShort(this, R.string.txt_go_to_pay);
+                break;
+            case R.id.btn_buy_again:
+                String text = btnBuyAgain.getText().toString();
+                ToastUtils.showShort(this, text);
+                if (TextUtils.equals(text, getString(R.string.txt_buy_again))) {
 
+                } else if (TextUtils.equals(text, getString(R.string.txt_cancel_order))) {
+                    new AlertDialog(this)
+                            .builder()
+                            .setMsg(getString(R.string.txt_confirm_cancel_order))
+                            .setPositiveButton(getString(R.string.txt_confirm_cancel), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                }
+                            })
+                            .setNegativeButton(getString(R.string.txt_give_up_cancel), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                }
+                            }).show();
+
+                }
+                break;
         }
     }
 
     public void showOrderTracePop() {
-        if(orderTracePop==null){
+        if (orderTracePop == null) {
             OrderTraceView orderTraceView = new OrderTraceView(this, this);
             orderTracePop = new PopupWindow(orderTraceView,
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -181,4 +274,7 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         getWindow().setAttributes(lp);
 
-    }}
+    }
+
+
+}

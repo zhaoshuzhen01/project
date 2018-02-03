@@ -92,5 +92,11 @@
     <string name="txt_order_refunded">已退款</string>
     <string name="txt_order_trace">订单跟踪</string>
     <string name="txt_close">关闭</string>
+    <string name="txt_cancel_order">取消订单</string>
+    <string name="txt_go_to_pay">去支付</string>
+    <string name="txt_buy_again">再次购买</string>
+    <string name="txt_confirm_cancel_order">确认要取消订单吗？</string>
+    <string name="txt_give_up_cancel">放弃取消</string>
+    <string name="txt_confirm_cancel">确认取消</string>
 
 </resources>

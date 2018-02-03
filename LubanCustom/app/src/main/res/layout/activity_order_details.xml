@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/h_5dp"
-            android:orientation="vertical"/>
+            android:orientation="vertical" />
 
         <!--3.订单价格-->
         <LinearLayout
@@ -122,6 +122,7 @@
 
         <!--4.工程师信息-->
         <LinearLayout
+            android:id="@+id/ll_engineer_info"
             android:layout_width="match_parent"
             android:layout_height="62.5dp"
             android:layout_marginTop="@dimen/h_5dp"
@@ -171,9 +172,8 @@
 
         </LinearLayout>
 
-
-        <!--5.退款详情-->
         <TextView
+            android:id="@+id/tv_refund_details"
             android:layout_width="match_parent"
             android:layout_height="@dimen/h_44dp"
             android:layout_marginTop="@dimen/h_5dp"
@@ -184,18 +184,18 @@
             android:textColor="@color/color_333333"
             android:textSize="@dimen/sp_15" />
 
+        <!--5.退款详情-->
         <LinearLayout
             android:id="@+id/ll_refund_details"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
 
 
         <!--客户信息-->
         <LinearLayout
             style="@style/linear_layout_order_details"
-            android:layout_marginTop="@dimen/h_5dp"
-            >
+            android:layout_marginTop="@dimen/h_5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -205,14 +205,12 @@
 
                 <TextView
                     style="@style/text_view_1_order_details"
-                    android:text="@string/txt_work_sheet_details_contact"
-                     />
+                    android:text="@string/txt_work_sheet_details_contact" />
 
                 <TextView
                     android:id="@+id/tv_contact_name"
                     style="@style/text_view_2_order_details"
-                    android:text="胡先生"
-                   />
+                    android:text="胡先生" />
 
             </LinearLayout>
 
@@ -225,14 +223,12 @@
 
                 <TextView
                     style="@style/text_view_1_order_details"
-                    android:text="@string/txt_order_details_contact"
-                   />
+                    android:text="@string/txt_order_details_contact" />
 
                 <TextView
                     android:id="@+id/tv_contact_phone"
                     style="@style/text_view_2_order_details"
-                    android:text="13811215936"
-                     />
+                    android:text="13811215936" />
 
             </LinearLayout>
 
@@ -245,14 +241,12 @@
 
                 <TextView
                     style="@style/text_view_1_order_details"
-                    android:text="@string/txt_order_details_address"
-                    />
+                    android:text="@string/txt_order_details_address" />
 
                 <TextView
                     android:id="@+id/tv_service_address"
                     style="@style/text_view_2_order_details"
-                    android:text="北京凯泰物业小区5单元203室"
-                    />
+                    android:text="北京凯泰物业小区5单元203室" />
 
             </LinearLayout>
 
@@ -265,14 +259,12 @@
 
                 <TextView
                     style="@style/text_view_1_order_details"
-                    android:text="@string/txt_work_sheet_details_comment_info"
-                    />
+                    android:text="@string/txt_work_sheet_details_comment_info" />
 
                 <TextView
                     android:id="@+id/tv_comment_info"
                     style="@style/text_view_2_order_details"
-                    android:text="来之前请给我打电话"
-                    />
+                    android:text="来之前请给我打电话" />
 
             </LinearLayout>
         </LinearLayout>
@@ -280,8 +272,7 @@
         <!--订单编号-->
         <LinearLayout
             style="@style/linear_layout_order_details"
-            android:layout_marginTop="@dimen/h_5dp"
-            >
+            android:layout_marginTop="@dimen/h_5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -291,15 +282,14 @@
 
                 <TextView
                     style="@style/text_view_1_order_details"
-                    android:text="@string/txt_order_num"
-                     />
+                    android:text="@string/txt_order_num" />
 
                 <TextView
                     android:id="@+id/tv_order_num"
                     style="@style/text_view_2_order_details"
                     android:text="9159764919201134114"
 
-                     />
+                    />
 
                 <TextView
                     android:id="@+id/tv_copy"
@@ -322,14 +312,12 @@
 
                 <TextView
                     style="@style/text_view_1_order_details"
-                    android:text="@string/txt_order_place_time"
-                    />
+                    android:text="@string/txt_order_place_time" />
 
                 <TextView
                     android:id="@+id/tv_place_time"
                     style="@style/text_view_2_order_details"
-                    android:text="2017-10-02 10:26:33"
-                    />
+                    android:text="2017-10-02 10:26:33" />
 
             </LinearLayout>
 
@@ -342,14 +330,12 @@
 
                 <TextView
                     style="@style/text_view_1_order_details"
-                    android:text="@string/txt_order_pay_type"
-                    />
+                    android:text="@string/txt_order_pay_type" />
 
                 <TextView
                     android:id="@+id/tv_pay_type"
                     style="@style/text_view_2_order_details"
-                    android:text="在线支付"
-                    />
+                    android:text="在线支付" />
 
             </LinearLayout>
 
@@ -357,30 +343,39 @@
 
         <!--button-->
         <FrameLayout
-            android:id="@+id/ll_btn"
+            android:id="@+id/ll_small_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/h_30dp"
             android:layout_marginLeft="@dimen/h_23dp"
             android:layout_marginRight="@dimen/h_23dp"
             android:layout_marginTop="@dimen/h_30dp"
-            android:layout_marginBottom="@dimen/h_30dp">
+            android:visibility="gone">
 
             <Button
-                android:id="@+id/btn_sign_exception"
+                android:id="@+id/btn_cancel_order"
                 style="@style/btn_login"
                 android:layout_width="135dp"
-                android:text="@string/txt_work_sheet_details_sign_exception"
-                android:textSize="@dimen/sp_18"
-                android:visibility="gone" />
+                android:text="@string/txt_cancel_order"
+                android:textSize="@dimen/sp_18" />
 
             <Button
-                android:id="@+id/btn_start_server"
+                android:id="@+id/btn_go_to_pay"
                 style="@style/btn_login"
                 android:layout_width="135dp"
-                android:layout_gravity="center"
-                android:text="@string/txt_work_sheet_details_on_road"
+                android:layout_gravity="right"
+                android:text="@string/txt_go_to_pay"
                 android:textSize="@dimen/sp_18" />
         </FrameLayout>
 
+        <Button
+            android:id="@+id/btn_buy_again"
+            style="@style/btn_login"
+            android:layout_marginBottom="@dimen/h_30dp"
+            android:layout_marginLeft="@dimen/h_23dp"
+            android:layout_marginRight="@dimen/h_23dp"
+            android:layout_marginTop="@dimen/h_30dp"
+            android:text="@string/txt_buy_again"
+            android:textSize="@dimen/sp_18" />
     </LinearLayout>
 </ScrollView>
