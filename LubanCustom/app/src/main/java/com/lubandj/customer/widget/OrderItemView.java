@@ -5,10 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
 
 import butterknife.ButterKnife;
@@ -20,7 +22,7 @@ import butterknife.InjectView;
  * @Description: This is OrderItemView
  */
 
-public class OrderItemView extends FrameLayout {
+public class OrderItemView extends FrameLayout implements View.OnClickListener {
 
 
     @InjectView(R.id.iv_item_photo)
@@ -31,6 +33,7 @@ public class OrderItemView extends FrameLayout {
     TextView tvItemNum;
     @InjectView(R.id.tv_item_price)
     TextView tvItemPrice;
+
 
     public OrderItemView(@NonNull Context context) {
         this(context, null);
@@ -48,5 +51,13 @@ public class OrderItemView extends FrameLayout {
     private void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.view_order_item, this);
         ButterKnife.inject(this);
+
+        setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        ToastUtils.showShort(getContext(),"跳转项目详情");
     }
 }

@@ -5,11 +5,6 @@ package com.lubandj.master;
  */
 
 public class Canstance {
-    public static final int TYPE_TO_PERFORM = 0;//执行中
-    public static final int TYPE_ON_ROAD = 1;//正在上门
-    public static final int TYPE_IN_SERVICE = 2;//服务中
-    public static final int TYPE_COMPLETED = 3;//完成
-    public static final int TYPE_CANCELED = 4;//取消
     public static final int TYPE_LIST_ALL = 0;//所有消息
     public static final int TYPE_LIST_UNFINISH = 1;//工单列表未完成
     public static final int TYPE_LIST_FINISH = 2;//工单列表已完成
@@ -54,4 +49,19 @@ public class Canstance {
     public static final String KEY_SHEET_STATUS_IN_SERVICE = "3";
     public static final String KEY_SHEET_STATUS_COMPLETED = "4";
     public static final String KEY_SHEET_STATUS_CANCELED = "6";
+
+
+    public static final int TYPE_ORDER_DETAILS_CANCELED = 0; //订单已取消
+    public static final int TYPE_ORDER_DETAILS_IN_THE_SINGLE = 1;//派单中
+    public static final int TYPE_ORDER_DETAILS_COMPLETED = 2;//订单已完成
+    public static final int TYPE_ORDER_DETAILS_PAY_OVERTIME = 3;//支付超时已取消
+    public static final int TYPE_ORDER_DETAILS_NO_PAYMENT = 4;//待支付
+    public static final int TYPE_ORDER_DETAILS_WAIT_SERVICE = 5;//等待服务
+    public static final int TYPE_ORDER_DETAILS_ON_ROAD = 6;//正在上门
+    public static final int TYPE_ORDER_DETAILS_IN_SERVICE = 7;//正在服务
+
+
+
+
+
 }
