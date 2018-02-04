@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/work_center_lay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_f4f4f4"
     android:orientation="vertical">
+    <TextView
+        android:id="@+id/in_get"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="进入领券中心"
+        android:textColor="@color/white"
+        android:paddingBottom="@dimen/h_14dp"
+        android:paddingTop="@dimen/h_14dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_e94b4e"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/in_get"
+        android:orientation="vertical">
     <View
         android:background="@color/color_e1e1e1"
         android:layout_width="match_parent"
@@ -24,4 +41,5 @@
                 android:overScrollMode="never"
                 android:scrollbars="none" />
     </com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6>
-</LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

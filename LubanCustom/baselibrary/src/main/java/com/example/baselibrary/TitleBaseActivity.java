@@ -55,8 +55,8 @@ public abstract class TitleBaseActivity extends BaseActivity {
     }
 
     private void findView() {
-        mNavigationView = (NavigationView) findViewById(R.id.id_nv_menu1);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout1);
+        mNavigationView = (NavigationView) findView(R.id.id_nv_menu1);
+        mDrawerLayout = (DrawerLayout) findView(R.id.id_drawer_layout1);
         mNavigationView.setItemIconTintList(null);
         llRoot = findView(R.id.ll_basetitle_root);
         ivBaseTitleBack = findView(R.id.iv_basetitle_back);
@@ -170,6 +170,12 @@ public abstract class TitleBaseActivity extends BaseActivity {
         }
     }
 
+    public void xinxiImg(int resID){
+        msgCount.setBackgroundResource(resID);
+    }
+    public void xinxText(int resID){
+        msgCount.setTextColor(resID);
+    }
     /**
      * 设置右边按钮是否显示
      *

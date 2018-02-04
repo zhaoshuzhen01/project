@@ -55,11 +55,6 @@ public class SplashActivity extends PermissionActivity {
                 return;
             }
         }
-
-       /* if (TextUtils.isEmpty(CommonUtils.getToken()))//无登录信息
-            mHandler.sendMessageDelayed(mHandler.obtainMessage(0), 500);
-        else
-            mHandler.sendMessageDelayed(mHandler.obtainMessage(1), 1000);*/
         Intent intent = new Intent(SplashActivity.this, MainCantainActivity.class);
         startActivity(intent);
     }

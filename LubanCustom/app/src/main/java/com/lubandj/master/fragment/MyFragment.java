@@ -1,6 +1,7 @@
 package com.lubandj.master.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,15 +16,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.example.baselibrary.BaseFragment;
+import com.example.baselibrary.util.GlideUtil;
 import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.master.Canstance;
+import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
+import com.lubandj.master.activity.CouponsActivity;
+import com.lubandj.master.activity.FeedbackActivity;
 import com.lubandj.master.activity.MainCantainActivity;
 import com.lubandj.master.httpbean.UserInfoRequest;
 import com.lubandj.master.httpbean.UserInfoResponse;
 import com.lubandj.master.login.SplashActivity;
+import com.lubandj.master.my.AboutLuBanActivity;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
 
@@ -35,7 +41,7 @@ import butterknife.OnClick;
  * Created by ${zhaoshuzhen} on 2018/1/31.
  */
 
-public class MyFragment extends BaseFragment {
+public class MyFragment extends BaseFragment implements DialogTagin.DialogSure{
 
     @InjectView(R.id.headicon)
     ImageView headicon;
@@ -125,14 +131,20 @@ public class MyFragment extends BaseFragment {
             case R.id.my_address:
                 break;
             case R.id.my_youhuiquan:
+                CouponsActivity.startActivity(getActivity());
                 break;
             case R.id.my_oingjia:
                 break;
             case R.id.my_kefu:
+                DialogTagin.getDialogTagin(getActivity()).showDialog("401-323434").setDialogSure(this);
+
                 break;
             case R.id.my_fankui:
+                FeedbackActivity.startActivity(getActivity());
                 break;
             case R.id.my_guanyu:
+                Intent intent = new Intent(getActivity(),AboutLuBanActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -152,8 +164,7 @@ public class MyFragment extends BaseFragment {
                     TApplication.context.setGetuiTag(response.info.uid);
                   headtext.setText(response.info.mobile);
                   if (!TextUtils.isEmpty(response.info.face_url)){
-                      Glide.with(getActivity()).load(response.info.face_url).skipMemoryCache(false).into(headicon);
-
+                      GlideUtil.circleImg(getActivity(),response.info.face_url,headicon);
                   }
                 }
             }
@@ -162,5 +173,12 @@ public class MyFragment extends BaseFragment {
             public void onErrorResponse(VolleyError volleyError) {
             }
         });
+    }
+
+    @Override
+    public void dialogCall() {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+"401-323434"));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

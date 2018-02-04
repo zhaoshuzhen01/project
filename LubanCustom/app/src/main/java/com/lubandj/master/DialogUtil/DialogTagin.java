@@ -14,24 +14,28 @@ import com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone;
 
 public class DialogTagin {
     private static DialogTagin dialogTagin = null;
-    private Context context ;
-    private DialogSure dialogSure ;
-    private DialogTagin(Context context){
-        this.context = context ;
+    private Context context;
+    private DialogSure dialogSure;
+
+    private DialogTagin(Context context) {
+        this.context = context;
     }
-    public static DialogTagin getDialogTagin(Context context){
-                dialogTagin = new DialogTagin(context);
+
+    public static DialogTagin getDialogTagin(Context context) {
+        dialogTagin = new DialogTagin(context);
         return dialogTagin;
     }
 
-    public DialogTagin messageShow(String currentType){
+    public DialogTagin messageShow(String currentType) {
         finishDialog(currentType);
-        return dialogTagin ;
+        return dialogTagin;
     }
+
     public void setDialogSure(DialogSure dialogSure) {
         this.dialogSure = dialogSure;
     }
-    public   void finishDialog(final String currentType){
+
+    public void finishDialog(final String currentType) {
         TipDialog outDialog = new TipDialog(context);
         outDialog.setNoPomptTitle();
         outDialog.setTextDes(getRemindContent(currentType));
@@ -39,11 +43,11 @@ public class DialogTagin {
             @Override
             public void onClick(View button, TipDialog dialog) {
                 dialog.dismiss();
-                if (dialogSure==null){
+                if (dialogSure == null) {
                     Intent intent = new Intent(context, WorkSheetDetailsActivityPhone.class);
 //                            intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID,currentType);
                     context.startActivity(intent);
-                }else {
+                } else {
                     dialogSure.dialogCall();
                 }
             }
@@ -59,7 +63,7 @@ public class DialogTagin {
         outDialog.show();
     }
 
-    public DialogTagin showDialog(String text){
+    public DialogTagin showDialog(String text) {
         TipDialog outDialog = new TipDialog(context);
         outDialog.setNoPomptTitle();
         outDialog.setTextDes(text);
@@ -67,7 +71,7 @@ public class DialogTagin {
             @Override
             public void onClick(View button, TipDialog dialog) {
                 dialog.dismiss();
-                if (dialogTagin!=null)
+                if (dialogTagin != null)
                     dialogSure.dialogCall();
             }
         });
@@ -82,23 +86,24 @@ public class DialogTagin {
         outDialog.show();
         return dialogTagin;
     }
-    private String getRemindContent(String currentType){
-        String content="";
+
+    private String getRemindContent(String currentType) {
+        String content = "";
         switch (currentType) {
             case Canstance.KEY_SHEET_STATUS_TO_PERFORM:
-                content="开始前往服务地点";
+                content = "开始前往服务地点";
                 break;
             case Canstance.KEY_SHEET_STATUS_ON_ROAD:
-                content="开始服务";
+                content = "开始服务";
                 break;
             case Canstance.KEY_SHEET_STATUS_IN_SERVICE:
-                content="已完成服务";
+                content = "已完成服务";
                 break;
         }
         return content;
     }
 
-    public interface  DialogSure{
+    public interface DialogSure {
         void dialogCall();
     }
 }

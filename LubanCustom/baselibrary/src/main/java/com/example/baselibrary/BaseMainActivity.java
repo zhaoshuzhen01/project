@@ -44,6 +44,9 @@ public abstract class BaseMainActivity extends TitleBaseActivity implements  Vie
         bottomNavigationBar.setSelectTab(position);
         window.setStatusBarColor(getResources().getColor(R.color.white));
         setTitleColor(getResources().getColor(R.color.white));
+        setOKImg(R.drawable.titleright);
+        xinxiImg(R.drawable.circle);
+        xinxText(getResources().getColor(R.color.white));
         switch (position){
             case 0:
                 setTitleText("首页");
@@ -55,6 +58,9 @@ public abstract class BaseMainActivity extends TitleBaseActivity implements  Vie
 
                 break;
             case 2:
+                xinxText(getResources().getColor(R.color.color_e94b4e));
+                setOKImg(R.drawable.myling);
+                xinxiImg(R.drawable.white_circle);
                 setTitleText("");
                 setTitleColor(getResources().getColor(R.color.redm));
                 window.setStatusBarColor(getResources().getColor(R.color.redm));

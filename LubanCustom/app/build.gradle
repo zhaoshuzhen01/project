@@ -45,7 +45,7 @@ MasterSecret： be2mClT9kU5PWNhyqz39YA重置
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'boolean', 'isDebug', 'false'
-//            signingConfig signingConfigs.config
+            signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
