@@ -41,6 +41,11 @@
                 style="@style/leftmenu_text"
                 android:text="头像"/>
 
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
             <com.lubandj.master.customview.RoundImageView
                 android:id="@+id/iv_set_headimg"
                 android:layout_width="50dp"

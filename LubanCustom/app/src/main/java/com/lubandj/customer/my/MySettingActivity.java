@@ -103,6 +103,8 @@ public class MySettingActivity extends PermissionActivity {
      * @param view
      */
     public void onHeadPhoto(View view) {
+        
+
         DoubleSelectDialog dialog = new DoubleSelectDialog(MySettingActivity.this, "拍照", "从手机相册选择", new DoubleSelectDialog.DoubleClickListenerInterface() {
             @Override
             public void doFirstClick() {

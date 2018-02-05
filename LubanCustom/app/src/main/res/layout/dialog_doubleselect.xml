@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dp"
-    android:layout_height="wrap_content"
-    android:background="@color/background_color"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/trans"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:padding="10dp">
 
     <TextView
         android:id="@+id/tv_selectone_doubleselect"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/white"
+        android:background="@drawable/roundrect_up"
         android:gravity="center"
         android:text=""
         android:textColor="@drawable/text_doubleselect_selector"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#999999"/>
 
     <TextView
         android:id="@+id/tv_selecttwo_doubleselect"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="1dp"
-        android:background="@color/white"
+        android:background="@drawable/roundrect_down"
         android:gravity="center"
         android:text=""
         android:textColor="@drawable/text_doubleselect_selector"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/tv_cancel_doubleselect"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="1dp"
-        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/roundrect"
         android:gravity="center"
         android:text="取消"
         android:textColor="#0e80ff"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
 </LinearLayout>
