@@ -1,4 +1,4 @@
-package com.lubandj.master.my;
+package com.lubandj.customer.my;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -14,22 +14,20 @@ import com.android.volley.toolbox.ImageLoader;
 import com.example.baselibrary.eventbus.BusEvent;
 import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.util.NetworkUtils;
 import com.example.baselibrary.util.PhotoUtil;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
-import com.lubandj.master.been.AddressBean;
 import com.lubandj.master.been.UserInfo;
 import com.lubandj.master.databinding.ActivityMysettingBinding;
 import com.lubandj.master.dialog.DoubleSelectDialog;
 import com.lubandj.master.dialog.TipDialog;
-import com.lubandj.master.httpbean.GetAddressReponse;
-import com.lubandj.master.httpbean.UidParamsRequest;
 import com.lubandj.master.httpbean.UploadPhotoReponse;
 import com.lubandj.master.httpbean.UploadPhotoRequest;
+import com.lubandj.master.my.PermissionActivity;
 import com.lubandj.master.utils.BitmapCache;
 import com.lubandj.master.utils.CommonUtils;
-import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.master.utils.TaskEngine;
 
 /**
@@ -42,7 +40,6 @@ import com.lubandj.master.utils.TaskEngine;
 public class MySettingActivity extends PermissionActivity {
     private ActivityMysettingBinding binding;
     private ImageLoader imageLoader;
-    private AddressBean mBean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,15 +47,25 @@ public class MySettingActivity extends PermissionActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_mysetting);
         imageLoader = new ImageLoader(TaskEngine.getInstance().getQueue(), new BitmapCache());
 
-        loadFace();
-        UserInfo info = TApplication.context.mUserInfo;
-        binding.tvSettingName.setText(info.nickname);
-        binding.tvSettingNum.setText(info.uuid);
-        setPhone();
-        getAddress();
-
+        refershInfo();
         setResult(RESULT_CANCELED);
     }
+
+    private void refershInfo() {
+        UserInfo info = TApplication.context.mUserInfo;
+        if (info != null) {
+            if (TextUtils.isEmpty(info.nickname)) {
+                binding.tvSettingNickname.setText(info.nickname);
+            } else {
+                binding.tvSettingNickname.setText(info.mobile);
+            }
+            binding.tvSettingSex.setText("选择");
+            binding.tvSettingWxaccount.setText("未绑定");
+            loadFace();
+            setPhone();
+        }
+    }
+
 
     @Override
     public int getLayout() {
@@ -121,16 +128,6 @@ public class MySettingActivity extends PermissionActivity {
         startActivityForResult(new Intent(MySettingActivity.this, ModifyPhoneActivity.class), 1001);
     }
 
-    /**
-     * 修改地址
-     *
-     * @param view
-     */
-    public void onMyAddress(View view) {
-        Intent intent = new Intent(MySettingActivity.this, MyAddressActivity.class);
-        intent.putExtra("address", mBean);
-        startActivityForResult(intent, 100);
-    }
 
     /**
      * 退出登录
@@ -158,10 +155,6 @@ public class MySettingActivity extends PermissionActivity {
         outDialog.setCancelable(false);
         outDialog.setCanceledOnTouchOutside(false);
         outDialog.show();
-    }
-
-    public void onAbout(View view) {
-        startActivity(AboutLuBanActivity.class, null);
     }
 
     @Override
@@ -222,10 +215,6 @@ public class MySettingActivity extends PermissionActivity {
             }
         } else if (requestCode == 1001) {
             setPhone();
-        } else if (requestCode == 100) {
-            mBean = (AddressBean) data.getSerializableExtra("data");
-            if (mBean.housing_estate != null)
-                binding.tvSettingAddress.setText(mBean.housing_estate + "");
         }
     }
 
@@ -239,28 +228,74 @@ public class MySettingActivity extends PermissionActivity {
             imageLoader.get(TApplication.context.mUserInfo.face_url, imageListener);
     }
 
-    public void getAddress() {
-        initProgressDialog("获取地址中...").show();
-        UidParamsRequest request = new UidParamsRequest(CommonUtils.getUid());
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_GETADDRESS, request, new Response.Listener<String>() {
+    /**
+     * 更改微信账户
+     *
+     * @param view
+     */
+    public void onChangeWxAccount(View view) {
+
+    }
+
+    /**
+     * 修改性别
+     *
+     * @param view
+     */
+    public void onModifySex(View view) {
+        DoubleSelectDialog dialog = new DoubleSelectDialog(MySettingActivity.this, "男", "女", new DoubleSelectDialog.DoubleClickListenerInterface() {
+            @Override
+            public void doFirstClick() {
+                updateSex("男");
+            }
 
             @Override
-            public void onResponse(String s) {
-                fastDismiss();
-                GetAddressReponse reponse = new GetAddressReponse();
-                reponse = (GetAddressReponse) CommonUtils.generateEntityByGson(MySettingActivity.this, s, reponse);
-                if (reponse != null) {
-                    mBean = reponse.info;
-                    if (mBean.housing_estate != null)
-                        binding.tvSettingAddress.setText(mBean.housing_estate + "");
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                fastDismiss();
-                CommonUtils.fastShowError(MySettingActivity.this, volleyError);
+            public void doSecondClick() {
+                updateSex("女");
             }
         });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    /**
+     * 修改昵称
+     *
+     * @param view
+     */
+    public void onModifyNickName(View view) {
+        Intent intent = new Intent(MySettingActivity.this, ModifyNickNameActivity.class);
+        startActivity(intent, null);
+    }
+
+    public void updateSex(String sex) {
+//        initProgressDialog("正在更新性别...").show();
+//        UploadPhotoRequest bean = new UploadPhotoRequest(CommonUtils.Bitmap2StrByBase64(headPhoto));
+//        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_UPLOAD_PHOTO, bean, new Response.Listener<String>() {
+//
+//            @Override
+//            public void onResponse(String s) {
+//                dialog.dismiss();
+//                UploadPhotoReponse response = new UploadPhotoReponse();
+//                response = (UploadPhotoReponse) CommonUtils.generateEntityByGson(MySettingActivity.this, s, response);
+//                if (response != null) {
+//                    RxBus.getInstance().post(new BusEvent(BusEvent.IMG_CODE));
+//                    TApplication.context.mUserInfo.face_url = response.info.face_url;
+//                    loadFace();
+//                    PhotoUtil.getInstance().deleteCache();
+//
+//                    setResult(RESULT_OK);
+//                    ToastUtils.showShort(MySettingActivity.this, "上传成功");
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//                dialog.dismiss();
+//                CommonUtils.fastShowError(MySettingActivity.this, volleyError);
+//            }
+//        });
+        binding.tvSettingSex.setText(sex);
     }
 }

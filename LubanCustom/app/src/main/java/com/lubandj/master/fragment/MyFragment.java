@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,15 +15,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.baselibrary.BaseFragment;
-import com.example.baselibrary.util.GlideUtil;
 import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.customer.login.LoginActivity;
+import com.lubandj.customer.my.MySettingActivity;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
-import com.lubandj.master.activity.CouponsActivity;
-import com.lubandj.master.activity.FeedbackActivity;
 import com.lubandj.master.customview.RoundImageView;
 import com.lubandj.master.httpbean.UserInfoRequest;
 import com.lubandj.master.httpbean.UserInfoResponse;
@@ -169,7 +166,8 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
                 startActivity(intent);
                 break;
             case R.id.tv_selfinfo://个人信息
-
+                Intent intent2 = new Intent(getActivity(), MySettingActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

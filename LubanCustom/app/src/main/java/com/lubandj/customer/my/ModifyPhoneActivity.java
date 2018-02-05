@@ -1,4 +1,4 @@
-package com.lubandj.master.my;
+package com.lubandj.customer.my;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;

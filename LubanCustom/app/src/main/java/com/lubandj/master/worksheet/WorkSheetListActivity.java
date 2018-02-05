@@ -33,7 +33,7 @@ import com.lubandj.master.customview.RoundImageView;
 import com.lubandj.master.dialog.TipDialog;
 import com.lubandj.master.fragment.WorkSheetFragment;
 import com.lubandj.master.my.LeaveListActivity;
-import com.lubandj.master.my.MySettingActivity;
+import com.lubandj.customer.my.MySettingActivity;
 import com.lubandj.master.my.WorkCalendarActivity;
 import com.lubandj.master.my.WorkCodeActivity;
 import com.lubandj.master.utils.BitmapCache;

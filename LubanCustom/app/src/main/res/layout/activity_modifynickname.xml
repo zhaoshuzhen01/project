@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:onClick="onBack">
+
+            <ImageView
+                style="@style/my_title_back"
+                android:layout_marginLeft="10dp"
+                android:padding="1dp"
+                android:src="@drawable/ic_login_close"/>
+
+            <TextView
+                style="@style/my_title_text"
+                android:text="修改昵称"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/h_23dp"
+            android:paddingRight="@dimen/h_23dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="20个字符以内，支持中英文、数字"
+                android:textColor="#999999"
+                android:textSize="12sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/h_44dp"
+                android:layout_marginTop="@dimen/h_20dp"
+                android:background="@drawable/shape_edit_text_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <com.example.baselibrary.widget.EditTextWithDel
+                    android:id="@+id/et_nickname"
+                    style="@style/editTextStyles"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/h_9dp"
+                    android:layout_marginRight="@dimen/h_20dp"
+                    android:hint="请输入昵称"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLength="20"
+                    android:paddingLeft="15dp"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_modifynickname"
+                style="@style/btn_login"
+                android:layout_marginTop="@dimen/h_26dp"
+                android:onClick="onModifyPhone"
+                android:text="确认修改"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>
+
