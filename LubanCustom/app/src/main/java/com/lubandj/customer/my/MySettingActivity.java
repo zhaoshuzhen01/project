@@ -103,9 +103,9 @@ public class MySettingActivity extends PermissionActivity {
      * @param view
      */
     public void onHeadPhoto(View view) {
-        
 
-        DoubleSelectDialog dialog = new DoubleSelectDialog(MySettingActivity.this, "拍照", "从手机相册选择", new DoubleSelectDialog.DoubleClickListenerInterface() {
+
+        DoubleSelectDialog dialog = new DoubleSelectDialog(MySettingActivity.this, "拍照", "从相册选择", new DoubleSelectDialog.DoubleClickListenerInterface() {
             @Override
             public void doFirstClick() {
                 PhotoUtil.getInstance().takePhoto(MySettingActivity.this);
@@ -139,11 +139,11 @@ public class MySettingActivity extends PermissionActivity {
     public void onLogout(View view) {
         TipDialog outDialog = new TipDialog(MySettingActivity.this);
         outDialog.setNoPomptTitle();
-        outDialog.setTextDes("退出登录");
+        outDialog.setTextDes("您确认要退出登录吗?");
         outDialog.setButton1("确定", new TipDialog.DialogButtonOnClickListener() {
             @Override
             public void onClick(View button, TipDialog dialog) {
-                CommonUtils.logOut(MySettingActivity.this);
+//                CommonUtils.logOut(MySettingActivity.this);
                 dialog.dismiss();
 
             }
@@ -236,7 +236,44 @@ public class MySettingActivity extends PermissionActivity {
      * @param view
      */
     public void onChangeWxAccount(View view) {
+        TipDialog outDialog = new TipDialog(MySettingActivity.this);
+        outDialog.setNoPomptTitle();
+        if ("未绑定".equals(binding.tvSettingWxaccount.getText().toString())) {
+            outDialog.setTextDes("\"鹿班\"想打开\"微信\"");
+            outDialog.setButton1("打开", new TipDialog.DialogButtonOnClickListener() {
+                @Override
+                public void onClick(View button, TipDialog dialog) {
+                    binding.tvSettingWxaccount.setText("luili");
+                    dialog.dismiss();
 
+                }
+            });
+            outDialog.setButton2("取消", new TipDialog.DialogButtonOnClickListener() {
+                @Override
+                public void onClick(View button, TipDialog dialog) {
+                    dialog.dismiss();
+                }
+            });
+        } else {
+            outDialog.setTextDes("确认要解除绑定微信吗？");
+            outDialog.setButton1("确认", new TipDialog.DialogButtonOnClickListener() {
+                @Override
+                public void onClick(View button, TipDialog dialog) {
+                    binding.tvSettingWxaccount.setText("未绑定");
+                    dialog.dismiss();
+
+                }
+            });
+            outDialog.setButton2("取消", new TipDialog.DialogButtonOnClickListener() {
+                @Override
+                public void onClick(View button, TipDialog dialog) {
+                    dialog.dismiss();
+                }
+            });
+        }
+        outDialog.setCancelable(false);
+        outDialog.setCanceledOnTouchOutside(false);
+        outDialog.show();
     }
 
     /**

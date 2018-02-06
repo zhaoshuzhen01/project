@@ -17,15 +17,17 @@ import com.android.volley.toolbox.ImageLoader;
 import com.example.baselibrary.BaseFragment;
 import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.customer.login.LoginActivity;
+import com.lubandj.customer.my.FeedBackInfoActivity;
 import com.lubandj.customer.my.MySettingActivity;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.customview.RoundImageView;
+import com.lubandj.master.dialog.DoubleSelectDialog;
 import com.lubandj.master.httpbean.UserInfoRequest;
 import com.lubandj.master.httpbean.UserInfoResponse;
-import com.lubandj.master.my.AboutLuBanActivity;
+import com.lubandj.customer.my.AboutLuBanActivity;
 import com.lubandj.master.utils.BitmapCache;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
@@ -137,7 +139,7 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
         ButterKnife.reset(this);
     }
 
-    @OnClick({R.id.headicon, R.id.my_address, R.id.my_youhuiquan, R.id.my_oingjia, R.id.my_kefu, R.id.my_fankui, R.id.my_guanyu, R.id.tv_selfinfo})
+    @OnClick({R.id.headicon, R.id.my_address, R.id.my_youhuiquan, R.id.my_oingjia, R.id.my_kefu, R.id.my_fankui, R.id.my_guanyu, R.id.tv_selfinfo, R.id.my_share})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.headicon:
@@ -155,11 +157,11 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
             case R.id.my_oingjia:
                 break;
             case R.id.my_kefu:
-                DialogTagin.getDialogTagin(getActivity()).showDialog("401-323434").setDialogSure(this);
+                DialogTagin.getDialogTagin(getActivity()).showDialog("即将拨打：" + "401-323434").setDialogSure(this);
 
                 break;
             case R.id.my_fankui:
-//                FeedbackActivity.startActivity(getActivity());
+                startActivity(new Intent(getActivity(), FeedBackInfoActivity.class));
                 break;
             case R.id.my_guanyu:
                 Intent intent = new Intent(getActivity(), AboutLuBanActivity.class);
@@ -168,6 +170,22 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
             case R.id.tv_selfinfo://个人信息
                 Intent intent2 = new Intent(getActivity(), MySettingActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.my_share://分享
+                DoubleSelectDialog dialog = new DoubleSelectDialog(getActivity(), "微信好友", "微信朋友圈", new DoubleSelectDialog.DoubleClickListenerInterface() {
+                    @Override
+                    public void doFirstClick() {
+
+                    }
+
+                    @Override
+                    public void doSecondClick() {
+
+                    }
+                });
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
                 break;
         }
     }

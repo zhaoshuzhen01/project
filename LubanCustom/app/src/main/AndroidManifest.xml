@@ -79,7 +79,7 @@
             android:name=".worksheet.SignExceptionActivityPhone"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".my.AboutLuBanActivity"
+            android:name="com.lubandj.customer.my.AboutLuBanActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.lubandj.customer.login.LoginActivity"
@@ -102,6 +102,10 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity
             android:name="com.lubandj.customer.my.ModifyNickNameActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+        <activity
+            android:name="com.lubandj.customer.my.FeedBackInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity

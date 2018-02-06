@@ -25,7 +25,6 @@
             <TextView
                 style="@style/my_title_text"
                 android:text="关于鹿班"/>
-
         </RelativeLayout>
 
         <ImageView
@@ -60,6 +59,11 @@
 
                 android:text="检查更新"/>
 
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
             <ImageView
                 style="@style/about_icon"/>
         </LinearLayout>
@@ -77,6 +81,11 @@
             <TextView
                 style="@style/leftmenu_text"
                 android:text="用户协议"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
 
 
             <ImageView
@@ -97,6 +106,11 @@
             <TextView
                 style="@style/leftmenu_text"
                 android:text="去评分"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
 
             <ImageView
                 style="@style/about_icon"/>

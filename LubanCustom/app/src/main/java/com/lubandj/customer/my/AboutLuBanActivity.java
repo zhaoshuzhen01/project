@@ -1,11 +1,10 @@
-package com.lubandj.master.my;
+package com.lubandj.customer.my;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -14,6 +13,7 @@ import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.tools.Tools;
 import com.lubandj.master.R;
 import com.lubandj.master.databinding.ActivityAboutlubanBinding;
+import com.lubandj.master.my.AgreementActivity;
 
 /**
  * function:
