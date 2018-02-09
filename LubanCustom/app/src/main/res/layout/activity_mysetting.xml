@@ -24,7 +24,7 @@
 
             <TextView
                 style="@style/my_title_text"
-                android:text="设置"/>
+                android:text="个人信息"/>
 
         </RelativeLayout>
 
@@ -40,6 +40,11 @@
             <TextView
                 style="@style/leftmenu_text"
                 android:text="头像"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
 
             <com.lubandj.master.customview.RoundImageView
                 android:id="@+id/iv_set_headimg"
@@ -60,16 +65,20 @@
         <LinearLayout
             android:id="@+id/ll_menu_service"
             style="@style/leftmenu_linearlayout"
+            android:onClick="onModifyNickName"
             >
 
 
             <TextView
                 style="@style/leftmenu_text"
-                android:text="姓名"/>
+                android:text="昵称"/>
 
             <TextView
-                android:id="@+id/tv_setting_name"
+                android:id="@+id/tv_setting_nickname"
                 style="@style/setting_righttext"/>
+
+            <ImageView
+                style="@style/about_icon"/>
         </LinearLayout>
 
         <View
@@ -78,20 +87,24 @@
         <LinearLayout
             android:id="@+id/ll_menu_workcode"
             style="@style/leftmenu_linearlayout"
+            android:onClick="onModifySex"
             >
-
 
             <TextView
                 style="@style/leftmenu_text"
-                android:text="工号"/>
+                android:text="性别"/>
 
             <TextView
-                android:id="@+id/tv_setting_num"
+                android:id="@+id/tv_setting_sex"
                 style="@style/setting_righttext"/>
+
+            <ImageView
+                style="@style/about_icon"/>
         </LinearLayout>
 
         <View
-            style="@style/horizontal_line"/>
+            style="@style/horizontal_line"
+            android:layout_marginTop="10dp"/>
 
         <LinearLayout
             style="@style/leftmenu_linearlayout"
@@ -105,7 +118,8 @@
 
             <TextView
                 android:id="@+id/tv_setting_phone"
-                style="@style/setting_righttext"/>
+                style="@style/setting_righttext"
+                android:textColor="#333333"/>
 
             <ImageView
                 style="@style/about_icon"/>
@@ -116,44 +130,22 @@
 
         <LinearLayout
             style="@style/leftmenu_linearlayout"
-            android:onClick="onMyAddress"
+            android:onClick="onChangeWxAccount"
             >
 
 
             <TextView
                 style="@style/leftmenu_text"
-                android:text="住址"/>
+                android:text="微信账号"/>
 
             <TextView
-                android:id="@+id/tv_setting_address"
-                style="@style/setting_righttext"/>
+                android:id="@+id/tv_setting_wxaccount"
+                style="@style/setting_righttext"
+                android:textColor="#333333"/>
 
             <ImageView
                 style="@style/about_icon"/>
         </LinearLayout>
-
-        <View
-            style="@style/horizontal_line"/>
-
-        <View
-            style="@style/horizontal_line"
-            android:layout_marginTop="10dp"/>
-
-        <LinearLayout
-            style="@style/leftmenu_linearlayout"
-            android:onClick="onAbout"
-            >
-
-
-            <TextView
-                style="@style/leftmenu_text"
-                android:text="关于鹿班"/>
-            <ImageView
-                style="@style/about_icon"/>
-        </LinearLayout>
-
-        <View
-            style="@style/horizontal_line"/>
 
         <android.support.v4.widget.Space
             android:layout_width="match_parent"

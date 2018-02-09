@@ -16,7 +16,7 @@ import com.lubandj.master.been.MsgCenterBeen;
 import java.util.List;
 
 /**
- * Created by ${zhaoshuzhen} on 2018/2/5.
+ * Created by ${zhaoshuzhen} on 2018/2/5.//
  */
 
 public class GetCoupsAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.ListBean, BaseViewHolder> {

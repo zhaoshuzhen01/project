@@ -29,7 +29,7 @@ public class DoubleSelectDialog extends Dialog implements View.OnClickListener {
     private String selectTwo;
 
     public DoubleSelectDialog(Context context, String selectOne, String selectTwo, DoubleClickListenerInterface clickListenerInterface) {
-        super(context, R.style.DialogTheme);
+        super(context, R.style.dialog);
         this.context = context;
         this.clickListenerInterface = clickListenerInterface;
         this.selectOne = selectOne;
@@ -54,9 +54,9 @@ public class DoubleSelectDialog extends Dialog implements View.OnClickListener {
 
         Window dialogWindow = getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        DisplayMetrics d = context.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
-        lp.width = d.widthPixels;
-        dialogWindow.setAttributes(lp);
+//        DisplayMetrics d = context.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
+//        lp.width = d.widthPixels;
+//        dialogWindow.setAttributes(lp);
 
         dialogWindow.setGravity(Gravity.BOTTOM);  //此处可以设置dialog显示的位置
         dialogWindow.setWindowAnimations(R.style.progressinsertstyle);  //添加动画
