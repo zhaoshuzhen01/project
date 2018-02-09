@@ -156,7 +156,7 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
                 CustomAddressActivity.startActivity(getActivity());
                 break;
             case R.id.my_youhuiquan:
-                CouponsActivity.startActivity(getActivity());
+//                CouponsActivity.startActivity(getActivity());
                 break;
             case R.id.my_oingjia:
                 MyEvaluationActivity.startActivity(getActivity());
