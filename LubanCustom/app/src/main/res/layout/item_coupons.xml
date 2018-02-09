@@ -95,7 +95,7 @@
                     android:layout_below="@+id/msgtitle"
                     android:layout_marginLeft="@dimen/h_18dp"
                     android:gravity="center"
-                    android:text="2017-12-6"
+                    android:text="有效日期:2017-12-6"
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/h_11dp" />
 
