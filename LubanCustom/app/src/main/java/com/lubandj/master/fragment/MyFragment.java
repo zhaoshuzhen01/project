@@ -23,6 +23,9 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
+import com.lubandj.master.activity.CouponsActivity;
+import com.lubandj.master.activity.CustomAddressActivity;
+import com.lubandj.master.activity.MyEvaluationActivity;
 import com.lubandj.master.customview.RoundImageView;
 import com.lubandj.master.dialog.DoubleSelectDialog;
 import com.lubandj.master.httpbean.UserInfoRequest;
@@ -150,11 +153,13 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
                 }
                 break;
             case R.id.my_address:
+                CustomAddressActivity.startActivity(getActivity());
                 break;
             case R.id.my_youhuiquan:
-//                CouponsActivity.startActivity(getActivity());
+                CouponsActivity.startActivity(getActivity());
                 break;
             case R.id.my_oingjia:
+                MyEvaluationActivity.startActivity(getActivity());
                 break;
             case R.id.my_kefu:
                 DialogTagin.getDialogTagin(getActivity()).showDialog("即将拨打：" + "401-323434").setDialogSure(this);

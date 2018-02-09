@@ -125,8 +125,8 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/line11"
-                    android:layout_marginRight="@dimen/h_14dp"
-                    android:layout_marginTop="@dimen/h_8dp"
+                    android:paddingLeft="@dimen/h_14dp"
+                    android:paddingTop="@dimen/h_8dp"
                     android:clickable="true"
                     android:scaleType="fitEnd"
                     android:src="@drawable/opencoups" />

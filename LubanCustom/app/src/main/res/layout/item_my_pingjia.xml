@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/work_center_lay"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/h_10dp"
+        android:paddingTop="@dimen/h_10dp">
+
+        <ImageView
+            android:id="@+id/pingjiatitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/h_14dp"
+            android:src="@drawable/homelistdefaut" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/pingjiatitle"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/pingjia_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/h_10dp"
+                android:layout_toRightOf="@+id/pingjiatitle"
+                android:text="空调保养"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/pingjia_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/h_6dp"
+                android:layout_marginLeft="@dimen/h_10dp"
+                android:text="评分" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/foodRatingBar"
+                android:layout_marginTop="@dimen/h_6dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/h_13dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/h_10dp"
+                android:numStars="5"
+                android:rating="2"></RatingBar>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/pingclick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:layout_marginRight="@dimen/h_14dp"
+            android:src="@drawable/citydown"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/color_e1e1e1"></View>
+<ScrollView
+    android:id="@+id/scrooview"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/pingjia_mydata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/h_6dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/h_10dp"
+            android:text="挺好的服务很周到挺好的服务很周到挺好的服务很周到挺好的服务很周到挺好的服务很周到挺好的服务很周到挺好的服务很周到挺好的服务很周到挺好的服务很周到挺好的服务很周到挺好的服务很周到挺好的服务很周到" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pingjia_mydata"
+            android:layout_marginLeft="@dimen/h_14dp"
+            android:layout_marginTop="@dimen/h_10dp"
+            android:layout_marginRight="@dimen/h_14dp"
+            android:overScrollMode="never"
+            android:layout_marginBottom="@dimen/h_30dp"
+            android:scrollbars="none" />
+        <TextView
+            android:id="@+id/pingjia_time"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/h_30dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="right|center_vertical"
+            android:layout_marginTop="@dimen/h_6dp"
+            android:layout_marginBottom="@dimen/h_6dp"
+            android:layout_marginRight="@dimen/h_14dp"
+            android:text="2017-12-12" />
+    </RelativeLayout>
+</ScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/color_e1e1e1"></View>
+</LinearLayout>
