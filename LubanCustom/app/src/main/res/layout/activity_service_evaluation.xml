@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f4f4f4"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/color_e1e1e1"></View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_10dp"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/h_10dp"
+        android:background="@color/white"
+        android:paddingTop="@dimen/h_10dp">
+
+        <ImageView
+            android:id="@+id/pingjiatitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/h_14dp"
+            android:src="@drawable/homelistdefaut" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/pingjiatitle"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/pingjia_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/h_10dp"
+                android:layout_toRightOf="@+id/pingjiatitle"
+                android:text="空调保养"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/pingjia_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/h_6dp"
+                android:layout_marginLeft="@dimen/h_10dp"
+                android:text="评分" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/foodRatingBar"
+                android:layout_marginTop="@dimen/h_6dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/h_13dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/h_10dp"
+                android:numStars="5"
+                android:rating="2"></RatingBar>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/pingclick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:visibility="gone"
+            android:layout_marginRight="@dimen/h_14dp"
+            android:src="@drawable/citydown"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/color_e1e1e1"></View>
+    <EditText
+        android:id="@+id/ask_edit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_140dp"
+        android:background="@color/white"
+        android:gravity="left"
+        android:hint="在这里留下您的评价吧"
+        android:lineSpacingExtra="@dimen/h_10dp"
+        android:maxLength="100"
+        android:paddingBottom="5dp"
+        android:paddingLeft="@dimen/h_7dp"
+        android:paddingRight="@dimen/h_7dp"
+        android:paddingTop="@dimen/h_10dp"
+        android:text=""
+        android:textColor="@color/color_999"
+        android:textColorHint="@color/color_999"
+        android:textSize="@dimen/sp_14" />
+
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="@dimen/h_10dp"
+        android:padding="@dimen/h_6dp"
+        android:background="@color/white"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="4"
+        android:verticalSpacing="@dimen/h_5dp">
+
+    </GridView>
+
+    <com.example.baselibrary.recycleview.NoScrollGridView
+        android:id="@+id/add_icon_gridView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:horizontalSpacing="@dimen/h_5dp"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:scrollingCache="false"
+        android:verticalSpacing="5dp" />
+
+
+</LinearLayout>

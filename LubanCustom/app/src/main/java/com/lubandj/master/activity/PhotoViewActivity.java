@@ -22,7 +22,7 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
     private MyImageAdapter adapter;
     private TextView mTvImageCount;
     private TextView mTvSaveImage;
-    private List<String> urls = new ArrayList<>();
+    private ArrayList<String> urls = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,9 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
 
         Intent intent = getIntent();
         currentPosition = intent.getIntExtra("currentPosition", 0);
+        Bundle bundle = intent.getExtras();
+
+        urls = bundle.getStringArrayList("dataBean");
         adapter = new MyImageAdapter(urls, this);
         mViewPager.setAdapter(adapter);
         mViewPager.setCurrentItem(currentPosition, false);

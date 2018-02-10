@@ -104,6 +104,7 @@ public class MyEvaluationActivity extends BaseRefreshActivity implements IbaseVi
         msgBeens.addAll(datas);
 //        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
         msgCenterAdapter.notifyDataSetChanged();
+        ServiceEvaluationActivity.startActivity(this);
     }
 
     @Override

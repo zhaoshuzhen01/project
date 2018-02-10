@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.baselibrary.photomanager.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:scaleType="centerCrop" />
+
+        <com.example.baselibrary.photomanager.TouchImageView
+            android:id="@+id/imageViewMinus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="-5dp"
+            android:layout_marginTop="-5dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/delete_def" />
+    </RelativeLayout>
+</com.example.baselibrary.photomanager.SquareLayout>
