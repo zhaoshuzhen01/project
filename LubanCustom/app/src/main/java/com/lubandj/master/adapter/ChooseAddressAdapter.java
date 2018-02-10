@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
 import com.lubandj.master.R;
+import com.lubandj.master.activity.AddAddressActivity;
 import com.lubandj.master.been.MsgCenterBeen;
 
 import java.util.List;
@@ -29,16 +30,22 @@ public class ChooseAddressAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBea
 
     @Override
     protected void convert(BaseViewHolder helper, MsgCenterBeen.InfoBean.ListBean item) {
-        int position = helper.getAdapterPosition();
+        final int position = helper.getAdapterPosition();
         ImageView iconMsg =  ((ImageView) (helper.getView(R.id.tv_commodity_delete)));
         TextView tvCommodityAttr = ((TextView)(helper.getView(R.id.tv_commodity_attr)));
         TextView tvCommodityNum = ((TextView)(helper.getView(R.id.tv_commodity_num)));
+        iconMsg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                childViewClick(position,view);
+            }
+        });
 
     }
 
     @Override
     public void childViewClick(int position, View view) {
-
+        AddAddressActivity.startActivity(context);
     }
 }
 

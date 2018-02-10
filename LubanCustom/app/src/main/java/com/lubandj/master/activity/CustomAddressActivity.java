@@ -77,8 +77,9 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
 
     @OnClick(R.id.fankui_button)
     public void onClick() {
-        toast(this, "地址");
+        AddAddressActivity.startActivity(this);
     }
+
 
 
     @Override
