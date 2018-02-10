@@ -108,6 +108,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IbaseView<
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
         msgBeens.clear();
+        if (datas!=null)
         msgBeens.addAll(datas);
 //        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
         sort(msgBeens);

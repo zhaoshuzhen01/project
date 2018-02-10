@@ -99,6 +99,7 @@ public class GetCoupsActivity extends BaseRefreshActivity implements IbaseView<M
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
         msgBeens.clear();
+        if (datas!=null)
         msgBeens.addAll(datas);
 //        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
         msgCenterAdapter.notifyDataSetChanged();
