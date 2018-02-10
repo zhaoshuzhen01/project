@@ -143,6 +143,18 @@ public class CommonUtils {
         SPUtils.getInstance().put(Canstance.UID, uid);
     }
 
+    public static void setFirst(){
+        SPUtils.getInstance().put(Canstance.FIRSTSTART, 2);
+    }
+
+    public static boolean getFirst(){
+        int dex = SPUtils.getInstance().getInt(Canstance.FIRSTSTART);
+        if (dex==2){
+            return false;
+        }
+        return true ;
+    }
+
     public static String getToken() {
         return SPUtils.getInstance().getString(Canstance.TOKEN);
     }

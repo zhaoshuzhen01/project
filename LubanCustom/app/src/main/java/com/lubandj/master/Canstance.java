@@ -42,7 +42,7 @@ public class Canstance {
     public static final String TOKEN = "TOKEN";
     public static final String UID = "UID";
     public static final String MSG = "MSG";
-
+    public static final String FIRSTSTART = "first_start";
 
     public static final String KEY_SHEET_STATUS_TO_PERFORM = "1";
     public static final String KEY_SHEET_STATUS_ON_ROAD = "2";

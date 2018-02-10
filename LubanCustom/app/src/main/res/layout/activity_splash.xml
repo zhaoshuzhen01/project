@@ -5,20 +5,24 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#eeeeee"
         android:gravity="center_horizontal"
         android:orientation="vertical">
-
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v4.view.ViewPager>
         <ImageView
             android:id="@+id/iv_splash"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:src="@drawable/splash"/>
-    </LinearLayout>
+    </RelativeLayout>
 
 </layout>
 
