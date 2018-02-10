@@ -100,6 +100,7 @@ public class MyEvaluationActivity extends BaseRefreshActivity implements IbaseVi
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
         msgBeens.clear();
+        if (datas!=null)
         msgBeens.addAll(datas);
 //        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
         msgCenterAdapter.notifyDataSetChanged();
