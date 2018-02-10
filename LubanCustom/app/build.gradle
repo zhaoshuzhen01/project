@@ -45,7 +45,7 @@ MasterSecret： be2mClT9kU5PWNhyqz39YA重置
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'boolean', 'isDebug', 'false'
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
@@ -54,7 +54,7 @@ MasterSecret： be2mClT9kU5PWNhyqz39YA重置
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'boolean', 'isDebug', 'true'
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
             manifestPlaceholders = [channelID: "testluban"]
         }
     }

@@ -212,7 +212,7 @@
         <!-- 百地图度配置 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="8qwhW0RtoR2X4TyCkoGbCSlb1El44C6R" />
+            android:value="bTcVrCq9kIalou3LsRzSqFlmtFV8pIYw" />
 
         <activity
             android:name=".activity.CarActivity"

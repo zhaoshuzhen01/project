@@ -34,7 +34,7 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
         super.onCreate();
         context = this;
         LoginUtil.setWeixinConfig(context);
-        if (!TextUtils.equals(getProcessName(this), "com.lubandj.master")) {
+        if (!TextUtils.equals(getProcessName(this), "com.lubandj.customer")) {
             return;
         }
 

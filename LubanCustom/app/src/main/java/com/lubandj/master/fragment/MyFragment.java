@@ -31,6 +31,7 @@ import com.lubandj.master.dialog.DoubleSelectDialog;
 import com.lubandj.master.httpbean.UserInfoRequest;
 import com.lubandj.master.httpbean.UserInfoResponse;
 import com.lubandj.customer.my.AboutLuBanActivity;
+import com.lubandj.master.my.SelectAddressActivity;
 import com.lubandj.master.utils.BitmapCache;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
@@ -153,7 +154,9 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
                 }
                 break;
             case R.id.my_address:
-                CustomAddressActivity.startActivity(getActivity());
+//                CustomAddressActivity.startActivity(getActivity());
+                Intent intenta = new Intent(getActivity(), SelectAddressActivity.class);
+                startActivity(intenta);
                 break;
             case R.id.my_youhuiquan:
                 CouponsActivity.startActivity(getActivity());
