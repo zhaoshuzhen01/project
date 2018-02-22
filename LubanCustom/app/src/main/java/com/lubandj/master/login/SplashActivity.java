@@ -41,10 +41,11 @@ import com.lubandj.master.utils.TaskEngine;
  * company:九州宏图
  */
 
-public class SplashActivity extends PermissionActivity implements ViewPager.OnPageChangeListener{
+public class SplashActivity extends PermissionActivity implements ViewPager.OnPageChangeListener {
     private ActivitySplashBinding mBinding;
-    private ViewPager viewPager ;
-    private int imgs [] ={R.drawable.start1,R.drawable.start2,R.drawable.start3};
+    private ViewPager viewPager;
+    private int imgs[] = {R.drawable.start1, R.drawable.start2, R.drawable.start3};
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ActUtils.isFirstIn = true;//设置为入口正常进入
@@ -53,15 +54,15 @@ public class SplashActivity extends PermissionActivity implements ViewPager.OnPa
         mBinding.viewpager.setAdapter(new MyAdatper());
         mBinding.viewpager.setOnPageChangeListener(this);
         StatusBarUtils.setWindowStatusBarColor(SplashActivity.this, R.color.splash_status_bar);
-        if (CommonUtils.getFirst()){
+        if (CommonUtils.getFirst()) {
             mBinding.viewpager.setVisibility(View.VISIBLE);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     StatusBarUtils.setWindowStatusBarColor(SplashActivity.this, R.color.white);
-                   mBinding.ivSplash.setVisibility(View.GONE);
+                    mBinding.ivSplash.setVisibility(View.GONE);
                 }
-            },1000);
+            }, 1000);
         }
         onLogin();
     }
@@ -70,6 +71,16 @@ public class SplashActivity extends PermissionActivity implements ViewPager.OnPa
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, "location")) {
                 setDialogTipUserGoToAppSettting("权限提醒", "应用需要定位权限，请到应用设置中打开");
+                startRequestPermission();
+                return;
+            }
+            if (checkPermission(Manifest.permission.CAMERA, "camera")) {
+                setDialogTipUserGoToAppSettting("权限提醒", "应用需要拍照权限，请到应用设置中打开");
+                startRequestPermission();
+                return;
+            }
+            if (checkPermission(Manifest.permission.CALL_PHONE, "phone")) {
+                setDialogTipUserGoToAppSettting("权限提醒", "应用需要打电话权限，请到应用设置中打开");
                 startRequestPermission();
                 return;
             }
@@ -82,7 +93,7 @@ public class SplashActivity extends PermissionActivity implements ViewPager.OnPa
                 Intent intent = new Intent(SplashActivity.this, MainCantainActivity.class);
                 startActivity(intent);
             }
-        },1000);
+        }, 1000);
     }
 
 
@@ -185,24 +196,24 @@ public class SplashActivity extends PermissionActivity implements ViewPager.OnPa
         public Object instantiateItem(ViewGroup view, final int position) {
             View imageLayout = null;
             if (imgs.length > 0) {
-                    imageLayout = LayoutInflater.from(SplashActivity.this).inflate(com.example.baselibrary.R.layout.adver_banner_item, view, false);
-                    ImageView imageView = (ImageView) imageLayout.findViewById(com.example.baselibrary.R.id.bi_imageView);
-                    final int pos = position % imgs.length; // 为了避免角标越界，进行取余运算
+                imageLayout = LayoutInflater.from(SplashActivity.this).inflate(com.example.baselibrary.R.layout.adver_banner_item, view, false);
+                ImageView imageView = (ImageView) imageLayout.findViewById(com.example.baselibrary.R.id.bi_imageView);
+                final int pos = position % imgs.length; // 为了避免角标越界，进行取余运算
                 imageView.setImageResource(imgs[pos]);
-                    //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos).getPic(), 0, 0, null);
-                    //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos), 0, 0, null);
-                    ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+                //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos).getPic(), 0, 0, null);
+                //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos), 0, 0, null);
+                ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
 //                layoutParams.height =getResources().getDisplayMetrics().widthPixels*2;
 //                GlideUtils.loadDefaultGameList(imageView, m_AdvImgs.get(pos).getImage());
-                    imageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                        }
-                    });
-                }
-                view.addView(imageLayout, 0);
-                return imageLayout;
+                    }
+                });
+            }
+            view.addView(imageLayout, 0);
+            return imageLayout;
 
         }
 
@@ -225,16 +236,16 @@ public class SplashActivity extends PermissionActivity implements ViewPager.OnPa
 
     @Override
     public void onPageSelected(int position) {
-if (position==imgs.length-1&&CommonUtils.getFirst()){
-    CommonUtils.setFirst();
-    new Handler().postDelayed(new Runnable() {
-        @Override
-        public void run() {
-            Intent intent = new Intent(SplashActivity.this, MainCantainActivity.class);
-            startActivity(intent);
+        if (position == imgs.length - 1 && CommonUtils.getFirst()) {
+            CommonUtils.setFirst();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(SplashActivity.this, MainCantainActivity.class);
+                    startActivity(intent);
+                }
+            }, 500);
         }
-    },500);
-}
     }
 
     @Override

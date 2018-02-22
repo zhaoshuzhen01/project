@@ -70,7 +70,7 @@ public class PhotoUtil {
             //FileProvider 是一个特殊的 ContentProvider 的子类，
             //它使用 content:// Uri 代替了 file:/// Uri. ，更便利而且安全的为另一个app分享文件
             photoUri = FileProvider.getUriForFile(context,
-                    "com.lubandj.master.fileprovider",
+                    "com.lubandj.customer.fileprovider",
                     image);
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);

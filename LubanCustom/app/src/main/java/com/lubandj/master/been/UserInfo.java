@@ -16,4 +16,5 @@ public class UserInfo {
     public String uuid;
     public String link;
     public String qrcode;
+    public String sex;
 }

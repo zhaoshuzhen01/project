@@ -17,6 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.example.baselibrary.BaseFragment;
 import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.customer.login.LoginActivity;
+import com.lubandj.customer.my.AddressListActivity;
 import com.lubandj.customer.my.FeedBackInfoActivity;
 import com.lubandj.customer.my.MySettingActivity;
 import com.lubandj.master.Canstance;
@@ -155,7 +156,7 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
                 break;
             case R.id.my_address:
 //                CustomAddressActivity.startActivity(getActivity());
-                Intent intenta = new Intent(getActivity(), SelectAddressActivity.class);
+                Intent intenta = new Intent(getActivity(), AddressListActivity.class);
                 startActivity(intenta);
                 break;
             case R.id.my_youhuiquan:

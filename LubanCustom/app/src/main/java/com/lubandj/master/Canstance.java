@@ -31,6 +31,8 @@ public class Canstance {
     public static final int HTTP_WORKDETAIL = 60001;//工作日历详情
     public static final int HTTP_LEAVERECORD = 50002;//请假列表
     public static final int HTTP_LEAVEREQUEST = 50001;//请假提交
+
+    public static final int HTTP_MODIFY_INFO=10009;//修改用户信息
 //  sp constant
 
     public static final String KEY_SP_PHONE_NUM = "sp_phone_num";
@@ -59,7 +61,6 @@ public class Canstance {
     public static final int TYPE_ORDER_DETAILS_WAIT_SERVICE = 5;//等待服务
     public static final int TYPE_ORDER_DETAILS_ON_ROAD = 6;//正在上门
     public static final int TYPE_ORDER_DETAILS_IN_SERVICE = 7;//正在服务
-
 
 
 

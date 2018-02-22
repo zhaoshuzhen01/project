@@ -16,6 +16,7 @@ import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.NetworkUtils;
 import com.example.baselibrary.util.PhotoUtil;
+import com.lubandj.customer.httpbean.ModifyInfoRequest;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
@@ -23,6 +24,7 @@ import com.lubandj.master.been.UserInfo;
 import com.lubandj.master.databinding.ActivityMysettingBinding;
 import com.lubandj.master.dialog.DoubleSelectDialog;
 import com.lubandj.master.dialog.TipDialog;
+import com.lubandj.master.httpbean.BaseResponseBean;
 import com.lubandj.master.httpbean.UploadPhotoReponse;
 import com.lubandj.master.httpbean.UploadPhotoRequest;
 import com.lubandj.master.my.PermissionActivity;
@@ -103,8 +105,6 @@ public class MySettingActivity extends PermissionActivity {
      * @param view
      */
     public void onHeadPhoto(View view) {
-
-
         DoubleSelectDialog dialog = new DoubleSelectDialog(MySettingActivity.this, "拍照", "从相册选择", new DoubleSelectDialog.DoubleClickListenerInterface() {
             @Override
             public void doFirstClick() {
@@ -215,8 +215,10 @@ public class MySettingActivity extends PermissionActivity {
                     }
                 });
             }
-        } else if (requestCode == 1001) {
+        } else if (requestCode == 1001) {//修改电话成功
             setPhone();
+        } else if (requestCode == 13) {//修改昵称成功
+            binding.tvSettingNickname.setText(TApplication.context.mUserInfo.nickname);
         }
     }
 
@@ -305,36 +307,34 @@ public class MySettingActivity extends PermissionActivity {
      */
     public void onModifyNickName(View view) {
         Intent intent = new Intent(MySettingActivity.this, ModifyNickNameActivity.class);
-        startActivity(intent, null);
+        startActivityForResult(intent, 13);
     }
 
-    public void updateSex(String sex) {
-//        initProgressDialog("正在更新性别...").show();
-//        UploadPhotoRequest bean = new UploadPhotoRequest(CommonUtils.Bitmap2StrByBase64(headPhoto));
-//        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_UPLOAD_PHOTO, bean, new Response.Listener<String>() {
-//
-//            @Override
-//            public void onResponse(String s) {
-//                dialog.dismiss();
-//                UploadPhotoReponse response = new UploadPhotoReponse();
-//                response = (UploadPhotoReponse) CommonUtils.generateEntityByGson(MySettingActivity.this, s, response);
-//                if (response != null) {
-//                    RxBus.getInstance().post(new BusEvent(BusEvent.IMG_CODE));
-//                    TApplication.context.mUserInfo.face_url = response.info.face_url;
-//                    loadFace();
-//                    PhotoUtil.getInstance().deleteCache();
-//
-//                    setResult(RESULT_OK);
-//                    ToastUtils.showShort(MySettingActivity.this, "上传成功");
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                dialog.dismiss();
-//                CommonUtils.fastShowError(MySettingActivity.this, volleyError);
-//            }
-//        });
-        binding.tvSettingSex.setText(sex);
+    public void updateSex(final String sex) {
+        initProgressDialog("正在更新性别...").show();
+        final ModifyInfoRequest request = new ModifyInfoRequest();
+        request.nickname = "";
+        request.sex = sex.equals("男") ? "1" : "2";
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_MODIFY_INFO, request, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String s) {
+                dialog.dismiss();
+                BaseResponseBean response = new BaseResponseBean();
+                response = CommonUtils.generateEntityByGson(MySettingActivity.this, s, response);
+                if (response != null) {
+                    ToastUtils.showShort(MySettingActivity.this, response.message);
+//                    TApplication.context.mUserInfo.sex = request.sex;
+                    binding.tvSettingSex.setText(sex);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                CommonUtils.fastShowError(MySettingActivity.this, volleyError);
+            }
+        });
+
     }
 }

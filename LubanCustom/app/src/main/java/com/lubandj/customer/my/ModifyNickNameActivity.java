@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.example.baselibrary.BaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.RegexUtils;
+import com.lubandj.customer.httpbean.ModifyInfoRequest;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
@@ -64,7 +65,11 @@ public class ModifyNickNameActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                if (s.length() > 0) {
+                    binding.btnModifynickname.setEnabled(true);
+                } else {
+                    binding.btnModifynickname.setEnabled(false);
+                }
             }
         });
     }
@@ -124,30 +129,31 @@ public class ModifyNickNameActivity extends BaseActivity {
 
         initProgressDialog("正在保存昵称...").show();
 
-        ModifyPhoneRequest request = new ModifyPhoneRequest();
-//        request.mobile = mPhoneNum;
-//        request.verifyCode = mPhoneNum;
-//        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_MODIFYPHONE, request, new Response.Listener<String>() {
-//
-//            @Override
-//            public void onResponse(String s) {
-//                dialog.dismiss();
-//                BaseResponseBean response = new BaseResponseBean();
-//                response = CommonUtils.generateEntityByGson(ModifyNickNameActivity.this, s, response);
-//                if (response != null) {
-//                    ToastUtils.showShort(ModifyNickNameActivity.this, response.message);
-//                    TApplication.context.mUserInfo.mobile = mPhoneNum;
-//                    setResult(RESULT_OK);
-//                    finish();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                fastDismiss();
-//                CommonUtils.fastShowError(ModifyNickNameActivity.this, volleyError);
-//            }
-//        });
+        ModifyInfoRequest request = new ModifyInfoRequest();
+        request.nickname = nickName;
+        request.sex = "";
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_MODIFY_INFO, request, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String s) {
+                dialog.dismiss();
+                BaseResponseBean response = new BaseResponseBean();
+                response = CommonUtils.generateEntityByGson(ModifyNickNameActivity.this, s, response);
+                if (response != null) {
+                    ToastUtils.showShort(ModifyNickNameActivity.this, response.message);
+                    TApplication.context.mUserInfo.nickname = nickName;
+                    ToastUtils.showShort(ModifyNickNameActivity.this, "修改成功");
+                    setResult(RESULT_OK);
+                    finish();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                fastDismiss();
+                CommonUtils.fastShowError(ModifyNickNameActivity.this, volleyError);
+            }
+        });
     }
 
 }
