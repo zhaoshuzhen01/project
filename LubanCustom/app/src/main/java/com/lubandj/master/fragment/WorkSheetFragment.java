@@ -174,7 +174,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void getWorkLists(List<WorkListBeen.InfoBean> datas) {
-        if (dialog != null)
+       /* if (dialog != null)
             dialog.dismiss();
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
@@ -190,7 +190,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
             backLayout.setImg(R.drawable.nodingdan);
             backLayout.setButtonText("立即预约");
             backLayout.setVisibility(View.VISIBLE);
-        }
+        }*/
     }
 
     @Override
