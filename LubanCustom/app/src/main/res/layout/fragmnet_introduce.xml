@@ -13,8 +13,15 @@
         android:layout_height="50dp"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:padding="@dimen/h_3dp">
+        android:paddingLeft="@dimen/h_3dp"
+        android:paddingRight="@dimen/h_3dp"
+        android:paddingBottom="@dimen/h_3dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_e1e1e1" />
         <TextView
+            android:layout_marginTop="@dimen/h_3dp"
             android:id="@+id/tv_show_price"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -32,6 +39,7 @@
             android:background="@drawable/xiadan"
             android:gravity="center"
             android:text="预约下单"
+            android:layout_marginTop="@dimen/h_3dp"
             android:textColor="@color/white" />
     </RelativeLayout>
     <!-- 第一部分:CoordinatorLayout -->

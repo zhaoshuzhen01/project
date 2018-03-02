@@ -21,6 +21,7 @@ import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.Iview.IbaseView;
+import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.activity.MainCantainActivity;
@@ -201,13 +202,18 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
     public void statistics() {
         totalCount = 0;
         totalPrice = 0.00;
+        LocalleCarData.newInstance().clear();
+        LocalleCarData.newInstance().setTotalPrice(0.00);
         for (int i = 0; i < shoppingCartBeanList.size(); i++) {
             ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(i);
             if (shoppingCartBean.isChoosed()) {
                 totalCount++;
+                LocalleCarData.newInstance().setShoppingCartBeanList(shoppingCartBean);
+
                 totalPrice += shoppingCartBean.getPrice() * shoppingCartBean.getCount();
             }
         }
+        LocalleCarData.newInstance().setTotalPrice(totalPrice);
         if (totalCount>0){
             car_msgCount.setText(totalCount+"");
             car_msgCount.setVisibility(VISIBLE);

@@ -21,6 +21,7 @@ import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.Iview.IbaseView;
+import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.ShoppingCartAdapter;
@@ -257,15 +258,19 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
         ids.clear();
         positons.clear();
         totalPrice = 0.00;
+        LocalleCarData.newInstance().clear();
+        LocalleCarData.newInstance().setTotalPrice(0.00);
         for (int i = 0; i < shoppingCartBeanList.size(); i++) {
             ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(i);
             if (shoppingCartBean.isChoosed()) {
                 ids.add(shoppingCartBean.getId());
                 positons.add(i);
+                LocalleCarData.newInstance().setShoppingCartBeanList(shoppingCartBean);
                 totalCount++;
                 totalPrice += shoppingCartBean.getPrice() * shoppingCartBean.getCount();
             }
         }
+        LocalleCarData.newInstance().setTotalPrice(totalPrice);
         tvShowPrice.setText("¥" + totalPrice);
         tvSettlement.setText("预约下单");
         if (totalCount==0){
