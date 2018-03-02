@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
+import com.lubandj.GlideRoundTransform;
 import com.lubandj.master.R;
 import com.lubandj.master.been.HomeBeen;
 import com.lubandj.master.been.MsgCenterBeen;
@@ -30,7 +31,7 @@ public class HomeListAdapter extends BaseQuickAdapter<HomeBeen.InfoBean, BaseVie
     protected void convert(BaseViewHolder helper, HomeBeen.InfoBean item) {
         int position = helper.getAdapterPosition();
         ImageView iconMsg = ((ImageView) (helper.getView(R.id.state_img)));
-        Glide.with(context).load(item.getService_pic()).skipMemoryCache(false).into(iconMsg);
+        Glide.with(context).load(item.getService_pic()).transform(new GlideRoundTransform(context,15)).into(iconMsg);
         TextView title = ((TextView) (helper.getView(R.id.home_list_title)));
         title.setText(item.getName());
         TextView price = ((TextView) (helper.getView(R.id.home_list_price)));
