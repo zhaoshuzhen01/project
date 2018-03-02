@@ -24,8 +24,10 @@ import com.lubandj.master.activity.CarActivity;
 import com.lubandj.master.activity.ServiceDetailActivity;
 import com.lubandj.master.adapter.HomeListAdapter;
 import com.lubandj.master.adapter.MsgCenterAdapter;
+import com.lubandj.master.been.HomeBeen;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.customview.HomeTopView;
+import com.lubandj.master.model.HomeModel;
 import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
 import com.lubandj.master.utils.CommonUtils;
 
@@ -38,16 +40,16 @@ import butterknife.InjectView;
  * Created by ${zhaoshuzhen} on 2018/1/20.
  */
 
-public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCenterBeen.InfoBean.ListBean>, BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
+public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeBeen.InfoBean>, BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     private HomeListAdapter homeListAdapter;
-    private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
+    private List<HomeBeen.InfoBean> msgBeens = new ArrayList<>();
     private BaseReflushPresenter msgCenterPresenter;
     private HomeTopView homeTopView;
     protected RelativeLayout main_car_lay;
-    private boolean mY = false;
     private int mdex = 0 ;
+    private HomeModel homeModel ;
 
     public static HomeFragment newInstance(int index) {
         HomeFragment myFragment = new HomeFragment();
@@ -65,7 +67,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
     @Override
     protected void initView(View view) {
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6) view.findViewById(R.id.prpt);
-
+        pullToRefreshAndPushToLoadView.setCanLoadMore(false);
         homeListAdapter = new HomeListAdapter(msgBeens, getActivity());
         homeListAdapter.setOnItemClickListener(this);
         homeTopView = new HomeTopView(getActivity());
@@ -74,7 +76,9 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2); //spanCount为列数，默认方向vertical
         initRawRecyclerView(recyclerView, manager, homeListAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(0,0,20,0));
-        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(), this, new MsgCenterModel(getActivity()));
+        homeModel = new HomeModel(getActivity());
+        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(), this, homeModel);
+        homeModel.setCity("北京");
         main_car_lay = view.findViewById(R.id.main_car_lay);
         main_car_lay.setOnClickListener(this);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -124,7 +128,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
     }
 
     @Override
-    public void getDataLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
+    public void getDataLists(List<HomeBeen.InfoBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
         if (msgBeens.size()==0&&datas==null){
@@ -140,7 +144,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<MsgCe
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        ServiceDetailActivity.startActivity(getActivity());
+        ServiceDetailActivity.startActivity(getActivity(),msgBeens.get(position).getService_id());
     }
 
     @Override

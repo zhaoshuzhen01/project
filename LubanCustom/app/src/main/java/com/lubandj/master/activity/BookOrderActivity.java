@@ -12,9 +12,14 @@ import android.widget.TextView;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.lubandj.customer.my.FeedBackInfoActivity;
+import com.lubandj.master.Iview.IbaseView;
+import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.BookOrderOdapter;
+import com.lubandj.master.been.CarListBeen;
+import com.lubandj.master.been.HomeBeen;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.model.CarListModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class BookOrderActivity extends TitleBaseActivity {
+public class BookOrderActivity extends TitleBaseActivity implements IbaseView<CarListBeen.InfoBean> {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.choose_youhui)
@@ -37,7 +42,8 @@ public class BookOrderActivity extends TitleBaseActivity {
     @InjectView(R.id.tv_settlement)
     TextView tv_settlement;
     private BookOrderOdapter bookOrderOdapter;
-    private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
+    private List<CarListBeen.InfoBean> msgBeens = new ArrayList<>();
+    private BaseReflushPresenter msgCenterPresenter;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, BookOrderActivity.class);
@@ -68,10 +74,6 @@ public class BookOrderActivity extends TitleBaseActivity {
 
     @Override
     public void initData() {
-        for (int i = 0; i < 5; i++) {
-            msgBeens.add(new MsgCenterBeen.InfoBean.ListBean());
-        }
-        bookOrderOdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -112,5 +114,16 @@ public class BookOrderActivity extends TitleBaseActivity {
                 CustomAddressActivity.startActivity(this);
                 break;
         }
+    }
+
+    @Override
+    public void getDataLists(List<CarListBeen.InfoBean> datas) {
+//        pullToRefreshAndPushToLoadView.finishLoading();
+        if (msgBeens.size()==0&&datas==null){
+            return;
+        }
+        msgBeens.clear();
+        msgBeens.addAll(datas);
+        bookOrderOdapter.notifyDataSetChanged();
     }
 }

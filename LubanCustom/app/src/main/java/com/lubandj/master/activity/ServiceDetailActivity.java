@@ -41,9 +41,12 @@ public class ServiceDetailActivity extends NotitleBaseActivity {
     private List<String> mTitles = new ArrayList<>();
     // 填充到ViewPager中的Fragment
     private List<Fragment> mFragments;
+    //服务id
+    private String service_id ;
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context,String service_id) {
         Intent intent = new Intent(context, ServiceDetailActivity.class);
+        intent.putExtra("serviceId",service_id);
         context.startActivity(intent);
     }
 
@@ -70,16 +73,17 @@ public class ServiceDetailActivity extends NotitleBaseActivity {
     }
 
     protected void onSetupTabData(List<String> titles) {
+        service_id = getIntent().getStringExtra("serviceId");
         Titles = (String[]) titles.toArray(new String[titles.size()]);
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
         for (int i = 0; i < Titles.length; i++) {
             if (i==0){
-                IntroduceFragment mFragment = IntroduceFragment.newInstance(i);
+                IntroduceFragment mFragment = IntroduceFragment.newInstance(service_id);
                 mFragments.add(i, mFragment);
 
             }else {
-                PingJiaFragment mFragment = PingJiaFragment.newInstance(i);
+                PingJiaFragment mFragment = PingJiaFragment.newInstance(service_id);
                 mFragments.add(i, mFragment);
 
             }

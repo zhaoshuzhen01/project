@@ -20,6 +20,33 @@ public class ShoppingCartBean {
     public boolean isCheck = false;
     private int count;
 
+    public int getService_type() {
+        return service_type;
+    }
+
+    public void setService_type(int service_type) {
+        this.service_type = service_type;
+    }
+
+    public int getService_id() {
+        return service_id;
+    }
+
+    public void setService_id(int service_id) {
+        this.service_id = service_id;
+    }
+
+    public int getSpec_id() {
+        return spec_id;
+    }
+
+    public void setSpec_id(int spec_id) {
+        this.spec_id = spec_id;
+    }
+
+    private int service_type;
+    private int service_id;
+    private int spec_id;
 
 
     public String getAttribute() {
@@ -34,13 +61,16 @@ public class ShoppingCartBean {
     }
 
     public ShoppingCartBean(int id, String shoppingName, String attribute, int dressSize,
-                            double price, int count) {
+                            double price, int count,int service_type,int service_id,int spec_id) {
         this.id = id;
         this.shoppingName = shoppingName;
         this.attribute = attribute;
         this.dressSize = dressSize;
         this.price = price;
         this.count = count;
+        this.service_type = service_type;
+        this.service_id = service_id ;
+        this.spec_id = spec_id ;
 
     }
 

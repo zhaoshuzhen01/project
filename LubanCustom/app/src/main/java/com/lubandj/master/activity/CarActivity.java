@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,7 +42,7 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
     TextView tv_clear;//tv_edit
 
 
-    ListView list_shopping_cart;
+    RecyclerView list_shopping_cart;
     private ShoppingCartAdapter shoppingCartAdapter;
     private boolean flag = false;
     private List<ShoppingCartBean> shoppingCartBeanList = new ArrayList<>();
@@ -87,7 +88,7 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
         ckAll= (CheckBox) findViewById(R.id.ck_all);
         tvShowPrice= (TextView) findViewById(R.id.tv_show_price);
         tvSettlement= (TextView) findViewById(R.id.tv_settlement);
-        list_shopping_cart= (ListView) findViewById(R.id.list_shopping_cart);
+        list_shopping_cart= (RecyclerView) findViewById(R.id.list_shopping_cart);
 
         ckAll.setOnClickListener(this);
         tvSettlement.setOnClickListener(this);
@@ -116,7 +117,7 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
             shoppingCartBean.setImageUrl("https://gd1.alicdn.com/imgextra/i1/2160089910/TB2M_NSbB0kpuFjSsppXXcGTXXa_!!2160089910.jpg");
             shoppingCartBeanList.add(shoppingCartBean);
         }
-        shoppingCartAdapter = new ShoppingCartAdapter(this);
+        shoppingCartAdapter = new ShoppingCartAdapter(shoppingCartBeanList,this);
         shoppingCartAdapter.isShow(false);
         shoppingCartAdapter.setCheckInterface(this);
         shoppingCartAdapter.setModifyCountInterface(this);

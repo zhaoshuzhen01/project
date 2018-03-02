@@ -66,17 +66,22 @@
         android:paddingTop="@dimen/h_12dp"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/jian"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/jian"
            />
         <TextView
+            android:id="@+id/count"
             android:layout_width="@dimen/h_40dp"
             android:layout_height="@dimen/h_40dp"
             android:textColor="@color/black"
             android:gravity="center"
             android:text="0"/>
         <ImageView
+            android:id="@+id/jia"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/jia"

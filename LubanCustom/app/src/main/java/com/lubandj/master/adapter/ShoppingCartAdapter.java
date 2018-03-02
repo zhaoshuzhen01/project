@@ -3,6 +3,7 @@ package com.lubandj.master.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.baselibrary.refresh.BaseQuickAdapter;
+import com.example.baselibrary.refresh.BaseViewHolder;
 import com.lubandj.master.R;
+import com.lubandj.master.been.HomeBeen;
 import com.lubandj.master.been.ShoppingCartBean;
 import com.lubandj.master.utils.StringUtil;
 import java.util.List;
@@ -24,7 +28,7 @@ import java.util.List;
  * <p/>
  * 购物车Adapter
  */
-public class ShoppingCartAdapter extends BaseAdapter {
+public class ShoppingCartAdapter extends BaseQuickAdapter<ShoppingCartBean, BaseViewHolder> {
 
     private boolean isShow = true;//是否显示编辑/完成
     private List<ShoppingCartBean> shoppingCartBeanList;
@@ -32,7 +36,8 @@ public class ShoppingCartAdapter extends BaseAdapter {
     private ModifyCountInterface modifyCountInterface;
     private Context context;
 
-    public ShoppingCartAdapter(Context context) {
+    public ShoppingCartAdapter(@Nullable List<ShoppingCartBean> data,Context context) {
+        super(R.layout.item_shopping_cart_layout, data);
         this.context = context;
     }
 
@@ -41,78 +46,47 @@ public class ShoppingCartAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    /**
-     * 单选接口
-     *
-     * @param checkInterface
-     */
-    public void setCheckInterface(CheckInterface checkInterface) {
-        this.checkInterface = checkInterface;
-    }
-
-    /**
-     * 改变商品数量接口
-     *
-     * @param modifyCountInterface
-     */
-    public void setModifyCountInterface(ModifyCountInterface modifyCountInterface) {
-        this.modifyCountInterface = modifyCountInterface;
-    }
-
     @Override
-    public int getCount() {
-        return shoppingCartBeanList == null ? 0 : shoppingCartBeanList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return shoppingCartBeanList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-
-    /**
-     * 是否显示可编辑
-     *
-     * @param flag
-     */
-    public void isShow(boolean flag) {
-        isShow = flag;
-    }
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        final ViewHolder holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_shopping_cart_layout, parent, false);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+    protected void convert(BaseViewHolder helper, ShoppingCartBean item) {
+       /* int position = helper.getAdapterPosition();
+        ImageView iconMsg = ((ImageView) (helper.getView(R.id.state_img)));
+        Glide.with(context).load(item.getService_pic()).skipMemoryCache(false).into(iconMsg);
+        TextView title = ((TextView) (helper.getView(R.id.home_list_title)));
+        title.setText(item.getName());
+        TextView price = ((TextView) (helper.getView(R.id.home_list_price)));
+        price.setText(item.getPrice());*/
+       final CheckBox ckOneChose = ((CheckBox)(helper.getView(R.id.ck_chose)));
+       ImageView ivShowPic = ((ImageView) (helper.getView(R.id.iv_show_pic)));
+        ImageView ivSub = ((ImageView)(helper.getView(R.id.iv_sub)));
+        ImageView ivAdd = ((ImageView)(helper.getView(R.id.iv_add)));
+       TextView tvCommodityName = ((TextView)(helper.getView(R.id.tv_commodity_name)));
+        TextView tvCommodityAttr = ((TextView)(helper.getView(R.id.tv_commodity_attr)));
+        TextView tvCommodityPrice = ((TextView)(helper.getView(R.id.tv_commodity_price)));
+        TextView tvCommodityNum = ((TextView)(helper.getView(R.id.tv_commodity_num)));
+        final TextView tvCommodityShowNum = ((TextView)(helper.getView(R.id.tv_commodity_show_num)));
+        ImageView tvCommodityDelete = ((ImageView) (helper.getView(R.id.tv_commodity_delete)));
+        LinearLayout  rlEdit = ((LinearLayout)(helper.getView(R.id.rl_edit)));
+       final int position = helper.getAdapterPosition();
         final ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(position);
         boolean choosed = shoppingCartBean.isChoosed();
         if (choosed){
-            holder.ckOneChose.setChecked(true);
+            ckOneChose.setChecked(true);
         }else{
-            holder.ckOneChose.setChecked(false);
+            ckOneChose.setChecked(false);
         }
         String attribute = shoppingCartBean.getAttribute();
         if (!TextUtils.isEmpty(attribute)){
-            holder.tvCommodityAttr.setText(attribute);
+            tvCommodityAttr.setText(attribute);
         }else{
-            holder.tvCommodityAttr.setText(shoppingCartBean.getShoppingName()+"");
+            tvCommodityAttr.setText(shoppingCartBean.getShoppingName()+"");
         }
-        holder.tvCommodityName.setText(shoppingCartBean.getShoppingName());
-        holder.tvCommodityPrice.setText("￥ "+shoppingCartBean.getPrice()+"");
-        holder.tvCommodityNum.setText(" X"+shoppingCartBean.getCount()+"");
-        holder.tvCommodityShowNum.setText(shoppingCartBean.getCount()+"");
-        Glide.with(context).load(shoppingCartBean.getImageUrl()).skipMemoryCache(false).into(holder.ivShowPic);
+        tvCommodityName.setText(shoppingCartBean.getShoppingName());
+        tvCommodityPrice.setText("￥ "+shoppingCartBean.getPrice()+"");
+        tvCommodityNum.setText(" X"+shoppingCartBean.getCount()+"");
+        tvCommodityShowNum.setText(shoppingCartBean.getCount()+"");
+        Glide.with(context).load(shoppingCartBean.getImageUrl()).skipMemoryCache(false).into(ivShowPic);
         //单选框按钮
-        holder.ckOneChose.setOnClickListener(
+        ckOneChose.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -122,21 +96,21 @@ public class ShoppingCartAdapter extends BaseAdapter {
                 }
         );
         //增加按钮
-        holder.ivAdd.setOnClickListener(new View.OnClickListener() {
+        ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modifyCountInterface.doIncrease(position, holder.tvCommodityShowNum, holder.ckOneChose.isChecked());//暴露增加接口
+                modifyCountInterface.doIncrease(position, tvCommodityShowNum, ckOneChose.isChecked());//暴露增加接口
             }
         });
         //删减按钮
-        holder.ivSub.setOnClickListener(new View.OnClickListener() {
+        ivSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modifyCountInterface.doDecrease(position, holder.tvCommodityShowNum, holder.ckOneChose.isChecked());//暴露删减接口
+                modifyCountInterface.doDecrease(position, tvCommodityShowNum, ckOneChose.isChecked());//暴露删减接口
             }
         });
         //删除弹窗
-        holder.tvCommodityDelete.setOnClickListener(new View.OnClickListener() {
+        tvCommodityDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog alert = new AlertDialog.Builder(context).create();
@@ -162,40 +136,50 @@ public class ShoppingCartAdapter extends BaseAdapter {
         });
         //判断是否在编辑状态下
         if (isShow) {
-//            holder.tvCommodityName.setVisibility(View.VISIBLE);
-            holder.tvCommodityPrice.setVisibility(View.GONE);
-            holder.rlEdit.setVisibility(View.VISIBLE);
+//            tvCommodityName.setVisibility(View.VISIBLE);
+            tvCommodityPrice.setVisibility(View.GONE);
+            rlEdit.setVisibility(View.VISIBLE);
         } else {
-//            holder.tvCommodityName.setVisibility(View.VISIBLE);
-            holder.rlEdit.setVisibility(View.GONE);
-            holder.tvCommodityPrice.setVisibility(View.VISIBLE);
+//            tvCommodityName.setVisibility(View.VISIBLE);
+            rlEdit.setVisibility(View.GONE);
+            tvCommodityPrice.setVisibility(View.VISIBLE);
         }
-        holder.tvCommodityNum.setVisibility(View.VISIBLE);
-        holder.tvCommodityDelete.setVisibility(View.GONE);
-
-        return convertView;
+        tvCommodityNum.setVisibility(View.VISIBLE);
+        tvCommodityDelete.setVisibility(View.GONE);
     }
-    //初始化控件
-    class ViewHolder {
-        ImageView ivShowPic,tvCommodityDelete,ivSub, ivAdd;
-        TextView tvCommodityName, tvCommodityAttr, tvCommodityPrice, tvCommodityNum, tvCommodityShowNum;
-        CheckBox ckOneChose;
-        LinearLayout rlEdit;
-        public ViewHolder(View itemView) {
-            ckOneChose = (CheckBox) itemView.findViewById(R.id.ck_chose);
-            ivShowPic = (ImageView) itemView.findViewById(R.id.iv_show_pic);
-            ivSub = (ImageView) itemView.findViewById(R.id.iv_sub);
-            ivAdd = (ImageView) itemView.findViewById(R.id.iv_add);
-            tvCommodityName = (TextView) itemView.findViewById(R.id.tv_commodity_name);
-            tvCommodityAttr = (TextView) itemView.findViewById(R.id.tv_commodity_attr);
-            tvCommodityPrice = (TextView) itemView.findViewById(R.id.tv_commodity_price);
-            tvCommodityNum = (TextView) itemView.findViewById(R.id.tv_commodity_num);
-            tvCommodityShowNum = (TextView) itemView.findViewById(R.id.tv_commodity_show_num);
-            tvCommodityDelete = (ImageView) itemView.findViewById(R.id.tv_commodity_delete);
-            rlEdit = (LinearLayout) itemView.findViewById(R.id.rl_edit);
+
+    @Override
+    public void childViewClick(int position, View view) {
+
+    }
+
+    /**
+     * 单选接口
+     *
+     * @param checkInterface
+     */
+    public void setCheckInterface(CheckInterface checkInterface) {
+        this.checkInterface = checkInterface;
+    }
+
+    /**
+     * 改变商品数量接口
+     *
+     * @param modifyCountInterface
+     */
+    public void setModifyCountInterface(ModifyCountInterface modifyCountInterface) {
+        this.modifyCountInterface = modifyCountInterface;
+    }
 
 
-        }
+
+    /**
+     * 是否显示可编辑
+     *
+     * @param flag
+     */
+    public void isShow(boolean flag) {
+        isShow = flag;
     }
     /**
      * 复选框接口

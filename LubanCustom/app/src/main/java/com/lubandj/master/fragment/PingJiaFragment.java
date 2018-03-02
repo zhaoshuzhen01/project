@@ -31,10 +31,10 @@ public class PingJiaFragment extends BaseRefreshFragment implements IbaseView<Ms
     private PingJIaAdapter msgCenterAdapter;
     private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
     private BaseReflushPresenter msgCenterPresenter ;
-    public static PingJiaFragment newInstance(int index) {
+    public static PingJiaFragment newInstance(String index) {
         PingJiaFragment myFragment = new PingJiaFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("index", index);
+        bundle.putCharSequence("index", index);
         myFragment.setArguments(bundle);
         return myFragment;
     }
