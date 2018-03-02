@@ -27,6 +27,7 @@ public class Canstance {
     public static final int HTTP_WORK_SHEET_LIST = 20001;//服务列表
     public static final int HTTP_ADD_CAR = 30001;//加入购物车
     public static final int HTTP_LIST_CAR = 30003;//购物车列表
+    public static final int HTTP_DELET_CAR = 30004;//清空购物车
     public static final int HTTP_CLEAR_CAR = 30005;//清空购物车
 
     public static final int HTTP_WORK_SHEET_UPDATE_STATUS = 20003;//工单列表更新状态

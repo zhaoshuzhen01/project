@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -15,11 +16,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.baselibrary.TitleBaseActivity;
+import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
+import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.DialogUtil.DialogTagin;
+import com.lubandj.master.Iview.DataCall;
+import com.lubandj.master.Iview.IbaseView;
+import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.ShoppingCartAdapter;
+import com.lubandj.master.been.CarListBeen;
+import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.ShoppingCartBean;
 import com.lubandj.master.customview.BackLayout;
+import com.lubandj.master.model.CarListModel;
+import com.lubandj.master.model.ClearCarListsModel;
+import com.lubandj.master.model.DeleteCarModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +38,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapter.CheckInterface, ShoppingCartAdapter.ModifyCountInterface,DialogTagin.DialogSure{
+public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapter.CheckInterface, ShoppingCartAdapter.ModifyCountInterface,DialogTagin.DialogSure, PullToRefreshAndPushToLoadView6.PullToRefreshAndPushToLoadMoreListener,IbaseView<CarListBeen.InfoBean> ,DataCall {
     private BackLayout backLayout;
     @InjectView(R.id.car_contaner)
     LinearLayout workFragmentContaner;
@@ -40,7 +51,8 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
     TextView tvSettlement;
     //删除
     TextView tv_clear;//tv_edit
-
+    private LinearLayout rl_bottom ;
+    protected PullToRefreshAndPushToLoadView6 pullToRefreshAndPushToLoadView;
 
     RecyclerView list_shopping_cart;
     private ShoppingCartAdapter shoppingCartAdapter;
@@ -49,6 +61,10 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
     private boolean mSelect;
     private double totalPrice = 0.00;// 购买的商品总价
     private int totalCount = 0;// 购买的商品总数量
+    private BaseReflushPresenter msgCenterPresenter;
+    private DeleteCarModel clearCarListsModel;
+    private List<Integer>ids = new ArrayList<>();
+    private List<Integer>positons  = new ArrayList<>();
     public  static  void startActivity(Context context){
         Intent intent = new Intent(context, CarActivity.class);
         context.startActivity(intent);
@@ -72,12 +88,15 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
     @Override
     public void initView() {
         ButterKnife.inject(this);
+        pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6)findViewById(R.id.prpt);
+        pullToRefreshAndPushToLoadView.setCanRefresh(false);
+        pullToRefreshAndPushToLoadView.setCanLoadMore(true);
         setTitleText(R.string.car_center);
         setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
         backLayout = new BackLayout(this);
         backLayout.setOnclick(this);
-        workFragmentContaner.addView(backLayout);
+        workFragmentContaner.addView(backLayout,0);
         backLayout.setOnclick(this);
         backLayout.setNodataText("购物车空空如也,快去逛逛吧");
         backLayout.setButtonText("进入首页");
@@ -85,38 +104,21 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
         tv_clear = findView(R.id.tv_clear);
         tv_clear.setOnClickListener(this);
         tv_clear.setVisibility(View.GONE);
+        rl_bottom = findView(R.id.rl_bottom);
         ckAll= (CheckBox) findViewById(R.id.ck_all);
         tvShowPrice= (TextView) findViewById(R.id.tv_show_price);
         tvSettlement= (TextView) findViewById(R.id.tv_settlement);
         list_shopping_cart= (RecyclerView) findViewById(R.id.list_shopping_cart);
-
+        list_shopping_cart.setLayoutManager(new LinearLayoutManager(this));
         ckAll.setOnClickListener(this);
         tvSettlement.setOnClickListener(this);
+        clearCarListsModel = new DeleteCarModel(this,this);
+
         initData();
     }
 
     @Override
     public void initData() {
-        for (int i = 0; i < 2; i++) {
-            ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
-            shoppingCartBean.setShoppingName("空调保养");
-            shoppingCartBean.setDressSize(20);
-            shoppingCartBean.setId(i);
-            shoppingCartBean.setPrice(30.6);
-            shoppingCartBean.setCount(1);
-            shoppingCartBean.setImageUrl("https://img.alicdn.com/bao/uploaded/i2/TB1YfERKVXXXXanaFXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");
-            shoppingCartBeanList.add(shoppingCartBean);
-        }
-        for (int i = 0; i < 2; i++) {
-            ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
-            shoppingCartBean.setShoppingName("瑞士正品夜光男女士手表情侣精钢带男表防水石英学生非天王星机械");
-            shoppingCartBean.setAttribute("黑白色");
-            shoppingCartBean.setPrice(89);
-            shoppingCartBean.setId(i+2);
-            shoppingCartBean.setCount(3);
-            shoppingCartBean.setImageUrl("https://gd1.alicdn.com/imgextra/i1/2160089910/TB2M_NSbB0kpuFjSsppXXcGTXXa_!!2160089910.jpg");
-            shoppingCartBeanList.add(shoppingCartBean);
-        }
         shoppingCartAdapter = new ShoppingCartAdapter(shoppingCartBeanList,this);
         shoppingCartAdapter.isShow(false);
         shoppingCartAdapter.setCheckInterface(this);
@@ -124,6 +126,8 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
         list_shopping_cart.setAdapter(shoppingCartAdapter);
         shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
         backLayout.setVisibility(View.GONE);
+        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this, this, new CarListModel(this));
+        msgCenterPresenter.getReflushData(0);
     }
 
     @Override
@@ -150,12 +154,14 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
                 flag = !flag;
                 if (flag) {
                     tv_clear.setVisibility(View.VISIBLE);
+                    rl_bottom.setVisibility(View.GONE);
                     tv_basetitle_right.setText("取消");
 //                    ckAll.setChecked(true);
 //                    shoppingCartAdapter.isShow(false);
                 } else {
                     tv_clear.setVisibility(View.GONE);
                     tv_basetitle_right.setText("编辑");
+                    rl_bottom.setVisibility(View.VISIBLE);
 //                    ckAll.setChecked(false);
 //                    shoppingCartAdapter.isShow(true);
                 }
@@ -175,9 +181,17 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
                 break;
             case R.id.tv_settlement: //结算
                 lementOnder();
+            if (totalCount==0){
+                ToastUtils.showShort(this,"请选择服务");
+                return;
+            }
             BookOrderActivity.startActivity(this);
                 break;
             case R.id.tv_clear:
+                if (totalCount==0){
+                    ToastUtils.showShort(this,"请选择服务");
+                    return;
+                }
                 DialogTagin.getDialogTagin(this).showDialog("删除服务").setDialogSure(this);
                 break;
                 default:
@@ -203,7 +217,6 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
                 Log.d("deal",id+"----id---"+shoppingName+"---"+count+"---"+price+"--size----"+size+"--attr---"+attribute);
             }
         }
-        toast(this,"总价："+totalPrice);
         //跳转到支付界面
     }
     /**
@@ -241,16 +254,25 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
      */
     public void statistics() {
         totalCount = 0;
+        ids.clear();
+        positons.clear();
         totalPrice = 0.00;
         for (int i = 0; i < shoppingCartBeanList.size(); i++) {
             ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(i);
             if (shoppingCartBean.isChoosed()) {
+                ids.add(shoppingCartBean.getId());
+                positons.add(i);
                 totalCount++;
                 totalPrice += shoppingCartBean.getPrice() * shoppingCartBean.getCount();
             }
         }
-        tvShowPrice.setText("合计: ¥" + totalPrice);
+        tvShowPrice.setText("¥" + totalPrice);
         tvSettlement.setText("预约下单");
+        if (totalCount==0){
+            tv_clear.setBackgroundColor(getResources().getColor(R.color.alertdialog_line));
+        }else {
+            tv_clear.setBackgroundColor(getResources().getColor(R.color.color_e94b4e));
+        }
     }
     /**
      * 增加
@@ -302,6 +324,53 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
 
     @Override
     public void dialogCall() {
-        toast(this,"删除");
+        String content = "";
+        for (Integer id:ids){
+            content = content+id+",";
+        }
+        content=content.substring(0,content.length()-1);
+        clearCarListsModel.getData(content+"");
+    }
+
+    @Override
+    public void getDataLists(List<CarListBeen.InfoBean> datas) {
+        pullToRefreshAndPushToLoadView.finishRefreshing();
+        pullToRefreshAndPushToLoadView.finishLoading();
+        if (shoppingCartBeanList.size()==0&&datas==null){
+            return;
+        }
+        shoppingCartBeanList.clear();
+        for (CarListBeen.InfoBean bean:datas){
+            ShoppingCartBean bean1 = new ShoppingCartBean(bean.getId(),bean.getService_name(),"",0,Double.parseDouble(bean.getPrice()),bean.getNum(),bean.getService_type(),bean.getService_id(),bean.getSpec_id());
+            bean1.setImageUrl("https://img.alicdn.com/bao/uploaded/i2/TB1YfERKVXXXXanaFXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");
+            shoppingCartBeanList.add(bean1);
+        }
+        shoppingCartAdapter.notifyDataSetChanged();
+        if (shoppingCartBeanList.size()==0){
+            backLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public void getServiceData(Object data) {
+        for (Integer position: positons){
+            int mpositon = position ;
+            shoppingCartBeanList.remove(mpositon);
+        }
+        Log.e("deal",shoppingCartBeanList.size()+"");
+        shoppingCartAdapter.notifyDataSetChanged();
+        if (shoppingCartBeanList.size()==0){
+            backLayout.setVisibility(View.VISIBLE);
+        }
     }
 }

@@ -9,28 +9,26 @@ import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
-import com.lubandj.master.been.ServiceDetailBeen;
 import com.lubandj.master.httpbean.BaseEntity;
 import com.lubandj.master.httpbean.NetClear;
-import com.lubandj.master.httpbean.NetServiceDetail;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
 
-/**清空购物车
+/**
  * Created by ${zhaoshuzhen} on 2018/3/2.
  */
 
-public class ClearCarListsModel {
+public class DeleteCarModel {
     private Context context ;
     private DataCall dataCall ;
-    public ClearCarListsModel(Context context,DataCall dataCall){
+    public DeleteCarModel(Context context,DataCall dataCall){
         this.context = context ;
         this.dataCall = dataCall ;
     }
 
     public void getData(String id) {
 
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_CLEAR_CAR, new NetClear(id), new Response.Listener<String>() {
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_DELET_CAR, new NetClear(id), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {

@@ -150,6 +150,7 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
                     carView.setVisibility(View.GONE);
                 }else {
                     carView.setVisibility(View.VISIBLE);
+                    carLayout.getData(getActivity());
                 }
                 break;
             case R.id.tv_settlement:

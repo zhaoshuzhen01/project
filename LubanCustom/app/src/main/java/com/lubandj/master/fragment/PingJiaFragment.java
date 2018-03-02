@@ -53,8 +53,8 @@ public class PingJiaFragment extends BaseRefreshFragment implements IbaseView<Ms
         isFirst = false;
         msgCenterAdapter = new PingJIaAdapter(msgBeens,getActivity());
         initRecyclerView(recyclerView, new LinearLayoutManager(getActivity()), msgCenterAdapter);
-        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(),this,new MsgCenterModel(getActivity()));
-        msgCenterPresenter.getReflushData(0);
+       /* msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(),this,new MsgCenterModel(getActivity()));
+        msgCenterPresenter.getReflushData(0);*/
     }
 
     @Override

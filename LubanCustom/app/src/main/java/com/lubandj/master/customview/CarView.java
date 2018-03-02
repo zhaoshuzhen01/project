@@ -100,8 +100,6 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         initData(context);
     }
     public void initData(Context context) {
-        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(context, this, new CarListModel(context));
-        msgCenterPresenter.getReflushData(0);
         shoppingCartAdapter = new ShoppingCartAdapter(shoppingCartBeanList,context);
         shoppingCartAdapter.isShow(true);
         shoppingCartAdapter.setCheckInterface(this);
@@ -109,6 +107,13 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         list_shopping_cart.setAdapter(shoppingCartAdapter);
         shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
         clearCarListsModel = new ClearCarListsModel(context,this);
+       /* msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(context, this, new CarListModel(context));
+        msgCenterPresenter.getReflushData(0);*/
+    }
+
+    public void getData(Context context){
+        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(context, this, new CarListModel(context));
+        msgCenterPresenter.getReflushData(0);
     }
 
     @Override
