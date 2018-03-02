@@ -1,5 +1,6 @@
 package com.lubandj.master.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,15 +14,18 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.baselibrary.BaseFragment;
 import com.example.baselibrary.tools.ToastUtils;
+import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
 import com.lubandj.master.activity.BookOrderActivity;
+import com.lubandj.master.activity.CarActivity;
 import com.lubandj.master.adapter.IntroduceAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.ServiceDetailBeen;
 import com.lubandj.master.customview.CarView;
 import com.lubandj.master.dialog.IntroduceDialog;
 import com.lubandj.master.model.ServiceDetailModel;
+import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,24 +46,25 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
     @InjectView(R.id.main_car_lay)
     RelativeLayout main_car_lay;
     @InjectView(R.id.main_car)
-    ImageView main_car ;
+    ImageView main_car;
     @InjectView(R.id.tv_settlement)
     TextView tv_settlement;
     @InjectView(R.id.detail_top_pic)
-    ImageView topPic ;
+    ImageView topPic;
     @InjectView(R.id.top_name)
-    TextView topName ;
+    TextView topName;
     @InjectView(R.id.car_msgCount)
-    TextView car_msgCount ;
+    TextView car_msgCount;
     @InjectView(R.id.cus_carlay)
-    CarView carLayout ;
-    private RelativeLayout carView ;
+    CarView carLayout;
+    private RelativeLayout carView;
     private List<ServiceDetailBeen.InfoBean.ItemsBean> msgBeens = new ArrayList<>();
     private IntroduceAdapter introduceAdapter;
     protected boolean isVisible = false;
     private IntroduceDialog introduceDialog;
-    private String service_id ;
-    private ServiceDetailModel serviceDetailModel ;
+    private String service_id;
+    private ServiceDetailModel serviceDetailModel;
+
     public static IntroduceFragment newInstance(String index) {
         IntroduceFragment myFragment = new IntroduceFragment();
         Bundle bundle = new Bundle();
@@ -89,9 +94,9 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
         recyclerView.setAdapter(introduceAdapter);
         introduceDialog = new IntroduceDialog();
         service_id = (String) getArguments().get("serviceId");
-        serviceDetailModel = new ServiceDetailModel(getActivity(),this);
+        serviceDetailModel = new ServiceDetailModel(getActivity(), this);
         car_msgCount.setVisibility(View.GONE);
-        carLayout.setCar_msgCount(carView,car_msgCount,main_car);
+        carLayout.setCar_msgCount(carView, car_msgCount, main_car);
         main_car.setTag(R.drawable.car);
     }
 
@@ -116,7 +121,7 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
     @Override
     protected void initData() {
         isFirst = false;
-       serviceDetailModel.getData(service_id);
+        serviceDetailModel.getData(service_id);
     }
 
 
@@ -135,20 +140,27 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
     }
 
 
-    @OnClick({R.id.button_text,R.id.main_car_lay,R.id.tv_settlement})
+    @OnClick({R.id.button_text, R.id.main_car_lay, R.id.tv_settlement})
     public void onClick(View view) {
+        if (CommonUtils.isLogin()) {
+        } else {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
         switch (view.getId()) {
             case R.id.button_text:
-                introduceDialog.clickShow(getChildFragmentManager(),"",getActivity());
+
+                introduceDialog.clickShow(getChildFragmentManager(), "", getActivity());
                 break;
             case R.id.main_car_lay:
-                if (((int)main_car.getTag())==R.drawable.nocar){
-                    ToastUtils.showShort(getActivity(),"请选择服务");
+                if (((int) main_car.getTag()) == R.drawable.nocar) {
+                    ToastUtils.showShort(getActivity(), "请选择服务");
                     return;
                 }
-                if (carView.getVisibility()==View.VISIBLE){
+                if (carView.getVisibility() == View.VISIBLE) {
                     carView.setVisibility(View.GONE);
-                }else {
+                } else {
                     carView.setVisibility(View.VISIBLE);
                     carLayout.getData(getActivity());
                 }
@@ -158,12 +170,13 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
                 break;
         }
     }
+
     @Override
     public void getServiceData(ServiceDetailBeen data) {
-        introduceDialog.setData(data,main_car);
+        introduceDialog.setData(data, main_car);
         Glide.with(getActivity()).load(data.getInfo().getService_pic()).skipMemoryCache(false).into(topPic);
         topName.setText(data.getInfo().getName());
-            msgBeens.addAll(data.getInfo().getItems());
+        msgBeens.addAll(data.getInfo().getItems());
         introduceAdapter.notifyDataSetChanged();
 
     }
