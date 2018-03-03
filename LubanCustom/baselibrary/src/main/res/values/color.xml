@@ -48,6 +48,7 @@
     <color name="foreground_text_color">#eeeeee</color>
 
     <color name="content_background_color">#FFFFFF</color>
+    <color name="province_line_border">#C7C7C7</color>
 
     <!-- default -->
     <color name="def_line_color">#EDEDED</color>

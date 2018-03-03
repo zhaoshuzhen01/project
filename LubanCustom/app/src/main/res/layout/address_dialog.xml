@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/cancle"
+            android:text="取消"
+            android:padding="@dimen/h_10dp"
+            android:textColor="@color/zfb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/finish"
+            android:text="完成"
+            android:padding="@dimen/h_10dp"
+            android:textColor="@color/zfb"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:background="@color/color_e1e1e1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"></View>
+    <LinearLayout
+        android:id="@+id/layint"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <com.example.baselibrary.wheel.kankan.wheel.widget.WheelView
+            android:id="@+id/id_province"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+        </com.example.baselibrary.wheel.kankan.wheel.widget.WheelView>
+
+        <com.example.baselibrary.wheel.kankan.wheel.widget.WheelView
+            android:id="@+id/id_city"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+        </com.example.baselibrary.wheel.kankan.wheel.widget.WheelView>
+
+        <com.example.baselibrary.wheel.kankan.wheel.widget.WheelView
+            android:id="@+id/id_district"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+        </com.example.baselibrary.wheel.kankan.wheel.widget.WheelView>
+    </LinearLayout>
+
+
+</LinearLayout>

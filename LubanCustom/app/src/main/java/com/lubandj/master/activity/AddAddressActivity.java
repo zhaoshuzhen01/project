@@ -3,6 +3,7 @@ package com.lubandj.master.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
 import com.lubandj.master.been.AddressBean;
+import com.lubandj.master.dialog.AddressDialog;
 import com.lubandj.master.model.AddAdressModel;
 import com.lubandj.master.my.MyAddressActivity;
 import com.lubandj.master.my.SelectAddressActivity;
@@ -25,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAdapter.OnItemClickListener,DataCall {
+public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAdapter.OnItemClickListener,DataCall,AddressDialog.GetCityAndArea {
     @InjectView(R.id.name)
     EditText name;
     @InjectView(R.id.phone)
@@ -44,9 +46,10 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
     LinearLayout choose_area;
     @InjectView(R.id.choose_city)
     LinearLayout choose_city ;
+    @InjectView(R.id.addressLog)
+    AddressDialog addressDialog ;
     private AddressBean mBean;
     private AddAdressModel addAdressModel;
-
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AddAddressActivity.class);
         context.startActivity(intent);
@@ -97,11 +100,15 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
         ButterKnife.inject(this);
     }
 
-    @OnClick({R.id.diqu, R.id.xiaoqu, R.id.fankui_button})
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        addressDialog.setVisibility(View.GONE);
+        return super.onTouchEvent(event);
+    }
+
+    @OnClick({ R.id.xiaoqu, R.id.fankui_button,R.id.choose_city,R.id.choose_area})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.diqu:
-                break;
             case R.id.xiaoqu:
                 Intent intent = new Intent(AddAddressActivity.this, SelectAddressActivity.class);
                 startActivityForResult(intent, 1010);
@@ -118,14 +125,15 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
                 mBean.phone = phone.getText().toString();
                 if (TextUtils.isEmpty(mBean.linkman)||TextUtils.isEmpty(mBean.phone)||TextUtils.isEmpty(mBean.city)||TextUtils.isEmpty(mBean.area)||TextUtils.isEmpty(mBean.address)||TextUtils.isEmpty(mBean.house_number)){
                     ToastUtils.showShort(this,"用户信息不完整");
+                    return;
                 }
                     addAdressModel.saveAddress(mBean);
                 break;
             case R.id.choose_city:
-                ToastUtils.showShort(this,"城市");
+                addressDialog.setTag("1",this);
                 break;
             case R.id.choose_area:
-                ToastUtils.showShort(this,"区域");
+                addressDialog.setTag("2",this);
                 break;
         }
     }
@@ -144,5 +152,14 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
     @Override
     public void getServiceData(Object data) {
         finish();
+    }
+
+    @Override
+    public void getContent(String address, String tag) {
+        if (tag.equals("1")){
+            city.setText(address);
+        }else {
+            diqu.setText(address);
+        }
     }
 }

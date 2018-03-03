@@ -127,6 +127,7 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
         list_shopping_cart.setAdapter(shoppingCartAdapter);
         shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
         backLayout.setVisibility(View.GONE);
+        pullToRefreshAndPushToLoadView.finishRefreshing();
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this, this, new CarListModel(this));
         msgCenterPresenter.getReflushData(0);
     }
