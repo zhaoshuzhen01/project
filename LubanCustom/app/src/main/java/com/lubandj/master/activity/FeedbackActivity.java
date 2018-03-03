@@ -18,7 +18,7 @@ public class FeedbackActivity extends TitleBaseActivity {
 
     @InjectView(R.id.fankui_text)
     EditText fankuiText;
-    @InjectView(R.id.fankui_button)
+    @InjectView(R.id.btn_save_addaddress)
     TextView fankuiButton;
 
     @Override
@@ -67,7 +67,7 @@ public class FeedbackActivity extends TitleBaseActivity {
         ButterKnife.inject(this);
     }
 
-    @OnClick(R.id.fankui_button)
+    @OnClick(R.id.btn_save_addaddress)
     public void onClick() {
     }
 }

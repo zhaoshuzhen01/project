@@ -7,6 +7,10 @@ import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -116,7 +120,7 @@ public class CommonUtils {
     }
 
     public static void fastShowError(Context context, VolleyError volleyError) {
-        try{
+        try {
             if (volleyError != null) {
                 if (volleyError.networkResponse != null) {
                     String format = String.format(context.getString(R.string.txt_net_connect_error), volleyError.networkResponse.statusCode);
@@ -125,7 +129,7 @@ public class CommonUtils {
                 }
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             Logger.e(e.toString());
         }
 
@@ -134,25 +138,26 @@ public class CommonUtils {
     public static int getUid() {
         return SPUtils.getInstance().getInt(Canstance.UID);
     }
+
     //大于零是登陆状态
-    public static boolean isLogin(){
-       return getUid()>0;
+    public static boolean isLogin() {
+        return getUid() > 0;
     }
 
     public static void setUid(int uid) {
         SPUtils.getInstance().put(Canstance.UID, uid);
     }
 
-    public static void setFirst(){
+    public static void setFirst() {
         SPUtils.getInstance().put(Canstance.FIRSTSTART, 2);
     }
 
-    public static boolean getFirst(){
+    public static boolean getFirst() {
         int dex = SPUtils.getInstance().getInt(Canstance.FIRSTSTART);
-        if (dex==2){
+        if (dex == 2) {
             return false;
         }
-        return true ;
+        return true;
     }
 
     public static String getToken() {
@@ -204,4 +209,19 @@ public class CommonUtils {
         context.startActivity(new Intent(context, LoginActivity.class));*/
     }
 
+
+    public static void customShowToast(Context context, String text) {
+        Toast result = new Toast(context);
+
+        LayoutInflater inflate = (LayoutInflater)
+                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflate.inflate(R.layout.toast_view, null);
+        TextView tv = (TextView) v.findViewById(R.id.tv_toast);
+        tv.setText(text);
+
+        result.setView(v);
+        result.setDuration(Toast.LENGTH_SHORT);
+        result.setGravity(Gravity.CENTER, 0, 0);
+        result.show();
+    }
 }
