@@ -3,6 +3,7 @@ package com.lubandj.master.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.been.AddressBean;
+import com.lubandj.master.dialog.AddressDialog;
 import com.lubandj.master.dialog.ClickListenerInterface;
 import com.lubandj.master.dialog.SingleScrollSelectDialog;
 import com.lubandj.master.httpbean.AddressListReponse;
@@ -41,7 +43,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAdapter.OnItemClickListener, DataCall {
+public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAdapter.OnItemClickListener, DataCall, AddressDialog.GetCityAndArea {
+
     @InjectView(R.id.name)
     EditText name;
     @InjectView(R.id.phone)
@@ -58,6 +61,8 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
     LinearLayout choose_area;
     @InjectView(R.id.choose_city)
     LinearLayout choose_city;
+    @InjectView(R.id.addressLog)
+    AddressDialog addressDialog;
     @InjectView(R.id.diqu_empty_text)
     TextView mTvEmptydiqu;
     @InjectView(R.id.btn_save_addaddress)
@@ -99,7 +104,7 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
             setTitleText("修改地址");
             setRightText("删除地址");
         }
-        getQuList();
+//        getQuList();
         setOkVisibity(false);
         initData();
 //        KeyBorad.DelayShow(name, this);
@@ -137,7 +142,8 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
         ButterKnife.inject(this);
     }
 
-    @OnClick({R.id.xiaoqu, R.id.btn_save_addaddress})
+
+    @OnClick({R.id.xiaoqu, R.id.fankui_button, R.id.choose_city, R.id.choose_area})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.xiaoqu:
@@ -147,6 +153,12 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
                 } else {
                     CommonUtils.customShowToast(AddAddressActivity.this, "请选择服务地区");
                 }
+                break;
+            case R.id.choose_city:
+                addressDialog.setTag("1", this);
+                break;
+            case R.id.choose_area:
+                addressDialog.setTag("2", this);
                 break;
             case R.id.btn_save_addaddress:
                 mBean.house_number = louhao.getText().toString();
@@ -187,6 +199,15 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
     @Override
     public void getServiceData(Object data) {
         finish();
+    }
+
+    @Override
+    public void getContent(String address, String tag) {
+        if (tag.equals("1")) {
+            city.setText(address);
+        } else {
+            diqu.setText(address);
+        }
     }
 
     /**

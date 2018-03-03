@@ -94,6 +94,13 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     }
 
     protected void lazyLoad() {
+        if (!CommonUtils.isLogin()){
+            backLayout.setNodataText("您还没有登录,请登录后查看订单");
+            backLayout.setImg(R.drawable.nologin);
+            backLayout.setButtonText("登录/注册");
+            isFirst = true;
+            return;
+        }
         if (isVisible && isFirst) {
             getWebDatas();
         }

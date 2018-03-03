@@ -114,6 +114,7 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
     }
 
     public void getData(Context context){
+        pullToRefreshAndPushToLoadView.finishRefreshing();
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(context, this, new CarListModel(context));
         msgCenterPresenter.getReflushData(0);
     }

@@ -95,6 +95,7 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
                     case BusEvent.LOGIN_OUT:
                         headtext.setText("未登录");
                         myInfo.setVisibility(View.GONE);
+                        isFirst = true;
                         break;
                 }
             }
