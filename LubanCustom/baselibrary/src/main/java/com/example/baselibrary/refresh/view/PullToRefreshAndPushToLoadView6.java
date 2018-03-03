@@ -369,8 +369,8 @@ public class PullToRefreshAndPushToLoadView6 extends ViewGroup {
         for (int i = 0; i < getChildCount(); i++) {
             View childView = getChildAt(i);
             if (childView.getVisibility() != GONE) {
-//                childView.layout(getPaddingLeft(), top, maxWidth+getPaddingLeft(), top+childView.getMeasuredHeight());
-//                top+=childView.getMeasuredHeight();
+                childView.layout(getPaddingLeft(), top, maxWidth+getPaddingLeft(), top+childView.getMeasuredHeight());
+                top+=childView.getMeasuredHeight();
             }
         }
     }
