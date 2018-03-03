@@ -9,13 +9,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
+import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.ChooseAddressAdapter;
 import com.lubandj.master.adapter.ChooseCityAdapter;
+import com.lubandj.master.been.AddressBean;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.httpbean.GetAddressReponse;
+import com.lubandj.master.httpbean.UidParamsRequest;
+import com.lubandj.master.my.MyAddressActivity;
+import com.lubandj.master.utils.CommonUtils;
+import com.lubandj.master.utils.TaskEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +38,7 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
     RecyclerView recyclerView;
     @InjectView(R.id.fankui_button)
     TextView fankuiButton;
-    private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
+    private List<AddressBean> msgBeens = new ArrayList<>();
     private ChooseAddressAdapter chooseCityAdapter;
 
     public static void startActivity(Context context) {
@@ -53,19 +62,17 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    @Override
     public void initView() {
         ButterKnife.inject(this);
         setTitleText("我的地址");
         setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
-        initData();
-    }
-
-    @Override
-    public void initData() {
-        for (int i = 0; i < 6; i++) {
-            msgBeens.add(new MsgCenterBeen.InfoBean.ListBean());
-        }
         chooseCityAdapter = new ChooseAddressAdapter(msgBeens, this);
         chooseCityAdapter.setOnItemClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(this); //spanCount为列数，默认方向vertical
@@ -73,6 +80,12 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
         recyclerView.addItemDecoration(new SpacesItemDecoration(10, 10, 20, 10));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(chooseCityAdapter);
+//        initData();
+    }
+
+    @Override
+    public void initData() {
+        getAddress();
     }
 
     @OnClick(R.id.fankui_button)
@@ -90,5 +103,24 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
     @Override
     public void onClick(View view) {
 
+    }
+
+    /**
+     * 获取地址
+     */
+    public void getAddress() {
+        UidParamsRequest request = new UidParamsRequest(CommonUtils.getUid());
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_GETADDRESS, request, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String s) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                CommonUtils.fastShowError(CustomAddressActivity.this, volleyError);
+            }
+        });
     }
 }

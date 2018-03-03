@@ -69,7 +69,7 @@
                 android:padding="@dimen/h_10dp"
                 android:textSize="@dimen/sp_16"
                 android:textColor="@color/black"
-                android:text="姓名 :"/>
+                android:text="手机号 :"/>
             <EditText
                 android:id="@+id/phone"
                 android:background="@color/white"
@@ -98,6 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0.5"></View>
         <LinearLayout
+            android:id="@+id/choose_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -122,6 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0.5"></View>
         <LinearLayout
+            android:id="@+id/choose_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -137,7 +139,7 @@
             <TextView
                 android:id="@+id/diqu"
                 android:background="@color/white"
-                android:text=""
+                android:text="南山区"
                 android:textSize="@dimen/sp_16"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
@@ -167,7 +169,7 @@
             <TextView
                 android:id="@+id/xiaoqu"
                 android:background="@color/white"
-                android:text=" 青岛市"
+                android:text=" 花园小区"
                 android:drawableLeft="@drawable/myaddress_gps"
                 android:textSize="@dimen/sp_16"
                 android:layout_width="match_parent"

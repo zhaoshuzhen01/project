@@ -13,6 +13,7 @@ import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
 import com.lubandj.master.R;
 import com.lubandj.master.activity.AddAddressActivity;
+import com.lubandj.master.been.AddressBean;
 import com.lubandj.master.been.MsgCenterBeen;
 
 import java.util.List;
@@ -21,15 +22,15 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2018/2/9.
  */
 
-public class ChooseAddressAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.ListBean, BaseViewHolder> {
+public class ChooseAddressAdapter extends BaseQuickAdapter<AddressBean, BaseViewHolder> {
     private Context context;
-    public ChooseAddressAdapter(@Nullable List<MsgCenterBeen.InfoBean.ListBean> data, Context context) {
+    public ChooseAddressAdapter(@Nullable List<AddressBean> data, Context context) {
         super(R.layout.item_choose_address, data);
         this.context = context ;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MsgCenterBeen.InfoBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, AddressBean item) {
         final int position = helper.getAdapterPosition();
         ImageView iconMsg =  ((ImageView) (helper.getView(R.id.tv_commodity_delete)));
         TextView tvCommodityAttr = ((TextView)(helper.getView(R.id.tv_commodity_attr)));

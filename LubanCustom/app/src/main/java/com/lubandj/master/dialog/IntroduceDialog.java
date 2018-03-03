@@ -123,6 +123,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
         main_car.setTag(R.drawable.car);
         dismiss();
         car_msgCount.setVisibility(View.VISIBLE);
+        car_msgCount.setText("1");
 
     }
 }
