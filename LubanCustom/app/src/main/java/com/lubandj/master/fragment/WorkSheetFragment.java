@@ -104,7 +104,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
             initData();
         } else {
             if (worklists != null && worklists.size() > 0) {
-//                backLayout.setVisibility(View.GONE);
+                backLayout.setVisibility(View.GONE);
             } else {
                 backLayout.setVisibility(View.VISIBLE);
                 if (!NetworkUtils.isNetworkAvailable(getActivity())){
@@ -164,7 +164,8 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     @Override
     public void onClick(View view) {
         if (CommonUtils.isLogin()){
-            getWebDatas();
+
+           MainCantainActivity.startActivity(getActivity());
         }else {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
@@ -179,9 +180,9 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
         backLayout.setVisibility(View.GONE);
-        worklists.clear();
+       /* worklists.clear();
         worklists.addAll(datas);
-        workSheetAdapter.notifyDataSetChanged();
+        workSheetAdapter.notifyDataSetChanged();*/
         if (datas!=null&&datas.size()==0){
             ToastUtils.showShort(getActivity(),"暂无数据");
         }

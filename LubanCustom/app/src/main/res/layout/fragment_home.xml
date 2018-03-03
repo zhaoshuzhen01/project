@@ -5,49 +5,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:paddingBottom="@dimen/h_20dp"
     android:orientation="vertical">
+
     <com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6
         android:id="@+id/prpt"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"
-                android:scrollbars="none" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
     </com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6>
+
     <RelativeLayout
         android:id="@+id/main_car_lay"
         android:layout_width="@dimen/h_80dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/h_80dp"
-        android:layout_marginRight="@dimen/h_6dp"
-        >
+        android:layout_marginRight="@dimen/h_6dp">
 
         <ImageView
             android:id="@+id/main_car"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            android:layout_alignParentRight="true"
             android:src="@drawable/car" />
 
         <TextView
             android:id="@+id/car_msgCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/yello_circle"
-            android:gravity="center"
             android:layout_alignParentRight="true"
             android:layout_marginRight="8dp"
             android:layout_marginTop="@dimen/h_3dp"
+            android:background="@drawable/yello_circle"
+            android:gravity="center"
             android:text="1"
-            android:textSize="@dimen/dp_11"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_11" />
     </RelativeLayout>
 </RelativeLayout>

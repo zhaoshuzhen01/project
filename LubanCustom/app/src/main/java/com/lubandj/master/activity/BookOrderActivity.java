@@ -12,9 +12,16 @@ import android.widget.TextView;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.lubandj.customer.my.FeedBackInfoActivity;
+import com.lubandj.master.Iview.IbaseView;
+import com.lubandj.master.LocalleCarData;
+import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.BookOrderOdapter;
+import com.lubandj.master.been.CarListBeen;
+import com.lubandj.master.been.HomeBeen;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.been.ShoppingCartBean;
+import com.lubandj.master.model.CarListModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +43,12 @@ public class BookOrderActivity extends TitleBaseActivity {
     RelativeLayout choose_address ;
     @InjectView(R.id.tv_settlement)
     TextView tv_settlement;
+    @InjectView(R.id.tv_show_price)
+    TextView tv_show_price ;
+    @InjectView(R.id.tv_show_price11)
+    TextView tv_show_price11 ;
     private BookOrderOdapter bookOrderOdapter;
-    private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
-
+    private List<ShoppingCartBean> msgBeens = new ArrayList<>();
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, BookOrderActivity.class);
         context.startActivity(intent);
@@ -55,6 +65,7 @@ public class BookOrderActivity extends TitleBaseActivity {
         setTitleText("预约下单");
         setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
+        msgBeens= LocalleCarData.newInstance().getShoppingBeenList();
         tv_settlement = findView(R.id.tv_settlement);
         tv_settlement.setOnClickListener(this);
         bookOrderOdapter = new BookOrderOdapter(msgBeens, this);
@@ -68,10 +79,8 @@ public class BookOrderActivity extends TitleBaseActivity {
 
     @Override
     public void initData() {
-        for (int i = 0; i < 5; i++) {
-            msgBeens.add(new MsgCenterBeen.InfoBean.ListBean());
-        }
-        bookOrderOdapter.notifyDataSetChanged();
+        tv_show_price.setText("¥" +LocalleCarData.newInstance().getTotalPrice()+"");
+        tv_show_price11.setText("¥" +LocalleCarData.newInstance().getTotalPrice()+"");
     }
 
     @Override
@@ -113,4 +122,15 @@ public class BookOrderActivity extends TitleBaseActivity {
                 break;
         }
     }
+
+ /*   @Override
+    public void getDataLists(List<CarListBeen.InfoBean> datas) {
+//        pullToRefreshAndPushToLoadView.finishLoading();
+        if (msgBeens.size()==0&&datas==null){
+            return;
+        }
+        msgBeens.clear();
+        msgBeens.addAll(datas);
+        bookOrderOdapter.notifyDataSetChanged();
+    }*/
 }

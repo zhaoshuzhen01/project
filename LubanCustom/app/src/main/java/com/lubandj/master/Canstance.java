@@ -5,6 +5,7 @@ package com.lubandj.master;
  */
 
 public class Canstance {
+    public static String CITY = "";
     public static final int TYPE_LIST_ALL = 0;//所有消息
     public static final int TYPE_LIST_UNFINISH = 1;//工单列表未完成
     public static final int TYPE_LIST_FINISH = 2;//工单列表已完成
@@ -22,8 +23,15 @@ public class Canstance {
     public static final int HTTP_GETADDRESS = 10006;//获取住址
     public static final int HTTP_SAVEADDRESS = 10007;//保存住址
     public static final int HTTP_QRCODE = 10008;//二维码
-    public static final int HTTP_WORK_SHEET_DETAILS = 20002;//工单详情
-    public static final int HTTP_WORK_SHEET_LIST = 20001;//工单列表
+    public static final int HTTP_WORK_SHEET_DETAILS = 20002;//服务详情
+    public static final int HTTP_WORK_SHEET_LIST = 20001;//服务列表
+    public static final int HTTP_ADD_CAR = 30001;//加入购物车
+    public static final int HTTP_UPDATA_CAR = 30002;//更新购物车
+    public static final int HTTP_LIST_CAR = 30003;//购物车列表
+    public static final int HTTP_DELET_CAR = 30004;//清空购物车
+    public static final int HTTP_CLEAR_CAR = 30005;//清空购物车
+    public static final int HTTP_ADD_ADDRESS = 30001;//加入购物车
+
     public static final int HTTP_WORK_SHEET_UPDATE_STATUS = 20003;//工单列表更新状态
     public static final int HTTP_SIGN_EXCEPTION = 20004;//标记异常
     public static final int HTTP_EXCEPTION_LIST = 80001;//异常列表

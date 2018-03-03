@@ -15,6 +15,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.baselibrary.BaseFragment;
+import com.example.baselibrary.eventbus.BusEvent;
+import com.example.baselibrary.eventbus.RxBus;
+import com.example.baselibrary.tools.NotificationUtil;
 import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.customer.my.AddressListActivity;
@@ -27,6 +30,7 @@ import com.lubandj.master.TApplication;
 import com.lubandj.master.activity.CouponsActivity;
 import com.lubandj.master.activity.CustomAddressActivity;
 import com.lubandj.master.activity.MyEvaluationActivity;
+import com.lubandj.master.been.UserInfo;
 import com.lubandj.master.customview.RoundImageView;
 import com.lubandj.master.dialog.DoubleSelectDialog;
 import com.lubandj.master.httpbean.UserInfoRequest;
@@ -36,10 +40,14 @@ import com.lubandj.master.my.SelectAddressActivity;
 import com.lubandj.master.utils.BitmapCache;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
+import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by ${zhaoshuzhen} on 2018/1/31.
@@ -69,6 +77,7 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
     TextView myInfo;
     protected boolean isVisible = false;
     private ImageLoader imageLoader;
+    private Observable<BusEvent> observable;
 
     public static MyFragment newInstance(int index) {
         MyFragment myFragment = new MyFragment();
@@ -83,6 +92,18 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
         ButterKnife.inject(this, view);
         imageLoader = new ImageLoader(TaskEngine.getInstance().getQueue(), new BitmapCache());
         refreshInfo();
+        observable = RxBus.getInstance().register(this);
+        observable.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<BusEvent>() {
+            @Override
+            public void call(BusEvent busEvent) {
+                switch (busEvent.getCode()) {
+                    case BusEvent.LOGIN_OUT:
+                        headtext.setText("未登录");
+                        myInfo.setVisibility(View.GONE);
+                        break;
+                }
+            }
+        });
     }
 
     public void refreshInfo() {
@@ -108,7 +129,6 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
 
     @Override
     protected void initData() {
-        isFirst = false;
         onTokenLogin();
     }
 
@@ -125,7 +145,7 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
     }
 
     protected void lazyLoad() {
-        if (isVisible && isFirst && NetworkUtils.isNetworkAvailable(getActivity()) && CommonUtils.isLogin()) {
+        if (isVisible && isFirst && NetworkUtils.isNetworkAvailable(getActivity()) &&CommonUtils.isLogin()) {
             initData();
         }
     }
@@ -144,20 +164,28 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
         ButterKnife.reset(this);
     }
 
-    @OnClick({R.id.headicon, R.id.my_address, R.id.my_youhuiquan, R.id.my_oingjia, R.id.my_kefu, R.id.my_fankui, R.id.my_guanyu, R.id.tv_selfinfo, R.id.my_share})
+    @OnClick({R.id.headtext,R.id.headicon, R.id.my_address, R.id.my_youhuiquan, R.id.my_oingjia, R.id.my_kefu, R.id.my_fankui, R.id.my_guanyu, R.id.tv_selfinfo, R.id.my_share})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.headtext:
             case R.id.headicon:
                 if (CommonUtils.isLogin()) {
+                    Intent intent2 = new Intent(getActivity(), MySettingActivity.class);
+                    startActivity(intent2);
                 } else {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }
                 break;
             case R.id.my_address:
-//                CustomAddressActivity.startActivity(getActivity());
-                Intent intenta = new Intent(getActivity(), AddressListActivity.class);
-                startActivity(intenta);
+                if (CommonUtils.isLogin()) {
+                    CustomAddressActivity.startActivity(getActivity());
+                } else {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+               /* Intent intenta = new Intent(getActivity(), AddressListActivity.class);
+                startActivity(intenta);*/
                 break;
             case R.id.my_youhuiquan:
                 CouponsActivity.startActivity(getActivity());
@@ -210,6 +238,7 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
                 UserInfoResponse response = new UserInfoResponse();
                 response = (UserInfoResponse) CommonUtils.generateEntityByGson(getActivity(), s, response);
                 if (response != null) {
+                    isFirst = false;
                     TApplication.context.mUserInfo = response.info;
                     TApplication.context.setGetuiTag(response.info.uid);
                     refreshInfo();
