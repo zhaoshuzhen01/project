@@ -31,6 +31,7 @@ import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.ShoppingCartBean;
 import com.lubandj.master.model.CarListModel;
 import com.lubandj.master.model.ClearCarListsModel;
+import com.lubandj.master.model.UpCarModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,7 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
     private RelativeLayout carView;
     private BaseReflushPresenter msgCenterPresenter;
     private ClearCarListsModel clearCarListsModel;
+    private UpCarModel upCarModel ;
     private ImageView main_car ;
     public void setCar_msgCount(RelativeLayout carView,TextView car_msgCount,ImageView main_car) {
         this.car_msgCount = car_msgCount;
@@ -96,7 +98,7 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         pullToRefreshAndPushToLoadView = (PullToRefreshAndPushToLoadView6) view.findViewById(R.id.prpt);
         pullToRefreshAndPushToLoadView.setCanRefresh(false);
         pullToRefreshAndPushToLoadView.setCanLoadMore(true);
-
+        ckAll.setChecked(true);
         ckAll.setOnClickListener(this);
         initData(context);
     }
@@ -108,8 +110,7 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         list_shopping_cart.setAdapter(shoppingCartAdapter);
         shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
         clearCarListsModel = new ClearCarListsModel(context,this);
-       /* msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(context, this, new CarListModel(context));
-        msgCenterPresenter.getReflushData(0);*/
+        upCarModel = new UpCarModel(context);
     }
 
     public void getData(Context context){
@@ -209,7 +210,7 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
             if (shoppingCartBean.isChoosed()) {
                 totalCount++;
                 LocalleCarData.newInstance().setShoppingCartBeanList(shoppingCartBean);
-
+                car_msgCount.setText(totalCount+"");
                 totalPrice += shoppingCartBean.getPrice() * shoppingCartBean.getCount();
             }
         }
@@ -234,6 +235,7 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(position);
         int currentCount = shoppingCartBean.getCount();
         currentCount++;
+        upCarModel.upData(shoppingCartBean.getId()+"",currentCount);
         shoppingCartBean.setCount(currentCount);
         ((TextView) showCountView).setText(currentCount + "");
         shoppingCartAdapter.notifyDataSetChanged();
@@ -250,12 +252,19 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
     public void doDecrease(int position, View showCountView, boolean isChecked) {
         ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(position);
         int currentCount = shoppingCartBean.getCount();
-        if (currentCount == 1) {
+        if (currentCount == 0) {
             return;
         }
         currentCount--;
+        upCarModel.upData(shoppingCartBean.getId()+"",currentCount);
         shoppingCartBean.setCount(currentCount);
         ((TextView) showCountView).setText(currentCount + "");
+        if (currentCount==0){
+            shoppingCartAdapter.remove(position);
+            carView.setVisibility(GONE);
+            main_car.setImageResource(R.drawable.nocar);
+            main_car.setTag(R.drawable.nocar);
+        }
         shoppingCartAdapter.notifyDataSetChanged();
         statistics();
     }
@@ -305,6 +314,7 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         for (CarListBeen.InfoBean bean:datas){
             ShoppingCartBean bean1 = new ShoppingCartBean(bean.getId(),bean.getService_name(),"",0,Double.parseDouble(bean.getPrice()),bean.getNum(),bean.getService_type(),bean.getService_id(),bean.getSpec_id());
             bean1.setImageUrl("https://img.alicdn.com/bao/uploaded/i2/TB1YfERKVXXXXanaFXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");
+            bean1.setChoosed(true);
             shoppingCartBeanList.add(bean1);
         }
         shoppingCartAdapter.notifyDataSetChanged();

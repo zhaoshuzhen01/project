@@ -40,6 +40,8 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
 
     private ServiceDetailBeen data;
     private ImageView main_car ;
+    private TextView  car_msgCount;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,9 +76,10 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
         topChose.setOnClickListener(this);
         buttonText.setOnClickListener(this);
     }
-    public void setData(ServiceDetailBeen data, ImageView main_car) {
+    public void setData(ServiceDetailBeen data, ImageView main_car,TextView car_msgCount) {
         this.data = data;
         this.main_car = main_car ;
+        this.car_msgCount = car_msgCount ;
     }
     @Override
     public void onDestroyView() {
@@ -119,5 +122,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
         main_car.setImageResource(R.drawable.car);
         main_car.setTag(R.drawable.car);
         dismiss();
+        car_msgCount.setVisibility(View.VISIBLE);
+
     }
 }

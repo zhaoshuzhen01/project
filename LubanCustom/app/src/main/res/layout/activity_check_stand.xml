@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/h_10dp"
-                    android:text="12：32"
+                    android:text="15：00"
                     android:textColor="@color/color_ff0000" />
             </LinearLayout>
         </LinearLayout>
@@ -204,6 +204,7 @@
                 android:text="确认支付" />
 
             <TextView
+                android:id="@+id/xiadanprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¥ 390.00"

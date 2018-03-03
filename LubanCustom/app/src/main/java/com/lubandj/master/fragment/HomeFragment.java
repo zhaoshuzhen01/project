@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.baselibrary.BaseRefreshFragment;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
@@ -43,6 +44,8 @@ import butterknife.InjectView;
 public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeBeen.InfoBean>, BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @InjectView(R.id.car_msgCount)
+    TextView car_msgCount ;
     private HomeListAdapter homeListAdapter;
     private List<HomeBeen.InfoBean> msgBeens = new ArrayList<>();
     private BaseReflushPresenter msgCenterPresenter;
@@ -81,6 +84,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
         homeModel.setCity("北京");
         main_car_lay = view.findViewById(R.id.main_car_lay);
         main_car_lay.setOnClickListener(this);
+        car_msgCount.setVisibility(View.GONE);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

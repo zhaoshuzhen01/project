@@ -143,9 +143,10 @@ public class MySettingActivity extends PermissionActivity {
         outDialog.setButton1("确定", new TipDialog.DialogButtonOnClickListener() {
             @Override
             public void onClick(View button, TipDialog dialog) {
-//                CommonUtils.logOut(MySettingActivity.this);
+                CommonUtils.logOut(MySettingActivity.this);
                 dialog.dismiss();
-
+                RxBus.getInstance().post(new BusEvent(BusEvent.LOGIN_OUT));
+                finish();
             }
         });
         outDialog.setButton2("取消", new TipDialog.DialogButtonOnClickListener() {

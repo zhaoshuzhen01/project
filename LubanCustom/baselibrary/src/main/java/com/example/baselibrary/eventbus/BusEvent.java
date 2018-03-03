@@ -7,6 +7,7 @@ package com.example.baselibrary.eventbus;
 public class BusEvent {
     public final static int IMG_CODE = 1 ;//上传图片
     public final static int NOTIFY_CODE = 2;//通知
+    public final static int LOGIN_OUT = 3;//退出登陆
 
     private int code ;
 

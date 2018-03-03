@@ -136,20 +136,7 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
         switch (view.getId()){
             //全选按钮
             case R.id.ck_all:
-                if (shoppingCartBeanList.size() != 0) {
-                    if (ckAll.isChecked()) {
-                        for (int i = 0; i < shoppingCartBeanList.size(); i++) {
-                            shoppingCartBeanList.get(i).setChoosed(true);
-                        }
-                        shoppingCartAdapter.notifyDataSetChanged();
-                    } else {
-                        for (int i = 0; i < shoppingCartBeanList.size(); i++) {
-                            shoppingCartBeanList.get(i).setChoosed(false);
-                        }
-                        shoppingCartAdapter.notifyDataSetChanged();
-                    }
-                }
-                statistics();
+                chooseAll();
                 break;
             case R.id.tv_basetitle_right:
                 flag = !flag;
@@ -199,6 +186,26 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
                     MainCantainActivity.startActivity(this);
                     break;
         }
+    }
+
+    /**
+     * 全选
+     */
+    private void chooseAll() {
+        if (shoppingCartBeanList.size() != 0) {
+            if (ckAll.isChecked()) {
+                for (int i = 0; i < shoppingCartBeanList.size(); i++) {
+                    shoppingCartBeanList.get(i).setChoosed(true);
+                }
+                shoppingCartAdapter.notifyDataSetChanged();
+            } else {
+                for (int i = 0; i < shoppingCartBeanList.size(); i++) {
+                    shoppingCartBeanList.get(i).setChoosed(false);
+                }
+                shoppingCartAdapter.notifyDataSetChanged();
+            }
+        }
+        statistics();
     }
 
     /**
@@ -363,7 +370,7 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
 
     @Override
     public void onLoadMore() {
-
+        msgCenterPresenter.getMoreData(0);
     }
 
     @Override

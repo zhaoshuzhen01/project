@@ -173,7 +173,7 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
 
     @Override
     public void getServiceData(ServiceDetailBeen data) {
-        introduceDialog.setData(data, main_car);
+        introduceDialog.setData(data, main_car,car_msgCount);
         Glide.with(getActivity()).load(data.getInfo().getService_pic()).skipMemoryCache(false).into(topPic);
         topName.setText(data.getInfo().getName());
         msgBeens.addAll(data.getInfo().getItems());

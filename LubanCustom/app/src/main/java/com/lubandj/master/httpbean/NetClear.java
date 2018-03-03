@@ -11,7 +11,17 @@ public class NetClear {
 
     private String id ;
 
+    public int getNum() {
+        return num;
+    }
+
+    private int num ;
+
     public NetClear(String id) {
         this.id = id;
+    }
+    public NetClear(String id,int num) {
+        this.id = id;
+        this.num = num ;
     }
 }
