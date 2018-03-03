@@ -132,7 +132,7 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
     }
 
 
-    @OnClick({ R.id.xiaoqu, R.id.fankui_button,R.id.choose_city,R.id.choose_area})
+    @OnClick({ R.id.xiaoqu, R.id.btn_save_addaddress,R.id.choose_city,R.id.choose_area})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.xiaoqu:
