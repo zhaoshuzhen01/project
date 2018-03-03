@@ -143,7 +143,7 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
     }
 
 
-    @OnClick({R.id.xiaoqu, R.id.fankui_button, R.id.choose_city, R.id.choose_area})
+    @OnClick({R.id.xiaoqu, R.id.choose_city, R.id.choose_area, R.id.btn_save_addaddress, R.id.diqu_empty_text})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.xiaoqu:
@@ -158,6 +158,7 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
                 addressDialog.setTag("1", this);
                 break;
             case R.id.choose_area:
+            case R.id.diqu_empty_text:
                 addressDialog.setTag("2", this);
                 break;
             case R.id.btn_save_addaddress:
