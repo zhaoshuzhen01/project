@@ -9,19 +9,28 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.tools.KeyBorad;
 import com.example.baselibrary.tools.ToastUtils;
+import com.google.gson.Gson;
+import com.lubandj.master.Canstance;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.been.AddressBean;
 import com.lubandj.master.dialog.ClickListenerInterface;
 import com.lubandj.master.dialog.SingleScrollSelectDialog;
+import com.lubandj.master.httpbean.AddressListReponse;
+import com.lubandj.master.httpbean.BaseEntity;
+import com.lubandj.master.httpbean.BaseResponseBean;
+import com.lubandj.master.httpbean.UidParamsRequest;
 import com.lubandj.master.model.AddAdressModel;
 import com.lubandj.master.my.SelectAddressActivity;
 import com.lubandj.master.utils.CommonUtils;
+import com.lubandj.master.utils.TaskEngine;
 
 import org.apache.http.util.TextUtils;
 
@@ -92,12 +101,13 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
         getQuList();
         setOkVisibity(false);
         initData();
-        KeyBorad.DelayShow(name, this);
+//        KeyBorad.DelayShow(name, this);
         addAdressModel = new AddAdressModel(this, this);
     }
 
     @Override
     public void initData() {
+        setResult(RESULT_CANCELED);
         if (mBean.id == 0) {//新增
             city.setText(TApplication.context.mCurrentCigy);
             mTvEmptydiqu.setVisibility(View.VISIBLE);
@@ -138,25 +148,16 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
                 }
                 break;
             case R.id.btn_save_addaddress:
-                mBean.id = 0;
-                mBean.city = city.getText().toString();
-                mBean.province = mBean.city;
-                mBean.area = diqu.getText().toString();
-                mBean.address = xiaoqu.getText().toString();
-                mBean.housing_estate = mBean.address;
                 mBean.house_number = louhao.getText().toString();
                 mBean.linkman = name.getText().toString();
                 mBean.phone = phone.getText().toString();
-                if (TextUtils.isEmpty(mBean.linkman) || TextUtils.isEmpty(mBean.phone) || TextUtils.isEmpty(mBean.city) || TextUtils.isEmpty(mBean.area) || TextUtils.isEmpty(mBean.address) || TextUtils.isEmpty(mBean.house_number)) {
+                if (TextUtils.isEmpty(mBean.linkman) || TextUtils.isEmpty(mBean.phone) || TextUtils.isEmpty(mBean.city) || TextUtils.isEmpty(mBean.area) || TextUtils.isEmpty(mBean.housing_estate) || TextUtils.isEmpty(mBean.house_number)) {
                     ToastUtils.showShort(this, "用户信息不完整");
-                }
-                addAdressModel.saveAddress(mBean);
+                } else
+                    saveAddress();
                 break;
-            case R.id.choose_city:
-                ToastUtils.showShort(this, "城市");
-                break;
-            case R.id.choose_area:
-                ToastUtils.showShort(this, "区域");
+            case R.id.tv_basetitle_right://删除地址
+                deleteAddress();
                 break;
         }
     }
@@ -168,7 +169,17 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
             return;
         }
         if (requestCode == 1010) {
-            mBean = (AddressBean) data.getSerializableExtra("address");
+            AddressBean bean = (AddressBean) data.getSerializableExtra("address");
+            if (bean.areapublic.equals(diqu.getText().toString())) {//区相同
+                mBean.province = bean.province;
+                mBean.city = bean.city;
+                mBean.area = bean.areapublic;
+                mBean.address = bean.address;
+                mBean.housing_estate = bean.housing_estate;
+                xiaoqu.setText(mBean.housing_estate);
+            } else {
+                CommonUtils.customShowToast(AddAddressActivity.this, "所选区域不在服务范围内\n请重新选择");
+            }
         }
     }
 
@@ -209,5 +220,53 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
         quList.add("丰台区");
         quList.add("海淀区");
         quList.add("朝阳区");
+    }
+
+    public void saveAddress() {
+        initProgressDialog("正在保存地址...").show();
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_SAVEADDRESS, mBean, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String s) {
+
+                fastDismiss();
+                BaseResponseBean bean = new BaseResponseBean();
+                bean = CommonUtils.generateEntityByGson(AddAddressActivity.this, s, bean);
+                if (bean != null) {
+                    ToastUtils.showShort(AddAddressActivity.this, "保存成功");
+                    setResult(RESULT_OK);
+                    finish();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                CommonUtils.fastShowError(AddAddressActivity.this, volleyError);
+            }
+        });
+    }
+
+    public void deleteAddress() {
+        UidParamsRequest request = new UidParamsRequest(CommonUtils.getUid());
+        initProgressDialog("正在删除地址...").show();
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_DELETEADDRESS, request, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String s) {
+                fastDismiss();
+                BaseResponseBean bean = new BaseResponseBean();
+                bean = CommonUtils.generateEntityByGson(AddAddressActivity.this, s, bean);
+                if (bean != null) {
+                    ToastUtils.showShort(AddAddressActivity.this, "删除成功");
+                    setResult(RESULT_OK);
+                    finish();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                CommonUtils.fastShowError(AddAddressActivity.this, volleyError);
+            }
+        });
     }
 }

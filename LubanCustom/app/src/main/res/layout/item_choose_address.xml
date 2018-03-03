@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,14 +20,16 @@
             android:layout_marginTop="3dp"
             android:text="北京市海淀区"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/tv_commodity_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/h_6dp"
-            android:text="李先生| 1335345435435453" />
+            android:text="李先生| 1335345435435453"
+            android:textColor="#999999"
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <ImageView
@@ -35,8 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:clickable="true"
         android:layout_marginRight="@dimen/h_14dp"
-        android:src="@drawable/addressre"
-        android:gravity="center" />
+        android:clickable="true"
+        android:gravity="center"
+        android:src="@drawable/addressre"/>
 </RelativeLayout>
