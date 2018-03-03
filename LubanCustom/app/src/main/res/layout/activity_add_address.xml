@@ -132,7 +132,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/h_10dp"
                 android:text="服务城市 :"
@@ -147,6 +147,7 @@
                 android:gravity="center_vertical"
                 android:text="青岛市"
                 android:textSize="@dimen/sp_14"
+                android:textColor="#333333"
                 />
 
         </LinearLayout>
@@ -166,7 +167,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/h_10dp"
                 android:text="服务地区 :"
@@ -180,7 +181,7 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:text="南山区"
+                android:textColor="#333333"
                 android:textSize="@dimen/sp_14"
                 />
 
@@ -214,7 +215,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/h_10dp"
                 android:text="小区/大厦/学校 :"
@@ -227,8 +228,10 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:drawableLeft="@drawable/myaddress_gps"
-                android:textSize="@dimen/sp_14"
+                android:gravity="center_vertical"
                 android:hint="点击选择"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_14"
                 />
         </LinearLayout>
 
@@ -244,7 +247,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/h_10dp"
                 android:text="楼号 - 门牌号 :"
@@ -256,7 +259,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:hint="请输入楼号或门牌号"
+                android:hint="例：10楼503"
                 android:textSize="@dimen/sp_14"
 
                 />
@@ -276,12 +279,4 @@
         android:gravity="center"
         android:text="保存"
         android:textColor="@color/white"/>
-
-    <com.lubandj.master.dialog.AddressDialog
-        android:id="@+id/addressLog"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone"></com.lubandj.master.dialog.AddressDialog>
-
 </RelativeLayout>

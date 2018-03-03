@@ -2,6 +2,7 @@ package com.lubandj.master.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,14 +17,20 @@ import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.tools.KeyBorad;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.wheel.kankan.model.CityModel;
+import com.example.baselibrary.wheel.kankan.model.DistrictModel;
+import com.example.baselibrary.wheel.kankan.model.ProvinceModel;
+import com.example.baselibrary.wheel.kankan.service.XmlParserHandler;
 import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
+import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.been.AddressBean;
 import com.lubandj.master.dialog.AddressDialog;
 import com.lubandj.master.dialog.ClickListenerInterface;
+import com.lubandj.master.dialog.DoubleSelectDialog;
 import com.lubandj.master.dialog.SingleScrollSelectDialog;
 import com.lubandj.master.httpbean.AddressListReponse;
 import com.lubandj.master.httpbean.BaseEntity;
@@ -37,7 +44,14 @@ import com.lubandj.master.utils.TaskEngine;
 
 import org.apache.http.util.TextUtils;
 
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -61,17 +75,12 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
     LinearLayout choose_area;
     @InjectView(R.id.choose_city)
     LinearLayout choose_city;
-    @InjectView(R.id.addressLog)
-    AddressDialog addressDialog;
     @InjectView(R.id.diqu_empty_text)
     TextView mTvEmptydiqu;
     @InjectView(R.id.btn_save_addaddress)
     Button mBtnSave;
 
     private AddressBean mBean;
-    private AddAdressModel addAdressModel;
-
-    private ArrayList<String> quList = new ArrayList<>();
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AddAddressActivity.class);
@@ -104,18 +113,17 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
             setTitleText("修改地址");
             setRightText("删除地址");
         }
-//        getQuList();
         setOkVisibity(false);
         initData();
-//        KeyBorad.DelayShow(name, this);
-        addAdressModel = new AddAdressModel(this, this);
     }
 
     @Override
     public void initData() {
         setResult(RESULT_CANCELED);
+        initProvinceDatas();
         if (mBean.id == 0) {//新增
             city.setText(TApplication.context.mCurrentCigy);
+            mBean.city = TApplication.context.mCurrentCigy;
             mTvEmptydiqu.setVisibility(View.VISIBLE);
         } else {//修改
             name.setText(mBean.linkman);
@@ -141,7 +149,8 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
         // TODO: add setContentView(...) invocation
         ButterKnife.inject(this);
     }
-    @OnClick({ R.id.xiaoqu, R.id.btn_save_addaddress,R.id.choose_city,R.id.choose_area})
+
+    @OnClick({R.id.xiaoqu, R.id.btn_save_addaddress, R.id.choose_city, R.id.choose_area})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.xiaoqu:
@@ -153,11 +162,11 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
                 }
                 break;
             case R.id.choose_city:
-                addressDialog.setTag("1", this);
+                onSelctCity(null);
                 break;
             case R.id.choose_area:
             case R.id.diqu_empty_text:
-                addressDialog.setTag("2", this);
+                onSelctQu(null);
                 break;
             case R.id.btn_save_addaddress:
                 mBean.house_number = louhao.getText().toString();
@@ -169,7 +178,12 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
                     saveAddress();
                 break;
             case R.id.tv_basetitle_right://删除地址
-                deleteAddress();
+                DialogTagin.getDialogTagin(AddAddressActivity.this).showDialog("确认删除该地址吗？").setDialogSure(new DialogTagin.DialogSure() {
+                    @Override
+                    public void dialogCall() {
+                        deleteAddress();
+                    }
+                });
                 break;
         }
     }
@@ -209,13 +223,38 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
         }
     }
 
+
+    /**
+     * 选择市
+     *
+     * @param view
+     */
+    public void onSelctCity(View view) {
+        SingleScrollSelectDialog dialog = new SingleScrollSelectDialog(AddAddressActivity.this, mProvinceDatas, mCitisDatasMap, new ClickListenerInterface() {
+            @Override
+            public void doConfirm(String mark) {
+                city.setText(mark);
+                mBean.city = mark;
+            }
+
+            @Override
+            public void doCancel(String mark) {
+
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+
     /**
      * 选择区
      *
      * @param view
      */
     public void onSelctQu(View view) {
-        SingleScrollSelectDialog dialog = new SingleScrollSelectDialog(AddAddressActivity.this, quList, new ClickListenerInterface() {
+        SingleScrollSelectDialog dialog = new SingleScrollSelectDialog(AddAddressActivity.this, mDistrictDatasMap.get(mBean.city), null, new ClickListenerInterface() {
             @Override
             public void doConfirm(String mark) {
                 diqu.setText(mark);
@@ -233,14 +272,6 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
-    }
-
-    public void getQuList() {
-        quList.add("东城区");
-        quList.add("西城区");
-        quList.add("丰台区");
-        quList.add("海淀区");
-        quList.add("朝阳区");
     }
 
     public void saveAddress() {
@@ -291,5 +322,68 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
                 CommonUtils.fastShowError(AddAddressActivity.this, volleyError);
             }
         });
+    }
+
+    /**
+     * 所有省
+     */
+    protected ArrayList<String> mProvinceDatas;
+    /**
+     * key - 省 value - 市
+     */
+    protected Map<String, ArrayList<String>> mCitisDatasMap = new HashMap<>();
+    /**
+     * key - 市 values - 区
+     */
+    protected Map<String, ArrayList<String>> mDistrictDatasMap = new HashMap<>();
+
+    /**
+     * key - 区 values - 邮编
+     */
+//    protected Map<String, String> mZipcodeDatasMap = new HashMap<String, String>();
+
+    /**
+     * 解析省市区的XML数据
+     */
+    protected void initProvinceDatas() {
+        List<ProvinceModel> provinceList = null;
+        AssetManager asset = this.getAssets();
+        try {
+            InputStream input = asset.open("province_data.xml");
+            // 创建一个解析xml的工厂对象
+            SAXParserFactory spf = SAXParserFactory.newInstance();
+            // 解析xml
+            SAXParser parser = spf.newSAXParser();
+            XmlParserHandler handler = new XmlParserHandler();
+            parser.parse(input, handler);
+            input.close();
+            // 获取解析出来的数据
+            provinceList = handler.getDataList();
+            mProvinceDatas = new ArrayList<>();
+            for (int i = 0; i < provinceList.size(); i++) {
+                // 遍历所有省的数据
+                mProvinceDatas.add(provinceList.get(i).getName());
+                List<CityModel> cityList = provinceList.get(i).getCityList();
+                ArrayList<String> cityNames = new ArrayList<>();
+                for (int j = 0; j < cityList.size(); j++) {
+                    // 遍历省下面的所有市的数据
+                    cityNames.add(cityList.get(j).getName());
+                    List<DistrictModel> districtList = cityList.get(j).getDistrictList();
+                    ArrayList<String> distrinctNameArray = new ArrayList<>();
+                    for (int k = 0; k < districtList.size(); k++) {
+                        // 遍历市下面所有区/县的数据
+                        distrinctNameArray.add(districtList.get(k).getName());
+                    }
+                    // 市-区/县的数据，保存到mDistrictDatasMap
+                    mDistrictDatasMap.put(cityList.get(j).getName(), distrinctNameArray);
+                }
+                // 省-市的数据，保存到mCitisDatasMap
+                mCitisDatasMap.put(provinceList.get(i).getName(), cityNames);
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        } finally {
+
+        }
     }
 }

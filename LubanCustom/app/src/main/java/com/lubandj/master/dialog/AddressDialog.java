@@ -108,9 +108,9 @@ public class AddressDialog extends LinearLayout implements View.OnClickListener,
         initView(context);
     }
 
-    public void setTag(String tag,GetCityAndArea getCityAndArea) {
+    public void setTag(String tag, GetCityAndArea getCityAndArea) {
         this.tag = tag;
-        this.getCityAndArea = getCityAndArea ;
+        this.getCityAndArea = getCityAndArea;
         if (tag.equals("1")) {
             mViewDistrict.setVisibility(GONE);
             mViewProvince.setVisibility(VISIBLE);
@@ -119,9 +119,13 @@ public class AddressDialog extends LinearLayout implements View.OnClickListener,
             mViewProvince.setVisibility(GONE);
             mViewCity.setVisibility(GONE);
             mViewDistrict.setVisibility(VISIBLE);
-            mViewDistrict.setCurrentItem(2);
+//            mViewDistrict.setCurrentItem(2);
         }
         this.setVisibility(VISIBLE);
+    }
+
+    public void setCity(String city) {
+        mCurrentCityName = city;
     }
 
     private void initView(Context context) {
@@ -143,12 +147,13 @@ public class AddressDialog extends LinearLayout implements View.OnClickListener,
         this.setVisibility(GONE);
         switch (view.getId()) {
             case R.id.cancle:
+                getCityAndArea.getContent("", "1");
                 break;
             case R.id.finish:
                 if (tag.equals("1"))
-                    getCityAndArea.getContent(mCurrentCityName,"1");
+                    getCityAndArea.getContent(mCurrentCityName, "1");
                 else
-                getCityAndArea.getContent(mCurrentDistrictName,"2");
+                    getCityAndArea.getContent(mCurrentDistrictName, "2");
                 break;
         }
     }
@@ -224,7 +229,6 @@ public class AddressDialog extends LinearLayout implements View.OnClickListener,
     /**
      * 解析省市区的XML数据
      */
-
     protected void initProvinceDatas() {
         List<ProvinceModel> provinceList = null;
         AssetManager asset = context.getAssets();
@@ -284,7 +288,7 @@ public class AddressDialog extends LinearLayout implements View.OnClickListener,
         }
     }
 
-    public interface GetCityAndArea{
-        void getContent(String address,String tag);
+    public interface GetCityAndArea {
+        void getContent(String address, String tag);
     }
 }

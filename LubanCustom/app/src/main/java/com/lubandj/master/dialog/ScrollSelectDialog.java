@@ -160,7 +160,6 @@ public class ScrollSelectDialog extends Dialog implements View.OnClickListener {
                 currentSelectDay = currentDay - 1;
             }
             mWvDay.setSelection(currentSelectDay);
-
         }
     }
 

@@ -18,7 +18,9 @@ import com.wx.wheelview.widget.WheelView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -31,15 +33,19 @@ public class SingleScrollSelectDialog extends Dialog implements View.OnClickList
     private Button mBtnCancel;
     private Context context;
     private ClickListenerInterface clickListenerInterface;
-    private WheelView mWvText;
+
+    private ArrayList<String> firstList;
+    private Map<String, ArrayList<String>> mCitisDatasMap;
+
+    private WheelView mWvFirst;
+    private WheelView mWvSecond;
     private WheelView.WheelViewStyle style;
 
-    private ArrayList<String> textList;
-
-    public SingleScrollSelectDialog(Context context, ArrayList<String> textList, ClickListenerInterface clickListenerInterface) {
+    public SingleScrollSelectDialog(Context context, ArrayList<String> firstList, Map<String, ArrayList<String>> mCitisDatasMap, ClickListenerInterface clickListenerInterface) {
         super(context, R.style.DialogTheme);
         this.context = context;
-        this.textList = textList;
+        this.firstList = firstList;
+        this.mCitisDatasMap = mCitisDatasMap;
         this.clickListenerInterface = clickListenerInterface;
     }
 
@@ -55,16 +61,31 @@ public class SingleScrollSelectDialog extends Dialog implements View.OnClickList
         mBtnSelect.setOnClickListener(this);
         mBtnCancel.setOnClickListener(this);
 
-        mWvText = (WheelView) view.findViewById(R.id.wv_text);
+        mWvFirst = (WheelView) view.findViewById(R.id.wv_first);
+        mWvSecond = (WheelView) view.findViewById(R.id.wv_second);
 
         style = new WheelView.WheelViewStyle();
-        style.selectedTextSize = 20;
+        style.selectedTextSize = 18;
         style.textSize = 16;
         style.selectedTextColor = Color.parseColor("#333333");
         style.textColor = Color.parseColor("#999999");
         style.holoBorderColor = Color.parseColor("#dddddd");
-        setStyle(mWvText);
-        mWvText.setWheelData(textList);
+        setStyle(mWvFirst);
+        setStyle(mWvSecond);
+
+        mWvFirst.setWheelData(firstList);
+        if (mCitisDatasMap != null) {
+            mWvSecond.setWheelData(mCitisDatasMap.get(firstList.get(0)));
+            mWvFirst.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
+                @Override
+                public void onItemSelected(int position, Object o) {
+                    String city = (String) mWvFirst.getSelectionItem();
+                    mWvSecond.resetDataFromTop(mCitisDatasMap.get(city));
+                }
+            });
+        } else {
+            mWvSecond.setVisibility(View.GONE);
+        }
 
         Window dialogWindow = getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
@@ -95,7 +116,12 @@ public class SingleScrollSelectDialog extends Dialog implements View.OnClickList
         switch (id) {
             case R.id.btn_select_scrollselect:
                 SingleScrollSelectDialog.this.dismiss();
-                String text = (String) mWvText.getSelectionItem();
+                String text;
+                if (mCitisDatasMap == null) {
+                    text = (String) mWvFirst.getSelectionItem();
+                } else {
+                    text = (String) mWvSecond.getSelectionItem();
+                }
                 clickListenerInterface.doConfirm(text);
                 break;
             case R.id.btn_cancel_scrollselect:

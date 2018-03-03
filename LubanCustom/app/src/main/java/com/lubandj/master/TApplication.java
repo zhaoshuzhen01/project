@@ -26,7 +26,7 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
     public static String APP_NAME;
     public boolean isActive = true;
     public UserInfo mUserInfo;
-    public String mCurrentCigy = "北京";
+    public String mCurrentCigy = "北京市";
 
     public static TApplication context;
 
