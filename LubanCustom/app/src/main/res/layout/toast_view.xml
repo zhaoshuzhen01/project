@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/roundrect_black"
+              android:gravity="center"
+              android:minHeight="50dp"
+              android:minWidth="150dp"
+              android:orientation="vertical"
+              android:padding="15dp">
+
+    <TextView
+        android:id="@+id/tv_toast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="凄凄切切"
+        android:textColor="#ffffff"
+        android:textSize="18sp"/>
+</LinearLayout>

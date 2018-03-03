@@ -26,6 +26,7 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
     public static String APP_NAME;
     public boolean isActive = true;
     public UserInfo mUserInfo;
+    public String mCurrentCigy = "北京";
 
     public static TApplication context;
 
@@ -109,7 +110,7 @@ public class TApplication extends Application implements Thread.UncaughtExceptio
 //            default:
 //                break;
 //        }
-        Log.e("deal",  "    uid  = " + uid);
+        Log.e("deal", "    uid  = " + uid);
         PushManager.getInstance().bindAlias(context, uid + "", CommonUtils.getUid() + "");
     }
 

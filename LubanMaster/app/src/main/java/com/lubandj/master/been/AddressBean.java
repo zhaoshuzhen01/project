@@ -12,6 +12,7 @@ public class AddressBean implements Serializable {
     public String province;//山东
     public String city;//青岛
     public String areapublic;//市南区
+    public String area;
     public String address;//香港中路21号
     public String housing_estate;//海港花园
     public String house_number;//1号楼508

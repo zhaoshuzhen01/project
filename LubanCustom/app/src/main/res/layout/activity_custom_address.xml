@@ -1,42 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/work_center_lay"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_f4f4f4"
-    android:orientation="vertical">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/work_center_lay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_f4f4f4"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/in_get"
         android:orientation="vertical">
+
         <View
-            android:background="@color/color_e1e1e1"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0.5"></View>
+            android:layout_height="@dimen/dp_0.5"
+            android:background="@color/color_e1e1e1"></View>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/h_10dp"></View>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"
-                android:scrollbars="none" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none"/>
     </LinearLayout>
+
     <TextView
-        android:id="@+id/fankui_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/btn_add_addresslist"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/h_40dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:background="@drawable/red_back"
-        android:paddingBottom="@dimen/h_12dp"
-        android:paddingLeft="@dimen/h_100dp"
-        android:paddingRight="@dimen/h_100dp"
-        android:paddingTop="@dimen/h_12dp"
+        android:gravity="center"
         android:text="新增地址"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
 </RelativeLayout>

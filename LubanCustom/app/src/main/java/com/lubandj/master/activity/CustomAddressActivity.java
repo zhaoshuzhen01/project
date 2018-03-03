@@ -2,8 +2,6 @@ package com.lubandj.master.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,12 +15,8 @@ import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.ChooseAddressAdapter;
-import com.lubandj.master.adapter.ChooseCityAdapter;
 import com.lubandj.master.been.AddressBean;
-import com.lubandj.master.been.MsgCenterBeen;
-import com.lubandj.master.httpbean.GetAddressReponse;
 import com.lubandj.master.httpbean.UidParamsRequest;
-import com.lubandj.master.my.MyAddressActivity;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
 
@@ -36,7 +30,7 @@ import butterknife.OnClick;
 public class CustomAddressActivity extends TitleBaseActivity implements BaseQuickAdapter.OnItemClickListener {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @InjectView(R.id.fankui_button)
+    @InjectView(R.id.btn_add_addresslist)
     TextView fankuiButton;
     private List<AddressBean> msgBeens = new ArrayList<>();
     private ChooseAddressAdapter chooseCityAdapter;
@@ -88,11 +82,14 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
         getAddress();
     }
 
-    @OnClick(R.id.fankui_button)
+    @OnClick(R.id.btn_add_addresslist)
     public void onClick() {
-        AddAddressActivity.startActivity(this);
+        Intent intent = new Intent(CustomAddressActivity.this, AddAddressActivity.class);
+        AddressBean bean = new AddressBean();
+        bean.id = 0;
+        intent.putExtra("bean", bean);
+        startActivityForResult(intent, 1001);
     }
-
 
 
     @Override
