@@ -126,6 +126,7 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                fastDismiss();
                 CommonUtils.fastShowError(CustomAddressActivity.this, volleyError);
             }
         });

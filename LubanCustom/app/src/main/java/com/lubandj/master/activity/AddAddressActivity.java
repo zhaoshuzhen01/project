@@ -26,6 +26,7 @@ import com.lubandj.master.dialog.SingleScrollSelectDialog;
 import com.lubandj.master.httpbean.AddressListReponse;
 import com.lubandj.master.httpbean.BaseEntity;
 import com.lubandj.master.httpbean.BaseResponseBean;
+import com.lubandj.master.httpbean.DeleteAddressRequest;
 import com.lubandj.master.httpbean.UidParamsRequest;
 import com.lubandj.master.model.AddAdressModel;
 import com.lubandj.master.my.SelectAddressActivity;
@@ -241,13 +242,14 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                fastDismiss();
                 CommonUtils.fastShowError(AddAddressActivity.this, volleyError);
             }
         });
     }
 
     public void deleteAddress() {
-        UidParamsRequest request = new UidParamsRequest(CommonUtils.getUid());
+        DeleteAddressRequest request = new DeleteAddressRequest(mBean.id);
         initProgressDialog("正在删除地址...").show();
         TaskEngine.getInstance().tokenHttps(Canstance.HTTP_DELETEADDRESS, request, new Response.Listener<String>() {
 
@@ -265,6 +267,7 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                fastDismiss();
                 CommonUtils.fastShowError(AddAddressActivity.this, volleyError);
             }
         });
