@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -63,6 +64,18 @@ public class BookOrderActivity extends TitleBaseActivity {
     TextView address_phone;
     @InjectView(R.id.tv_ordertime)
     TextView tv_ordertime;
+
+    @InjectView(R.id.choose_serice_address_lay)
+    RelativeLayout choose_address_none;
+    @InjectView(R.id.choose_address_has)
+    LinearLayout choose_address_has;
+    @InjectView(R.id.tv_name)
+    TextView tv_name;
+    @InjectView(R.id.tv_phone)
+    TextView tv_phone;
+    @InjectView(R.id.tv_address)
+    TextView tv_address;
+
     private BookOrderOdapter bookOrderOdapter;
     private List<ShoppingCartBean> msgBeens = new ArrayList<>();
 
@@ -189,5 +202,5 @@ public class BookOrderActivity extends TitleBaseActivity {
                 }
                 break;
         }
-        }
+}
 }
