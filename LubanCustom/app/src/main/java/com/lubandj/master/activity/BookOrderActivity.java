@@ -187,7 +187,7 @@ public class BookOrderActivity extends TitleBaseActivity {
                     }
                     String city = bean.province.equals(bean.city)?bean.city:bean.province+bean.city;
                     address_adress.setText(city + bean.area + bean.housing_estate + bean.house_number);
-                    CommonUtils.setAddress(bean.linkman + "," + bean.phone + "," + city + "," + bean.area + "," + bean.housing_estate + bean.house_number);
+                    CommonUtils.setAddress(bean.linkman + "," + bean.phone + "," + city + "," + bean.area + "," + bean.housing_estate +","+ bean.house_number);
                 }
                 break;
             case 303:
