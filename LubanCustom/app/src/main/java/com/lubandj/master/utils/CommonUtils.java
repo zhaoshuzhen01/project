@@ -27,6 +27,8 @@ import com.lubandj.customer.login.LoginActivity;
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * function:
@@ -166,6 +168,18 @@ public class CommonUtils {
 
     public static void setToken(String token) {
         SPUtils.getInstance().put(Canstance.TOKEN, token);
+    }
+
+    public static String[] getAddress() {
+        String address = SPUtils.getInstance().getString(Canstance.ADDRESS);
+        if (!TextUtils.isEmpty(address)){
+         return    address.split(",");
+        }
+        return null;
+    }
+
+    public static void setAddress(String address) {
+        SPUtils.getInstance().put(Canstance.ADDRESS, address);
     }
 
     public static int getMsgCount() {

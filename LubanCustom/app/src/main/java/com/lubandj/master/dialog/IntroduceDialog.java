@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,8 +127,8 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
         main_car.setTag(R.drawable.car);
         dismiss();
         car_msgCount.setVisibility(View.VISIBLE);
-
-        car_msgCount.setText((Integer.parseInt(car_msgCount.getText().toString())+count)+"");
+        String mcount = car_msgCount.getText().toString();
+        car_msgCount.setText((TextUtils.isEmpty(mcount)?0:Integer.parseInt(mcount)+count)+"");
 
         ShoppingCartBean bean1 = new ShoppingCartBean(1,data.getInfo().getName(),"",0,99.00,count,1,Integer.parseInt(data.getInfo().getService_id()),2);
         bean1.setImageUrl("https://img.alicdn.com/bao/uploaded/i2/TB1YfERKVXXXXanaFXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");

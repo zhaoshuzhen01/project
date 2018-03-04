@@ -211,12 +211,15 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         totalPrice = 0.00;
         LocalleCarData.newInstance().clear();
         LocalleCarData.newInstance().setTotalPrice(0.00);
+        int serverNum = 0;
         for (int i = 0; i < shoppingCartBeanList.size(); i++) {
             ShoppingCartBean shoppingCartBean = shoppingCartBeanList.get(i);
             if (shoppingCartBean.isChoosed()) {
                 totalCount++;
                 LocalleCarData.newInstance().setShoppingCartBeanList(shoppingCartBean);
                 totalPrice += shoppingCartBean.getPrice() * shoppingCartBean.getCount();
+                serverNum+=shoppingCartBean.getCount();
+                car_msgCount.setText(serverNum+"");
             }
         }
         LocalleCarData.newInstance().setTotalPrice(totalPrice);
@@ -356,6 +359,7 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
 
     @Override
     public void getServiceData(Object data) {
+        LocalleCarData.newInstance().clear();
         ToastUtils.showShort(context,"购物车已清空");
         carView.setVisibility(GONE);
         car_msgCount.setVisibility(GONE);

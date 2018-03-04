@@ -51,6 +51,7 @@ public class Canstance {
     //SharePrefrense 参数
     public static final String DEVIED_ID = "DEVICEID";
     public static final String TOKEN = "TOKEN";
+    public static final String ADDRESS = "address";
     public static final String UID = "UID";
     public static final String MSG = "MSG";
     public static final String FIRSTSTART = "first_start";

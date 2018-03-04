@@ -112,6 +112,7 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
         list_shopping_cart= (RecyclerView) findViewById(R.id.list_shopping_cart);
         list_shopping_cart.setLayoutManager(new LinearLayoutManager(this));
         ckAll.setOnClickListener(this);
+        ckAll.setChecked(true);
         tvSettlement.setOnClickListener(this);
         clearCarListsModel = new DeleteCarModel(this,this);
 
@@ -353,11 +354,18 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
             return;
         }
         shoppingCartBeanList.clear();
+        LocalleCarData.newInstance().clear();
         for (CarListBeen.InfoBean bean:datas){
             ShoppingCartBean bean1 = new ShoppingCartBean(bean.getId(),bean.getService_name(),"",0,Double.parseDouble(bean.getPrice()),bean.getNum(),bean.getService_type(),bean.getService_id(),bean.getSpec_id());
             bean1.setImageUrl("https://img.alicdn.com/bao/uploaded/i2/TB1YfERKVXXXXanaFXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");
+            bean1.setChoosed(true);
             shoppingCartBeanList.add(bean1);
+            LocalleCarData.newInstance().setShoppingCartBeanList(bean1);
+            totalPrice += bean1.getPrice() * bean1.getCount();
         }
+        LocalleCarData.newInstance().setTotalPrice(totalPrice);
+        tvShowPrice.setText("¥ " +totalPrice);
+        totalCount = shoppingCartBeanList.size();
         shoppingCartAdapter.notifyDataSetChanged();
         if (shoppingCartBeanList.size()==0){
             backLayout.setVisibility(View.VISIBLE);
@@ -378,6 +386,9 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
     public void getServiceData(Object data) {
         for (Integer position: positons){
             int mpositon = position ;
+            if (position>shoppingCartBeanList.size()){
+                --mpositon;
+            }
             shoppingCartBeanList.remove(mpositon);
         }
         Log.e("deal",shoppingCartBeanList.size()+"");
