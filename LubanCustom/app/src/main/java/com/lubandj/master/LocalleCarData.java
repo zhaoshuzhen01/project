@@ -36,6 +36,7 @@ public class LocalleCarData {
 
     public void clear(){
         shoppingCartBeanList.clear();
+        totalPrice = 0.00;
     }
     public double getTotalPrice() {
         return totalPrice;

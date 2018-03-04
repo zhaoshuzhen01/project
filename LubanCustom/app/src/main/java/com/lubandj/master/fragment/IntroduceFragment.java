@@ -57,6 +57,8 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
     TextView car_msgCount;
     @InjectView(R.id.cus_carlay)
     CarView carLayout;
+    @InjectView(R.id.tv_show_price)
+    TextView tv_show_price ;
     private RelativeLayout carView;
     private List<ServiceDetailBeen.InfoBean.ItemsBean> msgBeens = new ArrayList<>();
     private IntroduceAdapter introduceAdapter;
@@ -96,7 +98,7 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
         service_id = (String) getArguments().get("serviceId");
         serviceDetailModel = new ServiceDetailModel(getActivity(), this);
         car_msgCount.setVisibility(View.GONE);
-        carLayout.setCar_msgCount(carView, car_msgCount, main_car);
+        carLayout.setCar_msgCount(carView, car_msgCount, main_car,tv_show_price);
         main_car.setTag(R.drawable.car);
     }
 
@@ -166,14 +168,18 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
                 }
                 break;
             case R.id.tv_settlement:
+                int count = Integer.parseInt(car_msgCount.getText().toString());
+                if (count>0&&((int) main_car.getTag()) == R.drawable.car)
                 BookOrderActivity.startActivity(getActivity());
+                else
+                    ToastUtils.showShort(getActivity(),"请选择服务");
                 break;
         }
     }
 
     @Override
     public void getServiceData(ServiceDetailBeen data) {
-        introduceDialog.setData(data, main_car,car_msgCount);
+        introduceDialog.setData(data, main_car,car_msgCount,tv_show_price);
         Glide.with(getActivity()).load(data.getInfo().getService_pic()).skipMemoryCache(false).into(topPic);
         topName.setText(data.getInfo().getName());
         msgBeens.addAll(data.getInfo().getItems());
