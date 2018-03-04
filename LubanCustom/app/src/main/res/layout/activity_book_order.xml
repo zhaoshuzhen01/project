@@ -187,6 +187,7 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/shangmen_time"/>
                 <TextView
+                    android:id="@+id/tv_ordertime"
                     android:layout_centerVertical="true"
                     android:textColor="@color/black"
                     android:text="意向上门时间"

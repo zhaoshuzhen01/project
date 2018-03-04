@@ -63,6 +63,10 @@ public class WorkDateAdapter extends RecyclerView.Adapter<WorkDateAdapter.WorkDa
         notifyDataSetChanged();
     }
 
+    public String getSelectWeek() {
+        return dataList.get(selectPos).dayOfWeek;
+    }
+
     public String getCurrentSelectDay() {
         return dataList.get(selectPos).fulldate;
     }

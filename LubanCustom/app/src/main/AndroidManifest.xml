@@ -98,7 +98,7 @@
             android:name=".my.AskForLeaveActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.lubandj.customer.my.AddressListActivity"
+            android:name=".activity.OrderCalendarActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".my.SelectAddressActivity"

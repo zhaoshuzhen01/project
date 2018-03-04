@@ -26,7 +26,10 @@ import com.lubandj.master.been.ShoppingCartBean;
 import com.lubandj.master.model.CarListModel;
 import com.lubandj.master.utils.CommonUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -43,11 +46,11 @@ public class BookOrderActivity extends TitleBaseActivity {
     @InjectView(R.id.choose_liuyan)
     RelativeLayout chooseLiuyan;
     @InjectView(R.id.choose_address)
-    RelativeLayout choose_address ;
+    RelativeLayout choose_address;
     @InjectView(R.id.tv_settlement)
     TextView tv_settlement;
     @InjectView(R.id.tv_show_price)
-    TextView tv_show_price ;
+    TextView tv_show_price;
     @InjectView(R.id.tv_show_price11)
     TextView tv_show_price11 ;
     @InjectView(R.id.show_address_lay)
@@ -58,8 +61,11 @@ public class BookOrderActivity extends TitleBaseActivity {
     TextView address_adress;
     @InjectView(R.id.address_phone)
     TextView address_phone;
+    @InjectView(R.id.tv_ordertime)
+    TextView tv_ordertime;
     private BookOrderOdapter bookOrderOdapter;
     private List<ShoppingCartBean> msgBeens = new ArrayList<>();
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, BookOrderActivity.class);
         context.startActivity(intent);
@@ -76,7 +82,7 @@ public class BookOrderActivity extends TitleBaseActivity {
         setTitleText("预约下单");
         setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
-        msgBeens= LocalleCarData.newInstance().getShoppingBeenList();
+        msgBeens = LocalleCarData.newInstance().getShoppingBeenList();
         tv_settlement = findView(R.id.tv_settlement);
         tv_settlement.setOnClickListener(this);
         bookOrderOdapter = new BookOrderOdapter(msgBeens, this);
@@ -97,8 +103,8 @@ public class BookOrderActivity extends TitleBaseActivity {
 
     @Override
     public void initData() {
-        tv_show_price.setText("¥" +LocalleCarData.newInstance().getTotalPrice()+"");
-        tv_show_price11.setText("¥" +LocalleCarData.newInstance().getTotalPrice()+"");
+        tv_show_price.setText("¥" + LocalleCarData.newInstance().getTotalPrice() + "");
+        tv_show_price11.setText("¥" + LocalleCarData.newInstance().getTotalPrice() + "");
     }
 
     @Override
@@ -110,7 +116,6 @@ public class BookOrderActivity extends TitleBaseActivity {
     protected void clickMenu() {
 
     }
-
 
 
     @Override
@@ -127,6 +132,8 @@ public class BookOrderActivity extends TitleBaseActivity {
                 CouponsActivity.startActivity(this);
                 break;
             case R.id.choose_time:
+                Intent intent = new Intent(BookOrderActivity.this, OrderCalendarActivity.class);
+                startActivityForResult(intent, 303);
                 break;
             case R.id.choose_liuyan:
                 startActivity(new Intent(this, FeedBackInfoActivity.class));
@@ -137,11 +144,15 @@ public class BookOrderActivity extends TitleBaseActivity {
                     ToastUtils.showShort(this,"请选择服务地址");
                     return;
                 }
+                if (tv_ordertime.getText().toString().equals("意向上门时间")){
+                    ToastUtils.showShort(this,"请选择意向上门时间");
+                    return;
+                }
                 CheckStandActivity.startActivity(this);
                 break;
             case R.id.show_address_lay:
             case R.id.choose_address:
-                Intent intent = new Intent(this, CustomAddressActivity.class);
+                 intent = new Intent(this, CustomAddressActivity.class);
                 startActivityForResult(intent,1);
                 break;
         }
@@ -150,14 +161,33 @@ public class BookOrderActivity extends TitleBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        AddressBean bean =(AddressBean) data.getSerializableExtra("data");
-        if (bean!=null){
-            show_address_lay.setVisibility(View.VISIBLE);
-            address_peo.setText("联系人 "+bean.linkman+"");
-            address_phone.setText(bean.phone);
-            address_adress.setText(bean.city+bean.area+bean.address+bean.housing_estate+"");
-            CommonUtils.setAddress(bean.linkman+","+bean.phone+","+bean.city+","+bean.area+","+bean.address+","+bean.housing_estate+"");
+        switch (requestCode){
+            case 1:
+                AddressBean bean = (AddressBean) data.getSerializableExtra("data");
+                if (bean != null) {
+                    show_address_lay.setVisibility(View.VISIBLE);
+                    address_peo.setText("联系人 " + bean.linkman + "");
+                    address_phone.setText(bean.phone);
+                    address_adress.setText(bean.city + bean.area + bean.address + bean.housing_estate + "");
+                    CommonUtils.setAddress(bean.linkman + "," + bean.phone + "," + bean.city + "," + bean.area + "," + bean.address + "," + bean.housing_estate + "");
+                }
+                break;
+            case 303:
+                if (requestCode == 303) {
+                    if (resultCode == 100) {//获取时间返回
+                        String datetime = data.getStringExtra("time");//格式化的时间
+                        String week = data.getStringExtra("week");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        try {
+                            Date date = sdf.parse(datetime);
+                            SimpleDateFormat sdf2 = new SimpleDateFormat("MM月dd日 HH:mm");
+                            tv_ordertime.setText(sdf2.format(date).replace(" ", "(" + week + ") "));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                break;
         }
-
-    }
+        }
 }
