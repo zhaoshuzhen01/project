@@ -84,17 +84,6 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
     @Override
     public void initData() {
         getAddress();
-        if (getIntent() != null) {
-            chooseCityAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    Intent intent = new Intent();
-                    intent.putExtra("address", chooseCityAdapter.getItem(position));
-                    setResult(100, intent);
-                    finish();
-                }
-            });
-        }
     }
 
     @OnClick(R.id.btn_add_addresslist)
