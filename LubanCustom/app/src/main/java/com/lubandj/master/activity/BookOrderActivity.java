@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -181,8 +182,12 @@ public class BookOrderActivity extends TitleBaseActivity {
                     show_address_lay.setVisibility(View.VISIBLE);
                     address_peo.setText("联系人 " + bean.linkman + "");
                     address_phone.setText(bean.phone);
-                    address_adress.setText(bean.city + bean.area + bean.address + bean.housing_estate + "");
-                    CommonUtils.setAddress(bean.linkman + "," + bean.phone + "," + bean.city + "," + bean.area + "," + bean.address + "," + bean.housing_estate + "");
+                    if (TextUtils.isEmpty(bean.province)){
+                        bean.province = "";
+                    }
+                    String city = bean.province.equals(bean.city)?bean.city:bean.province+bean.city;
+                    address_adress.setText(city + bean.area + bean.address + bean.housing_estate + "");
+                    CommonUtils.setAddress(bean.linkman + "," + bean.phone + "," + city + "," + bean.area + "," + bean.address + "," + bean.housing_estate + "");
                 }
                 break;
             case 303:
