@@ -18,6 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * function:
@@ -32,7 +34,8 @@ public class WorkTimeAdapter extends BaseAdapter {
     private String beginLeave;
     private String endLeave;
     private ArrayList<WorkTime> workList;
-
+    private int selectPos = -1;
+    private Map<Integer, Boolean> enbaleList = new HashMap<>();
 
     public WorkTimeAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -85,6 +88,21 @@ public class WorkTimeAdapter extends BaseAdapter {
         return "";
     }
 
+    public String getTimeText() {
+        int hour = 8 + selectPos / 2;
+        int min = selectPos % 2;
+        return (hour > 9 ? hour + "" : "0" + hour) + ":" + (min == 0 ? "00" : "30");
+    }
+
+    public boolean setSelectTime(int positon) {
+        if (positon == -1 || enbaleList.get(positon)) {
+            selectPos = positon;
+            notifyDataSetChanged();
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
@@ -104,38 +122,28 @@ public class WorkTimeAdapter extends BaseAdapter {
             if ("1".equals(mBean.isLeave)) {
                 if (currentTime.compareTo(beginLeave) >= 0 && currentTime.compareTo(endLeave) < 0) {//请假状态
                     viewHolder.mTvTime.setTextColor(Color.parseColor("#999999"));
-                    viewHolder.mTvState.setVisibility(View.VISIBLE);
+                    viewHolder.mTvState.setVisibility(View.GONE);
                     viewHolder.mLl.setBackgroundColor(Color.WHITE);
                     viewHolder.mRlRightMark.setVisibility(View.GONE);
+                    enbaleList.put(position, false);
                     flag = true;
-                }
-            }
-            if (workList.size() > 0) {//存在工作
-                for (int i = 0; i < workList.size(); i++) {
-                    if (currentTime.compareTo(workList.get(i).beginTime) == 0 && currentTime.compareTo(workList.get(i).endTime) <= 0) {
-                        viewHolder.mLl.setBackgroundColor(Color.parseColor("#e55c5e"));
-                        viewHolder.mTvTime.setTextColor(Color.WHITE);
-                        viewHolder.mTvState.setVisibility(View.GONE);
-                        viewHolder.mRlRightMark.setVisibility(View.VISIBLE);
-                        flag = true;
-                    } else if (currentTime.compareTo(workList.get(i).beginTime) > 0 && currentTime.compareTo(workList.get(i).endTime) < 0) {
-                        viewHolder.mLl.setBackgroundColor(Color.parseColor("#e55c5e"));
-                        viewHolder.mTvTime.setTextColor(Color.WHITE);
-                        viewHolder.mTvState.setVisibility(View.GONE);
-                        viewHolder.mRlRightMark.setVisibility(View.GONE);
-                        flag = true;
-                    }
-                    if (flag) {
-                        break;
-                    }
                 }
             }
         }
         if (!flag) {
-            viewHolder.mTvTime.setTextColor(Color.parseColor("#333333"));
-            viewHolder.mTvState.setVisibility(View.GONE);
-            viewHolder.mLl.setBackgroundColor(Color.WHITE);
-            viewHolder.mRlRightMark.setVisibility(View.GONE);
+            if (position != selectPos) {
+                viewHolder.mTvTime.setTextColor(Color.parseColor("#333333"));
+                viewHolder.mTvState.setVisibility(View.GONE);
+                viewHolder.mLl.setBackgroundColor(Color.WHITE);
+                viewHolder.mRlRightMark.setVisibility(View.GONE);
+                enbaleList.put(position, true);
+            } else {
+                viewHolder.mLl.setBackgroundColor(Color.parseColor("#e55c5e"));
+                viewHolder.mTvTime.setTextColor(Color.WHITE);
+                viewHolder.mTvState.setVisibility(View.GONE);
+                viewHolder.mRlRightMark.setVisibility(View.VISIBLE);
+                enbaleList.put(position, false);
+            }
         }
         return convertView;
     }

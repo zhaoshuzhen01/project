@@ -29,8 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="-2dp"
-            android:text="(请假)"
-            android:textColor="#999999"
+            android:text="意向时间"
+            android:textColor="#dddddd"
             android:textSize="12sp"/>
     </LinearLayout>
 
@@ -42,15 +42,13 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/item_whitetriangle">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_margin="2dp"
-            android:text="上门"
-            android:textColor="#e55c5e"
-            android:textSize="10sp"/>
+            android:layout_margin="3dp"
+            android:src="@drawable/rightmark"/>
     </RelativeLayout>
 </RelativeLayout>
 
