@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.BookOrderOdapter;
+import com.lubandj.master.been.AddressBean;
 import com.lubandj.master.been.CarListBeen;
 import com.lubandj.master.been.HomeBeen;
 import com.lubandj.master.been.MsgCenterBeen;
@@ -52,6 +54,18 @@ public class BookOrderActivity extends TitleBaseActivity {
     TextView tv_show_price11;
     @InjectView(R.id.tv_ordertime)
     TextView tv_ordertime;
+
+    @InjectView(R.id.choose_serice_address_lay)
+    RelativeLayout choose_address_none;
+    @InjectView(R.id.choose_address_has)
+    LinearLayout choose_address_has;
+    @InjectView(R.id.tv_name)
+    TextView tv_name;
+    @InjectView(R.id.tv_phone)
+    TextView tv_phone;
+    @InjectView(R.id.tv_address)
+    TextView tv_address;
+
     private BookOrderOdapter bookOrderOdapter;
     private List<ShoppingCartBean> msgBeens = new ArrayList<>();
 
@@ -125,7 +139,9 @@ public class BookOrderActivity extends TitleBaseActivity {
                 CheckStandActivity.startActivity(this);
                 break;
             case R.id.choose_address:
-                CustomAddressActivity.startActivity(this);
+                Intent intent2 = new Intent(BookOrderActivity.this, CustomAddressActivity.class);
+                intent2.putExtra("mark", "select");
+                startActivityForResult(intent2, 304);
                 break;
         }
     }
@@ -133,19 +149,28 @@ public class BookOrderActivity extends TitleBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 303) {
-            if (resultCode == 100) {//获取时间返回
-                String datetime = data.getStringExtra("time");//格式化的时间
-                String week = data.getStringExtra("week");
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                try {
-                    Date date = sdf.parse(datetime);
-                    SimpleDateFormat sdf2 = new SimpleDateFormat("MM月dd日 HH:mm");
-                    tv_ordertime.setText(sdf2.format(date).replace(" ", "(" + week + ") "));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+        if (resultCode != 100) {
+            return;
+        }
+        if (requestCode == 303) {//获取时间返回
+            String datetime = data.getStringExtra("time");//格式化的时间
+            String week = data.getStringExtra("week");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            try {
+                Date date = sdf.parse(datetime);
+                SimpleDateFormat sdf2 = new SimpleDateFormat("MM月dd日 HH:mm");
+                tv_ordertime.setText(sdf2.format(date).replace(" ", "(" + week + ") "));
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+
+        } else if (requestCode == 304) {//获取地址返回
+            AddressBean bean = (AddressBean) data.getSerializableExtra("address");
+            choose_address_none.setVisibility(View.INVISIBLE);
+            choose_address_has.setVisibility(View.VISIBLE);
+            tv_name.setText("联系人：" + bean.linkman);
+            tv_phone.setText(bean.phone);
+            tv_address.setText((bean.province.equals(bean.city) ? bean.city : bean.province + bean.city) + bean.area + bean.housing_estate + bean.linkman);
         }
     }
 
