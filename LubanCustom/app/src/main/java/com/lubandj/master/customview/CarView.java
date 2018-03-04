@@ -47,6 +47,7 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
 
     //全选
     private  CheckBox ckAll;
+    private boolean chooseAll = true ;
     protected PullToRefreshAndPushToLoadView6 pullToRefreshAndPushToLoadView;
     RecyclerView list_shopping_cart;
     private ShoppingCartAdapter shoppingCartAdapter;
@@ -62,13 +63,14 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
     private ClearCarListsModel clearCarListsModel;
     private UpCarModel upCarModel ;
     private ImageView main_car ;
-    public void setCar_msgCount(RelativeLayout carView,TextView car_msgCount,ImageView main_car) {
+    public void setCar_msgCount(RelativeLayout carView,TextView car_msgCount,ImageView main_car,TextView tv_show_price) {
         this.car_msgCount = car_msgCount;
         this.carView = carView ;
         this.main_car = main_car ;
+        this.tv_show_price =tv_show_price;
     }
 
-    private TextView car_msgCount ;
+    private TextView car_msgCount ,tv_show_price;
 
     public CarView(Context context) {
         super(context);
@@ -111,11 +113,12 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
         clearCarListsModel = new ClearCarListsModel(context,this);
         upCarModel = new UpCarModel(context);
+        pullToRefreshAndPushToLoadView.finishRefreshing();
+        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(context, this, new CarListModel(context));
+        msgCenterPresenter.getReflushData(0);
     }
 
     public void getData(Context context){
-        pullToRefreshAndPushToLoadView.finishRefreshing();
-        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(context, this, new CarListModel(context));
         msgCenterPresenter.getReflushData(0);
     }
 
@@ -126,11 +129,13 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
             case R.id.ck_all:
                 if (shoppingCartBeanList.size() != 0) {
                     if (ckAll.isChecked()) {
+                        chooseAll = true ;
                         for (int i = 0; i < shoppingCartBeanList.size(); i++) {
                             shoppingCartBeanList.get(i).setChoosed(true);
                         }
                         shoppingCartAdapter.notifyDataSetChanged();
                     } else {
+                        chooseAll = false ;
                         for (int i = 0; i < shoppingCartBeanList.size(); i++) {
                             shoppingCartBeanList.get(i).setChoosed(false);
                         }
@@ -211,16 +216,20 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
             if (shoppingCartBean.isChoosed()) {
                 totalCount++;
                 LocalleCarData.newInstance().setShoppingCartBeanList(shoppingCartBean);
-                car_msgCount.setText(totalCount+"");
                 totalPrice += shoppingCartBean.getPrice() * shoppingCartBean.getCount();
             }
         }
         LocalleCarData.newInstance().setTotalPrice(totalPrice);
+        tv_show_price.setText("¥ " +totalPrice);
         if (totalCount>0){
-            car_msgCount.setText(totalCount+"");
             car_msgCount.setVisibility(VISIBLE);
+            main_car.setImageResource(R.drawable.car);
+            main_car.setTag(R.drawable.car);
         }else {
             car_msgCount.setVisibility(GONE);
+            main_car.setImageResource(R.drawable.nocar);
+            if (shoppingCartBeanList.size()==0)
+            main_car.setTag(R.drawable.nocar);
         }
        /* tvShowPrice.setText("合计: ¥" + totalPrice);
         tvSettlement.setText("预约下单");*/
@@ -240,6 +249,7 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         shoppingCartBean.setCount(currentCount);
         ((TextView) showCountView).setText(currentCount + "");
         shoppingCartAdapter.notifyDataSetChanged();
+        car_msgCount.setText((Integer.parseInt(car_msgCount.getText().toString())+1)+"");
         statistics();
     }
     /**
@@ -262,12 +272,15 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         ((TextView) showCountView).setText(currentCount + "");
         if (currentCount==0){
             shoppingCartAdapter.remove(position);
+        }
+        shoppingCartAdapter.notifyDataSetChanged();
+        car_msgCount.setText((Integer.parseInt(car_msgCount.getText().toString())-1)+"");
+        statistics();
+        if (totalCount==0){
             carView.setVisibility(GONE);
             main_car.setImageResource(R.drawable.nocar);
             main_car.setTag(R.drawable.nocar);
         }
-        shoppingCartAdapter.notifyDataSetChanged();
-        statistics();
     }
     /**
      * 删除
@@ -311,12 +324,32 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         if (shoppingCartBeanList.size()==0&&datas==null){
             return;
         }
+        int serverNum = 0 ;
         shoppingCartBeanList.clear();
+        LocalleCarData.newInstance().clear();
+        totalPrice = 0 ;
         for (CarListBeen.InfoBean bean:datas){
             ShoppingCartBean bean1 = new ShoppingCartBean(bean.getId(),bean.getService_name(),"",0,Double.parseDouble(bean.getPrice()),bean.getNum(),bean.getService_type(),bean.getService_id(),bean.getSpec_id());
             bean1.setImageUrl("https://img.alicdn.com/bao/uploaded/i2/TB1YfERKVXXXXanaFXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");
-            bean1.setChoosed(true);
+            if (chooseAll){
+                bean1.setChoosed(true);
+                serverNum+=bean.getNum();
+                car_msgCount.setText(serverNum+"");
+                car_msgCount.setVisibility(VISIBLE);
+                main_car.setTag(R.drawable.car);
+                LocalleCarData.newInstance().setShoppingCartBeanList(bean1);
+                totalPrice += bean1.getPrice() * bean1.getCount();
+                LocalleCarData.newInstance().setTotalPrice(totalPrice);
+                tv_show_price.setText("¥ " +totalPrice);
+            }else {
+                tv_show_price.setText("¥ 0.00");
+            }
             shoppingCartBeanList.add(bean1);
+        }
+        if (shoppingCartBeanList.size()==0){
+            main_car.setImageResource(R.drawable.nocar);
+            main_car.setTag(R.drawable.nocar);
+            tv_show_price.setText("购物车为空");
         }
         shoppingCartAdapter.notifyDataSetChanged();
     }
@@ -325,6 +358,8 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
     public void getServiceData(Object data) {
         ToastUtils.showShort(context,"购物车已清空");
         carView.setVisibility(GONE);
+        car_msgCount.setVisibility(GONE);
+        car_msgCount.setText("0");
         main_car.setImageResource(R.drawable.nocar);
         main_car.setTag(R.drawable.nocar);
     }

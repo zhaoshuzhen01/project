@@ -16,8 +16,10 @@ import android.widget.TextView;
 
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.Iview.DataCall;
+import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.R;
 import com.lubandj.master.been.ServiceDetailBeen;
+import com.lubandj.master.been.ShoppingCartBean;
 import com.lubandj.master.model.AddCarModel;
 
 import butterknife.ButterKnife;
@@ -40,7 +42,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
 
     private ServiceDetailBeen data;
     private ImageView main_car ;
-    private TextView  car_msgCount;
+    private TextView  car_msgCount,tv_show_price;
 
 
     @Override
@@ -76,10 +78,11 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
         topChose.setOnClickListener(this);
         buttonText.setOnClickListener(this);
     }
-    public void setData(ServiceDetailBeen data, ImageView main_car,TextView car_msgCount) {
+    public void setData(ServiceDetailBeen data, ImageView main_car,TextView car_msgCount,TextView tv_show_price) {
         this.data = data;
         this.main_car = main_car ;
         this.car_msgCount = car_msgCount ;
+        this.tv_show_price = tv_show_price ;
     }
     @Override
     public void onDestroyView() {
@@ -99,7 +102,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
                 break;
             case R.id.button_text:
                 if (count>0)
-                addCarModel.addCar("1","1","2",data.getInfo().getName(),"99.00",count+"");
+                addCarModel.addCar("1",data.getInfo().getService_id(),"2",data.getInfo().getName(),"99.00",count+"");
                 else
                     ToastUtils.showShort(getActivity(),"数量不能为0个");
                 break;
@@ -117,13 +120,21 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
     }
 
     @Override
-    public void getServiceData(Object data) {
+    public void getServiceData(Object mdata) {
         ToastUtils.showShort(getActivity(),"加入购物车");
         main_car.setImageResource(R.drawable.car);
         main_car.setTag(R.drawable.car);
         dismiss();
         car_msgCount.setVisibility(View.VISIBLE);
-        car_msgCount.setText("1");
 
+        car_msgCount.setText((Integer.parseInt(car_msgCount.getText().toString())+count)+"");
+
+        ShoppingCartBean bean1 = new ShoppingCartBean(1,data.getInfo().getName(),"",0,99.00,count,1,Integer.parseInt(data.getInfo().getService_id()),2);
+        bean1.setImageUrl("https://img.alicdn.com/bao/uploaded/i2/TB1YfERKVXXXXanaFXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");
+        LocalleCarData.newInstance().setShoppingCartBeanList(bean1);
+        double totalPrice = LocalleCarData.newInstance().getTotalPrice();
+        totalPrice += bean1.getPrice() * bean1.getCount();
+        LocalleCarData.newInstance().setTotalPrice(totalPrice);
+        tv_show_price.setText("¥ " +totalPrice);
     }
 }
