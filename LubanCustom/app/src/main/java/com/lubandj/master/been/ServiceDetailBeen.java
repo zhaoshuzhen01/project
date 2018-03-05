@@ -1,5 +1,7 @@
 package com.lubandj.master.been;
 
+import android.text.TextUtils;
+
 import com.lubandj.master.httpbean.BaseEntity;
 
 import java.util.List;
@@ -91,6 +93,11 @@ public class ServiceDetailBeen extends BaseEntity {
             private String spec_id;
             private String service_id;
             private String item_name;
+
+            public String getSpec_name() {
+                return spec_name;
+            }
+            private String spec_name ;
             private String item_pic;
             private String price;
 
@@ -127,12 +134,23 @@ public class ServiceDetailBeen extends BaseEntity {
             }
 
             public String getPrice() {
+                if (TextUtils.isEmpty(price))
+                    price = "99.00";
                 return price;
             }
 
             public void setPrice(String price) {
                 this.price = price;
             }
+            public boolean isSelect() {
+                return select;
+            }
+
+            public void setSelect(boolean select) {
+                this.select = select;
+            }
+
+            private boolean select ;
         }
     }
 }

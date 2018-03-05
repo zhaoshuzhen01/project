@@ -17,7 +17,7 @@
         android:layout_toRightOf="@+id/dialog_introduce_pic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¥ 150-180"
+        android:text="¥ 0.00"
         android:layout_marginLeft="@dimen/h_20dp"
         android:textColor="@color/color_ff0000" />
     <TextView

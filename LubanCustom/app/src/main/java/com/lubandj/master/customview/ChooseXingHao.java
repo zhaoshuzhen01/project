@@ -18,6 +18,7 @@ import com.lubandj.master.TApplication;
 import com.lubandj.master.adapter.ChooseXingHaoAdapter;
 import com.lubandj.master.adapter.HomePagerAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.been.ServiceDetailBeen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,9 @@ public class ChooseXingHao extends LinearLayout implements BaseQuickAdapter.OnIt
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     private ChooseXingHaoAdapter homeListAdapter;
-    private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
-
+    private XingHao xingHao ;
+    private List<ServiceDetailBeen.InfoBean.ItemsBean> msgBeens = new ArrayList<>();
+    private Context context ;
     public ChooseXingHao(Context context) {
         super(context);
         initView(context);
@@ -53,17 +55,20 @@ public class ChooseXingHao extends LinearLayout implements BaseQuickAdapter.OnIt
     }
 
     private void initView(Context context) {
+        this.context = context ;
         View view = LayoutInflater.from(context).inflate(R.layout.view_home_table, this);
         ButterKnife.inject(this, view);
-        for (int i=0;i<2;i++){
-            msgBeens.add(new MsgCenterBeen.InfoBean.ListBean());
-        }
-        homeListAdapter = new ChooseXingHaoAdapter(msgBeens,context);
-        homeListAdapter.setOnItemClickListener(this);
         GridLayoutManager manager = new  GridLayoutManager(context,4); //spanCount为列数，默认方向vertical
         recyclerView.setLayoutManager(manager);
         recyclerView.addItemDecoration(new SpacesItemDecoration(10,10,0,10));
         recyclerView.setHasFixedSize(true);
+    }
+
+    public void setData(List<ServiceDetailBeen.InfoBean.ItemsBean> msgBeens,XingHao xingHao){
+        this.msgBeens = msgBeens ;
+        this.xingHao = xingHao ;
+        homeListAdapter = new ChooseXingHaoAdapter(msgBeens,context);
+        homeListAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(homeListAdapter);
     }
 
@@ -71,8 +76,17 @@ public class ChooseXingHao extends LinearLayout implements BaseQuickAdapter.OnIt
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        ToastUtils.showShort(TApplication.context,position+"");
+        for (ServiceDetailBeen.InfoBean.ItemsBean bean:msgBeens){
+            bean.setSelect(false);
+        }
         msgBeens.get(position).setSelect(!msgBeens.get(position).isSelect());
         homeListAdapter.notifyDataSetChanged();
+        if (msgBeens.get(position).isSelect()){
+            xingHao.getXingHao(msgBeens.get(position));
+        }
+    }
+
+    public interface XingHao{
+        void getXingHao(ServiceDetailBeen.InfoBean.ItemsBean xinghao);
     }
 }

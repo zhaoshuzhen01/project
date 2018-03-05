@@ -9,6 +9,7 @@ import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
 import com.lubandj.master.R;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.been.ServiceDetailBeen;
 
 import java.util.List;
 
@@ -16,17 +17,18 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2018/1/27.
  */
 
-public class ChooseXingHaoAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.ListBean, BaseViewHolder> {
+public class ChooseXingHaoAdapter extends BaseQuickAdapter<ServiceDetailBeen.InfoBean.ItemsBean, BaseViewHolder> {
     private Context context;
-    public ChooseXingHaoAdapter(@Nullable List<MsgCenterBeen.InfoBean.ListBean> data, Context context) {
+    public ChooseXingHaoAdapter(@Nullable List<ServiceDetailBeen.InfoBean.ItemsBean> data, Context context) {
         super(R.layout.item_choose_xinghao, data);
         this.context = context ;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MsgCenterBeen.InfoBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, ServiceDetailBeen.InfoBean.ItemsBean item) {
         int position = helper.getAdapterPosition();
         TextView finishState =  ((TextView) (helper.getView(R.id.home_list_title)));
+        finishState.setText(item.getSpec_name()+"");
         if (item.isSelect()){
             finishState.setBackgroundResource(R.drawable.selector_btn_send_code_bg);
             finishState.setTextColor(context.getResources().getColor(R.color.white));

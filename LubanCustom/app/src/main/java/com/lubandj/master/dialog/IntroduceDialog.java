@@ -21,6 +21,7 @@ import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.R;
 import com.lubandj.master.been.ServiceDetailBeen;
 import com.lubandj.master.been.ShoppingCartBean;
+import com.lubandj.master.customview.ChooseXingHao;
 import com.lubandj.master.model.AddCarModel;
 
 import butterknife.ButterKnife;
@@ -31,17 +32,20 @@ import butterknife.OnClick;
  * Created by ${zhaoshuzhen} on 2018/1/27.
  */
 
-public class IntroduceDialog extends DialogFragment implements View.OnClickListener,DataCall{
+public class IntroduceDialog extends DialogFragment implements View.OnClickListener,DataCall,ChooseXingHao.XingHao{
 
     ImageView topChose;
     TextView buttonText;
-
+    private TextView top_name ;
+    private TextView top_price ;
     private ImageView jiaView,jianView;
     private TextView countView ;
+    private ChooseXingHao chooseXingHao ;
     private int count ;
     private AddCarModel addCarModel ;
 
     private ServiceDetailBeen data;
+    private ServiceDetailBeen.InfoBean.ItemsBean xinghao ;
     private ImageView main_car ;
     private TextView  car_msgCount,tv_show_price;
 
@@ -73,17 +77,36 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
         buttonText=view.findViewById(R.id.button_text);
         jianView = view.findViewById(R.id.jian);
         jiaView = view.findViewById(R.id.jia);
+        top_name = view.findViewById(R.id.top_name);
+        top_price = view.findViewById(R.id.top_price);
+        chooseXingHao = view.findViewById(R.id.introde_middle);
+        chooseXingHao.setData(data.getInfo().getItems(),this);
         countView = view.findViewById(R.id.count);
         jianView.setOnClickListener(this);
         jiaView.setOnClickListener(this);
         topChose.setOnClickListener(this);
         buttonText.setOnClickListener(this);
+        top_name.setText(data.getInfo().getName());
+        if (xinghao!=null){
+            double price = Double.parseDouble(xinghao.getPrice())*count;
+            top_price.setText("¥ " +price);
+            countView.setText(count+"");
+        }
     }
     public void setData(ServiceDetailBeen data, ImageView main_car,TextView car_msgCount,TextView tv_show_price) {
         this.data = data;
         this.main_car = main_car ;
         this.car_msgCount = car_msgCount ;
         this.tv_show_price = tv_show_price ;
+        initData(data);
+    }
+
+    /**
+     * 填充数据
+     * @param data
+     */
+    private void initData(ServiceDetailBeen data){
+        this.data = data ;
     }
     @Override
     public void onDestroyView() {
@@ -102,8 +125,12 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
                 dismiss();
                 break;
             case R.id.button_text:
+                if (xinghao==null){
+                    ToastUtils.showShort(getActivity(),"请选择型号");
+                    return;
+                }
                 if (count>0)
-                addCarModel.addCar("1",data.getInfo().getService_id(),"2",data.getInfo().getName(),"99.00",count+"");
+                addCarModel.addCar(xinghao.getSpec_name(),xinghao.getService_id(),xinghao.getSpec_id(),data.getInfo().getName(),xinghao.getPrice(),count+"");
                 else
                     ToastUtils.showShort(getActivity(),"数量不能为0个");
                 break;
@@ -111,11 +138,15 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
                 if (count>0){
                     --count;
                     countView.setText(count+"");
+                    double price = Double.parseDouble(xinghao.getPrice())*count;
+                    top_price.setText(price+"");
                 }
                 break;
             case R.id.jia:
                 ++count;
                 countView.setText(count+"");
+                double price = Double.parseDouble(xinghao.getPrice())*count;
+                top_price.setText(price+"");
                 break;
         }
     }
@@ -137,5 +168,13 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
         totalPrice += bean1.getPrice() * bean1.getCount();
         LocalleCarData.newInstance().setTotalPrice(totalPrice);
         tv_show_price.setText("¥ " +totalPrice);
+    }
+
+    @Override
+    public void getXingHao(ServiceDetailBeen.InfoBean.ItemsBean xinghao) {
+        this.xinghao = xinghao ;
+        top_name.setText(xinghao.getItem_name()+"");
+        double price = Double.parseDouble(xinghao.getPrice())*count;
+        top_price.setText("¥ " +price);
     }
 }
