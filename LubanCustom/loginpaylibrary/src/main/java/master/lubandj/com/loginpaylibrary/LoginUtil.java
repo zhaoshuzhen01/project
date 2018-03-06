@@ -31,7 +31,7 @@ public class LoginUtil {
 
     public static void setWeixinConfig(Context context) {
         UMShareAPI.get(context);
-        PlatformConfig.setWeixin("wx7c1df1136554af6a", "127feb4fbcaabb57f02e83feec103735");
+        PlatformConfig.setWeixin("wx2337ad10e3cd3cf1", "24dfb2264b3f86a4bc2afeabc83f0b3c");
     }
 
     public static LoginUtil getLoginUtil(Context context) {

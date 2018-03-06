@@ -177,6 +177,8 @@ public class BookOrderActivity extends TitleBaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case 1:
+                if (data==null)
+                    return;
                 AddressBean bean = (AddressBean) data.getSerializableExtra("data");
                 if (bean != null) {
                     show_address_lay.setVisibility(View.VISIBLE);

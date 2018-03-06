@@ -36,6 +36,7 @@ import com.umeng.socialize.UMShareAPI;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import master.lubandj.com.loginpaylibrary.LoginUtil;
 
 public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.EditTextContentListener {
 
@@ -187,8 +188,8 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
             case R.id.ll_agreement:
                 break;
             case R.id.ll_login_we_chat:
-//                LoginUtil.getLoginUtil(LoginActivity.this).setAuthWeixin(LoginActivity.this);
-              startActivity(OrderDetailsActivity.class,null);
+                LoginUtil.getLoginUtil(LoginActivity.this).setAuthWeixin(LoginActivity.this);
+//              startActivity(OrderDetailsActivity.class,null);
                 break;
         }
     }

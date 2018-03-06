@@ -91,6 +91,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
             double price = Double.parseDouble(xinghao.getPrice())*count;
             top_price.setText("¥ " +price);
             countView.setText(count+"");
+            top_name.setText(xinghao.getItem_name()+"");
         }
     }
     public void setData(ServiceDetailBeen data, ImageView main_car,TextView car_msgCount,TextView tv_show_price) {

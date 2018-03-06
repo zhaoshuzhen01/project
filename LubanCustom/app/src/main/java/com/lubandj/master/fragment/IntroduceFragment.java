@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,8 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
     CarView carLayout;
     @InjectView(R.id.tv_show_price)
     TextView tv_show_price ;
+    @InjectView(R.id.top_price)
+    TextView top_price ;
     private RelativeLayout carView;
     private List<ServiceDetailBeen.InfoBean.ItemsBean> msgBeens = new ArrayList<>();
     private IntroduceAdapter introduceAdapter;
@@ -184,6 +187,12 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
         topName.setText(data.getInfo().getName());
         msgBeens.addAll(data.getInfo().getItems());
         introduceAdapter.notifyDataSetChanged();
+
+      /*  List<String> prices = new ArrayList<>();
+        for (ServiceDetailBeen.InfoBean.ItemsBean bean:msgBeens){
+            if (!TextUtils.isEmpty(bean.getPrice()))
+            prices.add(bean.getPrice());
+        }*/
 
     }
 }
