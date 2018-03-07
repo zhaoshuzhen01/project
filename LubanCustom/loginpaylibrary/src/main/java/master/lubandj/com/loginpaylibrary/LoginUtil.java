@@ -24,6 +24,22 @@ public class LoginUtil {
     private static LoginUtil loginUtil = null;
     private  Activity mactivity;
     private boolean isauth = false ;
+    private GetWeiXinMap getWeiXinMap ;
+    public static String   UNIONID = "unionid";
+    public static String   OPEN_ID = "openid";
+    public static String   UID = "uid";
+    public static String   SCREEN_NAME = "screen_name";
+    public static String   NAME = "name";
+    public static String   GENDER = "gender";
+    public static String   COUNTRY = "country";
+    public static String   PROVINCE = "province";
+    public static String   CITY = "city";
+    public static String   ACCESS_TOKEN = "access_token";
+    public static String   ACCESSTOKEN = "accessToken";
+    public static String   REFRESH_TOKEN = "refreshToken";
+    public static String   PROFILE_IMAGE_URL = "profile_image_url";
+    public static String   ICON_URL = "iconurl";
+    public static String   LANGUAGE = "language";
     private LoginUtil(Context context) {
         dialog = new ProgressDialog(context);
         mcontext = context;
@@ -45,8 +61,9 @@ public class LoginUtil {
         return loginUtil;
     }
 
-    public void setAuthWeixin(Activity activity){
+    public void setAuthWeixin(Activity activity,GetWeiXinMap getWeiXinMap){
         mactivity = activity;
+        this.getWeiXinMap = getWeiXinMap ;
       boolean install =   UMShareAPI.get(mactivity).isInstall(mactivity,SHARE_MEDIA.WEIXIN);
       if (install){
           isauth = UMShareAPI.get(mactivity).isAuthorize(mactivity,SHARE_MEDIA.WEIXIN);
@@ -89,11 +106,12 @@ public class LoginUtil {
                 getWeiXinInfo(mactivity);
             }
             else {
+                getWeiXinMap.getWeiXinMap(data);
                 String temp = "";
                 for (String key : data.keySet()) {
                     temp = temp + key + " : " + data.get(key) + "\n";
                 }
-                Toast.makeText(mcontext,temp, Toast.LENGTH_LONG).show();
+//                Toast.makeText(mcontext,temp, Toast.LENGTH_LONG).show();
             }
         }
 
@@ -120,4 +138,8 @@ public class LoginUtil {
             Toast.makeText(mcontext, "取消了", Toast.LENGTH_LONG).show();
         }
     };
+
+    public interface GetWeiXinMap{
+        void getWeiXinMap(Map<String, String> data);
+    }
 }

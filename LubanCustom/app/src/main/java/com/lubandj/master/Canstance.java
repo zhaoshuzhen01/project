@@ -32,7 +32,8 @@ public class Canstance {
     public static final int HTTP_DELET_CAR = 30004;//清空购物车
     public static final int HTTP_CLEAR_CAR = 30005;//清空购物车
     public static final int HTTP_ADD_ADDRESS = 30001;//加入购物车
-
+    public static final int HTTP_WEIXIN_LOGIN = 70001;//微信登录
+    public static final int Http_WEIXIN_BINDING = 70002;//微信绑定手机号
     public static final int HTTP_WORK_SHEET_UPDATE_STATUS = 20003;//工单列表更新状态
     public static final int HTTP_SIGN_EXCEPTION = 20004;//标记异常
     public static final int HTTP_EXCEPTION_LIST = 80001;//异常列表

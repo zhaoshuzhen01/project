@@ -49,6 +49,7 @@ public class BindPhoneNumActivity extends TitleBaseActivity implements EditTextW
     private int COUNT_DOWN_TIME = 60;
     private String mPhoneNum;
     private String mAuthCode;
+    private String openid ;
 
 
     @SuppressLint("HandlerLeak")
@@ -99,6 +100,7 @@ public class BindPhoneNumActivity extends TitleBaseActivity implements EditTextW
         if (!TextUtils.isEmpty(mPhoneNum)) {
             etPhoneNum.setText(mPhoneNum);
         }
+        openid= getIntent().getStringExtra("openid");
     }
 
     private void setListener() {
@@ -151,7 +153,11 @@ public class BindPhoneNumActivity extends TitleBaseActivity implements EditTextW
             case R.id.btn_login:
                 if (checkPhoneNum()) return;
                 initProgressDialog(R.string.txt_is_login).show();
-                TaskEngine.getInstance().commonHttps(Canstance.HTTP_MODIFYPHONE, new LoginAppBean(mPhoneNum, mAuthCode), new Response.Listener<String>() {
+                int url = TextUtils.isEmpty(openid)?Canstance.HTTP_MODIFYPHONE:Canstance.Http_WEIXIN_BINDING;
+                LoginAppBean loginAppBean = new LoginAppBean(mPhoneNum,mAuthCode);
+                if (!TextUtils.isEmpty(openid))
+                    loginAppBean.openid = openid;
+                TaskEngine.getInstance().commonHttps(Canstance.HTTP_MODIFYPHONE, loginAppBean, new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String s) {

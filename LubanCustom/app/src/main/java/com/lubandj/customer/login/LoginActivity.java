@@ -21,24 +21,30 @@ import com.example.baselibrary.widget.EditTextWithDel;
 import com.google.gson.Gson;
 import com.lubandj.customer.order.OrderDetailsActivity;
 import com.lubandj.master.Canstance;
+import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.activity.MainCantainActivity;
+import com.lubandj.master.been.UserInfo;
+import com.lubandj.master.been.WeiXinBeen;
 import com.lubandj.master.httpbean.BaseEntity;
 import com.lubandj.master.httpbean.LoginAppBean;
 import com.lubandj.master.httpbean.SendSmsBean;
 import com.lubandj.master.httpbean.UserInfoResponse;
+import com.lubandj.master.model.WeiXinLoginModel;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.SPUtils;
 import com.lubandj.master.utils.TaskEngine;
 import com.umeng.socialize.UMShareAPI;
+
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import master.lubandj.com.loginpaylibrary.LoginUtil;
 
-public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.EditTextContentListener {
+public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.EditTextContentListener, LoginUtil.GetWeiXinMap, DataCall {
 
 
     @InjectView(R.id.et_phone_num)
@@ -56,6 +62,8 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
     private int COUNT_DOWN_TIME = 60;
     private String mPhoneNum;
     private String mAuthCode;
+    private String openId;
+    private WeiXinLoginModel weiXinLoginModel;
 
 
     @SuppressLint("HandlerLeak")
@@ -102,12 +110,11 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
         setListener();
         initData();
         btnSendCode.setEnabled(false);
-
-
         mPhoneNum = SPUtils.getInstance().getString(Canstance.KEY_SP_PHONE_NUM);
         if (!TextUtils.isEmpty(mPhoneNum)) {
             etPhoneNum.setText(mPhoneNum);
         }
+        weiXinLoginModel = new WeiXinLoginModel(this, this);
     }
 
     private void setListener() {
@@ -188,7 +195,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
             case R.id.ll_agreement:
                 break;
             case R.id.ll_login_we_chat:
-                LoginUtil.getLoginUtil(LoginActivity.this).setAuthWeixin(LoginActivity.this);
+                LoginUtil.getLoginUtil(LoginActivity.this).setAuthWeixin(LoginActivity.this, this);
 //              startActivity(OrderDetailsActivity.class,null);
                 break;
         }
@@ -243,23 +250,48 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
 
     }
 
-    private long exitTime = 0;
-
-  /*  @Override
-    public void onBackPressed() {
-        if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(getApplicationContext(), "再按一次退出",
-                    Toast.LENGTH_SHORT).show();
-            exitTime = System.currentTimeMillis();
-        } else {
-            finish();
-            ActUtils.getInstance().exitApp(LoginActivity.this);
-        }
-    }*/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void getWeiXinMap(Map<String, String> data) {
+        if (data != null) {
+            openId = data.get(LoginUtil.OPEN_ID);
+            if (!TextUtils.isEmpty(openId)) {
+                weiXinLoginModel.weixinLogin(data);
+            }
+        }
+    }
+
+    /**
+     * 微信登录回调
+     *
+     * @param data
+     */
+    @Override
+    public void getServiceData(Object data) {
+        if (data instanceof WeiXinBeen) {//登录成功
+            WeiXinBeen been = (WeiXinBeen) data;
+            CommonUtils.setUid(been.getInfo().getUid());
+            CommonUtils.setToken(been.getInfo().getToken());
+            UserInfo userInfo = new UserInfo();
+            userInfo.face_url = been.getInfo().getFace_url();
+            userInfo.uid = been.getInfo().getUid();
+            userInfo.mobile = been.getInfo().getMobile();
+            userInfo.nickname = been.getInfo().getNickname();
+            userInfo.token = been.getInfo().getToken();
+            TApplication.context.mUserInfo = userInfo;
+            TApplication.context.setGetuiTag(been.getInfo().getUid());
+            startActivity(MainCantainActivity.class, null);
+            finish();
+        } else {//go绑定手机号
+            Intent intent = new Intent(this, BindPhoneNumActivity.class);
+            intent.putExtra("openid", openId);
+            startActivity(intent);
+            finish();
+        }
     }
 }

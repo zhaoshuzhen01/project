@@ -11,6 +11,7 @@ public class LoginAppBean {
 
     private String mobile;
     private String verifyCode;
+    public String openid ;
 
 
     public LoginAppBean(String mobile, String verifyCode) {
