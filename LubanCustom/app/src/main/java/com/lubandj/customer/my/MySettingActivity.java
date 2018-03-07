@@ -56,12 +56,15 @@ public class MySettingActivity extends PermissionActivity {
     private void refershInfo() {
         UserInfo info = TApplication.context.mUserInfo;
         if (info != null) {
-            if (TextUtils.isEmpty(info.nickname)) {
+            if (!TextUtils.isEmpty(info.nickname)) {
                 binding.tvSettingNickname.setText(info.nickname);
             } else {
                 binding.tvSettingNickname.setText(info.mobile);
             }
+            if (TextUtils.isEmpty(info.sex))
             binding.tvSettingSex.setText("选择");
+            else
+                binding.tvSettingSex.setText(info.sex);
             binding.tvSettingWxaccount.setText("未绑定");
             loadFace();
             setPhone();

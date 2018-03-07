@@ -283,6 +283,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
             userInfo.mobile = been.getInfo().getMobile();
             userInfo.nickname = been.getInfo().getNickname();
             userInfo.token = been.getInfo().getToken();
+            userInfo.sex = been.getInfo().getSex();
             TApplication.context.mUserInfo = userInfo;
             TApplication.context.setGetuiTag(been.getInfo().getUid());
             startActivity(MainCantainActivity.class, null);
