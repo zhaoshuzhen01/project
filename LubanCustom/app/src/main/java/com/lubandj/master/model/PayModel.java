@@ -10,6 +10,8 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
 import com.lubandj.master.been.BookOrderBeen;
+import com.lubandj.master.been.WeiXinPayInfo;
+import com.lubandj.master.httpbean.BaseEntity;
 import com.lubandj.master.httpbean.NetOrderBeen;
 import com.lubandj.master.utils.TaskEngine;
 
@@ -25,7 +27,7 @@ public class PayModel {
         this.dataCall = dataCall ;
     }
 
-    public void bookOrder(String order_id,String payType) {
+    public void bookOrder(String order_id, final String payType) {
         NetOrderBeen netOrderBeen = new NetOrderBeen();
         netOrderBeen.order_id = order_id;
         netOrderBeen.payType = payType ;
@@ -33,11 +35,15 @@ public class PayModel {
 
             @Override
             public void onResponse(String s) {
-
-                BookOrderBeen msgCenterBeen = new Gson().fromJson(s, BookOrderBeen.class);
-                if (msgCenterBeen != null) {
-                    if (msgCenterBeen.getCode() == 0) {
-                        dataCall.getServiceData(msgCenterBeen);
+                Object object = null;
+                if (payType.equals("1")){//微信支付
+                    object = new Gson().fromJson(s, WeiXinPayInfo.class);
+                }else {//支付宝支付
+                    object = new Gson().fromJson(s, BookOrderBeen.class);
+                }
+                if (object != null) {
+                    if (((BaseEntity)object).getCode() == 0) {
+                        dataCall.getServiceData(object);
                     }
                 }
 

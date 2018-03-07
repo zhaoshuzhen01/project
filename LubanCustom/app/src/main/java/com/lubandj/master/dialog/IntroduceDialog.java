@@ -140,7 +140,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
                     --count;
                     countView.setText(count+"");
                     double price = Double.parseDouble(xinghao.getPrice())*count;
-                    top_price.setText(price+"");
+                    top_price.setText("¥ "+price+"");
                 }
                 break;
             case R.id.jia:
@@ -160,9 +160,9 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
         dismiss();
         car_msgCount.setVisibility(View.VISIBLE);
         String mcount = car_msgCount.getText().toString();
-        car_msgCount.setText((TextUtils.isEmpty(mcount)?0:Integer.parseInt(mcount)+count)+"");
+        car_msgCount.setText(((TextUtils.isEmpty(mcount)?0:Integer.parseInt(mcount))+count)+"");
 
-        ShoppingCartBean bean1 = new ShoppingCartBean(1,xinghao.getItem_name(),"",0,99.00,count,Integer.parseInt(xinghao.getService_type()),Integer.parseInt(xinghao.getService_id()),Integer.parseInt(xinghao.getSpec_id()));
+        ShoppingCartBean bean1 = new ShoppingCartBean(1,xinghao.getItem_name(),"",0, Double.parseDouble(xinghao.getPrice()),count,Integer.parseInt(xinghao.getService_type()),Integer.parseInt(xinghao.getService_id()),Integer.parseInt(xinghao.getSpec_id()));
         bean1.setImageUrl(xinghao.getItem_pic());
         LocalleCarData.newInstance().setShoppingCartBeanList(bean1);
         double totalPrice = LocalleCarData.newInstance().getTotalPrice();

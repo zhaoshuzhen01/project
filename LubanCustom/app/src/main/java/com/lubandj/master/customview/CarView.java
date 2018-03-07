@@ -333,7 +333,7 @@ public class CarView extends LinearLayout implements View.OnClickListener,  Shop
         totalPrice = 0 ;
         for (CarListBeen.InfoBean bean:datas){
             ShoppingCartBean bean1 = new ShoppingCartBean(bean.getId(),bean.getService_name(),"",0,Double.parseDouble(bean.getPrice()),bean.getNum(),bean.getService_type(),bean.getService_id(),bean.getSpec_id());
-            bean1.setImageUrl("https://img.alicdn.com/bao/uploaded/i2/TB1YfERKVXXXXanaFXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");
+            bean1.setImageUrl(bean.getService_icon());
             if (chooseAll){
                 bean1.setChoosed(true);
                 serverNum+=bean.getNum();

@@ -171,6 +171,10 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
                 }
                 break;
             case R.id.tv_settlement:
+                if (TextUtils.isEmpty(car_msgCount.getText().toString())){
+                    ToastUtils.showShort(getActivity(),"请选择服务");
+                    return;
+                }
                 int count = Integer.parseInt(car_msgCount.getText().toString());
                 if (count>0&&((int) main_car.getTag()) == R.drawable.car)
                 BookOrderActivity.startActivity(getActivity());

@@ -41,6 +41,16 @@ public class CarListBeen extends BaseEntity {
         private int num;
         private int datetime;
 
+        public String getService_icon() {
+            return service_icon;
+        }
+
+        public void setService_icon(String service_icon) {
+            this.service_icon = service_icon;
+        }
+
+        private String service_icon;
+
         public int getId() {
             return id;
         }

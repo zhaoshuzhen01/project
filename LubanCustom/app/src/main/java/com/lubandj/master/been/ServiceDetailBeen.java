@@ -94,6 +94,8 @@ public class ServiceDetailBeen extends BaseEntity {
             private String service_id;
 
             public String getService_type() {
+                if (TextUtils.isEmpty(service_type))
+                    service_type = "1";
                 return service_type;
             }
 

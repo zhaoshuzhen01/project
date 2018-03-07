@@ -30,7 +30,7 @@ public class BookOrderModel {
 
     public void bookOrder(NetBookBeen netBookBeen) {
 
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_BOOK_ORDER,null, new Response.Listener<String>() {
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_BOOK_ORDER,netBookBeen, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {

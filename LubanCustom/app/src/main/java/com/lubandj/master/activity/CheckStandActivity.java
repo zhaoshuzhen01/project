@@ -22,6 +22,7 @@ import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.R;
 import com.lubandj.master.been.BookOrderBeen;
+import com.lubandj.master.been.WeiXinPayInfo;
 import com.lubandj.master.model.PayModel;
 import com.lubandj.master.pay.Pay;
 import com.lubandj.master.pay.PayHelper;
@@ -162,7 +163,8 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
     @Override
     public void getServiceData(Object data) {
         if (weixinchekcout.isChecked()) {
-            pay.pay(PayHelper.WXPAY, "10");
+//            pay.payOrder(PayHelper.WXPAY, data);
+            pay.pay(PayHelper.WXPAY, "");
         } else {
             pay.pay(PayHelper.ALIPAY, "10");
         }

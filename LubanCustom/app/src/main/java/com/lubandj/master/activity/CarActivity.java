@@ -141,6 +141,9 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
                 chooseAll();
                 break;
             case R.id.tv_basetitle_right:
+                if (shoppingCartBeanList.size()==0){
+                    return;
+                }
                 flag = !flag;
                 if (flag) {
                     tv_clear.setVisibility(View.VISIBLE);
@@ -155,19 +158,6 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
 //                    ckAll.setChecked(false);
 //                    shoppingCartAdapter.isShow(true);
                 }
-               /* if (shoppingCartBeanList.size() != 0) {
-                    if (ckAll.isChecked()) {
-                        for (int i = 0; i < shoppingCartBeanList.size(); i++) {
-                            shoppingCartBeanList.get(i).setChoosed(true);
-                        }
-                        shoppingCartAdapter.notifyDataSetChanged();
-                    } else {
-                        for (int i = 0; i < shoppingCartBeanList.size(); i++) {
-                            shoppingCartBeanList.get(i).setChoosed(false);
-                        }
-                        shoppingCartAdapter.notifyDataSetChanged();
-                    }
-                }*/
                 break;
             case R.id.tv_settlement: //结算
                 lementOnder();
@@ -357,7 +347,7 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
         LocalleCarData.newInstance().clear();
         for (CarListBeen.InfoBean bean:datas){
             ShoppingCartBean bean1 = new ShoppingCartBean(bean.getId(),bean.getService_name(),"",0,Double.parseDouble(bean.getPrice()),bean.getNum(),bean.getService_type(),bean.getService_id(),bean.getSpec_id());
-            bean1.setImageUrl("https://img.alicdn.com/bao/uploaded/i2/TB1YfERKVXXXXanaFXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");
+            bean1.setImageUrl(bean.getService_icon());
             bean1.setChoosed(true);
             shoppingCartBeanList.add(bean1);
             LocalleCarData.newInstance().setShoppingCartBeanList(bean1);

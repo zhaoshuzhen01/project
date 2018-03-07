@@ -2,6 +2,8 @@ package com.lubandj.master.been;
 
 import com.lubandj.master.httpbean.BaseEntity;
 
+import java.io.Serializable;
+
 /**
  * Created by ${zhaoshuzhen} on 2018/3/7.
  */
@@ -22,7 +24,7 @@ public class BookOrderBeen extends BaseEntity {
         this.info = info;
     }
 
-    public static class InfoBean {
+    public static class InfoBean implements Serializable{
         /**
          * id : 266
          * order_id : 20180302162044999954
@@ -31,7 +33,7 @@ public class BookOrderBeen extends BaseEntity {
 
         private String id;
         private String order_id;
-        private int pay_amount;
+        private String pay_amount;
 
         public String getId() {
             return id;
@@ -49,11 +51,11 @@ public class BookOrderBeen extends BaseEntity {
             this.order_id = order_id;
         }
 
-        public int getPay_amount() {
+        public String getPay_amount() {
             return pay_amount;
         }
 
-        public void setPay_amount(int pay_amount) {
+        public void setPay_amount(String pay_amount) {
             this.pay_amount = pay_amount;
         }
     }

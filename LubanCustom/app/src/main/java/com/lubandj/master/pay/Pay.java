@@ -2,6 +2,8 @@ package com.lubandj.master.pay;
 
 import android.app.Activity;
 
+import com.lubandj.master.been.WeiXinPayInfo;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,6 +43,32 @@ public class Pay implements IPay {
                 WxPayInfo info = WxPayInfo.createBean(new JSONObject(jsonObject));
                 callWxPay(info);
             } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void payOrder(final String payType,Object data) {
+        if (PayHelper.ALIPAY.equalsIgnoreCase(payType)) {
+
+            callAlipay(info);
+        } else if (PayHelper.WXPAY.equalsIgnoreCase(payType)) {
+            try {
+                WxPayInfo info=new WxPayInfo();
+                WxPayInfo.ResultBean resultBean = new WxPayInfo.ResultBean();
+                WxPayInfo.ResultBean.WxBean wxBean = new WxPayInfo.ResultBean.WxBean();
+                resultBean.setWx(wxBean);
+                info.setResult(resultBean);
+                WeiXinPayInfo weiXinPayInfo = (WeiXinPayInfo) data;
+                info.getResult().getWx().setAppid(weiXinPayInfo.getInfo().getAppid());
+                info.getResult().getWx().setPartnerid(weiXinPayInfo.getInfo().getPartnerid());
+                info.getResult().getWx().setPrepayid(weiXinPayInfo.getInfo().getPrepay_id());
+                info.getResult().getWx().setNoncestr(weiXinPayInfo.getInfo().getNonce_str());
+                info.getResult().getWx().setTimestamp(weiXinPayInfo.getInfo().getTimestamp()+"");
+                info.getResult().getWx().setPackageValue("Sign=WXPay");
+                info.getResult().getWx().setSign(weiXinPayInfo.getInfo().getSign());
+                callWxPay(info);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
