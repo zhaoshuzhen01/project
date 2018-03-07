@@ -35,7 +35,8 @@ public class PayHelper {
         req.sign = info.getResult().getWx().getSign();
         // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
         //3.调用微信支付sdk支付方法
-        api.sendReq(req);
+        boolean chek = req.checkArgs();
+       boolean  payResult =  api.sendReq(req);
 
         //4.处理支付结果：WXPayEntryActivity类的onResp处理
     }

@@ -163,8 +163,8 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
     @Override
     public void getServiceData(Object data) {
         if (weixinchekcout.isChecked()) {
-//            pay.payOrder(PayHelper.WXPAY, data);
-            pay.pay(PayHelper.WXPAY, "");
+            pay.payOrder(PayHelper.WXPAY, data);
+//            pay.pay(PayHelper.WXPAY, "");
         } else {
             pay.pay(PayHelper.ALIPAY, "10");
         }

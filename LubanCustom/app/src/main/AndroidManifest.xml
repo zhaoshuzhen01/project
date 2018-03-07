@@ -213,6 +213,11 @@
             android:name="com.lubandj.customer.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"/>
+        <receiver android:name=".AppRegister">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>
         <!-- 百地图度配置 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -241,7 +246,14 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.CheckStandActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+            <!--这个intent-filter不要忘了-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="wx2337ad10e3cd3cf1"/>
+            </intent-filter>
+        </activity>
         <!-- 支付宝支付 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
