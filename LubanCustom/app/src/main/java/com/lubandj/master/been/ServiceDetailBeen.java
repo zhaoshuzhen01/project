@@ -92,6 +92,16 @@ public class ServiceDetailBeen extends BaseEntity {
 
             private String spec_id;
             private String service_id;
+
+            public String getService_type() {
+                return service_type;
+            }
+
+            public void setService_type(String service_type) {
+                this.service_type = service_type;
+            }
+
+            private String service_type;
             private String item_name;
 
             public String getSpec_name() {

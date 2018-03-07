@@ -122,7 +122,7 @@ public class BindPhoneNumActivity extends TitleBaseActivity implements EditTextW
         switch (view.getId()) {
             case R.id.btn_send_code:
                 if (checkPhoneNum()) return;
-                SendSmsBean bean = new SendSmsBean(mPhoneNum, SendSmsBean.KEY_BINGING_PHONE_TEMPLATEID);
+                SendSmsBean bean = new SendSmsBean(mPhoneNum, TextUtils.isEmpty(openid)?SendSmsBean.KEY_BINGING_PHONE_TEMPLATEID:SendSmsBean.KEY_LOGIN_TEMPLATEID);
                 initProgressDialog(R.string.txt_is_sending_auth_code).show();
                 TaskEngine.getInstance().commonHttps(Canstance.HTTP_SEND_CODE, bean, new Response.Listener<String>() {
 
@@ -157,7 +157,7 @@ public class BindPhoneNumActivity extends TitleBaseActivity implements EditTextW
                 LoginAppBean loginAppBean = new LoginAppBean(mPhoneNum,mAuthCode);
                 if (!TextUtils.isEmpty(openid))
                     loginAppBean.openid = openid;
-                TaskEngine.getInstance().commonHttps(Canstance.HTTP_MODIFYPHONE, loginAppBean, new Response.Listener<String>() {
+                TaskEngine.getInstance().commonHttps(url, loginAppBean, new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String s) {

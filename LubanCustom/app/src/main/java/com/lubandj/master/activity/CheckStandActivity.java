@@ -18,8 +18,11 @@ import android.widget.TextView;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.customer.login.LoginActivity;
+import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.R;
+import com.lubandj.master.been.BookOrderBeen;
+import com.lubandj.master.model.PayModel;
 import com.lubandj.master.pay.Pay;
 import com.lubandj.master.pay.PayHelper;
 import com.lubandj.master.pay.PayResultCallbackImpl;
@@ -27,7 +30,7 @@ import com.lubandj.master.pay.PayResultCallbackImpl;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class CheckStandActivity extends TitleBaseActivity implements CompoundButton.OnCheckedChangeListener {
+public class CheckStandActivity extends TitleBaseActivity implements CompoundButton.OnCheckedChangeListener,DataCall {
     @InjectView(R.id.top_img)
     ImageView topImg;
     @InjectView(R.id.top_lay)
@@ -47,12 +50,15 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
     private final long INTERVAL = 1000L;
     private LinearLayout sure_pay;
     public Pay pay;
+    private BookOrderBeen bookOrderBeen ;
+    private PayModel payModel ;
     /**
      * 充值结果,0为未充值状态;1为成功;2为失败
      */
     public static int mRechargeResult = 0;
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context,BookOrderBeen data) {
         Intent intent = new Intent(context, CheckStandActivity.class);
+        intent.putExtra("data",data);
         context.startActivity(intent);
     }
 
@@ -76,7 +82,9 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
         window.setStatusBarColor(getResources().getColor(R.color.weixin));
         text1.setText("¥" +LocalleCarData.newInstance().getTotalPrice());
         xiandanprice.setText("¥" +LocalleCarData.newInstance().getTotalPrice());
+        payModel = new PayModel(this,this);
         startTimer();
+        bookOrderBeen = (BookOrderBeen) getIntent().getSerializableExtra("data");
         pay = new Pay(this, new PayResultCallbackImpl() {
             @Override
             public void onPaySuccess(String result, String payType) {
@@ -111,11 +119,10 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sure_pay:
-                toast(this, "确认支付");
                 if (weixinchekcout.isChecked()) {
-                    pay.pay(PayHelper.WXPAY, "10");
+                    payModel.bookOrder(bookOrderBeen.getInfo().getOrder_id(),"1");
                 } else {
-                    pay.pay(PayHelper.ALIPAY, "10");
+                    payModel.bookOrder(bookOrderBeen.getInfo().getOrder_id(),"2");
                 }
                 break;
         }
@@ -149,6 +156,15 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
                 sure_pay.setBackgroundResource(R.drawable.fulayback);
                 window.setStatusBarColor(getResources().getColor(R.color.weixin));
                 break;
+        }
+    }
+
+    @Override
+    public void getServiceData(Object data) {
+        if (weixinchekcout.isChecked()) {
+            pay.pay(PayHelper.WXPAY, "10");
+        } else {
+            pay.pay(PayHelper.ALIPAY, "10");
         }
     }
 

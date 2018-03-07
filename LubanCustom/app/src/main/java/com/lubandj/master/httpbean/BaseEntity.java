@@ -1,12 +1,14 @@
 package com.lubandj.master.httpbean;
 
+import java.io.Serializable;
+
 /**
  * @author: lj
  * @Time: 2017/12/18 11:17
  * @Description: This is BaseEntity
  */
 
-public class BaseEntity {
+public class BaseEntity implements Serializable{
 
 
     /**

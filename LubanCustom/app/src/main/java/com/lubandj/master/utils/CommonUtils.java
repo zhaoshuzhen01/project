@@ -182,6 +182,14 @@ public class CommonUtils {
         SPUtils.getInstance().put(Canstance.ADDRESS, address);
     }
 
+    public static void setAddressID(String addressID) {
+        SPUtils.getInstance().put(Canstance.ADDRESS_ID, addressID);
+    }
+
+    public static String getAddressID() {
+      return   SPUtils.getInstance().getString(Canstance.ADDRESS_ID);
+    }
+
     public static int getMsgCount() {
         return SPUtils.getInstance().getInt(Canstance.MSG);
     }

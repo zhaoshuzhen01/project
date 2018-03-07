@@ -15,16 +15,20 @@ import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.customer.my.FeedBackInfoActivity;
+import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.Iview.IbaseView;
 import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.BookOrderOdapter;
 import com.lubandj.master.been.AddressBean;
+import com.lubandj.master.been.BookOrderBeen;
 import com.lubandj.master.been.CarListBeen;
 import com.lubandj.master.been.HomeBeen;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.ShoppingCartBean;
+import com.lubandj.master.httpbean.NetBookBeen;
+import com.lubandj.master.model.BookOrderModel;
 import com.lubandj.master.model.CarListModel;
 import com.lubandj.master.utils.CommonUtils;
 
@@ -38,7 +42,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class BookOrderActivity extends TitleBaseActivity {
+public class BookOrderActivity extends TitleBaseActivity implements DataCall<BookOrderBeen>{
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.choose_youhui)
@@ -76,10 +80,13 @@ public class BookOrderActivity extends TitleBaseActivity {
     TextView tv_phone;
     @InjectView(R.id.tv_address)
     TextView tv_address;
+    private BookOrderModel bookOrderModel ;
+    private String addressId = "";
 
     private BookOrderOdapter bookOrderOdapter;
     private List<ShoppingCartBean> msgBeens = new ArrayList<>();
-
+    private  List<NetBookBeen.ItemsBean> items = new ArrayList<>();
+    private  NetBookBeen netBookBeen = new NetBookBeen();
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, BookOrderActivity.class);
         context.startActivity(intent);
@@ -111,6 +118,18 @@ public class BookOrderActivity extends TitleBaseActivity {
             address_peo.setText("联系人 "+datas[0]+"");
             address_phone.setText(datas[1]+"");
             address_adress.setText(datas[2]+datas[3]+datas[4]+datas[5]+"");
+        }
+        addressId = CommonUtils.getAddressID();;
+        bookOrderModel = new BookOrderModel(this,this);
+        for (ShoppingCartBean bean:msgBeens){
+            NetBookBeen.ItemsBean itemsBean= new NetBookBeen.ItemsBean();
+            itemsBean.setId(bean.getId());
+            itemsBean.setService_id(bean.getService_id());
+            itemsBean.setSpec_id(bean.getSpec_id());
+            itemsBean.setService_name(bean.getShoppingName());
+            itemsBean.setPrice(bean.getPrice()+"");
+            itemsBean.setNum(bean.getCount());
+            items.add(itemsBean);
         }
         initData();
     }
@@ -162,7 +181,15 @@ public class BookOrderActivity extends TitleBaseActivity {
                     ToastUtils.showShort(this,"请选择意向上门时间");
                     return;
                 }
-                CheckStandActivity.startActivity(this);
+                netBookBeen.setAddress_id(addressId);
+                netBookBeen.setAmount(LocalleCarData.newInstance().getTotalPrice());
+                netBookBeen.setCoupon_id(0);
+                netBookBeen.setCoupon_amount(0);
+                netBookBeen.setDatetime(System.currentTimeMillis()+"");
+                netBookBeen.setRemark("");
+                netBookBeen.setItems(items);
+                bookOrderModel.bookOrder(netBookBeen);
+//                CheckStandActivity.startActivity(this);
                 break;
             case R.id.show_address_lay:
             case R.id.choose_address:
@@ -190,6 +217,8 @@ public class BookOrderActivity extends TitleBaseActivity {
                     String city = bean.province.equals(bean.city)?bean.city:bean.province+bean.city;
                     address_adress.setText(city + bean.area + bean.housing_estate + bean.house_number);
                     CommonUtils.setAddress(bean.linkman + "," + bean.phone + "," + city + "," + bean.area + "," + bean.housing_estate +","+ bean.house_number);
+                    addressId = bean.id+"";
+                    CommonUtils.setAddressID(addressId);
                 }
                 break;
             case 303:
@@ -210,4 +239,9 @@ public class BookOrderActivity extends TitleBaseActivity {
                 break;
         }
 }
+
+    @Override
+    public void getServiceData(BookOrderBeen data) {
+        CheckStandActivity.startActivity(this,data);
+    }
 }

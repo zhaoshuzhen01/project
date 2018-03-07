@@ -131,7 +131,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
                     return;
                 }
                 if (count>0)
-                addCarModel.addCar(xinghao.getSpec_name(),xinghao.getService_id(),xinghao.getSpec_id(),data.getInfo().getName(),xinghao.getPrice(),count+"");
+                addCarModel.addCar(xinghao.getService_type(),xinghao.getService_id(),xinghao.getSpec_id(),xinghao.getItem_name(),xinghao.getPrice(),count+"");
                 else
                     ToastUtils.showShort(getActivity(),"数量不能为0个");
                 break;
@@ -162,8 +162,8 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
         String mcount = car_msgCount.getText().toString();
         car_msgCount.setText((TextUtils.isEmpty(mcount)?0:Integer.parseInt(mcount)+count)+"");
 
-        ShoppingCartBean bean1 = new ShoppingCartBean(1,data.getInfo().getName(),"",0,99.00,count,1,Integer.parseInt(data.getInfo().getService_id()),2);
-        bean1.setImageUrl("https://img.alicdn.com/bao/uploaded/i2/TB1YfERKVXXXXanaFXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");
+        ShoppingCartBean bean1 = new ShoppingCartBean(1,xinghao.getItem_name(),"",0,99.00,count,Integer.parseInt(xinghao.getService_type()),Integer.parseInt(xinghao.getService_id()),Integer.parseInt(xinghao.getSpec_id()));
+        bean1.setImageUrl(xinghao.getItem_pic());
         LocalleCarData.newInstance().setShoppingCartBeanList(bean1);
         double totalPrice = LocalleCarData.newInstance().getTotalPrice();
         totalPrice += bean1.getPrice() * bean1.getCount();
