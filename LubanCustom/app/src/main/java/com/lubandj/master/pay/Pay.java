@@ -62,8 +62,8 @@ public class Pay implements IPay {
                 WeiXinPayInfo weiXinPayInfo = (WeiXinPayInfo) data;
                 info.getResult().getWx().setAppid(weiXinPayInfo.getInfo().getAppid());
                 info.getResult().getWx().setPartnerid(weiXinPayInfo.getInfo().getPartnerid());
-                info.getResult().getWx().setPrepayid(weiXinPayInfo.getInfo().getPrepay_id());
-                info.getResult().getWx().setNoncestr(weiXinPayInfo.getInfo().getNonce_str());
+                info.getResult().getWx().setPrepayid(weiXinPayInfo.getInfo().getPrepayid());
+                info.getResult().getWx().setNoncestr(weiXinPayInfo.getInfo().getNoncestr());
                 info.getResult().getWx().setTimestamp(weiXinPayInfo.getInfo().getTimestamp()+"");
                 info.getResult().getWx().setPackageValue("Sign=WXPay");
                 info.getResult().getWx().setSign(weiXinPayInfo.getInfo().getSign());

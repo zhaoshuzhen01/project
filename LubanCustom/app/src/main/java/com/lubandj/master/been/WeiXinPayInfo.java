@@ -8,8 +8,9 @@ import com.lubandj.master.httpbean.BaseEntity;
 
 public class WeiXinPayInfo extends BaseEntity {
 
+
     /**
-     * info : {"return_code":"SUCCESS","return_msg":"OK","appid":"wx2337ad10e3cd3cf1","mch_id":"1499143632","nonce_str":"NR6BDlYhUKkmpSQN","sign":"5AA9970BD17ECD96517954DA47BE9BD0","result_code":"SUCCESS","prepay_id":"wx2018030720102011e713cb850002830684","trade_type":"APP","partnerid":"1499143632","timestamp":1520424620}
+     * info : {"appid":"wx2337ad10e3cd3cf1","partnerid":"1499143632","prepayid":"wx201803081001226d3318316c0995820882","packages":"Sign=WXPay","noncestr":"BF39ED14C728940180E0E7432F61BBA2","timestamp":1520474482,"sign":"F2D27A3AD7F0B8AFBA9345BBE910A2D4"}
      */
 
     private InfoBean info;
@@ -24,46 +25,22 @@ public class WeiXinPayInfo extends BaseEntity {
 
     public static class InfoBean {
         /**
-         * return_code : SUCCESS
-         * return_msg : OK
          * appid : wx2337ad10e3cd3cf1
-         * mch_id : 1499143632
-         * nonce_str : NR6BDlYhUKkmpSQN
-         * sign : 5AA9970BD17ECD96517954DA47BE9BD0
-         * result_code : SUCCESS
-         * prepay_id : wx2018030720102011e713cb850002830684
-         * trade_type : APP
          * partnerid : 1499143632
-         * timestamp : 1520424620
+         * prepayid : wx201803081001226d3318316c0995820882
+         * packages : Sign=WXPay
+         * noncestr : BF39ED14C728940180E0E7432F61BBA2
+         * timestamp : 1520474482
+         * sign : F2D27A3AD7F0B8AFBA9345BBE910A2D4
          */
 
-        private String return_code;
-        private String return_msg;
         private String appid;
-        private String mch_id;
-        private String nonce_str;
-        private String sign;
-        private String result_code;
-        private String prepay_id;
-        private String trade_type;
         private String partnerid;
+        private String prepayid;
+        private String packages;
+        private String noncestr;
         private int timestamp;
-
-        public String getReturn_code() {
-            return return_code;
-        }
-
-        public void setReturn_code(String return_code) {
-            this.return_code = return_code;
-        }
-
-        public String getReturn_msg() {
-            return return_msg;
-        }
-
-        public void setReturn_msg(String return_msg) {
-            this.return_msg = return_msg;
-        }
+        private String sign;
 
         public String getAppid() {
             return appid;
@@ -71,54 +48,6 @@ public class WeiXinPayInfo extends BaseEntity {
 
         public void setAppid(String appid) {
             this.appid = appid;
-        }
-
-        public String getMch_id() {
-            return mch_id;
-        }
-
-        public void setMch_id(String mch_id) {
-            this.mch_id = mch_id;
-        }
-
-        public String getNonce_str() {
-            return nonce_str;
-        }
-
-        public void setNonce_str(String nonce_str) {
-            this.nonce_str = nonce_str;
-        }
-
-        public String getSign() {
-            return sign;
-        }
-
-        public void setSign(String sign) {
-            this.sign = sign;
-        }
-
-        public String getResult_code() {
-            return result_code;
-        }
-
-        public void setResult_code(String result_code) {
-            this.result_code = result_code;
-        }
-
-        public String getPrepay_id() {
-            return prepay_id;
-        }
-
-        public void setPrepay_id(String prepay_id) {
-            this.prepay_id = prepay_id;
-        }
-
-        public String getTrade_type() {
-            return trade_type;
-        }
-
-        public void setTrade_type(String trade_type) {
-            this.trade_type = trade_type;
         }
 
         public String getPartnerid() {
@@ -129,12 +58,44 @@ public class WeiXinPayInfo extends BaseEntity {
             this.partnerid = partnerid;
         }
 
+        public String getPrepayid() {
+            return prepayid;
+        }
+
+        public void setPrepayid(String prepayid) {
+            this.prepayid = prepayid;
+        }
+
+        public String getPackages() {
+            return packages;
+        }
+
+        public void setPackages(String packages) {
+            this.packages = packages;
+        }
+
+        public String getNoncestr() {
+            return noncestr;
+        }
+
+        public void setNoncestr(String noncestr) {
+            this.noncestr = noncestr;
+        }
+
         public int getTimestamp() {
             return timestamp;
         }
 
         public void setTimestamp(int timestamp) {
             this.timestamp = timestamp;
+        }
+
+        public String getSign() {
+            return sign;
+        }
+
+        public void setSign(String sign) {
+            this.sign = sign;
         }
     }
 }
