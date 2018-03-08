@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
+import com.lubandj.master.been.AlipayBeen;
 import com.lubandj.master.been.BookOrderBeen;
 import com.lubandj.master.been.WeiXinPayInfo;
 import com.lubandj.master.httpbean.BaseEntity;
@@ -35,11 +36,15 @@ public class PayModel {
 
             @Override
             public void onResponse(String s) {
+
                 Object object = null;
                 if (payType.equals("1")){//微信支付
                     object = new Gson().fromJson(s, WeiXinPayInfo.class);
                 }else {//支付宝支付
-                    object = new Gson().fromJson(s, BookOrderBeen.class);
+                    if (s.contains("amp;")){
+                        s = s.replace("amp;","");
+                    }
+                    object = new Gson().fromJson(s, AlipayBeen.class);
                 }
                 if (object != null) {
                     if (((BaseEntity)object).getCode() == 0) {

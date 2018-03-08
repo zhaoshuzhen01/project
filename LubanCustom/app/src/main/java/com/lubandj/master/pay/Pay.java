@@ -2,6 +2,7 @@ package com.lubandj.master.pay;
 
 import android.app.Activity;
 
+import com.lubandj.master.been.AlipayBeen;
 import com.lubandj.master.been.WeiXinPayInfo;
 
 import org.json.JSONException;
@@ -18,7 +19,7 @@ public class Pay implements IPay {
     private String mAmount;
     private final PayHelper mPayHelper;
     private String jsonObject = "{\"code\":0,\"desc\":\"\",\"result\":{\"id\":716,\"wx\":{\"appid\":\"wx2281f6dda3069029\",\"noncestr\":\"cqikbJsoenPWjTbG1F2YJ28Dru5a2PyR\",\"package\":\"Sign=WXPay\",\"partnerid\":\"1462681502\",\"prepayid\":\"wx201801301600228ea5ca50d70858144114\",\"timestamp\":\"1517299222\",\"sign\":\"5BE024DE0814CE75F2B40533EE765CC6\"}}}";
-    private String info = "app_id=2017071807800448&method=alipay.trade.app.pay&version=1.0&format=JSON&charset=utf8&sign_type=RSA2&timestamp=2018-01-3015: 13: 31&notify_url=https: //api.banmi.com/api/app/v3/payments/alibaba&biz_content={\n" +
+    private String info = "app_id=2018012302042230&method=alipay.trade.app.pay&version=1.0&format=JSON&charset=utf8&sign_type=RSA2&timestamp=2018-01-3015: 13: 31&notify_url=https: //api.banmi.com/api/app/v3/payments/alibaba&biz_content={\n" +
             "  \"subject\": \"ä¼´ç±³æ\u0097\u0085è¡\u008C\",\n" +
             "  \"out_trade_no\": \"APP1517296411012ALIPAY951585\",\n" +
             "  \"total_amount\": \"30.00\",\n" +
@@ -48,13 +49,13 @@ public class Pay implements IPay {
         }
     }
 
-    public void payOrder(final String payType,Object data) {
+    public void payOrder(final String payType, Object data) {
         if (PayHelper.ALIPAY.equalsIgnoreCase(payType)) {
-
+            String info = ((AlipayBeen) data).getInfo();
             callAlipay(info);
         } else if (PayHelper.WXPAY.equalsIgnoreCase(payType)) {
             try {
-                WxPayInfo info=new WxPayInfo();
+                WxPayInfo info = new WxPayInfo();
                 WxPayInfo.ResultBean resultBean = new WxPayInfo.ResultBean();
                 WxPayInfo.ResultBean.WxBean wxBean = new WxPayInfo.ResultBean.WxBean();
                 resultBean.setWx(wxBean);
@@ -64,7 +65,7 @@ public class Pay implements IPay {
                 info.getResult().getWx().setPartnerid(weiXinPayInfo.getInfo().getPartnerid());
                 info.getResult().getWx().setPrepayid(weiXinPayInfo.getInfo().getPrepayid());
                 info.getResult().getWx().setNoncestr(weiXinPayInfo.getInfo().getNoncestr());
-                info.getResult().getWx().setTimestamp(weiXinPayInfo.getInfo().getTimestamp()+"");
+                info.getResult().getWx().setTimestamp(weiXinPayInfo.getInfo().getTimestamp() + "");
                 info.getResult().getWx().setPackageValue("Sign=WXPay");
                 info.getResult().getWx().setSign(weiXinPayInfo.getInfo().getSign());
                 callWxPay(info);

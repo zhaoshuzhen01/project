@@ -166,7 +166,7 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
             pay.payOrder(PayHelper.WXPAY, data);
 //            pay.pay(PayHelper.WXPAY, "");
         } else {
-            pay.pay(PayHelper.ALIPAY, "10");
+            pay.payOrder(PayHelper.ALIPAY, data);
         }
     }
 
