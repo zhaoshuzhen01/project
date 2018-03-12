@@ -1,6 +1,8 @@
 package com.lubandj.customer.order;
 
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,14 +17,32 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.widget.AlertDialog;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.lubandj.customer.base.PhonePermissionActivity;
 import com.lubandj.customer.widget.OrderItemView;
 import com.lubandj.customer.widget.OrderTraceView;
 import com.lubandj.customer.widget.RefundDetailsView;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
+import com.lubandj.master.adapter.BookOrderOdapter;
+import com.lubandj.master.been.BookOrderBeen;
+import com.lubandj.master.been.OrderDetailBeen;
+import com.lubandj.master.been.ShoppingCartBean;
+import com.lubandj.master.been.WorkSheetDetailBean;
+import com.lubandj.master.httpbean.NetBookBeen;
+import com.lubandj.master.utils.CommonUtils;
+import com.lubandj.master.utils.Logger;
+import com.lubandj.master.utils.TaskEngine;
+import com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -81,13 +101,18 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
     Button btnGoToPay;
     @InjectView(R.id.ll_small_btn)
     FrameLayout llSmallBtn;
+    @InjectView(R.id.recyclerView)
+    RecyclerView recyclerView;
     @InjectView(R.id.btn_buy_again)
     Button btnBuyAgain;
-
-
+    public static final String KEY_DETAILS_ID = "details_id";
+    private String workSheetId;
+    private BookOrderOdapter bookOrderOdapter;
+    private List<ShoppingCartBean> msgBeens = new ArrayList<>();
+    private  List<OrderDetailBeen.InfoBean.ItemsBean> items = new ArrayList<>();
     private PopupWindow orderTracePop;
     private int mStatus = Canstance.TYPE_ORDER_DETAILS_IN_THE_SINGLE;
-
+private OrderDetailBeen msgCenterBeen ;
     @Override
     public void titleLeftClick() {
         finish();
@@ -111,24 +136,59 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
         setBackImg(R.drawable.back_mark);
         setOKImg(R.drawable.ic_service);
         setStatus(mStatus);
+        workSheetId = getIntent().getStringExtra(KEY_DETAILS_ID);
+        bookOrderOdapter = new BookOrderOdapter(msgBeens, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 2, 0));
+
+        recyclerView.setAdapter(bookOrderOdapter);
         initData();
     }
 
     @Override
     public void initData() {
-        for (int i = 0; i < 2; i++) {
-            OrderItemView orderItemView = new OrderItemView(this);
-            llOrderItem.addView(orderItemView);
-            if (i != 1) {
-                LayoutInflater.from(this).inflate(R.layout.line_cutting, llOrderItem);
+        initProgressDialog(R.string.txt_loading).show();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", workSheetId);
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_DETAILS, jsonObject, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                dialog.dismiss();
+                Logger.e(s);
+                try {
+                     msgCenterBeen = new Gson().fromJson(s, OrderDetailBeen.class);
+                    if (msgCenterBeen.getCode() == 0) {
+                        items = msgCenterBeen.getInfo().getItems();
+                        for (OrderDetailBeen.InfoBean.ItemsBean bean:items){
+                            ShoppingCartBean bean1 = new ShoppingCartBean(0,bean.getService_name(),"",0,0.0,Integer.parseInt(bean.getNum()),0,0,0);
+//                            bean1.setImageUrl(bean.getService_icon());
+                            msgBeens.add(bean1);
+                        }
+                        bookOrderOdapter.notifyDataSetChanged();
+                        tvOrderPriceTotal.setText("¥ " + msgCenterBeen.getInfo().getPay_amount()+"");
+                        tvContactName.setText(msgCenterBeen.getInfo().getContact_name()+"");
+                        tvContactPhone.setText(msgCenterBeen.getInfo().getContact_mobile()+"");
+                        tvServiceAddress.setText(msgCenterBeen.getInfo().getAddress()+"");
+                        tvCommentInfo.setText("备注信息");
+                        tvOrderNum.setText(msgCenterBeen.getInfo().getOrder_id()+"");
+                        tvPlaceTime.setText(msgCenterBeen.getInfo().getDatatime()+"");
+                    }else if(msgCenterBeen.getCode()==104){
+                        CommonUtils.tokenNullDeal(OrderDetailsActivity.this);
+                    } else {
+                        ToastUtils.showShort(OrderDetailsActivity.this, msgCenterBeen.getMessage());
+                    }
+                } catch (Exception e) {
+                    Logger.e(e.toString());
+                }
             }
-
-        }
-
-        for (int j = 0; j < refundCount; j++) {
-            RefundDetailsView refundDetailsView = new RefundDetailsView(this);
-            llRefundDetails.addView(refundDetailsView);
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                CommonUtils.fastShowError(OrderDetailsActivity.this,volleyError);
+            }
+        });
 
     }
 

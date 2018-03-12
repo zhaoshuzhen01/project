@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.customer.login.LoginActivity;
+import com.lubandj.customer.order.OrderDetailsActivity;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.R;
@@ -27,6 +28,7 @@ import com.lubandj.master.model.PayModel;
 import com.lubandj.master.pay.Pay;
 import com.lubandj.master.pay.PayHelper;
 import com.lubandj.master.pay.PayResultCallbackImpl;
+import com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -89,7 +91,11 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
         pay = new Pay(this, new PayResultCallbackImpl() {
             @Override
             public void onPaySuccess(String result, String payType) {
-
+                MainCantainActivity.startActivity(CheckStandActivity.this);
+                Intent intent = new Intent(CheckStandActivity.this, OrderDetailsActivity.class);
+                intent.putExtra(OrderDetailsActivity.KEY_DETAILS_ID, bookOrderBeen.getInfo().getOrder_id());
+                startActivity(intent);
+                finish();
             }
 
             @Override
@@ -120,11 +126,16 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sure_pay:
-                if (weixinchekcout.isChecked()) {
+                MainCantainActivity.startActivity(CheckStandActivity.this);
+                Intent intent = new Intent(CheckStandActivity.this, OrderDetailsActivity.class);
+                intent.putExtra(OrderDetailsActivity.KEY_DETAILS_ID, bookOrderBeen.getInfo().getOrder_id());
+                startActivity(intent);
+                finish();
+               /* if (weixinchekcout.isChecked()) {
                     payModel.bookOrder(bookOrderBeen.getInfo().getOrder_id(),"1");
                 } else {
                     payModel.bookOrder(bookOrderBeen.getInfo().getOrder_id(),"2");
-                }
+                }*/
                 break;
         }
     }

@@ -116,8 +116,6 @@
                            android:layout_height="wrap_content" />
                    </RelativeLayout>
                 </RelativeLayout>
-=======
-
                 <LinearLayout
                     android:id="@+id/choose_address_has"
                     android:layout_width="match_parent"
@@ -198,7 +196,6 @@
                         android:src="@drawable/right_arrow"/>
                 </LinearLayout>
 
->>>>>>> 3a8b34d59a89d6cde7b9e22badb3b28fecbc77ba
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"

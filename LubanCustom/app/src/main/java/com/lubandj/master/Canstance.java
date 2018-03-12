@@ -24,7 +24,9 @@ public class Canstance {
     public static final int HTTP_SAVEADDRESS = 10007;//保存住址
     public static final int HTTP_DELETEADDRESS = 10008;//删除住址
     public static final int HTTP_QRCODE = 10008;//二维码
-    public static final int HTTP_WORK_SHEET_DETAILS = 20002;//服务详情
+    public static final int HTTP_WORK_SHEET_DETAILS = 40003;//订单详情
+    public static final int HTTP_SERVICE_DETAILS = 20002;//服务详情
+
     public static final int HTTP_WORK_SHEET_LIST = 20001;//服务列表
     public static final int HTTP_ADD_CAR = 30001;//加入购物车
     public static final int HTTP_UPDATA_CAR = 30002;//更新购物车
