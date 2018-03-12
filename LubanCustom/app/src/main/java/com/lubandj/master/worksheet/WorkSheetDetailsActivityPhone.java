@@ -44,14 +44,8 @@ public class WorkSheetDetailsActivityPhone extends PhonePermissionActivity imple
     ImageView ivStateIcon;
     @InjectView(R.id.tv_state_desc)
     TextView tvStateDesc;
-    @InjectView(R.id.tv_phone_num)
-    TextView tvPhoneNum;
     @InjectView(R.id.iv_phone_icon)
     ImageView ivPhoneIcon;
-    @InjectView(R.id.tv_address_desc)
-    TextView tvAddressDesc;
-    @InjectView(R.id.iv_address_icon)
-    ImageView ivAddressIcon;
     @InjectView(R.id.tv_contact_name)
     TextView tvContactName;
     @InjectView(R.id.tv_work_sheet_no)
@@ -70,8 +64,6 @@ public class WorkSheetDetailsActivityPhone extends PhonePermissionActivity imple
     FrameLayout llBtn;
     @InjectView(R.id.ll_cancel_reason)
     LinearLayout llCancelReason;
-    @InjectView(R.id.ll_detail_items)
-    LinearLayout llDetailItems;
     @InjectView(R.id.ll_state)
     LinearLayout llState;
     @InjectView(R.id.recyclerView)
@@ -141,17 +133,15 @@ public class WorkSheetDetailsActivityPhone extends PhonePermissionActivity imple
     }
 
 
-    @OnClick({R.id.iv_phone_icon, R.id.iv_address_icon, R.id.tv_copy, R.id.btn_sign_exception, R.id.btn_start_server})
+    @OnClick({R.id.iv_phone_icon, R.id.tv_copy, R.id.btn_sign_exception, R.id.btn_start_server})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_phone_icon:
-                String s = tvPhoneNum.getText().toString();
+                String s = "";
                 if (TextUtils.isEmpty(s)) {
                     return;
                 }
                 callToClient(s,  String.format(getString(R.string.txt_make_sure_phone), s));
-                break;
-            case R.id.iv_address_icon:
                 break;
             case R.id.tv_copy:
                 copy(tvWorkSheetNo.getText().toString());
@@ -268,8 +258,6 @@ public class WorkSheetDetailsActivityPhone extends PhonePermissionActivity imple
         }
 
         tvStateDesc.setText(info.getStatusText());
-        tvPhoneNum.setText(info.getCustPhone());
-        tvAddressDesc.setText(info.getAddress());
         tvContactName.setText(info.getCustName());
         tvTime.setText(info.getBeginTime());
         tvReMark.setText(info.getRemark());
@@ -278,9 +266,6 @@ public class WorkSheetDetailsActivityPhone extends PhonePermissionActivity imple
         List<WorkSheetDetailBean.InfoBean.ServiceItemBean> serviceItem = info.getServiceItem();
         if (serviceItem == null || serviceItem.size() == 0) {
             return;
-        }
-        if (llDetailItems.getChildCount() > 0) {
-            llDetailItems.removeAllViews();
         }
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.topMargin = (int) getResources().getDimension(R.dimen.h_8dp);
@@ -292,7 +277,7 @@ public class WorkSheetDetailsActivityPhone extends PhonePermissionActivity imple
                 if (i != 0) {
                     workSheetDetailItem.setLayoutParams(layoutParams);
                 }
-                llDetailItems.addView(workSheetDetailItem);
+//                llDetailItems.addView(workSheetDetailItem);
             }
         }
     }
