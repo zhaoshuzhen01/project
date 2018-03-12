@@ -126,16 +126,12 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sure_pay:
-                MainCantainActivity.startActivity(CheckStandActivity.this);
-                Intent intent = new Intent(CheckStandActivity.this, OrderDetailsActivity.class);
-                intent.putExtra(OrderDetailsActivity.KEY_DETAILS_ID, bookOrderBeen.getInfo().getOrder_id());
-                startActivity(intent);
-                finish();
-               /* if (weixinchekcout.isChecked()) {
+
+                if (weixinchekcout.isChecked()) {
                     payModel.bookOrder(bookOrderBeen.getInfo().getOrder_id(),"1");
                 } else {
                     payModel.bookOrder(bookOrderBeen.getInfo().getOrder_id(),"2");
-                }*/
+                }
                 break;
         }
     }
