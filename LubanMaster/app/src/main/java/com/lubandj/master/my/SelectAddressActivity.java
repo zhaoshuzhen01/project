@@ -371,6 +371,7 @@ public class SelectAddressActivity extends BaseActivity implements BaiduMap.OnMa
                 bean.province = component.province;
                 bean.city = component.city;
                 bean.areapublic = component.district;
+                bean.area = component.district;
                 bean.address = component.street + component.streetNumber;
                 bean.housing_estate = mInfo.name;
 

@@ -55,7 +55,7 @@
                 android:id="@+id/gv_workcalendar_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#cfcfcf"
+                android:background="#eeeeee"
                 android:cacheColorHint="#00000000"
                 android:horizontalSpacing="0.5dp"
                 android:listSelector="#00000000"

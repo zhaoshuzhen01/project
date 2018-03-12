@@ -44,7 +44,7 @@ public class WorkTimeAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 24;
+        return 19;
     }
 
     @Override
@@ -89,7 +89,7 @@ public class WorkTimeAdapter extends BaseAdapter {
     }
 
     public String getTimeText() {
-        int hour = 8 + selectPos / 2;
+        int hour = 9 + selectPos / 2;
         int min = selectPos % 2;
         return (hour > 9 ? hour + "" : "0" + hour) + ":" + (min == 0 ? "00" : "30");
     }
@@ -113,7 +113,7 @@ public class WorkTimeAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        int hour = 8 + position / 2;
+        int hour = 9 + position / 2;
         int min = position % 2;
         String currentTime = (hour > 9 ? hour + "" : "0" + hour) + ":" + (min == 0 ? "00" : "30");
         viewHolder.mTvTime.setText(currentTime);
