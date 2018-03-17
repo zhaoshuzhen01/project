@@ -32,6 +32,7 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.R;
 import com.lubandj.master.activity.CancleOrderActivity;
+import com.lubandj.master.activity.CheckStandActivity;
 import com.lubandj.master.adapter.BookOrderOdapter;
 import com.lubandj.master.been.BookOrderBeen;
 import com.lubandj.master.been.OrderDetailBeen;
@@ -182,8 +183,12 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
                         tvOrderNum.setText(msgCenterBeen.getInfo().getOrder_id() + "");
                         tvPlaceTime.setText(msgCenterBeen.getInfo().getDatatime() + "");
                         tvStateDesc.setText(msgCenterBeen.getInfo().getStatusText());
-//                        setStatus(Integer.parseInt(msgCenterBeen.getInfo().getStatus()));
-                        setStatus(2);
+                        if (msgCenterBeen.getInfo().getPay_status().equals("1")){
+                            tvStateDesc.setText(msgCenterBeen.getInfo().getPay_statusText());
+                            btnBuyAgain.setText("去付款");
+                        }
+                        setStatus(Integer.parseInt(msgCenterBeen.getInfo().getStatus()));
+//                        setStatus(2);
                     } else if (msgCenterBeen.getCode() == 104) {
                         CommonUtils.tokenNullDeal(OrderDetailsActivity.this);
                     } else {
@@ -294,7 +299,6 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
                 break;
             case R.id.btn_buy_again:
                 String text = btnBuyAgain.getText().toString();
-                ToastUtils.showShort(this, text);
                 if (TextUtils.equals(text, getString(R.string.txt_buy_again))) {
 
                 } else if (TextUtils.equals(text, getString(R.string.txt_cancel_order))) {
@@ -313,6 +317,14 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
 
                                 }
                             }).show();
+
+                }else if (msgCenterBeen.getInfo().getPay_status().equals("1")){
+                    BookOrderBeen bookOrderBeen = new BookOrderBeen();
+                    BookOrderBeen.InfoBean infoBean = new BookOrderBeen.InfoBean();
+                    infoBean.setId(msgCenterBeen.getInfo().getId());
+                    infoBean.setOrder_id(msgCenterBeen.getInfo().getOrder_id());
+                    bookOrderBeen.setInfo(infoBean);
+                    CheckStandActivity.startActivity(this,bookOrderBeen);
 
                 }
                 break;

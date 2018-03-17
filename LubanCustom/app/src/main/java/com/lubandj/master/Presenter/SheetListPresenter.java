@@ -3,6 +3,7 @@ package com.lubandj.master.Presenter;
 import android.content.Context;
 
 import com.lubandj.master.Canstance;
+import com.lubandj.master.been.OrderListBeen;
 import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.model.workList.IWorkModel;
 import com.lubandj.master.Iview.IworkListView;
@@ -23,7 +24,7 @@ public class SheetListPresenter implements IRefleshLoadMorePrester, IWorkModel {
     private int mstartIndex = 1;
     private IworkListView iworkListView;
 
-    private List<WorkListBeen.InfoBean> mdatas = new ArrayList<>();
+    private List<OrderListBeen.InfoBean> mdatas = new ArrayList<>();
 
     private boolean loadMore = false ;
 
@@ -35,7 +36,6 @@ public class SheetListPresenter implements IRefleshLoadMorePrester, IWorkModel {
 
     @Override
     public void getReflushData(int type) {
-        ++type;
         loadMore = false ;
         mstartIndex = 1 ;
         switch (type) {
@@ -72,7 +72,7 @@ public class SheetListPresenter implements IRefleshLoadMorePrester, IWorkModel {
     }
 
     @Override
-    public void getWorkLists(List<WorkListBeen.InfoBean> datas) {
+    public void getWorkLists(List<OrderListBeen.InfoBean> datas) {
         if (datas!=null){
             if (loadMore){
                 mdatas.addAll(datas);

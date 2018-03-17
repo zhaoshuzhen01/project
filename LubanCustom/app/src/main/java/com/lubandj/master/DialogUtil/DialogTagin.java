@@ -99,6 +99,10 @@ public class DialogTagin {
             case Canstance.KEY_SHEET_STATUS_IN_SERVICE:
                 content = "已完成服务";
                 break;
+            case Canstance.TYPE_ORDER_DETAILS_IN_PAY:
+                content = "确认支付";
+
+                break;
         }
         return content;
     }

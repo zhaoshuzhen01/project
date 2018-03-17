@@ -14,10 +14,13 @@ import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.customer.login.LoginActivity;
+import com.lubandj.customer.order.OrderDetailsActivity;
 import com.lubandj.master.Presenter.SheetListPresenter;
 import com.lubandj.master.R;
+import com.lubandj.master.activity.CheckStandActivity;
 import com.lubandj.master.activity.MainCantainActivity;
 import com.lubandj.master.adapter.WorkSheetAdapter;
+import com.lubandj.master.been.OrderListBeen;
 import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.customview.BackLayout;
 import com.lubandj.master.Iview.IworkListView;
@@ -42,7 +45,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     @InjectView(R.id.work_fragment_contaner)
     RelativeLayout workFragmentContaner;
     private WorkSheetAdapter workSheetAdapter;
-    private List<WorkListBeen.InfoBean> worklists = new ArrayList<>();
+    private List<OrderListBeen.InfoBean> worklists = new ArrayList<>();
     private int index;// 0 未完成  1  已完成  2 已取消
     private BackLayout backLayout;
     private SheetListPresenter sheetListPresenter;
@@ -147,23 +150,26 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        switch (index) {
-            case 0://工单未完成
+        /*switch (index) {
+            case 0://全部
                 Intent intent = new Intent(getActivity(), WorkSheetDetailsActivityPhone.class);
                 intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, worklists.get(position).getId());
                 startActivity(intent);
                 break;
-            case 1://工单已完成
+            case 1://未完成
                 intent = new Intent(getActivity(), WorkSheetDetailsActivityPhone.class);
                 intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, worklists.get(position).getId());
                 startActivity(intent);
                 break;
-            case 2://工单已取消
+            case 2://评价
                 intent = new Intent(getActivity(), WorkSheetDetailsActivityPhone.class);
                 intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, worklists.get(position).getId());
                 startActivity(intent);
                 break;
-        }
+        }*/
+        Intent intent = new Intent(getActivity(), OrderDetailsActivity.class);
+        intent.putExtra(OrderDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
+        startActivity(intent);
     }
 
     @Override
@@ -179,15 +185,15 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     }
 
     @Override
-    public void getWorkLists(List<WorkListBeen.InfoBean> datas) {
+    public void getWorkLists(List<OrderListBeen.InfoBean> datas) {
         if (dialog != null)
             dialog.dismiss();
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
         backLayout.setVisibility(View.GONE);
-       /* worklists.clear();
+        worklists.clear();
         worklists.addAll(datas);
-        workSheetAdapter.notifyDataSetChanged();*/
+        workSheetAdapter.notifyDataSetChanged();
         if (datas!=null&&datas.size()==0){
             ToastUtils.showShort(getActivity(),"暂无数据");
         }
@@ -200,11 +206,10 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     }
 
     @Override
-    public void callClick(WorkListBeen.InfoBean entity,int currentIndex) {
-        this.currentIndex = currentIndex;
-        int status = Integer.parseInt(entity.getStatus());
-        ++status;
-        workListClickModel.getClickState(status, Integer.parseInt(entity.getId()));
+    public void callClick(OrderListBeen.InfoBean entity,int currentIndex) {
+        Intent intent = new Intent(getActivity(), OrderDetailsActivity.class);
+        intent.putExtra(OrderDetailsActivity.KEY_DETAILS_ID, worklists.get(currentIndex).getId());
+        startActivity(intent);
     }
 
     //点击回调

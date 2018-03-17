@@ -1,5 +1,6 @@
 package com.lubandj.master.model.workList;
 
+import com.lubandj.master.been.OrderListBeen;
 import com.lubandj.master.been.WorkListBeen;
 
 import java.util.List;
@@ -9,5 +10,5 @@ import java.util.List;
  */
 
 public interface IWorkModel {
-    public void getWorkLists(List<WorkListBeen.InfoBean> datas);
+    public void getWorkLists(List<OrderListBeen.InfoBean> datas);
 }
