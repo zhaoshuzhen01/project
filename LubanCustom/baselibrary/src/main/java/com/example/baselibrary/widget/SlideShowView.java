@@ -31,7 +31,8 @@ public class SlideShowView extends FrameLayout {
 
     private CustomViewPager mViewPager;
 
-    private LinearLayout llContainer; // 小圆点的容器
+    private LinearLayout llContainer,ll_containertopo; // 小圆点的容器
+
 
     private Context context;
     //数据集合
@@ -77,7 +78,9 @@ public class SlideShowView extends FrameLayout {
 
         setListener();
         if (mtype == TOPCONTENT) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) llContainer.getLayoutParams();
+            llContainer.setVisibility(GONE);
+            ll_containertopo.setVisibility(VISIBLE);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ll_containertopo.getLayoutParams();
             params.width = getResources().getDisplayMetrics().widthPixels;
         }
 
@@ -102,6 +105,7 @@ public class SlideShowView extends FrameLayout {
         mViewPager = (CustomViewPager) findViewById(R.id.vp_pager);
 
         llContainer = (LinearLayout) findViewById(R.id.ll_container);
+        ll_containertopo = (LinearLayout) findViewById(R.id.ll_containertopo);
         adatper = new MyAdatper();
 
         mViewPager.setAdapter(adatper);
@@ -146,11 +150,19 @@ public class SlideShowView extends FrameLayout {
                 }
                 position = position % m_AdvImgs.size();
                 clickPos = position;
-                for (int i = 0; i < llContainer.getChildCount(); i++) {
-                    llContainer.getChildAt(i).setEnabled(false);
-                }
+                if (mtype!=TOPCONTENT){
+                    for (int i = 0; i < llContainer.getChildCount(); i++) {
+                        llContainer.getChildAt(i).setEnabled(false);
+                    }
 
-                llContainer.getChildAt(position).setEnabled(true);
+                    llContainer.getChildAt(position).setEnabled(true);
+                }else {
+                    for (int i = 0; i < ll_containertopo.getChildCount(); i++) {
+                        ll_containertopo.getChildAt(i).setEnabled(false);
+                    }
+
+                    ll_containertopo.getChildAt(position).setEnabled(true);
+                }
             }
 
             @Override
@@ -199,7 +211,12 @@ public class SlideShowView extends FrameLayout {
         });
 
         // 动态添加小圆点
-        llContainer.removeAllViews();
+        if (mtype==TOPCONTENT){
+            ll_containertopo.removeAllViews();
+        }else {
+            llContainer.removeAllViews();
+
+        }
         for (int i = 0; i < m_AdvImgs.size(); i++) {
             ImageView point = new ImageView(context);
 
@@ -214,7 +231,12 @@ public class SlideShowView extends FrameLayout {
                 point.setEnabled(false);
             }
             point.setLayoutParams(params);
-            llContainer.addView(point);
+            if (mtype==TOPCONTENT)
+            ll_containertopo.addView(point);
+            else
+                llContainer.addView(point);
+
+
         }
     }
 

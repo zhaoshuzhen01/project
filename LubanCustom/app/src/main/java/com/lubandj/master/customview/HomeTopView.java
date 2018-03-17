@@ -69,7 +69,7 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
         params.height = getResources().getDisplayMetrics().widthPixels / 2;
         viewPager.setPadding(0, 0, 0, 0);
         LinearLayout.LayoutParams params1 = (LayoutParams) bannerView.getLayoutParams();
-        params1.height = getResources().getDisplayMetrics().widthPixels / 3;
+        params1.height = getResources().getDisplayMetrics().widthPixels /2;
     }
 
 
