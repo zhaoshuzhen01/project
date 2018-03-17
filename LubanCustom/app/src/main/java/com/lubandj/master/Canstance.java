@@ -69,14 +69,13 @@ public class Canstance {
     public static final String KEY_SHEET_STATUS_CANCELED = "6";
 
 
-    public static final int TYPE_ORDER_DETAILS_CANCELED = 0; //订单已取消
-    public static final int TYPE_ORDER_DETAILS_IN_THE_SINGLE = 1;//派单中
-    public static final int TYPE_ORDER_DETAILS_COMPLETED = 2;//订单已完成
-    public static final int TYPE_ORDER_DETAILS_PAY_OVERTIME = 3;//支付超时已取消
-    public static final int TYPE_ORDER_DETAILS_NO_PAYMENT = 4;//待支付
-    public static final int TYPE_ORDER_DETAILS_WAIT_SERVICE = 5;//等待服务
-    public static final int TYPE_ORDER_DETAILS_ON_ROAD = 6;//正在上门
-    public static final int TYPE_ORDER_DETAILS_IN_SERVICE = 7;//正在服务
+    public static final int TYPE_ORDER_DETAILS_CANCELED = 0; //订单未知
+    public static final int TYPE_ORDER_DETAILS_IN_THE_SINGLE = 1;//待指派
+    public static final int TYPE_ORDER_DETAILS_COMPLETED = 2;//待服务
+    public static final int TYPE_ORDER_DETAILS_PAY_OVERTIME = 3;//正在上门
+    public static final int TYPE_ORDER_DETAILS_NO_PAYMENT = 4;//服务中
+    public static final int TYPE_ORDER_DETAILS_WAIT_SERVICE = 5;//已完成
+    public static final int TYPE_ORDER_DETAILS_IN_SERVICE = 7;//取消订单
 
 
 

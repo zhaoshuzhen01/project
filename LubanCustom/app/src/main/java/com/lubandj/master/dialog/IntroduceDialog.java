@@ -147,7 +147,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
                 ++count;
                 countView.setText(count+"");
                 double price = Double.parseDouble(xinghao.getPrice())*count;
-                top_price.setText(price+"");
+                top_price.setText("¥ "+price+"");
                 break;
         }
     }
