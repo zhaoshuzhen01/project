@@ -304,14 +304,13 @@
                 style="@style/btn_login"
                 android:layout_width="135dp"
                 android:text="@string/txt_work_sheet_details_sign_exception"
-                android:visibility="gone"
                 android:textSize="@dimen/sp_18" />
 
             <Button
                 android:id="@+id/btn_start_server"
                 style="@style/btn_login"
                 android:layout_width="135dp"
-                android:layout_gravity="center"
+                android:layout_gravity="right"
                 android:text="@string/txt_work_sheet_details_on_road"
                 android:textSize="@dimen/sp_18" />
         </FrameLayout>
