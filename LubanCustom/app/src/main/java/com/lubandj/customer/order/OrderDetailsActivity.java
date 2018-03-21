@@ -29,12 +29,16 @@ import com.lubandj.customer.widget.OrderItemView;
 import com.lubandj.customer.widget.OrderTraceView;
 import com.lubandj.customer.widget.RefundDetailsView;
 import com.lubandj.master.Canstance;
+import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.R;
+import com.lubandj.master.activity.CancleOrderActivity;
+import com.lubandj.master.activity.CheckStandActivity;
 import com.lubandj.master.adapter.BookOrderOdapter;
 import com.lubandj.master.been.BookOrderBeen;
 import com.lubandj.master.been.OrderDetailBeen;
 import com.lubandj.master.been.ShoppingCartBean;
 import com.lubandj.master.been.WorkSheetDetailBean;
+import com.lubandj.master.httpbean.HttpDetailOrder;
 import com.lubandj.master.httpbean.NetBookBeen;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.Logger;
@@ -109,10 +113,11 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
     private String workSheetId;
     private BookOrderOdapter bookOrderOdapter;
     private List<ShoppingCartBean> msgBeens = new ArrayList<>();
-    private  List<OrderDetailBeen.InfoBean.ItemsBean> items = new ArrayList<>();
+    private List<OrderDetailBeen.InfoBean.ItemsBean> items = new ArrayList<>();
     private PopupWindow orderTracePop;
     private int mStatus = Canstance.TYPE_ORDER_DETAILS_IN_THE_SINGLE;
-private OrderDetailBeen msgCenterBeen ;
+    private OrderDetailBeen msgCenterBeen;
+
     @Override
     public void titleLeftClick() {
         finish();
@@ -149,31 +154,42 @@ private OrderDetailBeen msgCenterBeen ;
     @Override
     public void initData() {
         initProgressDialog(R.string.txt_loading).show();
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", workSheetId);
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_DETAILS, jsonObject, new Response.Listener<String>() {
+        HttpDetailOrder detailOrder = new HttpDetailOrder();
+        detailOrder.id = workSheetId ;
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_DETAILS, detailOrder, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 dialog.dismiss();
                 Logger.e(s);
                 try {
-                     msgCenterBeen = new Gson().fromJson(s, OrderDetailBeen.class);
+                    msgCenterBeen = new Gson().fromJson(s, OrderDetailBeen.class);
                     if (msgCenterBeen.getCode() == 0) {
                         items = msgCenterBeen.getInfo().getItems();
-                        for (OrderDetailBeen.InfoBean.ItemsBean bean:items){
-                            ShoppingCartBean bean1 = new ShoppingCartBean(0,bean.getService_name(),"",0,0.0,Integer.parseInt(bean.getNum()),0,0,0);
-//                            bean1.setImageUrl(bean.getService_icon());
+                        for (OrderDetailBeen.InfoBean.ItemsBean bean : items) {
+                            ShoppingCartBean bean1 = new ShoppingCartBean(0, bean.getService_name(), "", 0, 0.0, Integer.parseInt(bean.getNum()), 0, 0, 0);
+                            bean1.setImageUrl("http://lubandj.oss-cn-beijing.aliyuncs.com/service/20180115/2018011511554573163.jpg");
                             msgBeens.add(bean1);
+                            LocalleCarData.newInstance().setShoppingCartBeanList(bean1);
+
                         }
                         bookOrderOdapter.notifyDataSetChanged();
-                        tvOrderPriceTotal.setText("¥ " + msgCenterBeen.getInfo().getPay_amount()+"");
-                        tvContactName.setText(msgCenterBeen.getInfo().getContact_name()+"");
-                        tvContactPhone.setText(msgCenterBeen.getInfo().getContact_mobile()+"");
-                        tvServiceAddress.setText(msgCenterBeen.getInfo().getAddress()+"");
+                        tvOrderPriceTotal.setText("¥ " + msgCenterBeen.getInfo().getPay_amount() + "");
+                        LocalleCarData.newInstance().setTotalPrice(Double.parseDouble(msgCenterBeen.getInfo().getPay_amount()));
+
+                        tvContactName.setText(msgCenterBeen.getInfo().getContact_name() + "");
+                        tvContactPhone.setText(msgCenterBeen.getInfo().getContact_mobile() + "");
+                        tvServiceAddress.setText(msgCenterBeen.getInfo().getAddress() + "");
                         tvCommentInfo.setText("备注信息");
-                        tvOrderNum.setText(msgCenterBeen.getInfo().getOrder_id()+"");
-                        tvPlaceTime.setText(msgCenterBeen.getInfo().getDatatime()+"");
-                    }else if(msgCenterBeen.getCode()==104){
+                        tvOrderNum.setText(msgCenterBeen.getInfo().getOrder_id() + "");
+                        tvPlaceTime.setText(msgCenterBeen.getInfo().getDatatime() + "");
+                        tvStateDesc.setText(msgCenterBeen.getInfo().getStatusText());
+                        if (msgCenterBeen.getInfo().getPay_status().equals("1")){
+                            tvStateDesc.setText(msgCenterBeen.getInfo().getPay_statusText());
+                            btnBuyAgain.setText("去付款");
+                        }
+                        setStatus(Integer.parseInt(msgCenterBeen.getInfo().getStatus()));
+//                        setStatus(2);
+                    } else if (msgCenterBeen.getCode() == 104) {
                         CommonUtils.tokenNullDeal(OrderDetailsActivity.this);
                     } else {
                         ToastUtils.showShort(OrderDetailsActivity.this, msgCenterBeen.getMessage());
@@ -186,7 +202,7 @@ private OrderDetailBeen msgCenterBeen ;
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                CommonUtils.fastShowError(OrderDetailsActivity.this,volleyError);
+                CommonUtils.fastShowError(OrderDetailsActivity.this, volleyError);
             }
         });
 
@@ -204,11 +220,15 @@ private OrderDetailBeen msgCenterBeen ;
                 refundCount = 2;
                 break;
             case Canstance.TYPE_ORDER_DETAILS_COMPLETED:
+                ivStateIcon.setImageResource(R.drawable.ic_details_to_perform);
+                btnBuyAgain.setText(R.string.txt_cancel_order);
                 break;
             case Canstance.TYPE_ORDER_DETAILS_PAY_OVERTIME:
                 llEngineerInfo.setVisibility(View.GONE);
                 refundCount = 0;
                 tvRefundDetails.setVisibility(View.GONE);
+                ivStateIcon.setImageResource(R.drawable.ic_details_on_road);
+
                 break;
             case Canstance.TYPE_ORDER_DETAILS_NO_PAYMENT:
                 llEngineerInfo.setVisibility(View.GONE);
@@ -216,23 +236,23 @@ private OrderDetailBeen msgCenterBeen ;
                 tvRefundDetails.setVisibility(View.GONE);
                 llSmallBtn.setVisibility(View.VISIBLE);
                 btnBuyAgain.setVisibility(View.GONE);
+                ivStateIcon.setImageResource(R.drawable.ic_details_in_service);
+
                 break;
             case Canstance.TYPE_ORDER_DETAILS_WAIT_SERVICE:
                 llEngineerInfo.setVisibility(View.GONE);
                 refundCount = 0;
                 tvRefundDetails.setVisibility(View.GONE);
                 btnBuyAgain.setText(R.string.txt_cancel_order);
-                break;
-            case Canstance.TYPE_ORDER_DETAILS_ON_ROAD:
-                refundCount = 0;
-                tvRefundDetails.setVisibility(View.GONE);
-                btnBuyAgain.setText(R.string.txt_cancel_order);
+                ivStateIcon.setImageResource(R.drawable.ic_details_completed);
                 break;
             case Canstance.TYPE_ORDER_DETAILS_IN_SERVICE:
                 llEngineerInfo.setVisibility(View.GONE);
                 refundCount = 0;
                 tvRefundDetails.setVisibility(View.GONE);
                 btnBuyAgain.setText(R.string.txt_cancel_order);
+                ivStateIcon.setImageResource(R.drawable.ic_details_canceled);
+
                 break;
             default:
                 break;
@@ -279,7 +299,6 @@ private OrderDetailBeen msgCenterBeen ;
                 break;
             case R.id.btn_buy_again:
                 String text = btnBuyAgain.getText().toString();
-                ToastUtils.showShort(this, text);
                 if (TextUtils.equals(text, getString(R.string.txt_buy_again))) {
 
                 } else if (TextUtils.equals(text, getString(R.string.txt_cancel_order))) {
@@ -289,13 +308,23 @@ private OrderDetailBeen msgCenterBeen ;
                             .setPositiveButton(getString(R.string.txt_confirm_cancel), new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    CancleOrderActivity.startActivity(OrderDetailsActivity.this);
                                 }
                             })
                             .setNegativeButton(getString(R.string.txt_give_up_cancel), new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+
                                 }
                             }).show();
+
+                }else if (msgCenterBeen.getInfo().getPay_status().equals("1")){
+                    BookOrderBeen bookOrderBeen = new BookOrderBeen();
+                    BookOrderBeen.InfoBean infoBean = new BookOrderBeen.InfoBean();
+                    infoBean.setId(msgCenterBeen.getInfo().getId());
+                    infoBean.setOrder_id(msgCenterBeen.getInfo().getOrder_id());
+                    bookOrderBeen.setInfo(infoBean);
+                    CheckStandActivity.startActivity(this,bookOrderBeen);
 
                 }
                 break;

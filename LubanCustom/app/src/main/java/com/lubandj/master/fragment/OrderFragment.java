@@ -65,7 +65,18 @@ public class OrderFragment extends BaseFragment{
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
         for (int i = 0; i < Titles.length; i++) {
-            WorkSheetFragment mFragment = WorkSheetFragment.newInstance(i);
+            WorkSheetFragment mFragment = null;
+            switch (i){
+                case 0:
+                    mFragment = WorkSheetFragment.newInstance(1);
+                    break;
+                case 1:
+                    mFragment = WorkSheetFragment.newInstance(2);
+                    break;
+                case 2:
+                    mFragment = WorkSheetFragment.newInstance(0);
+                    break;
+            }
             mFragments.add(i, mFragment);
             idTablayout.removeAllTabs();
             idTablayout.addTab(idTablayout.newTab().setText(Titles[i]));

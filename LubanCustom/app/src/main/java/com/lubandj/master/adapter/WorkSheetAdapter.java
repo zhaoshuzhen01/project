@@ -13,6 +13,7 @@ import com.lubandj.master.Canstance;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
 import com.lubandj.master.baiduUtil.BaiduApi;
+import com.lubandj.master.been.OrderListBeen;
 import com.lubandj.master.been.WorkListBeen;
 
 import java.util.List;
@@ -21,13 +22,13 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2017/11/26.
  */
 
-public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, BaseViewHolder> implements DialogTagin.DialogSure {
+public class WorkSheetAdapter extends BaseQuickAdapter<OrderListBeen.InfoBean, BaseViewHolder> implements DialogTagin.DialogSure {
     private Context context;
     private  int modeStyle = 0 ;// 0 未完成  1  已完成  2 已取消
     private int currentIndex = 0 ;
-    private List<WorkListBeen.InfoBean> mdata ;
+    private List<OrderListBeen.InfoBean> mdata ;
     private ClickButton clickButton ;
-    public WorkSheetAdapter(@Nullable List<WorkListBeen.InfoBean> data,Context context,int modeStyle,ClickButton clickButton) {
+    public WorkSheetAdapter(@Nullable List<OrderListBeen.InfoBean> data, Context context, int modeStyle, ClickButton clickButton) {
         super(R.layout.item_worksheet, data);
         this.context = context ;
         this.mdata = data;
@@ -36,7 +37,7 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WorkListBeen.InfoBean item) {
+    protected void convert(BaseViewHolder helper, OrderListBeen.InfoBean item) {
         initView(helper,item);
     }
 
@@ -45,7 +46,7 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
      * @param helper
      * @param item
      */
-    private void initView(final BaseViewHolder helper, WorkListBeen.InfoBean item){
+    private void initView(final BaseViewHolder helper, OrderListBeen.InfoBean item){
         int position = helper.getAdapterPosition();
         TextView finishState =  ((TextView) (helper.getView(R.id.finishState)));
         TextView serviceState = ((TextView) (helper.getView(R.id.serviceState)));
@@ -53,10 +54,10 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
         TextView worklist_address = ((TextView) (helper.getView(R.id.worklist_address)));
         TextView worklist_code= ((TextView) (helper.getView(R.id.worklist_code)));
         TextView worklist_time = ((TextView) (helper.getView(R.id.worklist_time)));
+        TextView price = ((TextView) (helper.getView(R.id.daohangprice)));
         worklist_address.setText(item.getAddress()+"");
-        worklist_code.setText("工单号："+item.getTicketSn());
-        worklist_time.setText(item.getBeginTime());
-        daohangState.setVisibility(View.GONE);
+        worklist_time.setText(item.getDatatime()+"");
+        price.setText("¥" +item.getPay_amount());
         ((ImageView) (helper.getView(R.id.pic_finish))).setVisibility(View.GONE);
         daohangState.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,21 +71,15 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
                 childViewClick(helper.getAdapterPosition(),view);
             }
         });
-        switch (modeStyle){
-            case 0:
-               unFinish(item.getStatus(),position,serviceState,finishState,daohangState,helper);
-                break;
-            case 1:
-                finishOrCancle("已完成",position,serviceState,helper);
-                break;
-            case 2:
-                finishOrCancle("已取消",position,serviceState,helper);
-                break;
-        }
+        unFinish(Integer.parseInt(item.getStatus())+"",position,serviceState,finishState,daohangState,helper,item);
     }
     @Override
     public void childViewClick(int position,View view) {
         currentIndex = position;
+        if (mdata.get(currentIndex).getPay_status().equals("1")){
+            DialogTagin.getDialogTagin(context).messageShow(Canstance.TYPE_ORDER_DETAILS_IN_PAY + "").setDialogSure(this);
+            return;
+        }
         switch (view.getId()) {
             case R.id.finishState:
                 switch (Integer.parseInt(mdata.get(currentIndex).getStatus())) {
@@ -99,9 +94,6 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
                         break;
                 }
                 break;
-            case R.id.daohangState:
-                BaiduApi.getBaiduApi().baiduNavigation(context,mdata.get(currentIndex).getAddress(),mdata.get(currentIndex).getLat(),mdata.get(currentIndex).getLng());
-                break;
         }
     }
     /**
@@ -111,25 +103,41 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
      * @param finishState
      * @param daohangState
      */
-    private void unFinish(String status,int position,TextView serviceState,TextView finishState,TextView daohangState,final BaseViewHolder helper){
+    private void unFinish(String status,int position,TextView serviceState,TextView finishState,TextView daohangState,final BaseViewHolder helper,OrderListBeen.InfoBean item){
+       serviceState.setText(item.getStatusText());
+       if (item.getPay_status().equals("1")){
+           serviceState.setText(item.getPay_statusText());
+           finishState.setText("去支付");
+           return;
+       }
         switch (Integer.parseInt(status)){
-            case 3:
-                ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.workservie);
-                serviceState.setText("派单中");
+            case 0:
                 finishState.setText("取消订单");
                 break;
             case 1:
-                ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.workwait);
-                serviceState.setText("派单中");
                 finishState.setText("取消订单");
-                daohangState.setVisibility(View.GONE);
                 break;
 
             case 2:
-                ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.workpath);
-                serviceState.setText("派单中");
+                ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.ic_details_to_perform);
                 finishState.setText("取消订单");
-                daohangState.setVisibility(View.GONE);
+                break;
+            case 3:
+                ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.ic_details_on_road);
+                finishState.setText("取消订单");
+                break;
+            case 4:
+                ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.ic_details_in_service);
+                finishState.setText("再次购买");
+                break;
+
+            case 5:
+                ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.ic_details_completed);
+                finishState.setText("取消订单");
+                break;
+            case 7:
+                ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.ic_details_canceled);
+                finishState.setText("取消订单");
                 break;
         }
     }
@@ -139,27 +147,20 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
      * @param position
      * @param serviceState
      */
-    private void finishOrCancle(String title,int position,TextView serviceState,final BaseViewHolder helper) {
-        serviceState.setText(title);
-        RelativeLayout bottomLay = ((RelativeLayout) (helper.getView(R.id.bottom_lay)));
-        bottomLay.setVisibility(View.GONE);
-        if (title.equals("已完成")) {
-            ((ImageView) (helper.getView(R.id.pic_finish))).setVisibility(View.VISIBLE);
-        ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.ic_details_completed);
-    }
-        else
-            ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.ic_details_canceled);
+    private void finishOrCancle(String title,int position,TextView serviceState,final BaseViewHolder helper,OrderListBeen.InfoBean item) {
+        serviceState.setText(item.getStatusText());
+
 
     }
 
     @Override
     public void dialogCall() {
-        WorkListBeen.InfoBean entity = mdata.get(currentIndex);
+        OrderListBeen.InfoBean entity = mdata.get(currentIndex);
         if (clickButton!=null)
             clickButton.callClick(entity,currentIndex);
     }
 
     public interface ClickButton{
-        void callClick(WorkListBeen.InfoBean entity,int currentIndex);
+        void callClick(OrderListBeen.InfoBean entity,int currentIndex);
     }
 }

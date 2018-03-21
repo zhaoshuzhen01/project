@@ -5,22 +5,22 @@ package com.lubandj.master.httpbean;
  */
 
 public class NetWorkListBeen {
-    int type;
+    int OrderStatus;
     int startIndex;
     int pageSize;
 
     public NetWorkListBeen(int type, int startIndex, int pageSize) {
-        this.type = type;
+        this.OrderStatus = type;
         this.startIndex = startIndex;
         this.pageSize = pageSize;
     }
 
     public int getType() {
-        return type;
+        return OrderStatus;
     }
 
     public void setType(int type) {
-        this.type = type;
+        this.OrderStatus = type;
     }
 
     public int getStartIndex() {

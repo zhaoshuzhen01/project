@@ -28,6 +28,7 @@
             android:textColor="@color/black" />
     </LinearLayout>
 
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0.5"
@@ -150,6 +151,7 @@
             android:background="@drawable/listback"
             android:focusable="false"
             android:gravity="center"
+            android:visibility="gone"
             android:padding="@dimen/h_6dp"
             android:text="开始导航"
             android:textColor="@color/color_666"

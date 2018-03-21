@@ -8,6 +8,7 @@ import com.example.baselibrary.tools.ToastUtils;
 import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
+import com.lubandj.master.been.OrderListBeen;
 import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.httpbean.NetWorkListBeen;
 import com.lubandj.master.model.BaseModel;
@@ -31,15 +32,15 @@ public UnFinishModel(Context context,IWorkModel iWorkModel){
     @Override
     public void getReflushData(int type,int startIndex,int pageSize) {
 
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_LIST, new NetWorkListBeen(type, startIndex,pageSize), new Response.Listener<String>() {
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_UPDATE_STATUS, new NetWorkListBeen(type, startIndex,pageSize), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {
 
-                WorkListBeen workListBeen = new Gson().fromJson(s, WorkListBeen.class);
+                OrderListBeen workListBeen = new Gson().fromJson(s, OrderListBeen.class);
                         if (workListBeen != null) {
                             if (workListBeen.getCode() == 0) {
-                                List<WorkListBeen.InfoBean> datas = workListBeen.getInfo();
+                                List<OrderListBeen.InfoBean> datas = workListBeen.getInfo();
                                 if (datas!=null){
                                     iWorkModel.getWorkLists(datas);
                                 }

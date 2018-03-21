@@ -7,9 +7,9 @@ package com.lubandj.master;
 public class Canstance {
     public static String CITY = "";
     public static final int TYPE_LIST_ALL = 0;//所有消息
-    public static final int TYPE_LIST_UNFINISH = 1;//工单列表未完成
-    public static final int TYPE_LIST_FINISH = 2;//工单列表已完成
-    public static final int TYPE_LIST_CANCELED = 3;//工单列表已取消
+    public static final int TYPE_LIST_UNFINISH = 0;//工单列表未完成
+    public static final int TYPE_LIST_FINISH = 1;//工单列表已完成
+    public static final int TYPE_LIST_CANCELED = 2;//工单列表已取消
 
     public static final int TYPE_WORKCALENDAR = 5;//工作日历跳转
 
@@ -36,7 +36,7 @@ public class Canstance {
     public static final int HTTP_ADD_ADDRESS = 30001;//加入购物车
     public static final int HTTP_WEIXIN_LOGIN = 70001;//微信登录
     public static final int Http_WEIXIN_BINDING = 70002;//微信绑定手机号
-    public static final int HTTP_WORK_SHEET_UPDATE_STATUS = 20003;//工单列表更新状态
+    public static final int HTTP_WORK_SHEET_UPDATE_STATUS = 40002;//工单列表
     public static final int HTTP_SIGN_EXCEPTION = 20004;//标记异常
     public static final int HTTP_EXCEPTION_LIST = 80001;//异常列表
     public static final int HTTP_BOOK_ORDER = 40001;//预约下单
@@ -69,14 +69,15 @@ public class Canstance {
     public static final String KEY_SHEET_STATUS_CANCELED = "6";
 
 
-    public static final int TYPE_ORDER_DETAILS_CANCELED = 0; //订单已取消
-    public static final int TYPE_ORDER_DETAILS_IN_THE_SINGLE = 1;//派单中
-    public static final int TYPE_ORDER_DETAILS_COMPLETED = 2;//订单已完成
-    public static final int TYPE_ORDER_DETAILS_PAY_OVERTIME = 3;//支付超时已取消
-    public static final int TYPE_ORDER_DETAILS_NO_PAYMENT = 4;//待支付
-    public static final int TYPE_ORDER_DETAILS_WAIT_SERVICE = 5;//等待服务
-    public static final int TYPE_ORDER_DETAILS_ON_ROAD = 6;//正在上门
-    public static final int TYPE_ORDER_DETAILS_IN_SERVICE = 7;//正在服务
+    public static final int TYPE_ORDER_DETAILS_CANCELED = 0; //订单未知
+    public static final int TYPE_ORDER_DETAILS_IN_THE_SINGLE = 1;//待指派
+    public static final int TYPE_ORDER_DETAILS_COMPLETED = 2;//待服务
+    public static final int TYPE_ORDER_DETAILS_PAY_OVERTIME = 3;//正在上门
+    public static final int TYPE_ORDER_DETAILS_NO_PAYMENT = 4;//服务中
+    public static final int TYPE_ORDER_DETAILS_WAIT_SERVICE = 5;//已完成
+    public static final int TYPE_ORDER_DETAILS_IN_SERVICE = 7;//取消订单
+    public static final String TYPE_ORDER_DETAILS_IN_PAY = "8";//确认支付
+
 
 
 
