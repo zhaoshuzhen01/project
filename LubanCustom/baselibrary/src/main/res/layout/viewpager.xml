@@ -17,7 +17,7 @@
     <com.example.baselibrary.widget.CustomViewPager
         android:id="@+id/vp_pager"
         android:layout_width="wrap_content"
-        android:layout_above="@+id/ll_container1"
+        android:layout_above="@+id/ll_container"
         android:layout_height="match_parent" />
 
     <LinearLayout
