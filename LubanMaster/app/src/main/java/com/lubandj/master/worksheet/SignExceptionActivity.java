@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -14,7 +15,6 @@ import android.widget.RadioGroup;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.baselibrary.tools.ToastUtils;
-import com.example.baselibrary.widget.AlertDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.lubandj.master.Canstance;
@@ -48,6 +48,7 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
     private int infoSize;
     private int problemId = 0;
     private String workSheetId;
+    private InputMethodManager inputMethodManager;
 
     @Override
     public void titleLeftClick() {
@@ -73,6 +74,8 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
         radioGroup.setOnCheckedChangeListener(this);
         editReason.addTextChangedListener(this);
         workSheetId = getIntent().getStringExtra(KEY_DETAILS_ID);
+        inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
         initData();
     }
 
@@ -165,21 +168,8 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
                 try {
                     BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
                     if (baseEntity.getCode() == 0) {
-                        new AlertDialog(SignExceptionActivity.this)
-                                .builder()
-                                .setTitle(getString(R.string.txt_submit_success))
-                                .setMsg(getString(R.string.txt_submit_success_service))
-                                .setPositiveButton(getString(R.string.txt_contact_service), new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        call("10086");
-                                    }
-                                })
-                                .setNegativeButton(getString(R.string.txt_later_call), new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                    }
-                                }).show();
+                        setResult(RESULT_OK);
+                        finish();
                     } else if (baseEntity.getCode() == 104) {
                         CommonUtils.tokenNullDeal(SignExceptionActivity.this);
                     } else {
@@ -203,8 +193,14 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
         problemId = checkedId;
         if (checkedId == infoSize) {
             flReason.setVisibility(View.VISIBLE);
+            editReason.requestFocus();
+            inputMethodManager.showSoftInput(editReason, InputMethodManager.SHOW_FORCED);
         } else {
             flReason.setVisibility(View.GONE);
+            inputMethodManager.hideSoftInputFromWindow(editReason.getWindowToken(), 0);
+            if (!TextUtils.isEmpty(mStrSeason)) {
+                editReason.setText("");
+            }
         }
     }
 
@@ -227,7 +223,7 @@ public class SignExceptionActivity extends PermissionActivity implements RadioGr
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_basetitle_ok:
-                String serviceNum = "10086";
+                String serviceNum = "4006-388-818";
                 callToClient(serviceNum, String.format(getString(R.string.txt_confirm_call_service), serviceNum));
                 break;
             default:

@@ -61,9 +61,11 @@
             android:id="@+id/edit_reason"
             style="@style/editTextStyles"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/h_12dp"
             android:hint="@string/txt_sign_exception"
+            android:gravity="left|top"
+            android:singleLine="false"
             android:maxLength="200"
             android:textSize="@dimen/sp_13" />
 
