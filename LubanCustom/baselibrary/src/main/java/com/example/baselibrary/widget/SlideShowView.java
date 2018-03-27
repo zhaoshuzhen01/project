@@ -31,7 +31,8 @@ public class SlideShowView extends FrameLayout {
 
     private CustomViewPager mViewPager;
 
-    private LinearLayout llContainer,ll_containertopo; // 小圆点的容器
+    private LinearLayout  ll_containertopo; // 小圆点的容器
+
 
 
     private Context context;
@@ -77,15 +78,11 @@ public class SlideShowView extends FrameLayout {
         adatper.notifyDataSetChanged();
 
         setListener();
-        if (mtype == TOPCONTENT) {
-            llContainer.setVisibility(GONE);
-            ll_containertopo.setVisibility(VISIBLE);
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ll_containertopo.getLayoutParams();
-            params.width = getResources().getDisplayMetrics().widthPixels;
+if (mtype!=GUANG){
+    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ll_containertopo.getLayoutParams();
+    params.width = getResources().getDisplayMetrics().widthPixels;
+}
         }
-
-    }
-
     public void startLoopAdv() {
         if (m_AdvImgs.size() > 1) {//轮播图的个数大于1的时候才能滑动
             mHandler.postDelayed(mRunnable, LOOPTIME);
@@ -103,8 +100,6 @@ public class SlideShowView extends FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.viewpager, this, true);
 
         mViewPager = (CustomViewPager) findViewById(R.id.vp_pager);
-
-        llContainer = (LinearLayout) findViewById(R.id.ll_container);
         ll_containertopo = (LinearLayout) findViewById(R.id.ll_containertopo);
         adatper = new MyAdatper();
 
@@ -130,16 +125,9 @@ public class SlideShowView extends FrameLayout {
         if (m_AdvImgs.size() <= 1) {
             mHandler.removeCallbacksAndMessages(null);
             mViewPager.setScrollable(false);
-            if (llContainer != null) {
-                llContainer.setVisibility(View.GONE);
-            }
         } else {
             startLoopAdv();
             mViewPager.setScrollable(true);
-
-            if (llContainer != null) {
-                llContainer.setVisibility(View.VISIBLE);
-            }
         }
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -150,19 +138,11 @@ public class SlideShowView extends FrameLayout {
                 }
                 position = position % m_AdvImgs.size();
                 clickPos = position;
-                if (mtype!=TOPCONTENT){
-                    for (int i = 0; i < llContainer.getChildCount(); i++) {
-                        llContainer.getChildAt(i).setEnabled(false);
-                    }
-
-                    llContainer.getChildAt(position).setEnabled(true);
-                }else {
-                    for (int i = 0; i < ll_containertopo.getChildCount(); i++) {
-                        ll_containertopo.getChildAt(i).setEnabled(false);
-                    }
-
-                    ll_containertopo.getChildAt(position).setEnabled(true);
+                for (int i = 0; i < ll_containertopo.getChildCount(); i++) {
+                    ll_containertopo.getChildAt(i).setEnabled(false);
                 }
+
+                ll_containertopo.getChildAt(position).setEnabled(true);
             }
 
             @Override
@@ -211,12 +191,7 @@ public class SlideShowView extends FrameLayout {
         });
 
         // 动态添加小圆点
-        if (mtype==TOPCONTENT){
-            ll_containertopo.removeAllViews();
-        }else {
-            llContainer.removeAllViews();
-
-        }
+        ll_containertopo.removeAllViews();
         for (int i = 0; i < m_AdvImgs.size(); i++) {
             ImageView point = new ImageView(context);
 
@@ -224,17 +199,14 @@ public class SlideShowView extends FrameLayout {
             if (mtype == GUANG)
                 point.setImageResource(R.drawable.select_pot);
             else
-                point.setImageResource(R.drawable.select_pot1);
+            point.setImageResource(R.drawable.select_pot1);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             if (i > 0) {
                 params.leftMargin = 10;
                 point.setEnabled(false);
             }
             point.setLayoutParams(params);
-            if (mtype==TOPCONTENT)
             ll_containertopo.addView(point);
-            else
-                llContainer.addView(point);
 
 
         }
@@ -267,7 +239,7 @@ public class SlideShowView extends FrameLayout {
                     //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos).getPic(), 0, 0, null);
                     //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos), 0, 0, null);
                     ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
-//                layoutParams.height =getResources().getDisplayMetrics().widthPixels*2;
+                layoutParams.height =(getResources().getDisplayMetrics().widthPixels/2);
 //                GlideUtils.loadDefaultGameList(imageView, m_AdvImgs.get(pos).getImage());
                     imageView.setOnClickListener(new OnClickListener() {
                         @Override

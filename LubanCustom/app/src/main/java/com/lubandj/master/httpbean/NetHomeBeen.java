@@ -14,11 +14,22 @@ public class NetHomeBeen {
         this.city = city;
     }
 
-    private String city ;
+    private String city;
 
-
-    public NetHomeBeen(String city){
-        this.city = city ;
+    public String getReType() {
+        return reType;
     }
 
+    public void setReType(String reType) {
+        this.reType = reType;
+    }
+
+    private String reType;
+
+
+    public NetHomeBeen(String city, String reType) {
+        this.city = city;
+        this.reType = reType;
+
+    }
 }

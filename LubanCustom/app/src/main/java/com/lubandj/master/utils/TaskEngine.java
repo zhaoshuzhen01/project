@@ -21,8 +21,8 @@ public class TaskEngine {
 
     private static TaskEngine instance;
     private RequestQueue mQueue;
-    public static final String URL = "https://api.luban.eme.net.cn/customer";
 //    public static final String URL = "https://api.luban.eme.net.cn/customer";
+    public static final String URL = "https://app.api.lubandj.com/customer";
 
     public RequestQueue getQueue() {
         return mQueue;
