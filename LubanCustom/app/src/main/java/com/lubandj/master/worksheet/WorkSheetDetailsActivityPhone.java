@@ -23,7 +23,6 @@ import com.lubandj.customer.base.PhonePermissionActivity;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.DialogUtil.DialogTagin;
 import com.lubandj.master.R;
-import com.lubandj.master.baiduUtil.BaiduApi;
 import com.lubandj.master.been.WorkSheetDetailBean;
 import com.lubandj.master.httpbean.BaseEntity;
 import com.lubandj.master.utils.CommonUtils;
@@ -242,6 +241,7 @@ public class WorkSheetDetailsActivityPhone extends PhonePermissionActivity imple
 //                ivPhoneIcon.setEnabled(false);
 //                ivAddressIcon.setEnabled(false);
                 btnStartServer.setVisibility(View.GONE);
+                btnSignException.setVisibility(View.GONE);
 //                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) btnSignException.getLayoutParams();
 //                layoutParams.gravity = Gravity.CENTER;
 //                btnSignException.setLayoutParams(layoutParams);
