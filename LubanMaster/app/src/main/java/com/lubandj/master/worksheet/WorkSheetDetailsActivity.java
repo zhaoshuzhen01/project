@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.widget.AlertDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.lubandj.master.Canstance;
@@ -77,10 +78,12 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
     public static final String KEY_DETAIL_LAT = "lat";
     public static final String KEY_DETAIL_LNG = "lng";
     private String workSheetId;
-    private String lat ;
-    private String lng ;
+    private String lat;
+    private String lng;
     private int updateStatus = 0;
     private String status;
+    private static final int REQUEST_CODE_SIGN_EXCEPTION = 532;
+    private String serviceNum;
 
 
     @Override
@@ -108,6 +111,8 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         workSheetId = getIntent().getStringExtra(KEY_DETAILS_ID);
         lat = getIntent().getStringExtra(KEY_DETAIL_LAT);
         lng = getIntent().getStringExtra(KEY_DETAIL_LNG);
+        serviceNum = "4006-388-818";
+
         initData();
     }
 
@@ -125,7 +130,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                     WorkSheetDetailBean workSheetDetailBean = new Gson().fromJson(s, WorkSheetDetailBean.class);
                     if (workSheetDetailBean.getCode() == 0) {
                         refreshPage(workSheetDetailBean);
-                    }else if(workSheetDetailBean.getCode()==104){
+                    } else if (workSheetDetailBean.getCode() == 104) {
                         CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
                     } else {
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, workSheetDetailBean.getMessage());
@@ -138,7 +143,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                CommonUtils.fastShowError(WorkSheetDetailsActivity.this,volleyError);
+                CommonUtils.fastShowError(WorkSheetDetailsActivity.this, volleyError);
             }
         });
     }
@@ -152,12 +157,12 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 if (TextUtils.isEmpty(s)) {
                     return;
                 }
-                callToClient(s,  String.format(getString(R.string.txt_make_sure_phone), s));
+                callToClient(s, String.format(getString(R.string.txt_make_sure_phone), s));
                 break;
             case R.id.iv_address_icon:
                 String address = tvAddressDesc.getText().toString();
                 if (!TextUtils.isEmpty(address)) {
-                    BaiduApi.getBaiduApi().baiduNavigation(this,address,lat,lng);
+                    BaiduApi.getBaiduApi().baiduNavigation(this, address, lat, lng);
                 }
                 break;
             case R.id.tv_copy:
@@ -166,7 +171,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
             case R.id.btn_sign_exception:
                 Intent intent = new Intent(this, SignExceptionActivity.class);
                 intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, workSheetId);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_SIGN_EXCEPTION);
                 break;
             case R.id.btn_start_server:
                 DialogTagin.getDialogTagin(this).messageShow(status).setDialogSure(this);
@@ -174,13 +179,34 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_SIGN_EXCEPTION) {
+            new AlertDialog(this)
+                    .builder()
+                    .setTitle(getString(R.string.txt_submit_success))
+                    .setMsg(getString(R.string.txt_submit_success_service))
+                    .setPositiveButton(getString(R.string.txt_contact_service), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            call(serviceNum);
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.txt_later_call), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        }
+                    }).show();
+        }
+
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_basetitle_ok:
-                String serviceNum = "4006-388-818";
-                callToClient(serviceNum,  String.format(getString(R.string.txt_confirm_call_service), serviceNum));
+                callToClient(serviceNum, String.format(getString(R.string.txt_confirm_call_service), serviceNum));
                 break;
             default:
                 break;
@@ -210,9 +236,9 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                     if (baseEntity.getCode() == 0) {
                         initData();
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
-                    }else if(baseEntity.getCode()==104){
+                    } else if (baseEntity.getCode() == 104) {
                         CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
-                    }else{
+                    } else {
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
                     }
                 } catch (Exception e) {
@@ -223,7 +249,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                CommonUtils.fastShowError(WorkSheetDetailsActivity.this,volleyError);
+                CommonUtils.fastShowError(WorkSheetDetailsActivity.this, volleyError);
             }
         });
     }
@@ -294,7 +320,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         layoutParams.topMargin = (int) getResources().getDimension(R.dimen.h_8dp);
         for (int i = 0; i < serviceItem.size(); i++) {
             WorkSheetDetailBean.InfoBean.ServiceItemBean serviceItemBean = serviceItem.get(i);
-            if(serviceItemBean!=null){
+            if (serviceItemBean != null) {
                 WorkSheetDetailItem workSheetDetailItem = new WorkSheetDetailItem(this);
                 workSheetDetailItem.initData(serviceItemBean);
                 if (i != 0) {
