@@ -259,6 +259,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
 //                ivPhoneIcon.setEnabled(false);
 //                ivAddressIcon.setEnabled(false);
                 btnStartServer.setVisibility(View.GONE);
+                btnSignException.setVisibility(View.GONE);
 //                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) btnSignException.getLayoutParams();
 //                layoutParams.gravity = Gravity.CENTER;
 //                btnSignException.setLayoutParams(layoutParams);
