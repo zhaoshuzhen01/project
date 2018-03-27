@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">鹿班用户端</string>
+    <string name="app_name">鹿班到家</string>
     <string name="txt_login">登录</string>
     <string name="txt_login_title">用户登录</string>
     <string name="txt_login_page_desc">输入手机号，登陆或注册鹿班到家</string>

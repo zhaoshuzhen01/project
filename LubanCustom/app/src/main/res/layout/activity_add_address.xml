@@ -261,7 +261,7 @@
                 android:background="@color/white"
                 android:hint="例：10楼503"
                 android:textSize="@dimen/sp_14"
-
+                android:singleLine="true"
                 />
         </LinearLayout>
     </LinearLayout>
