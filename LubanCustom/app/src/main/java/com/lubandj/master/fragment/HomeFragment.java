@@ -46,14 +46,14 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.car_msgCount)
-    TextView car_msgCount ;
+    TextView car_msgCount;
     private HomeListAdapter homeListAdapter;
     private List<HomeBeen.InfoBean> msgBeens = new ArrayList<>();
     private BaseReflushPresenter msgCenterPresenter;
     private HomeTopView homeTopView;
     protected RelativeLayout main_car_lay;
-    private int mdex = 0 ;
-    private HomeModel homeModel ;
+    private int mdex = 0;
+    private HomeModel homeModel;
 
     public static HomeFragment newInstance(int index) {
         HomeFragment myFragment = new HomeFragment();
@@ -79,10 +79,10 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
         homeTopView.initViewPager(getActivity());
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2); //spanCount为列数，默认方向vertical
         initRawRecyclerView(recyclerView, manager, homeListAdapter);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(0,0,20,0));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 20, 0));
         homeModel = new HomeModel(getActivity());
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(), this, homeModel);
-        Canstance.CITY="北京";
+        Canstance.CITY = "北京";
         homeModel.setCity(Canstance.CITY);
         main_car_lay = view.findViewById(R.id.main_car_lay);
         main_car_lay.setOnClickListener(this);
@@ -97,13 +97,13 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 Log.e("deal", dy + "     dy");
-                       if ((mdex*dy)<0||mdex==0){
-                           mdex = dy;
-                           if (dy>0)
-                           carAnimal();
-                           else
-                               upAnimal();
-                       }
+                if ((mdex * dy) < 0 || mdex == 0) {
+                    mdex = dy;
+                    if (dy > 0)
+                        carAnimal();
+                    else
+                        upAnimal();
+                }
             }
         });
     }
@@ -112,23 +112,22 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
     protected void initData() {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         msgCenterPresenter.getReflushData(0);
-
     }
 
     @Override
     public void onRefresh() {
-        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+        if (!NetworkUtils.isNetworkAvailable(getActivity())) {
             pullToRefreshAndPushToLoadView.finishRefreshing();
-        }else {
+        } else {
             msgCenterPresenter.getReflushData(0);
         }
     }
 
     @Override
     public void onLoadMore() {
-        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+        if (!NetworkUtils.isNetworkAvailable(getActivity())) {
             pullToRefreshAndPushToLoadView.finishLoading();
-        }else {
+        } else {
             msgCenterPresenter.getMoreData(0);
         }
     }
@@ -137,27 +136,37 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
     public void getDataLists(List<HomeBeen.InfoBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
-        if (msgBeens.size()==0&&datas==null){
+        if (msgBeens.size() == 0 && datas == null) {
             return;
         }
         msgBeens.clear();
-        msgBeens.addAll(datas);
+        //分类数据为热销和非热销
+        List<HomeBeen.InfoBean> hotList = new ArrayList<>();
+        List<HomeBeen.InfoBean> unhotList = new ArrayList<>();
+        for (int i = 0; i < datas.size(); i++) {
+            if (datas.get(i).getType() == 1) {
+                hotList.add(datas.get(i));
+            } else {
+                unhotList.add(datas.get(i));
+            }
+        }
+        msgBeens.addAll(hotList);
         homeListAdapter.notifyDataSetChanged();
-        if (msgBeens.size()>0){
+        if (msgBeens.size() > 0) {
             isFirst = false;
         }
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        ServiceDetailActivity.startActivity(getActivity(),msgBeens.get(position).getService_id());
+        ServiceDetailActivity.startActivity(getActivity(), msgBeens.get(position).getService_id());
     }
 
     @Override
     public void onClick(View view) {
-        if (CommonUtils.isLogin()){
+        if (CommonUtils.isLogin()) {
             CarActivity.startActivity(getActivity());
-        }else {
+        } else {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
 
@@ -165,12 +174,13 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
     }
 
     private void carAnimal() {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(main_car_lay, "translationX", 0f,120f);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(main_car_lay, "translationX", 0f, 120f);
         animator.setDuration(500);
         animator.start();
     }
-    private void upAnimal(){
-        ObjectAnimator animator1 = ObjectAnimator.ofFloat(main_car_lay, "translationX", 120f,0f);
+
+    private void upAnimal() {
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(main_car_lay, "translationX", 120f, 0f);
         animator1.setDuration(500);
 
         animator1.start();

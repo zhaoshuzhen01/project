@@ -17,6 +17,7 @@ import com.example.baselibrary.widget.CustomViewPager;
 import com.example.baselibrary.widget.SlideShowView;
 import com.example.baselibrary.widget.ViewPagerSlide;
 import com.lubandj.master.R;
+import com.lubandj.master.been.HomeBeen;
 import com.lubandj.master.fragment.HomeFragment;
 
 import java.util.ArrayList;

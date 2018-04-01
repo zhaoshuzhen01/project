@@ -122,8 +122,8 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
         setResult(RESULT_CANCELED);
         initProvinceDatas();
         if (mBean.id == 0) {//新增
-            city.setText(TApplication.context.mCurrentCigy);
-            mBean.city = TApplication.context.mCurrentCigy;
+            city.setText(Canstance.CITY);
+            mBean.city = Canstance.CITY;
             mTvEmptydiqu.setVisibility(View.VISIBLE);
         } else {//修改
             name.setText(mBean.linkman);
