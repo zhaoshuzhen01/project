@@ -1,11 +1,9 @@
 package com.lubandj.master.fragment;
 
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -25,12 +23,10 @@ import com.lubandj.master.R;
 import com.lubandj.master.activity.CarActivity;
 import com.lubandj.master.activity.ServiceDetailActivity;
 import com.lubandj.master.adapter.HomeListAdapter;
-import com.lubandj.master.adapter.MsgCenterAdapter;
-import com.lubandj.master.been.HomeBeen;
+import com.example.baselibrary.HomeBeen;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.customview.HomeTopView;
 import com.lubandj.master.model.HomeModel;
-import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
 import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -76,7 +72,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
         homeListAdapter.setOnItemClickListener(this);
         homeTopView = new HomeTopView(getActivity());
         homeListAdapter.addHeaderView(homeTopView);
-        homeTopView.initViewPager(getActivity());
+//        homeTopView.initViewPager(getActivity());
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2); //spanCount为列数，默认方向vertical
         initRawRecyclerView(recyclerView, manager, homeListAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 20, 0));
@@ -150,6 +146,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
                 unhotList.add(datas.get(i));
             }
         }
+        homeTopView.initViewPager(getActivity(),datas);
         msgBeens.addAll(hotList);
         homeListAdapter.notifyDataSetChanged();
         if (msgBeens.size() > 0) {

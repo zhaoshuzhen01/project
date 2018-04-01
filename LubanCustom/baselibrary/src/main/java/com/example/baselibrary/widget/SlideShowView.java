@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.example.baselibrary.HomeBeen;
 import com.example.baselibrary.R;
 
 import java.util.ArrayList;
@@ -31,8 +32,7 @@ public class SlideShowView extends FrameLayout {
 
     private CustomViewPager mViewPager;
 
-    private LinearLayout  ll_containertopo; // 小圆点的容器
-
+    private LinearLayout ll_containertopo; // 小圆点的容器
 
 
     private Context context;
@@ -51,6 +51,7 @@ public class SlideShowView extends FrameLayout {
     public static int TOPCONTENT = 2;//分类内容
     private int mtype;
     private LayoutView mlayoutView;
+    private List<List<HomeBeen.InfoBean>> contentlist = new ArrayList<>();
 
     public SlideShowView(Context context) {
         this(context, null);
@@ -66,11 +67,11 @@ public class SlideShowView extends FrameLayout {
         initUI(context);
     }
 
-    public void setData(List<String> m_AdvImgs, int type, LayoutView layoutView) {
+    public void setData(List<String> m_AdvImgs, int type, LayoutView layoutView, List<List<HomeBeen.InfoBean>> contentlist) {
         mtype = type;
         mlayoutView = layoutView;
         stopLoopAdv();
-
+        this.contentlist = contentlist;
         this.m_AdvImgs.clear();
         this.m_AdvImgs.addAll(m_AdvImgs);
 
@@ -78,11 +79,12 @@ public class SlideShowView extends FrameLayout {
         adatper.notifyDataSetChanged();
 
         setListener();
-if (mtype!=GUANG){
-    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ll_containertopo.getLayoutParams();
-    params.width = getResources().getDisplayMetrics().widthPixels;
-}
+        if (mtype != GUANG) {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ll_containertopo.getLayoutParams();
+            params.width = getResources().getDisplayMetrics().widthPixels;
         }
+    }
+
     public void startLoopAdv() {
         if (m_AdvImgs.size() > 1) {//轮播图的个数大于1的时候才能滑动
             mHandler.postDelayed(mRunnable, LOOPTIME);
@@ -199,7 +201,7 @@ if (mtype!=GUANG){
             if (mtype == GUANG)
                 point.setImageResource(R.drawable.select_pot);
             else
-            point.setImageResource(R.drawable.select_pot1);
+                point.setImageResource(R.drawable.select_pot1);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             if (i > 0) {
                 params.leftMargin = 10;
@@ -239,7 +241,7 @@ if (mtype!=GUANG){
                     //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos).getPic(), 0, 0, null);
                     //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos), 0, 0, null);
                     ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
-                layoutParams.height =(getResources().getDisplayMetrics().widthPixels/2);
+                    layoutParams.height = (getResources().getDisplayMetrics().widthPixels / 2);
 //                GlideUtils.loadDefaultGameList(imageView, m_AdvImgs.get(pos).getImage());
                     imageView.setOnClickListener(new OnClickListener() {
                         @Override
@@ -276,7 +278,8 @@ if (mtype!=GUANG){
                     });
                 } else {
                     int mposition = position % m_AdvImgs.size();
-                    imageLayout = mlayoutView.getView();
+                    imageLayout = mlayoutView.getView(position);
+
                 }
                 view.addView(imageLayout, 0);
                 return imageLayout;
@@ -313,7 +316,7 @@ if (mtype!=GUANG){
     }
 
     public interface LayoutView {
-        View getView();
+        View getView(int position);
     }
 
 }

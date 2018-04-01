@@ -11,8 +11,7 @@ import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
 import com.lubandj.GlideRoundTransform;
 import com.lubandj.master.R;
-import com.lubandj.master.been.HomeBeen;
-import com.lubandj.master.been.MsgCenterBeen;
+import com.example.baselibrary.HomeBeen;
 
 import java.util.List;
 

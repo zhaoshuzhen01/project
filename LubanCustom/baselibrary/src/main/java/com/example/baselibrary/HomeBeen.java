@@ -1,6 +1,5 @@
-package com.lubandj.master.been;
+package com.example.baselibrary;
 
-import com.lubandj.master.httpbean.BaseEntity;
 
 import java.util.List;
 
