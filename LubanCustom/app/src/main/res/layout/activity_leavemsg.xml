@@ -40,7 +40,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/et_feedbackinfo"
+                android:id="@+id/et_leavemsg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"

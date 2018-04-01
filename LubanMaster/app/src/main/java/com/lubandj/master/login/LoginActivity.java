@@ -1,6 +1,7 @@
 package com.lubandj.master.login;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +25,8 @@ import com.lubandj.master.httpbean.BaseEntity;
 import com.lubandj.master.httpbean.LoginAppBean;
 import com.lubandj.master.httpbean.SendSmsBean;
 import com.lubandj.master.httpbean.UserInfoResponse;
+import com.lubandj.master.my.AboutLuBanActivity;
+import com.lubandj.master.my.AgreementActivity;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.SPUtils;
 import com.lubandj.master.utils.TaskEngine;
@@ -231,5 +234,12 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
             finish();
             ActUtils.getInstance().exitApp(LoginActivity.this);
         }
+    }
+
+    public void onUserAggrement(View view) {
+        Intent intent = new Intent(LoginActivity.this, AgreementActivity.class);
+        String url = "https://wx.lubandj.com/h5/protocol/bbcr/";
+        intent.putExtra("url", url);
+        startActivity(intent);
     }
 }

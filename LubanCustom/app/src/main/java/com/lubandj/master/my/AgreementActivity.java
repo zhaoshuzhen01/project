@@ -102,7 +102,7 @@ public class AgreementActivity extends BaseActivity {
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
                 mBinding.pbAgreement.setProgress(newProgress * 100);
-                if (newProgress == 100) {
+                if (newProgress >= 100) {
                     mBinding.pbAgreement.setVisibility(View.GONE);
                 }
             }

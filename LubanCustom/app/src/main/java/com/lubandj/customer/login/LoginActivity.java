@@ -19,12 +19,14 @@ import com.example.baselibrary.util.ActUtils;
 import com.example.baselibrary.util.RegexUtils;
 import com.example.baselibrary.widget.EditTextWithDel;
 import com.google.gson.Gson;
+import com.lubandj.customer.my.AboutLuBanActivity;
 import com.lubandj.customer.order.OrderDetailsActivity;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.activity.MainCantainActivity;
+import com.lubandj.master.been.LoginBeen;
 import com.lubandj.master.been.UserInfo;
 import com.lubandj.master.been.WeiXinBeen;
 import com.lubandj.master.httpbean.BaseEntity;
@@ -32,6 +34,7 @@ import com.lubandj.master.httpbean.LoginAppBean;
 import com.lubandj.master.httpbean.SendSmsBean;
 import com.lubandj.master.httpbean.UserInfoResponse;
 import com.lubandj.master.model.WeiXinLoginModel;
+import com.lubandj.master.my.AgreementActivity;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.SPUtils;
 import com.lubandj.master.utils.TaskEngine;
@@ -294,5 +297,17 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
             startActivity(intent);
             finish();
         }
+    }
+
+    /**
+     * 用户协议
+     *
+     * @param view
+     */
+    public void onUserAggrement(View view) {
+        Intent intent = new Intent(LoginActivity.this, AgreementActivity.class);
+        String url = "https://wx.lubandj.com/h5/protocol/lbdj";
+        intent.putExtra("url", url);
+        startActivity(intent);
     }
 }

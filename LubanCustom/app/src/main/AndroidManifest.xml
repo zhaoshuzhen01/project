@@ -113,6 +113,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
+            android:name="com.lubandj.customer.my.LeaveMsgActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
             android:name=".my.WorkCalendarActivity"
             android:screenOrientation="portrait" />
         <activity

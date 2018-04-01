@@ -190,7 +190,7 @@ public class BookOrderActivity extends TitleBaseActivity implements DataCall<Boo
                 netBookBeen.setCoupon_amount(0);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 netBookBeen.setDatetime(sdf.format(new Date()));
-                netBookBeen.setRemark("");
+                netBookBeen.setRemark(tv_marktext.getText().toString());
                 netBookBeen.setItems(items);
                 bookOrderModel.bookOrder(netBookBeen);
 //                CheckStandActivity.startActivity(this);

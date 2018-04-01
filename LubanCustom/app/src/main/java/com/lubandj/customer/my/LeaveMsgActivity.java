@@ -7,18 +7,10 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.example.baselibrary.BaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
-import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
-import com.lubandj.master.databinding.ActivityFeedbackinfoBinding;
-import com.lubandj.master.databinding.ActivityLeavelistBinding;
-import com.lubandj.master.httpbean.AskForLeaveRequest;
-import com.lubandj.master.httpbean.BaseResponseBean;
-import com.lubandj.master.utils.CommonUtils;
-import com.lubandj.master.utils.TaskEngine;
+import com.lubandj.master.databinding.ActivityLeavemsgBinding;
 
 /**
  * function:
@@ -28,7 +20,7 @@ import com.lubandj.master.utils.TaskEngine;
  */
 
 public class LeaveMsgActivity extends BaseActivity {
-    private ActivityLeavelistBinding binding;
+    private ActivityLeavemsgBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,13 +58,13 @@ public class LeaveMsgActivity extends BaseActivity {
     }
 
     public void onSubmit(View view) {
-        String feedbackStr = binding.etFeedbackinfo.getText().toString().trim();
-        if (TextUtils.isEmpty(feedbackStr.trim())) {
-            ToastUtils.showShort(LeaveMsgActivity.this, "请先写下您的留言");
-            return;
-        }
+        String feedbackStr = binding.etLeavemsg.getText().toString().trim();
+//        if (TextUtils.isEmpty(feedbackStr.trim())) {
+//            ToastUtils.showShort(LeaveMsgActivity.this, "请先写下您的留言");
+//            return;
+//        }
         Intent intent=new Intent();
-        intent.putExtra("msg",feedbackStr);
+        intent.putExtra("msg",feedbackStr.trim());
         setResult(10001,intent);
         finish();
     }

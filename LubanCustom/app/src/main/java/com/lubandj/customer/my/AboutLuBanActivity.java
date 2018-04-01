@@ -81,7 +81,7 @@ public class AboutLuBanActivity extends BaseActivity {
      */
     public void onUserAggrement(View view) {
         Intent intent = new Intent(AboutLuBanActivity.this, AgreementActivity.class);
-        String url = "http://www.baidu.com/";
+        String url = "https://wx.lubandj.com/h5/protocol/lbdj";
         intent.putExtra("url", url);
         startActivity(intent);
     }

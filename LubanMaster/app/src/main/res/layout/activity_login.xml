@@ -120,6 +120,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="onUserAggrement"
                     android:text="《鹿班到家工程师协议》"
                     android:textColor="@color/actionsheet_red"/>
             </LinearLayout>

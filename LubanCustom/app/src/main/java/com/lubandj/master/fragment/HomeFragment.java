@@ -18,6 +18,7 @@ import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.customer.login.LoginActivity;
+import com.lubandj.master.Canstance;
 import com.lubandj.master.Iview.IbaseView;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
@@ -81,7 +82,8 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
         recyclerView.addItemDecoration(new SpacesItemDecoration(0,0,20,0));
         homeModel = new HomeModel(getActivity());
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(), this, homeModel);
-        homeModel.setCity("北京");
+        Canstance.CITY="北京";
+        homeModel.setCity(Canstance.CITY);
         main_car_lay = view.findViewById(R.id.main_car_lay);
         main_car_lay.setOnClickListener(this);
         car_msgCount.setVisibility(View.GONE);

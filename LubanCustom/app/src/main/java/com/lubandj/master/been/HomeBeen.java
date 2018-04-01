@@ -35,6 +35,7 @@ public class HomeBeen extends BaseEntity{
         private String service_icon;
         private String service_pic;
         private String price;
+        private int type;
 
         public String getService_id() {
             return service_id;
@@ -74,6 +75,14 @@ public class HomeBeen extends BaseEntity{
 
         public void setPrice(String price) {
             this.price = price;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
         }
     }
 }

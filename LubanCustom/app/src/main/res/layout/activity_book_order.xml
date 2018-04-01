@@ -310,7 +310,7 @@
                     android:id="@+id/tv_marktext"
                     android:layout_centerVertical="true"
                     android:textColor="@color/black"
-                    android:text="留言"
+                    android:hint="留言"
                     android:layout_toRightOf="@+id/pic4"
                     android:layout_marginLeft="@dimen/h_6dp"
                     android:layout_width="wrap_content"
