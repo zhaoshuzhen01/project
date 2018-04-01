@@ -307,6 +307,7 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/liuyan"/>
                 <TextView
+                    android:id="@+id/tv_marktext"
                     android:layout_centerVertical="true"
                     android:textColor="@color/black"
                     android:text="留言"

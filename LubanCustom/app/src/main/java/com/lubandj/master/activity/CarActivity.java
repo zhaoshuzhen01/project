@@ -165,7 +165,9 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
                 ToastUtils.showShort(this,"请选择服务");
                 return;
             }
-            BookOrderActivity.startActivity(this);
+//            BookOrderActivity.startActivity(this);
+                Intent intent = new Intent(CarActivity.this, BookOrderActivity.class);
+                startActivityForResult(intent,100);
                 break;
             case R.id.tv_clear:
                 if (totalCount==0){
@@ -385,6 +387,14 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
         shoppingCartAdapter.notifyDataSetChanged();
         if (shoppingCartBeanList.size()==0){
             backLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==1010){
+            finish();
         }
     }
 }

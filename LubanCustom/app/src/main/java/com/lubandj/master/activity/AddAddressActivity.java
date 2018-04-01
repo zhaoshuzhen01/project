@@ -311,6 +311,11 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
                 bean = CommonUtils.generateEntityByGson(AddAddressActivity.this, s, bean);
                 if (bean != null) {
                     ToastUtils.showShort(AddAddressActivity.this, "删除成功");
+                    String id = CommonUtils.getAddressID();
+                    if (id.equals(mBean.id + "")) {//如果删掉的是存储的地址
+                        CommonUtils.setAddress("");
+                        CommonUtils.setAddressID("");
+                    }
                     setResult(RESULT_OK);
                     finish();
                 }

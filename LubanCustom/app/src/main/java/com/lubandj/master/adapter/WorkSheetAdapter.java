@@ -57,7 +57,7 @@ public class WorkSheetAdapter extends BaseQuickAdapter<OrderListBeen.InfoBean, B
         TextView price = ((TextView) (helper.getView(R.id.daohangprice)));
         worklist_address.setText(item.getAddress()+"");
         worklist_time.setText(item.getDatatime()+"");
-        price.setText("¥" +item.getPay_amount());
+        price.setText("¥" +item.getAmount());
         ((ImageView) (helper.getView(R.id.pic_finish))).setVisibility(View.GONE);
         daohangState.setOnClickListener(new View.OnClickListener() {
             @Override
