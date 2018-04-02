@@ -5,10 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,9 +15,8 @@ import com.bumptech.glide.Glide;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
 import com.lubandj.master.R;
-import com.lubandj.master.been.HomeBeen;
 import com.lubandj.master.been.ShoppingCartBean;
-import com.lubandj.master.utils.StringUtil;
+
 import java.util.List;
 
 /**

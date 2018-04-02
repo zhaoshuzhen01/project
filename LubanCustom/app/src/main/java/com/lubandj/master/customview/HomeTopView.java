@@ -2,23 +2,15 @@ package com.lubandj.master.customview;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.baselibrary.adapter.MainAdapter;
-import com.example.baselibrary.adapter.MyViewPagerAdapter;
-import com.example.baselibrary.widget.CustomViewPager;
 import com.example.baselibrary.widget.SlideShowView;
-import com.example.baselibrary.widget.ViewPagerSlide;
 import com.lubandj.master.R;
-import com.lubandj.master.been.HomeBeen;
-import com.lubandj.master.fragment.HomeFragment;
+import com.example.baselibrary.HomeBeen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +28,11 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
     SlideShowView bannerView;
     @InjectView(R.id.viewPager)
     SlideShowView viewPager;
-    protected List<View> mList = new ArrayList<>(); //ViewPager的数据源
     private List<String> list = new ArrayList<>();
-    private List<String> contentlist = new ArrayList<>();
+    private List<String> pagerlist = new ArrayList<>();
+
+    private List<List<HomeBeen.InfoBean>> contentlist = new ArrayList<>();
+    private List<HomeBeen.InfoBean> viewpagerDatas ;
     private Context mcontext;
 
     public HomeTopView(Context context) {
@@ -65,7 +59,7 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
         list.add("1");
         list.add("1");
         list.add("1");
-        bannerView.setData(list, SlideShowView.GUANG, null);
+        bannerView.setData(list, SlideShowView.GUANG, null,null);
         LinearLayout.LayoutParams params = (LayoutParams) viewPager.getLayoutParams();
         params.height = getResources().getDisplayMetrics().widthPixels / 2;
         viewPager.setPadding(0, 0, 0, 0);
@@ -75,15 +69,26 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
 
 
     //初始化ViewPager
-    public void initViewPager(Context context) {
-        mList.add(new TableView(context));
-        mList.add(new TableView(context));
-       /* MyViewPagerAdapter  adapter = new MyViewPagerAdapter(mList);
-        viewPager.setAdapter(adapter);
-        viewPager.setScrollable(true);*/
-        contentlist.add("1");
-        contentlist.add("1");
-        viewPager.setData(contentlist, SlideShowView.TOPCONTENT, this);
+    public void initViewPager(Context context,List<HomeBeen.InfoBean> datas) {
+       for (int i=0;i<datas.size();i++){
+
+           if (i%6==0){
+               if (viewpagerDatas!=null){
+                   contentlist.add(viewpagerDatas);
+                   pagerlist.add("");
+               }
+               viewpagerDatas = new ArrayList<>();
+               viewpagerDatas.add(datas.get(i));
+           }else {
+               viewpagerDatas.add(datas.get(i));
+           }
+       }
+       if (datas!=null&&datas.size()>0&&contentlist.size()==0){
+           contentlist.add(viewpagerDatas);
+           pagerlist.add("");
+
+       }
+        viewPager.setData(pagerlist, SlideShowView.TOPCONTENT, this,contentlist);
 
     }
 
@@ -103,8 +108,13 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
     }
 
     @Override
-    public View getView() {
-        return new TableView(mcontext);
+    public View getView(int position) {
+        TableView tableView = new TableView(mcontext);
+        if (position<contentlist.size()){
+            List<HomeBeen.InfoBean> mdata = contentlist.get(position);
+            tableView.setData(mdata);
+        }
+        return tableView;
     }
 }
 

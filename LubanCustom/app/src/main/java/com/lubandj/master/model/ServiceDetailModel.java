@@ -9,14 +9,10 @@ import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
-import com.lubandj.master.been.HomeBeen;
 import com.lubandj.master.been.ServiceDetailBeen;
-import com.lubandj.master.httpbean.NetHomeBeen;
 import com.lubandj.master.httpbean.NetServiceDetail;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
-
-import java.util.List;
 
 /**
  * Created by ${zhaoshuzhen} on 2018/3/2.

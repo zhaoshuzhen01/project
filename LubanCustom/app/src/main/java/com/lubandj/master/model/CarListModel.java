@@ -9,8 +9,6 @@ import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.been.CarListBeen;
-import com.lubandj.master.been.HomeBeen;
-import com.lubandj.master.httpbean.NetHomeBeen;
 import com.lubandj.master.httpbean.NetWorkListBeen;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
