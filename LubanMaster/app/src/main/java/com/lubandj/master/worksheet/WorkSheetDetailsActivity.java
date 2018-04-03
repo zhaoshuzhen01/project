@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -73,6 +74,18 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
     LinearLayout llDetailItems;
     @InjectView(R.id.ll_state)
     LinearLayout llState;
+    @InjectView(R.id.ll_cancel_time)
+    LinearLayout llCancelTime;
+    @InjectView(R.id.rl_time)
+    RelativeLayout RlTime;
+    @InjectView(R.id.ll_work_time)
+    LinearLayout llWorkTime;
+    @InjectView(R.id.tv_cancel_time)
+    TextView tvCancelTime;
+    @InjectView(R.id.tv_work_start_time)
+    TextView tvWorkStartTime;
+    @InjectView(R.id.tv_work_end_time)
+    TextView tvWorkEndTime;
 
     public static final String KEY_DETAILS_ID = "details_id";
     public static final String KEY_DETAIL_LAT = "lat";
@@ -267,11 +280,17 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 ivStateIcon.setImageResource(R.drawable.workwait);
                 btnStartServer.setText(R.string.txt_work_sheet_details_on_road);
                 updateStatus = 2;
+                RlTime.setVisibility(View.GONE);
+                llCancelTime.setVisibility(View.GONE);
+                llWorkTime.setVisibility(View.VISIBLE);
                 break;
             case Canstance.KEY_SHEET_STATUS_ON_ROAD:
                 ivStateIcon.setImageResource(R.drawable.workpath);
                 btnStartServer.setText(R.string.txt_work_sheet_details_start_service);
                 updateStatus = 3;
+                RlTime.setVisibility(View.VISIBLE);
+                llCancelTime.setVisibility(View.GONE);
+                llWorkTime.setVisibility(View.VISIBLE);
                 break;
             case Canstance.KEY_SHEET_STATUS_IN_SERVICE:
                 ivStateIcon.setImageResource(R.drawable.workservie);
@@ -279,6 +298,9 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 updateStatus = 4;
 //                ivPhoneIcon.setEnabled(false);
 //                ivAddressIcon.setEnabled(false);
+                RlTime.setVisibility(View.VISIBLE);
+                llCancelTime.setVisibility(View.GONE);
+                llWorkTime.setVisibility(View.VISIBLE);
                 break;
             case Canstance.KEY_SHEET_STATUS_COMPLETED:
                 ivStateIcon.setImageResource(R.drawable.ic_details_completed);
@@ -289,6 +311,9 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
 //                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) btnSignException.getLayoutParams();
 //                layoutParams.gravity = Gravity.CENTER;
 //                btnSignException.setLayoutParams(layoutParams);
+                RlTime.setVisibility(View.VISIBLE);
+                llCancelTime.setVisibility(View.GONE);
+                llWorkTime.setVisibility(View.VISIBLE);
                 break;
             case Canstance.KEY_SHEET_STATUS_CANCELED:
                 ivStateIcon.setImageResource(R.drawable.ic_details_canceled);
@@ -296,6 +321,9 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
 //                ivAddressIcon.setEnabled(false);
                 llBtn.setVisibility(View.GONE);
                 llCancelReason.setVisibility(View.GONE);
+                RlTime.setVisibility(View.VISIBLE);
+                llCancelTime.setVisibility(View.VISIBLE);
+                llWorkTime.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -305,9 +333,12 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         tvPhoneNum.setText(info.getCustPhone());
         tvAddressDesc.setText(info.getAddress());
         tvContactName.setText(info.getCustName());
-        tvTime.setText(info.getBeginTime());
+        tvTime.setText(info.getOrderTime());
         tvReMark.setText(info.getRemark());
         tvWorkSheetNo.setText(info.getTicketSn());
+        tvCancelTime.setText(info.getClose_time());
+        tvWorkStartTime.setText(info.getWork_begin_time());
+        tvWorkEndTime.setText(info.getWork_end_time());
 
         List<WorkSheetDetailBean.InfoBean.ServiceItemBean> serviceItem = info.getServiceItem();
         if (serviceItem == null || serviceItem.size() == 0) {

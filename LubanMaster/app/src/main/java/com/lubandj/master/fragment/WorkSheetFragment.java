@@ -7,20 +7,31 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.baselibrary.BaseRefreshFragment;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.example.baselibrary.tools.ToastUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.lubandj.master.Canstance;
 import com.lubandj.master.Presenter.SheetListPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.WorkSheetAdapter;
 import com.lubandj.master.been.WorkListBeen;
+import com.lubandj.master.been.WorkSheetDetailBean;
 import com.lubandj.master.customview.BackLayout;
 import com.lubandj.master.Iview.IworkListView;
+import com.lubandj.master.httpbean.BaseResponseBean;
 import com.lubandj.master.model.workList.WorkListClickModel;
+import com.lubandj.master.utils.CommonUtils;
+import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.NetworkUtils;
+import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 
 import java.util.ArrayList;
@@ -28,6 +39,8 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+
+import static com.lubandj.master.TApplication.context;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/9/5.
@@ -45,7 +58,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     private BackLayout backLayout;
     private SheetListPresenter sheetListPresenter;
     private WorkListClickModel workListClickModel;
-    private int currentIndex ;
+    private int currentIndex;
 
     public static WorkSheetFragment newInstance(int index) {
         WorkSheetFragment myFragment = new WorkSheetFragment();
@@ -122,7 +135,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void onRefresh() {
-        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+        if (!NetworkUtils.isNetworkAvailable(getActivity())) {
             pullToRefreshAndPushToLoadView.finishRefreshing();
             pullToRefreshAndPushToLoadView.finishLoading();
             return;
@@ -132,7 +145,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void onLoadMore() {
-        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+        if (!NetworkUtils.isNetworkAvailable(getActivity())) {
             pullToRefreshAndPushToLoadView.finishRefreshing();
             pullToRefreshAndPushToLoadView.finishLoading();
             return;
@@ -146,9 +159,9 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
             case 0://工单未完成
                 Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
                 intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LAT,worklists.get(position).getLat());
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LNG,worklists.get(position).getLng());
-                startActivity(intent);
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LAT, worklists.get(position).getLat());
+                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LNG, worklists.get(position).getLng());
+                queryStatus(position, worklists.get(position).getId());
                 break;
             case 1://工单已完成
                 intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
@@ -178,16 +191,16 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         worklists.clear();
         worklists.addAll(datas);
         workSheetAdapter.notifyDataSetChanged();
-        if (datas!=null&&datas.size()==0){
-            ToastUtils.showShort(getActivity(),"暂无数据");
+        if (datas != null && datas.size() == 0) {
+            ToastUtils.showShort(getActivity(), "暂无数据");
         }
-        if (worklists.size()==0){
+        if (worklists.size() == 0) {
             backLayout.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
-    public void callClick(WorkListBeen.InfoBean entity,int currentIndex) {
+    public void callClick(WorkListBeen.InfoBean entity, int currentIndex) {
         this.currentIndex = currentIndex;
         int status = Integer.parseInt(entity.getStatus());
         ++status;
@@ -197,14 +210,55 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     //点击回调
     @Override
     public void clickCallback(int status) {
-       if (status!=4){
-           worklists.get(currentIndex).setStatus(status+"");
-       }else {
-           worklists.remove(currentIndex);
-       }
+        if (status != 4) {
+            worklists.get(currentIndex).setStatus(status + "");
+        } else {
+            worklists.remove(currentIndex);
+        }
         workSheetAdapter.notifyDataSetChanged();
 
-       if (worklists!=null&&worklists.size()==0)
-           backLayout.setVisibility(View.VISIBLE);
+        if (worklists != null && worklists.size() == 0)
+            backLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void queryStatus(final int position, String id) {
+        initProgressDialog(R.string.txt_loading).show();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_DETAILS, jsonObject, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                dialog.dismiss();
+                BaseResponseBean bean;
+                try {
+                    bean = new Gson().fromJson(s, BaseResponseBean.class);
+                    if (bean != null) {//解析未错
+                        if (bean.code != 0) {
+                            if (bean.code == 104) {
+                                CommonUtils.tokenNullDeal(getActivity());
+                            } else if (bean.code == 1001) {
+                                Toast.makeText(getActivity(), bean.message, Toast.LENGTH_SHORT).show();
+                                workSheetAdapter.remove(position);
+                            }
+                        } else {
+                            Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
+                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
+                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LAT, worklists.get(position).getLat());
+                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LNG, worklists.get(position).getLng());
+                            startActivity(intent);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ToastUtils.showShort(context, "返回数据解析出错:" + s);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                CommonUtils.fastShowError(getActivity(), volleyError);
+            }
+        });
     }
 }

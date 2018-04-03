@@ -312,6 +312,22 @@ public class WorkSheetListActivity extends TitleBaseActivity {
             idTablayout.setupWithViewPager(viewPager);
         }
         viewPager.setOffscreenPageLimit(5);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                ((WorkSheetFragment) mFragments.get(position)).onRefresh();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private static final int REQUEST_PERMISSION_CAMERA_CODE = 123;

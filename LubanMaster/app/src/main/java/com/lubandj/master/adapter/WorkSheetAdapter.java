@@ -40,6 +40,11 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
         initView(helper,item);
     }
 
+    public void remove(int pos){
+        mdata.remove(mdata);
+        notifyDataSetChanged();
+    }
+
     /**
      * 初始化view
      * @param helper

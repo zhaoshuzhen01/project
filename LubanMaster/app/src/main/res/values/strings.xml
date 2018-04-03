@@ -17,7 +17,7 @@
     <string name="txt_work_sheet_details_work_sheet_no">工&#160;&#160;单&#160; 号:</string>
     <string name="txt_work_sheet_details_address">服务地址:</string>
     <string name="txt_work_sheet_details_cancel_reason">取消原因:</string>
-    <string name="txt_work_sheet_details_time">上门时间:</string>
+    <string name="txt_work_sheet_details_time">预约时间:</string>
     <string name="txt_work_sheet_details_comment_info">备注信息:</string>
     <string name="txt_work_sheet_details_service_content">服务内容:</string>
     <string name="txt_work_sheet_details_sign_exception">标记异常</string>

@@ -81,6 +81,9 @@ public class WorkSheetDetailBean {
         private String orderTime;
         private List<ServiceItemBean> serviceItem;
         private String statusText;
+        private String work_end_time;//完成时间
+        private String work_begin_time;//上门时间
+        private String close_time;//取消时间
 
         @Override
         public String toString() {
@@ -204,6 +207,30 @@ public class WorkSheetDetailBean {
 
         public void setServiceItem(List<ServiceItemBean> serviceItem) {
             this.serviceItem = serviceItem;
+        }
+
+        public String getWork_end_time() {
+            return work_end_time;
+        }
+
+        public void setWork_end_time(String work_end_time) {
+            this.work_end_time = work_end_time;
+        }
+
+        public String getWork_begin_time() {
+            return work_begin_time;
+        }
+
+        public void setWork_begin_time(String work_begin_time) {
+            this.work_begin_time = work_begin_time;
+        }
+
+        public String getClose_time() {
+            return close_time;
+        }
+
+        public void setClose_time(String close_time) {
+            this.close_time = close_time;
         }
 
         public static class ServiceItemBean {
