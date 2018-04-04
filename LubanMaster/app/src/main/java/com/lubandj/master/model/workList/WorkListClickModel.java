@@ -39,6 +39,8 @@ public class WorkListClickModel {
                 if (baseEntity != null) {
                     if (baseEntity.getCode() == 0) {
                         clickCallBack.clickCallback(status);
+                    }else if(baseEntity.getCode() == 301){
+                        clickCallBack.clickCallback(301);
                     }
                 }
 

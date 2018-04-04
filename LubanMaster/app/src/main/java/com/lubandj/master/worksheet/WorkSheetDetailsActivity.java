@@ -31,6 +31,8 @@ import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.widget.WorkSheetDetailItem;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -251,6 +253,10 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
                     } else if (baseEntity.getCode() == 104) {
                         CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
+                    } else if (baseEntity.getCode() ==301) {
+                        ToastUtils.showShort(WorkSheetDetailsActivity.this, "该工单不存在或已被改派");
+                        setResult(RESULT_OK);
+                        finish();
                     } else {
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
                     }
@@ -336,9 +342,23 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         tvTime.setText(info.getOrderTime());
         tvReMark.setText(info.getRemark());
         tvWorkSheetNo.setText(info.getTicketSn());
-        tvCancelTime.setText(info.getClose_time());
-        tvWorkStartTime.setText(info.getWork_begin_time());
-        tvWorkEndTime.setText(info.getWork_end_time());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        if(TextUtils.isEmpty(info.getClose_time())) {
+            tvCancelTime.setText("");
+        }else{
+            tvCancelTime.setText(sdf.format(new Date(1000*Long.parseLong(info.getClose_time()))));
+        }
+        if(TextUtils.isEmpty(info.getWork_begin_time())) {
+            tvWorkStartTime.setText("");
+        }else{
+            tvWorkStartTime.setText(sdf.format(new Date(1000*Long.parseLong(info.getWork_begin_time()))));
+        }
+        if(TextUtils.isEmpty(info.getWork_end_time())) {
+            tvWorkEndTime.setText("");
+        }else{
+            tvWorkEndTime.setText(sdf.format(new Date(1000*Long.parseLong(info.getWork_end_time()))));
+        }
 
         List<WorkSheetDetailBean.InfoBean.ServiceItemBean> serviceItem = info.getServiceItem();
         if (serviceItem == null || serviceItem.size() == 0) {

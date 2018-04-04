@@ -41,7 +41,7 @@ public class WorkSheetAdapter extends BaseQuickAdapter<WorkListBeen.InfoBean, Ba
     }
 
     public void remove(int pos){
-        mdata.remove(mdata);
+        mdata.remove(pos);
         notifyDataSetChanged();
     }
 

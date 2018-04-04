@@ -94,8 +94,8 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
             isVisible = true;
-            if (getActivity() != null)
-                lazyLoad();
+            if (getActivity() != null){}
+//                lazyLoad();
         } else {
             isVisible = false;
         }
@@ -155,9 +155,9 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
         switch (index) {
             case 0://工单未完成
-                Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
                 intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
                 intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LAT, worklists.get(position).getLat());
                 intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LNG, worklists.get(position).getLng());
@@ -210,7 +210,10 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     //点击回调
     @Override
     public void clickCallback(int status) {
-        if (status != 4) {
+        if(status==301){
+            ToastUtils.showShort(context, "该工单不存在或已被改派");
+            worklists.remove(currentIndex);
+        }else if (status != 4) {
             worklists.get(currentIndex).setStatus(status + "");
         } else {
             worklists.remove(currentIndex);
@@ -236,7 +239,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
                         if (bean.code != 0) {
                             if (bean.code == 104) {
                                 CommonUtils.tokenNullDeal(getActivity());
-                            } else if (bean.code == 1001) {
+                            } else if (bean.code == 301) {
                                 Toast.makeText(getActivity(), bean.message, Toast.LENGTH_SHORT).show();
                                 workSheetAdapter.remove(position);
                             }
