@@ -147,7 +147,11 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                         refreshPage(workSheetDetailBean);
                     } else if (workSheetDetailBean.getCode() == 104) {
                         CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
-                    } else {
+                    } else if (workSheetDetailBean.getCode() ==301) {
+                        ToastUtils.showShort(WorkSheetDetailsActivity.this, "该工单不存在或已被改派");
+                        setResult(RESULT_OK);
+                        finish();
+                    }  else {
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, workSheetDetailBean.getMessage());
                     }
                 } catch (Exception e) {

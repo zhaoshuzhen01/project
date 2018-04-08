@@ -65,6 +65,8 @@ public class MsgCenterBeen extends BaseEntity {
             private String type;
             private String is_read;
             private String datatime;
+            private String ticket_sn;
+            private String id;
 
             public String getTitle() {
                 return title;
@@ -104,6 +106,22 @@ public class MsgCenterBeen extends BaseEntity {
 
             public void setDatatime(String datatime) {
                 this.datatime = datatime;
+            }
+
+            public String getTicket_sn() {
+                return ticket_sn;
+            }
+
+            public void setTicket_sn(String ticket_sn) {
+                this.ticket_sn = ticket_sn;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
             }
         }
     }

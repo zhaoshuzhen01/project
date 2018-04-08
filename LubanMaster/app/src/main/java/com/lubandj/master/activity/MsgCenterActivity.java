@@ -59,6 +59,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IbaseView<
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this,this,new MsgCenterModel(this));
         msgCenterPresenter.getReflushData(0);
 //        recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 20, 0));
+
     }
     @Override
     public void titleLeftClick() {

@@ -95,7 +95,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         if (getUserVisibleHint()) {
             isVisible = true;
             if (getActivity() != null){}
-//                lazyLoad();
+                lazyLoad();
         } else {
             isVisible = false;
         }
