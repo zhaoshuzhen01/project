@@ -1,11 +1,14 @@
 package com.lubandj.master.activity;
 
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.example.baselibrary.BaseRefreshActivity;
+import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.lubandj.master.Iview.IbaseView;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
@@ -16,6 +19,7 @@ import com.lubandj.master.db.DbInstance;
 import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.StringUtil;
+import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +29,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MsgCenterActivity extends BaseRefreshActivity implements IbaseView<MsgCenterBeen.InfoBean.ListBean> {
+public class MsgCenterActivity extends BaseRefreshActivity implements IbaseView<MsgCenterBeen.InfoBean.ListBean>,BaseQuickAdapter.OnItemClickListener {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     private MsgCenterAdapter msgCenterAdapter;
@@ -59,7 +63,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IbaseView<
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this,this,new MsgCenterModel(this));
         msgCenterPresenter.getReflushData(0);
 //        recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 20, 0));
-
+        msgCenterAdapter.setOnItemClickListener(this);
     }
     @Override
     public void titleLeftClick() {
@@ -110,5 +114,15 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IbaseView<
 //        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
 //        sort(msgBeens);
         msgCenterAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        MsgCenterBeen.InfoBean.ListBean bean = msgCenterAdapter.getItem(position);
+        if (!TextUtils.isEmpty(bean.getTicket_sn())) {//检测跳转
+            Intent intent = new Intent(MsgCenterActivity.this, WorkSheetDetailsActivity.class);
+            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, bean.getTicket_sn());
+            startActivity(intent);
+        }
     }
 }

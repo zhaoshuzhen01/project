@@ -64,11 +64,6 @@ public class MsgCenterAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.Li
 
     @Override
     public void childViewClick(int position, View view) {
-        MsgCenterBeen.InfoBean.ListBean bean = getItem(position);
-        if (!TextUtils.isEmpty(bean.getTicket_sn())) {//检测跳转
-            Intent intent = new Intent(context, WorkSheetDetailsActivity.class);
-            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, bean.getTicket_sn());
-            context.startActivity(intent);
-        }
+
     }
 }

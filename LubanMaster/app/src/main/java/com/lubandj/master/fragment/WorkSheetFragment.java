@@ -94,8 +94,9 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
             isVisible = true;
-            if (getActivity() != null){}
+            if (getActivity() != null){
                 lazyLoad();
+            }
         } else {
             isVisible = false;
         }
@@ -240,7 +241,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
                             if (bean.code == 104) {
                                 CommonUtils.tokenNullDeal(getActivity());
                             } else if (bean.code == 301) {
-                                Toast.makeText(getActivity(), bean.message, Toast.LENGTH_SHORT).show();
+                                ToastUtils.showShort(context, bean.message);
                                 workSheetAdapter.remove(position);
                             }
                         } else {
