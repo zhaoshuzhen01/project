@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.example.baselibrary.widget.SlideShowView;
 import com.lubandj.master.R;
 import com.example.baselibrary.HomeBeen;
+import com.example.baselibrary.GuangGaoBeen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,12 +55,6 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
         mcontext = context;
         View view = LayoutInflater.from(context).inflate(R.layout.view_home_top, this);
         ButterKnife.inject(this, view);
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        bannerView.setData(list, SlideShowView.GUANG, null,null);
         LinearLayout.LayoutParams params = (LayoutParams) viewPager.getLayoutParams();
         params.height = getResources().getDisplayMetrics().widthPixels / 2;
         viewPager.setPadding(0, 0, 0, 0);
@@ -73,23 +68,23 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
        for (int i=0;i<datas.size();i++){
 
            if (i%6==0){
-               if (viewpagerDatas!=null){
-                   contentlist.add(viewpagerDatas);
-                   pagerlist.add("");
-               }
+               pagerlist.add("");
                viewpagerDatas = new ArrayList<>();
                viewpagerDatas.add(datas.get(i));
+               contentlist.add(viewpagerDatas);
            }else {
                viewpagerDatas.add(datas.get(i));
            }
        }
-       if (datas!=null&&datas.size()>0&&contentlist.size()==0){
-           contentlist.add(viewpagerDatas);
-           pagerlist.add("");
-
-       }
         viewPager.setData(pagerlist, SlideShowView.TOPCONTENT, this,contentlist);
 
+    }
+    public void initGuangGao(List<GuangGaoBeen.InfoBean> guangGaolists){
+        for (int i=0;i<guangGaolists.size();i++){
+            list.add("1");
+        }
+       bannerView.setGuangGaolists(guangGaolists);
+        bannerView.setData(list, SlideShowView.GUANG, null,null);
     }
 
     @Override

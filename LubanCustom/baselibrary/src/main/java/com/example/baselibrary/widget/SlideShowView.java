@@ -15,8 +15,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
+import com.example.baselibrary.GuangGaoBeen;
 import com.example.baselibrary.HomeBeen;
 import com.example.baselibrary.R;
+import com.example.baselibrary.tools.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,12 @@ public class SlideShowView extends FrameLayout {
     private int mtype;
     private LayoutView mlayoutView;
     private List<List<HomeBeen.InfoBean>> contentlist = new ArrayList<>();
+
+    public void setGuangGaolists(List<GuangGaoBeen.InfoBean> guangGaolists) {
+        this.guangGaolists = guangGaolists;
+    }
+
+    private List<GuangGaoBeen.InfoBean> guangGaolists;
 
     public SlideShowView(Context context) {
         this(context, null);
@@ -242,11 +251,11 @@ public class SlideShowView extends FrameLayout {
                     //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos), 0, 0, null);
                     ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
                     layoutParams.height = (getResources().getDisplayMetrics().widthPixels / 2);
-//                GlideUtils.loadDefaultGameList(imageView, m_AdvImgs.get(pos).getImage());
+                    Glide.with(context).load(guangGaolists.get(pos).getPicture()).skipMemoryCache(false).into(imageView);
                     imageView.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            ToastUtils.showShort(context,"跳转webview");
                         }
                     });
 
@@ -278,15 +287,12 @@ public class SlideShowView extends FrameLayout {
                     });
                 } else {
                     int mposition = position % m_AdvImgs.size();
-                    imageLayout = mlayoutView.getView(position);
+                    imageLayout = mlayoutView.getView(mposition);
 
                 }
                 view.addView(imageLayout, 0);
                 return imageLayout;
             } else {
-                //
-                //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos).getPic(), 0, 0, null);
-                //                container.addView(imageLayout, 0);
                 return imageLayout;
             }
 

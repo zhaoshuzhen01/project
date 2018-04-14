@@ -39,6 +39,8 @@ public class Canstance {
     public static final int HTTP_WORK_SHEET_UPDATE_STATUS = 40002;//工单列表
     public static final int HTTP_SIGN_EXCEPTION = 20004;//标记异常
     public static final int HTTP_EXCEPTION_LIST = 80001;//异常列表
+    public static final int HTTP_GUANGAO_LIST = 80003;//广告列表
+
     public static final int HTTP_BOOK_ORDER = 40001;//预约下单
     public static final int HTTP_PAY_ORDER = 40005;//支付订单
     public static final int HTTP_MSGCENTER_LIST = 40001;//消息列表
