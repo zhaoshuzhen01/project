@@ -17,6 +17,7 @@ import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.master.Canstance;
+import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.Iview.IbaseView;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
@@ -24,9 +25,11 @@ import com.lubandj.master.activity.CarActivity;
 import com.lubandj.master.activity.ServiceDetailActivity;
 import com.lubandj.master.adapter.HomeListAdapter;
 import com.example.baselibrary.HomeBeen;
+import com.example.baselibrary.GuangGaoBeen;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.customview.HomeTopView;
 import com.lubandj.master.model.HomeModel;
+import com.lubandj.master.model.workList.GuangGaoModel;
 import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ import butterknife.InjectView;
  * Created by ${zhaoshuzhen} on 2018/1/20.
  */
 
-public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeBeen.InfoBean>, BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
+public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeBeen.InfoBean>, BaseQuickAdapter.OnItemClickListener, View.OnClickListener ,DataCall<GuangGaoBeen>{
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.car_msgCount)
@@ -50,6 +53,8 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
     protected RelativeLayout main_car_lay;
     private int mdex = 0;
     private HomeModel homeModel;
+    private GuangGaoModel guangGaoModel;
+    private List<GuangGaoBeen.InfoBean> guangGaolists;
 
     public static HomeFragment newInstance(int index) {
         HomeFragment myFragment = new HomeFragment();
@@ -77,9 +82,11 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
         initRawRecyclerView(recyclerView, manager, homeListAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 20, 0));
         homeModel = new HomeModel(getActivity());
+        guangGaoModel = new GuangGaoModel(getActivity(),this);
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(), this, homeModel);
         Canstance.CITY = "北京";
         homeModel.setCity(Canstance.CITY);
+        guangGaoModel.getGuangGao();
         main_car_lay = view.findViewById(R.id.main_car_lay);
         main_car_lay.setOnClickListener(this);
         car_msgCount.setVisibility(View.GONE);
@@ -181,5 +188,11 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
         animator1.setDuration(500);
 
         animator1.start();
+    }
+
+    @Override
+    public void getServiceData(GuangGaoBeen data) {
+        guangGaolists = data.getInfo();
+        homeTopView.initGuangGao(guangGaolists);
     }
 }

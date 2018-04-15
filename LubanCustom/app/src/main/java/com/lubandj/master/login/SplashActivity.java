@@ -19,16 +19,21 @@ import android.widget.ImageView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
+import com.example.baselibrary.GuangGaoBeen;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.ActUtils;
 import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.master.Canstance;
+import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.activity.MainCantainActivity;
+import com.lubandj.master.been.StartGuagnBeen;
 import com.lubandj.master.databinding.ActivitySplashBinding;
 import com.lubandj.master.httpbean.UserInfoRequest;
 import com.lubandj.master.httpbean.UserInfoResponse;
+import com.lubandj.master.model.StartPageModel;
 import com.lubandj.master.my.PermissionActivity;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.StatusBarUtils;
@@ -41,18 +46,22 @@ import com.lubandj.master.utils.TaskEngine;
  * company:九州宏图
  */
 
-public class SplashActivity extends PermissionActivity implements ViewPager.OnPageChangeListener {
+public class SplashActivity extends PermissionActivity implements ViewPager.OnPageChangeListener, DataCall<StartGuagnBeen> {
     private ActivitySplashBinding mBinding;
     private ViewPager viewPager;
     private int imgs[] = {R.drawable.start1, R.drawable.start2, R.drawable.start3};
+    private StartPageModel startPageModel;
+    private ImageView iv_splash;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ActUtils.isFirstIn = true;//设置为入口正常进入
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+        iv_splash = findView(R.id.iv_splash);
         mBinding.viewpager.setAdapter(new MyAdatper());
         mBinding.viewpager.setOnPageChangeListener(this);
+        startPageModel = new StartPageModel(this, this);
         StatusBarUtils.setWindowStatusBarColor(SplashActivity.this, R.color.splash_status_bar);
         if (CommonUtils.getFirst()) {
             mBinding.viewpager.setVisibility(View.VISIBLE);
@@ -87,13 +96,7 @@ public class SplashActivity extends PermissionActivity implements ViewPager.OnPa
         }
         if (CommonUtils.getFirst())
             return;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this, MainCantainActivity.class);
-                startActivity(intent);
-            }
-        }, 1000);
+        startPageModel.getGuangGao();
     }
 
 
@@ -174,6 +177,19 @@ public class SplashActivity extends PermissionActivity implements ViewPager.OnPa
     public void onPermissionRefuse(String operation) {
         ToastUtils.showShort(SplashActivity.this, "拒绝权限，将退出程序");
         finish();
+    }
+
+    @Override
+    public void getServiceData(StartGuagnBeen data) {
+        Glide.with(this).load(data.getInfo().getPicture()).skipMemoryCache(false).into(iv_splash);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashActivity.this, MainCantainActivity.class);
+                startActivity(intent);
+            }
+        }, 1000);
     }
 
     class MyAdatper extends PagerAdapter {

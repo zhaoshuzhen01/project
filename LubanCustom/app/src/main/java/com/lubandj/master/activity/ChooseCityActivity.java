@@ -12,10 +12,13 @@ import com.example.baselibrary.BaseRefreshActivity;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
+import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.ChooseCityAdapter;
 import com.lubandj.master.adapter.HomePagerAdapter;
+import com.lubandj.master.been.CityListBeen;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.model.CityModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +26,13 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class ChooseCityActivity extends TitleBaseActivity implements BaseQuickAdapter.OnItemClickListener {
+public class ChooseCityActivity extends TitleBaseActivity implements BaseQuickAdapter.OnItemClickListener ,DataCall<CityListBeen>{
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
-    private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
+    private List<String> msgBeens = new ArrayList<>();
     private ChooseCityAdapter chooseCityAdapter;
+    private CityModel cityModel;
+
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ChooseCityActivity.class);
@@ -55,21 +60,13 @@ public class ChooseCityActivity extends TitleBaseActivity implements BaseQuickAd
         setTitleText(R.string.choose_address);
         setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
+        cityModel = new CityModel(this,this);
         initData();
     }
 
     @Override
     public void initData() {
-        for (int i = 0; i < 6; i++) {
-            msgBeens.add(new MsgCenterBeen.InfoBean.ListBean());
-        }
-        chooseCityAdapter = new ChooseCityAdapter(msgBeens, this);
-        chooseCityAdapter.setOnItemClickListener(this);
-        GridLayoutManager manager = new GridLayoutManager(this, 3); //spanCount为列数，默认方向vertical
-        recyclerView.setLayoutManager(manager);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(10, 10, 20, 10));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(chooseCityAdapter);
+        cityModel.getCityLists();
     }
 
     @Override
@@ -81,5 +78,17 @@ public class ChooseCityActivity extends TitleBaseActivity implements BaseQuickAd
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         finish();
+    }
+
+    @Override
+    public void getServiceData(CityListBeen data) {
+        msgBeens = data.getInfo();
+        chooseCityAdapter = new ChooseCityAdapter(msgBeens, ChooseCityActivity.this);
+        chooseCityAdapter.setOnItemClickListener(this);
+        GridLayoutManager manager = new GridLayoutManager(this, 3); //spanCount为列数，默认方向vertical
+        recyclerView.setLayoutManager(manager);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(10, 10, 20, 10));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(chooseCityAdapter);
     }
 }

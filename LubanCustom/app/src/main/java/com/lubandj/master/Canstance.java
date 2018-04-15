@@ -34,11 +34,16 @@ public class Canstance {
     public static final int HTTP_DELET_CAR = 30004;//清空购物车
     public static final int HTTP_CLEAR_CAR = 30005;//清空购物车
     public static final int HTTP_ADD_ADDRESS = 30001;//加入购物车
+    public static final int HTTP_CITY_LIST = 20003;//城市列表
+
     public static final int HTTP_WEIXIN_LOGIN = 70001;//微信登录
     public static final int Http_WEIXIN_BINDING = 70002;//微信绑定手机号
     public static final int HTTP_WORK_SHEET_UPDATE_STATUS = 40002;//工单列表
     public static final int HTTP_SIGN_EXCEPTION = 20004;//标记异常
     public static final int HTTP_EXCEPTION_LIST = 80001;//异常列表
+    public static final int HTTP_GUANGAO_LIST = 80003;//广告列表
+    public static final int HTTP_GUANGAO_START = 80002;//启动页广告
+
     public static final int HTTP_BOOK_ORDER = 40001;//预约下单
     public static final int HTTP_PAY_ORDER = 40005;//支付订单
     public static final int HTTP_MSGCENTER_LIST = 40001;//消息列表
