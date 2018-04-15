@@ -54,12 +54,22 @@ public class WorkTimeAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void setBean(WorkDetailResponse.WorkDetailBean newBean) {
+    public void setBean(WorkDetailResponse.WorkDetailBean newBean, String currentDay) {
         mBean = newBean;
         workList.clear();
         if (mBean.isLeave.equals("1")) {
-            beginLeave = mBean.leaveTime.begin.split(" ")[1];
-            endLeave = mBean.leaveTime.end.split(" ")[1];
+            String leaveStartDay = mBean.leaveTime.begin.split(" ")[0];
+            if (leaveStartDay.compareTo(currentDay) < 0) {
+                beginLeave = "00:01";
+            } else {
+                beginLeave = mBean.leaveTime.begin.split(" ")[1];
+            }
+            String leaveEndDay = mBean.leaveTime.end.split(" ")[0];
+            if (leaveEndDay.compareTo(currentDay) > 0) {
+                endLeave = "23:59";
+            } else {
+                endLeave = mBean.leaveTime.end.split(" ")[1];
+            }
         }
         int count = mBean.list.size();
         for (int i = 0; i < count; i++) {
@@ -95,8 +105,8 @@ public class WorkTimeAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        int hour = 8 + (position+1) / 2;
-        int min = (position+1) % 2;
+        int hour = 8 + (position + 1) / 2;
+        int min = (position + 1) % 2;
         String currentTime = (hour > 9 ? hour + "" : "0" + hour) + ":" + (min == 0 ? "00" : "30");
         viewHolder.mTvTime.setText(currentTime);
         boolean flag = false;

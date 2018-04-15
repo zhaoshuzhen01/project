@@ -96,6 +96,7 @@ public class WorkCalendarActivity extends BaseActivity {
                 WorkListBeen.InfoBean info = (WorkListBeen.InfoBean) mDetailAdapter.getItem(position);
                 Intent intent = new Intent(WorkCalendarActivity.this, WorkSheetDetailsActivity.class);
                 intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, info.getId());
+                intent.putExtra(WorkSheetDetailsActivity.WORK_NO, info.getTicketSn());
                 startActivityForResult(intent, 1001);
             }
         });
@@ -159,7 +160,7 @@ public class WorkCalendarActivity extends BaseActivity {
                 WorkDetailResponse response = new WorkDetailResponse();
                 response = (WorkDetailResponse) CommonUtils.generateEntityByGson(WorkCalendarActivity.this, s, response);
                 if (response != null) {
-                    mAdapter.setBean(response.info);
+                    mAdapter.setBean(response.info,titleAdapter.getCurrentSelectDay());
                     mDetailAdapter.setData(response.info.list);
                 }
             }
