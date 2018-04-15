@@ -84,6 +84,8 @@ public class WorkSheetDetailBean {
         private String work_end_time;//完成时间
         private String work_begin_time;//上门时间
         private String close_time;//取消时间
+        private String is_exception;
+        private ExceptionInfo exception_remark;
 
         @Override
         public String toString() {
@@ -225,6 +227,22 @@ public class WorkSheetDetailBean {
             this.work_begin_time = work_begin_time;
         }
 
+        public String getIs_exception() {
+            return is_exception;
+        }
+
+        public void setIs_exception(String is_exception) {
+            this.is_exception = is_exception;
+        }
+
+        public ExceptionInfo getException_remark() {
+            return exception_remark;
+        }
+
+        public void setException_remark(ExceptionInfo exception_remark) {
+            this.exception_remark = exception_remark;
+        }
+
         public String getClose_time() {
             return close_time;
         }
@@ -280,6 +298,29 @@ public class WorkSheetDetailBean {
 
             public void setNum(String num) {
                 this.num = num;
+            }
+
+
+        }
+
+        public class ExceptionInfo {
+            private int problemId;
+            private String content;
+
+            public int getProblemId() {
+                return problemId;
+            }
+
+            public void setProblemId(int problemId) {
+                this.problemId = problemId;
+            }
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
             }
         }
     }

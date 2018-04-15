@@ -95,8 +95,8 @@ public class WorkTimeAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        int hour = 9 + position / 2;
-        int min = position % 2;
+        int hour = 8 + (position+1) / 2;
+        int min = (position+1) % 2;
         String currentTime = (hour > 9 ? hour + "" : "0" + hour) + ":" + (min == 0 ? "00" : "30");
         viewHolder.mTvTime.setText(currentTime);
         boolean flag = false;

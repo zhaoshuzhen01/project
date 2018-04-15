@@ -79,15 +79,15 @@
                     android:id="@+id/gv_workcalendar_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#cfcfcf"
+                    android:background="#dddddd"
                     android:cacheColorHint="#00000000"
-                    android:horizontalSpacing="0.5dp"
+                    android:horizontalSpacing="0.7dp"
                     android:listSelector="#00000000"
                     android:numColumns="4"
                     android:paddingBottom="0.5dp"
                     android:scrollbars="none"
                     android:stretchMode="columnWidth"
-                    android:verticalSpacing="0.5dp"
+                    android:verticalSpacing="0.7dp"
                     />
 
                 <android.support.v4.widget.Space

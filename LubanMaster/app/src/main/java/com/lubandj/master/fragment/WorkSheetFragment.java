@@ -33,6 +33,7 @@ import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.NetworkUtils;
 import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.worksheet.WorkSheetDetailsActivity;
+import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
             isVisible = true;
-            if (getActivity() != null){
+            if (getActivity() != null) {
                 lazyLoad();
             }
         } else {
@@ -167,11 +168,13 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
             case 1://工单已完成
                 intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
                 intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
+                intent.putExtra(WorkSheetDetailsActivity.WORK_NO, worklists.get(position).getTicketSn());
                 startActivity(intent);
                 break;
             case 2://工单已取消
                 intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
                 intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
+                intent.putExtra(WorkSheetDetailsActivity.WORK_NO, worklists.get(position).getTicketSn());
                 startActivity(intent);
                 break;
         }
@@ -211,10 +214,10 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     //点击回调
     @Override
     public void clickCallback(int status) {
-        if(status==301){
+        if (status == 301) {
             ToastUtils.showShort(context, "该工单不存在或已被改派");
             worklists.remove(currentIndex);
-        }else if (status != 4) {
+        } else if (status != 4) {
             worklists.get(currentIndex).setStatus(status + "");
         } else {
             worklists.remove(currentIndex);
@@ -245,11 +248,13 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
                                 workSheetAdapter.remove(position);
                             }
                         } else {
-                            Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
-                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
-                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LAT, worklists.get(position).getLat());
-                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LNG, worklists.get(position).getLng());
-                            startActivity(intent);
+                            ((WorkSheetListActivity)getActivity()).fastIntent(worklists.get(position));
+//                            Intent intent = new Intent(getActivity(), WorkSheetDetailsActivity.class);
+//                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
+//                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LAT, worklists.get(position).getLat());
+//                            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LNG, worklists.get(position).getLng());
+//                            intent.putExtra(WorkSheetDetailsActivity.WORK_NO, worklists.get(position).getTicketSn());
+//                            startActivityForResult(intent, 3090);
                         }
                     }
                 } catch (Exception e) {

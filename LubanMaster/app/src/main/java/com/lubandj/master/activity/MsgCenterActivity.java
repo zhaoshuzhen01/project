@@ -121,7 +121,7 @@ public class MsgCenterActivity extends BaseRefreshActivity implements IbaseView<
         MsgCenterBeen.InfoBean.ListBean bean = msgCenterAdapter.getItem(position);
         if (!TextUtils.isEmpty(bean.getTicket_sn())) {//检测跳转
             Intent intent = new Intent(MsgCenterActivity.this, WorkSheetDetailsActivity.class);
-            intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, bean.getTicket_sn());
+            intent.putExtra(WorkSheetDetailsActivity.WORK_NO, bean.getTicket_sn());
             startActivity(intent);
         }
     }

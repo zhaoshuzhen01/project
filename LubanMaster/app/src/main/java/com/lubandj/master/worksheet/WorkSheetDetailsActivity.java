@@ -89,16 +89,25 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
     @InjectView(R.id.tv_work_end_time)
     TextView tvWorkEndTime;
 
+    @InjectView(R.id.tv_exception)
+    TextView tvException;
+    @InjectView(R.id.ll_exception)
+    LinearLayout llException;
+
     public static final String KEY_DETAILS_ID = "details_id";
     public static final String KEY_DETAIL_LAT = "lat";
     public static final String KEY_DETAIL_LNG = "lng";
+    public static final String WORK_NO = "work_no";
     private String workSheetId;
+    private String workNo;
     private String lat;
     private String lng;
     private int updateStatus = 0;
     private String status;
     private static final int REQUEST_CODE_SIGN_EXCEPTION = 532;
     private String serviceNum;
+
+    private WorkSheetDetailBean.InfoBean mInfoBean;
 
 
     @Override
@@ -124,6 +133,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         setBackImg(R.drawable.back_mark);
         setOKImg(R.drawable.ic_service);
         workSheetId = getIntent().getStringExtra(KEY_DETAILS_ID);
+        workNo = getIntent().getStringExtra(WORK_NO);
         lat = getIntent().getStringExtra(KEY_DETAIL_LAT);
         lng = getIntent().getStringExtra(KEY_DETAIL_LNG);
         serviceNum = "4006-388-818";
@@ -135,7 +145,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
     public void initData() {
         initProgressDialog(R.string.txt_loading).show();
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", workSheetId);
+        jsonObject.addProperty("ticket_sn", workNo);
         TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_DETAILS, jsonObject, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -147,11 +157,11 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                         refreshPage(workSheetDetailBean);
                     } else if (workSheetDetailBean.getCode() == 104) {
                         CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
-                    } else if (workSheetDetailBean.getCode() ==301) {
+                    } else if (workSheetDetailBean.getCode() == 301) {
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, "该工单不存在或已被改派");
                         setResult(RESULT_OK);
                         finish();
-                    }  else {
+                    } else {
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, workSheetDetailBean.getMessage());
                     }
                 } catch (Exception e) {
@@ -188,9 +198,13 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                 copy(tvWorkSheetNo.getText().toString());
                 break;
             case R.id.btn_sign_exception:
-                Intent intent = new Intent(this, SignExceptionActivity.class);
-                intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, workSheetId);
-                startActivityForResult(intent, REQUEST_CODE_SIGN_EXCEPTION);
+                if("0".equals(mInfoBean.getIs_exception()+"")) {
+                    Intent intent = new Intent(this, SignExceptionActivity.class);
+                    intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, workSheetId);
+                    startActivityForResult(intent, REQUEST_CODE_SIGN_EXCEPTION);
+                }else{
+                    ToastUtils.showShort(WorkSheetDetailsActivity.this,"已标记");
+                }
                 break;
             case R.id.btn_start_server:
                 DialogTagin.getDialogTagin(this).messageShow(status).setDialogSure(this);
@@ -202,6 +216,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_SIGN_EXCEPTION) {
+            setResult(RESULT_OK);
             new AlertDialog(this)
                     .builder()
                     .setTitle(getString(R.string.txt_submit_success))
@@ -217,8 +232,8 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                         public void onClick(View v) {
                         }
                     }).show();
+            initData();
         }
-
     }
 
     @Override
@@ -254,10 +269,11 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
                     BaseEntity baseEntity = new Gson().fromJson(s, BaseEntity.class);
                     if (baseEntity.getCode() == 0) {
                         initData();
+                        setResult(RESULT_OK);
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, baseEntity.getMessage());
                     } else if (baseEntity.getCode() == 104) {
                         CommonUtils.tokenNullDeal(WorkSheetDetailsActivity.this);
-                    } else if (baseEntity.getCode() ==301) {
+                    } else if (baseEntity.getCode() == 301) {
                         ToastUtils.showShort(WorkSheetDetailsActivity.this, "该工单不存在或已被改派");
                         setResult(RESULT_OK);
                         finish();
@@ -283,7 +299,7 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
             return;
         }
         WorkSheetDetailBean.InfoBean info = workSheetDetailBean.getInfo();
-
+        mInfoBean=workSheetDetailBean.getInfo();
         status = info.getStatus();
         switch (status) {
             case Canstance.KEY_SHEET_STATUS_TO_PERFORM:
@@ -347,21 +363,32 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         tvReMark.setText(info.getRemark());
         tvWorkSheetNo.setText(info.getTicketSn());
 
+        if ("0".equals(info.getIs_exception() + "")) {
+            llException.setVisibility(View.GONE);
+            btnSignException.setSelected(false);
+        } else {
+            if (info.getException_remark() != null) {
+                llException.setVisibility(View.VISIBLE);
+                tvException.setText(info.getException_remark().getContent());
+                btnSignException.setSelected(true);
+            }
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        if(TextUtils.isEmpty(info.getClose_time())) {
+        if (TextUtils.isEmpty(info.getClose_time())) {
             tvCancelTime.setText("");
-        }else{
-            tvCancelTime.setText(sdf.format(new Date(1000*Long.parseLong(info.getClose_time()))));
+        } else {
+            tvCancelTime.setText(sdf.format(new Date(1000 * Long.parseLong(info.getClose_time()))));
         }
-        if(TextUtils.isEmpty(info.getWork_begin_time())) {
+        if (TextUtils.isEmpty(info.getWork_begin_time())) {
             tvWorkStartTime.setText("");
-        }else{
-            tvWorkStartTime.setText(sdf.format(new Date(1000*Long.parseLong(info.getWork_begin_time()))));
+        } else {
+            tvWorkStartTime.setText(sdf.format(new Date(1000 * Long.parseLong(info.getWork_begin_time()))));
         }
-        if(TextUtils.isEmpty(info.getWork_end_time())) {
+        if (TextUtils.isEmpty(info.getWork_end_time())) {
             tvWorkEndTime.setText("");
-        }else{
-            tvWorkEndTime.setText(sdf.format(new Date(1000*Long.parseLong(info.getWork_end_time()))));
+        } else {
+            tvWorkEndTime.setText(sdf.format(new Date(1000 * Long.parseLong(info.getWork_end_time()))));
         }
 
         List<WorkSheetDetailBean.InfoBean.ServiceItemBean> serviceItem = info.getServiceItem();
@@ -392,6 +419,4 @@ public class WorkSheetDetailsActivity extends PermissionActivity implements Dial
         cm.setPrimaryClip(ClipData.newPlainText(null, selectedText));
         ToastUtils.showShort(this, R.string.txt_copy_success);
     }
-
-
 }

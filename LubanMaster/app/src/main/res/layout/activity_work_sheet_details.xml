@@ -1,374 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_eeeeee"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            tools:context="com.lubandj.master.worksheet.WorkSheetDetailsActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_eeeeee"
+              android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/ll_state"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/h_60dp"
-            android:layout_marginTop="@dimen/h_10dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/h_12dp"
-            android:paddingRight="@dimen/h_12dp">
-
-            <ImageView
-                android:id="@+id/iv_state_icon"
-                android:layout_width="@dimen/h_22dp"
-                android:layout_height="@dimen/h_22dp"/>
-
-            <TextView
-                android:id="@+id/tv_state_desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_12dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_15"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/h_44dp"
-            android:layout_marginTop="@dimen/h_10dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_12dp"
-                android:text="@string/txt_work_sheet_details_contact_way"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/sp_15"/>
-
-            <TextView
-                android:id="@+id/tv_phone_num"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_15dp"
-                android:layout_weight="1"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/sp_15"/>
-
-            <ImageView
-                android:id="@+id/iv_phone_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/h_12dp"
-                android:clickable="true"
-                android:src="@drawable/ic_sheet_details_phone"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/h_44dp"
-            android:layout_marginTop="@dimen/h_10dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_12dp"
-                android:text="@string/txt_work_sheet_details_address"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/sp_15"/>
-
-            <TextView
-                android:id="@+id/tv_address_desc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h_15dp"
-                android:layout_weight="1"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/sp_15"/>
-
-            <ImageView
-                android:id="@+id/iv_address_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/h_12dp"
-                android:clickable="true"
-                android:src="@drawable/ic_sheet_details_address"/>
-        </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/color_eeeeee"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        tools:context="com.lubandj.master.worksheet.WorkSheetDetailsActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/h_10dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/h_15dp"
-            android:paddingLeft="@dimen/h_12dp"
-            android:paddingRight="@dimen/h_12dp"
-            android:paddingTop="@dimen/h_15dp">
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_state"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/h_60dp"
+                android:layout_marginTop="@dimen/h_10dp"
+                android:background="@color/white"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/txt_work_sheet_details_contact"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/sp_13"/>
-
-                <TextView
-                    android:id="@+id/tv_contact_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/h_15dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/color_666666"
-                    android:textSize="@dimen/sp_13"/>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h_8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/txt_work_sheet_details_time"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/sp_13"/>
-
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/h_15dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/color_666666"
-                    android:textSize="@dimen/sp_13"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h_8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/txt_work_sheet_details_comment_info"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/sp_13"/>
-
-                <TextView
-                    android:id="@+id/tv_remark"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/h_15dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/color_666666"
-                    android:textSize="@dimen/sp_13"/>
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/h_10dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/h_15dp"
-            android:paddingLeft="@dimen/h_12dp"
-            android:paddingRight="@dimen/h_12dp"
-            android:paddingTop="@dimen/h_15dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/txt_work_sheet_details_work_sheet_no"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/sp_13"/>
-
-                <TextView
-                    android:id="@+id/tv_work_sheet_no"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/h_15dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/color_666666"
-                    android:textSize="@dimen/sp_13"/>
-
-                <TextView
-                    android:id="@+id/tv_copy"
-                    android:layout_width="@dimen/h_45dp"
-                    android:layout_height="@dimen/h_20dp"
-                    android:background="@drawable/shape_copy_bg"
-                    android:gravity="center"
-                    android:text="@string/txt_copy"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_11"/>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h_8dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/tv_service_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/txt_work_sheet_details_service_content"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/sp_13"/>
-
-                <LinearLayout
-                    android:id="@+id/ll_detail_items"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_service_content"
-                    android:layout_marginLeft="@dimen/h_15dp"
-                    android:layout_toRightOf="@+id/tv_service_content"
-                    android:orientation="vertical"/>
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_cancel_reason"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/h_50dp"
                 android:orientation="horizontal"
-                android:paddingTop="@dimen/h_10dp"
-                android:visibility="gone">
+                android:paddingLeft="@dimen/h_12dp"
+                android:paddingRight="@dimen/h_12dp">
+
+                <ImageView
+                    android:id="@+id/iv_state_icon"
+                    android:layout_width="@dimen/h_22dp"
+                    android:layout_height="@dimen/h_22dp"/>
 
                 <TextView
+                    android:id="@+id/tv_state_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/txt_work_sheet_details_cancel_reason"
+                    android:layout_marginLeft="@dimen/h_12dp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_15"/>
-
-                <EditText
-                    android:id="@+id/et_cancel_reason"
-                    style="@style/editTextStyles"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/h_15dp"/>
-
             </LinearLayout>
 
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/h_8dp"
-            android:background="#ffffff"
-            android:paddingBottom="@dimen/h_15dp"
-            android:paddingLeft="@dimen/h_12dp"
-            android:paddingRight="@dimen/h_12dp"
-            android:paddingTop="@dimen/h_15dp">
-
             <LinearLayout
-                android:id="@+id/ll_cancel_time"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/h_44dp"
+                android:layout_marginTop="@dimen/h_10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="取消时间"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/sp_13"/>
+                    android:layout_marginLeft="@dimen/h_12dp"
+                    android:text="@string/txt_work_sheet_details_contact_way"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_15"/>
 
                 <TextView
-                    android:id="@+id/tv_cancel_time"
+                    android:id="@+id/tv_phone_num"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/h_15dp"
                     android:layout_weight="1"
-                    android:textColor="@color/color_666666"
-                    android:textSize="@dimen/sp_13"/>
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_15"/>
+
+                <ImageView
+                    android:id="@+id/iv_phone_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/h_12dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_sheet_details_phone"/>
+
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_work_time"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/h_44dp"
+                android:layout_marginTop="@dimen/h_10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/h_12dp"
+                    android:text="@string/txt_work_sheet_details_address"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_15"/>
+
+                <TextView
+                    android:id="@+id/tv_address_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/h_15dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_15"/>
+
+                <ImageView
+                    android:id="@+id/iv_address_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/h_12dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_sheet_details_address"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/h_10dp"
+                android:background="@color/white"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:paddingBottom="@dimen/h_15dp"
+                android:paddingLeft="@dimen/h_12dp"
+                android:paddingRight="@dimen/h_12dp"
+                android:paddingTop="@dimen/h_15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="开始上门："
+                        android:text="@string/txt_work_sheet_details_contact"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/sp_13"/>
 
                     <TextView
-                        android:id="@+id/tv_work_start_time"
+                        android:id="@+id/tv_contact_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/h_15dp"
                         android:layout_weight="1"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_13"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_work_sheet_details_time"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/sp_13"/>
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/h_15dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/sp_13"/>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/h_8dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="完成时间："
+                        android:text="@string/txt_work_sheet_details_comment_info"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/sp_13"/>
 
                     <TextView
-                        android:id="@+id/tv_work_end_time"
+                        android:id="@+id/tv_remark"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/h_15dp"
@@ -376,32 +198,249 @@
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_13"/>
                 </LinearLayout>
+
+
             </LinearLayout>
-        </RelativeLayout>
 
-        <FrameLayout
-            android:id="@+id/ll_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/h_23dp"
-            android:layout_marginRight="@dimen/h_23dp"
-            android:layout_marginTop="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/h_10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/h_15dp"
+                android:paddingLeft="@dimen/h_12dp"
+                android:paddingRight="@dimen/h_12dp"
+                android:paddingTop="@dimen/h_15dp">
 
-            <Button
-                android:id="@+id/btn_sign_exception"
-                style="@style/btn_login"
-                android:layout_width="135dp"
-                android:text="@string/txt_work_sheet_details_sign_exception"
-                android:textSize="@dimen/sp_18"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_start_server"
-                style="@style/btn_login"
-                android:layout_width="135dp"
-                android:layout_gravity="right"
-                android:text="@string/txt_work_sheet_details_on_road"
-                android:textSize="@dimen/sp_18"/>
-        </FrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_work_sheet_details_work_sheet_no"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/sp_13"/>
 
-    </LinearLayout>
-</ScrollView>
+                    <TextView
+                        android:id="@+id/tv_work_sheet_no"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/h_15dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/sp_13"/>
+
+                    <TextView
+                        android:id="@+id/tv_copy"
+                        android:layout_width="@dimen/h_45dp"
+                        android:layout_height="@dimen/h_20dp"
+                        android:background="@drawable/shape_copy_bg"
+                        android:gravity="center"
+                        android:text="@string/txt_copy"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/sp_11"/>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_8dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_service_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_work_sheet_details_service_content"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/sp_13"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_detail_items"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_service_content"
+                        android:layout_marginLeft="@dimen/h_15dp"
+                        android:layout_toRightOf="@+id/tv_service_content"
+                        android:orientation="vertical"/>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_cancel_reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/h_50dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/h_10dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_work_sheet_details_cancel_reason"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_15"/>
+
+                    <EditText
+                        android:id="@+id/et_cancel_reason"
+                        style="@style/editTextStyles"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/h_15dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/h_8dp"
+                android:background="#ffffff"
+                android:paddingBottom="@dimen/h_15dp"
+                android:paddingLeft="@dimen/h_12dp"
+                android:paddingRight="@dimen/h_12dp"
+                android:paddingTop="@dimen/h_15dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/ll_cancel_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="取消时间："
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/sp_13"/>
+
+                    <TextView
+                        android:id="@+id/tv_cancel_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/h_15dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/sp_13"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_work_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="开始上门:"
+                            android:textColor="@color/color_999999"
+                            android:textSize="@dimen/sp_13"/>
+
+                        <TextView
+                            android:id="@+id/tv_work_start_time"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/h_15dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/sp_13"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/h_8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="完成时间:"
+                            android:textColor="@color/color_999999"
+                            android:textSize="@dimen/sp_13"/>
+
+                        <TextView
+                            android:id="@+id/tv_work_end_time"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/h_15dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/sp_13"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_exception"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/h_8dp"
+                android:background="#ffffff"
+                android:paddingBottom="@dimen/h_15dp"
+                android:paddingLeft="@dimen/h_12dp"
+                android:paddingRight="@dimen/h_12dp"
+                android:paddingTop="@dimen/h_15dp"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="异常备注:"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_13"/>
+
+                <TextView
+                    android:id="@+id/tv_exception"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/h_15dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_13"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="@dimen/h_23dp"
+        android:layout_marginRight="@dimen/h_23dp"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/btn_sign_exception"
+            style="@style/btn_login"
+            android:layout_width="135dp"
+            android:text="@string/txt_work_sheet_details_sign_exception"
+            android:textSize="@dimen/sp_18"/>
+
+        <Button
+            android:id="@+id/btn_start_server"
+            style="@style/btn_login"
+            android:layout_width="135dp"
+            android:layout_gravity="right"
+            android:text="@string/txt_work_sheet_details_on_road"
+            android:textSize="@dimen/sp_18"/>
+    </FrameLayout>
+</LinearLayout>

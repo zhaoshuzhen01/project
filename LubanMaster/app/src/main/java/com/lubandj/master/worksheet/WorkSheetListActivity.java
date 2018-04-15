@@ -41,6 +41,7 @@ import com.lubandj.master.TApplication;
 import com.lubandj.master.activity.MsgCenterActivity;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.UserInfo;
+import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.customview.RoundImageView;
 import com.lubandj.master.db.DbInstance;
 import com.lubandj.master.dialog.TipDialog;
@@ -357,11 +358,14 @@ public class WorkSheetListActivity extends TitleBaseActivity {
 //        if (!TApplication.context.isActive) {
 //            MyApplication.getApplication().isActive = true;
 //        }
+
         if (resultCode != RESULT_OK) {
             return;
         }
         if (requestCode == 3030) {
             loadFace();
+        } else if (requestCode == 3090) {
+            ((WorkSheetFragment) mFragments.get(viewPager.getCurrentItem())).onRefresh();
         } else {
             ToastUtils.showShort(WorkSheetListActivity.this, "网络未连接");
         }
@@ -404,5 +408,14 @@ public class WorkSheetListActivity extends TitleBaseActivity {
         outDialog.setCancelable(false);
         outDialog.setCanceledOnTouchOutside(false);
         outDialog.show();
+    }
+
+    public void fastIntent(WorkListBeen.InfoBean bean){
+        Intent intent = new Intent(WorkSheetListActivity.this, WorkSheetDetailsActivity.class);
+        intent.putExtra(WorkSheetDetailsActivity.KEY_DETAILS_ID, bean.getId());
+        intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LAT, bean.getLat());
+        intent.putExtra(WorkSheetDetailsActivity.KEY_DETAIL_LNG, bean.getLng());
+        intent.putExtra(WorkSheetDetailsActivity.WORK_NO, bean.getTicketSn());
+        startActivityForResult(intent, 3090);
     }
 }

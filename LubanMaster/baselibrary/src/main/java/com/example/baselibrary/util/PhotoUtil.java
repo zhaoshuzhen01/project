@@ -2,6 +2,7 @@ package com.example.baselibrary.util;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -23,6 +24,7 @@ public class PhotoUtil {
      */
     public static String picPath = "";
     public static Uri photoUri;
+    private static Uri cropUri;
     /* 持有私有静态实例，防止被引用，此处赋值为null，目的是实现延迟加载 */
     private static PhotoUtil instance = null;
 
@@ -58,7 +60,7 @@ public class PhotoUtil {
     public void takePhoto(Activity context) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //在图库创建文件
-        File path = context.getCacheDir();
+        File path = context.getFilesDir();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA).format(new Date());
         String imageFileName = "JPEG_" + timeStamp;
         File image = new File(path, imageFileName + ".jpg");
@@ -76,6 +78,23 @@ public class PhotoUtil {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
         intent.putExtra("return-data", true);
         context.startActivityForResult(intent, TAKE_PICTURE);
+    }
+
+    public void getPhotoUri(Activity context) {
+        File path = context.getFilesDir();
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA).format(new Date());
+        String imageFileName = "crop_" + timeStamp;
+        File image = new File(path, imageFileName + ".jpg");
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+//            ContentValues values = new ContentValues();
+            cropUri = Uri.fromFile(image);
+        } else {
+            //FileProvider 是一个特殊的 ContentProvider 的子类，
+            //它使用 content:// Uri 代替了 file:/// Uri. ，更便利而且安全的为另一个app分享文件
+            cropUri = FileProvider.getUriForFile(context,
+                    "com.lubandj.master.fileprovider",
+                    image);
+        }
     }
 
     /**
@@ -102,7 +121,9 @@ public class PhotoUtil {
             intent.putExtra("aspectY", 1);
             intent.putExtra("outputX", 160);// 输出图片大小
             intent.putExtra("outputY", 160);
-            intent.putExtra("return-data", true);
+            intent.putExtra("return-data", false);
+
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, cropUri);
 //					 intent.putExtra("noFaceDetection", true);
             context.startActivityForResult(intent, 200);
         } catch (Exception e) {
