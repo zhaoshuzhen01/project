@@ -47,6 +47,8 @@ public class Canstance {
     public static final int HTTP_BOOK_ORDER = 40001;//预约下单
     public static final int HTTP_PAY_ORDER = 40005;//支付订单
     public static final int HTTP_MSGCENTER_LIST = 40001;//消息列表
+    public static final int HTTP_COUSPS_LIST = 50004;//优惠券列表
+
     public static final int HTTP_PINGJIA_LIST = 60003;//评价列表
 
     public static final int HTTP_WORKDETAIL = 60001;//工作日历详情

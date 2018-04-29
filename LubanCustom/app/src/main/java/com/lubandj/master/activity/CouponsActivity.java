@@ -16,6 +16,7 @@ import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.CouponsAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.model.CouponsModel;
 import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
 
 import java.util.ArrayList;
@@ -61,8 +62,8 @@ public class CouponsActivity extends BaseRefreshActivity implements IbaseView<Ms
         initRecyclerView(recyclerView, new LinearLayoutManager(this), msgCenterAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(25, 25, 0, 25));
 
-       /* msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this, this, new MsgCenterModel(this));
-        msgCenterPresenter.getReflushData(0);*/
+        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this, this, new CouponsModel(this));
+        msgCenterPresenter.getReflushData(0);
     }
 
     @Override
