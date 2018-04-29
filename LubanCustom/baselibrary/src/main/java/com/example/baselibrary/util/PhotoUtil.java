@@ -23,6 +23,7 @@ public class PhotoUtil {
      */
     public static String picPath = "";
     public static Uri photoUri;
+    private static Uri cropUri;
     /* 持有私有静态实例，防止被引用，此处赋值为null，目的是实现延迟加载 */
     private static PhotoUtil instance = null;
 
@@ -46,7 +47,6 @@ public class PhotoUtil {
      */
     public void pickPhoto(Activity context) {
         Intent intent = new Intent();
-//        intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         context.startActivityForResult(intent, SELECT_PIC_BY_PICK_PHOTO);
@@ -58,24 +58,30 @@ public class PhotoUtil {
     public void takePhoto(Activity context) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //在图库创建文件
-        File path = context.getCacheDir();
+        File path = new File(getSdcardPath());
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA).format(new Date());
         String imageFileName = "JPEG_" + timeStamp;
         File image = new File(path, imageFileName + ".jpg");
         picPath = image.getAbsolutePath();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-//            ContentValues values = new ContentValues();
             photoUri = Uri.fromFile(image);
         } else {
-            //FileProvider 是一个特殊的 ContentProvider 的子类，
-            //它使用 content:// Uri 代替了 file:/// Uri. ，更便利而且安全的为另一个app分享文件
             photoUri = FileProvider.getUriForFile(context,
-                    "com.lubandj.customer.fileprovider",
+                    "com.lubandj.master.fileprovider",
                     image);
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
         intent.putExtra("return-data", true);
         context.startActivityForResult(intent, TAKE_PICTURE);
+    }
+
+    public static String getSdcardPath() {
+        String path = "";
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            path = Environment.getExternalStorageDirectory().getAbsolutePath();//获取跟目录
+        }
+        return path;
     }
 
     /**
@@ -87,10 +93,6 @@ public class PhotoUtil {
         try {
             if (!isTakePhoto)
                 photoUri = data.getData();
-//            else {
-//                File file = new File(picPath);
-//                photoUri = Uri.fromFile(file);
-//            }
             Intent intent = new Intent();
             intent.setAction("com.android.camera.action.CROP");
             intent.setDataAndType(photoUri, "image/*");// mUri是已经选择的图片Uri
@@ -103,7 +105,13 @@ public class PhotoUtil {
             intent.putExtra("outputX", 160);// 输出图片大小
             intent.putExtra("outputY", 160);
             intent.putExtra("return-data", true);
-//					 intent.putExtra("noFaceDetection", true);
+            File tempFile = new File(getSdcardPath(), "lubancrop.jpg");
+            if (tempFile.exists()) {
+                tempFile.delete();
+            }
+            Uri uri1;
+            uri1 = Uri.fromFile(tempFile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri1);
             context.startActivityForResult(intent, 200);
         } catch (Exception e) {
             e.printStackTrace();
