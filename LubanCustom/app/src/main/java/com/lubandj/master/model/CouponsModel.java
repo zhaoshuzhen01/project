@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.httpbean.NetStartBeen;
 import com.lubandj.master.httpbean.NetWorkListBeen;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
@@ -26,7 +27,7 @@ public class CouponsModel extends BaseModel {
     @Override
     public void getReflushData(int type,int startIndex,int pageSize) {
 
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_COUSPS_LIST, new NetWorkListBeen(type, startIndex,pageSize), new Response.Listener<String>() {
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_COUSPS_LIST, new NetStartBeen( startIndex,pageSize), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {
