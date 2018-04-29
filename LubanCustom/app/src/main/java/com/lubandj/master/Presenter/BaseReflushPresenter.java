@@ -22,12 +22,20 @@ public class BaseReflushPresenter<T> extends BasePresenter<T> {
     @Override
     public void getReflushData(int type) {
         super.getReflushData(type);
+        if (type!=0){
+            workModel.getReflushData(type,STARTINDEX,PAGESIZE);
+        }else {
             workModel.getReflushData(Canstance.TYPE_LIST_ALL,STARTINDEX,PAGESIZE);
+        }
     }
     @Override
     public void getMoreData(int type) {
         super.getMoreData(type);
-        workModel.getReflushData(Canstance.TYPE_LIST_ALL,mstartIndex,PAGESIZE);
+        if (type!=0){
+            workModel.getReflushData(type,mstartIndex,PAGESIZE);
+        }else {
+            workModel.getReflushData(Canstance.TYPE_LIST_ALL,mstartIndex,PAGESIZE);
+        }
     }
     @Override
     public void getDataLists(List<T> datas) {
