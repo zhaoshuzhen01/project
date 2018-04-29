@@ -3,6 +3,7 @@ package com.lubandj.customer.my;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -31,6 +32,8 @@ import com.lubandj.master.my.PermissionActivity;
 import com.lubandj.master.utils.BitmapCache;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
+
+import java.io.File;
 
 /**
  * function:设置界面
@@ -62,7 +65,7 @@ public class MySettingActivity extends PermissionActivity {
                 binding.tvSettingNickname.setText(info.mobile);
             }
             if (TextUtils.isEmpty(info.sex))
-            binding.tvSettingSex.setText("选择");
+                binding.tvSettingSex.setText("选择");
             else
                 binding.tvSettingSex.setText(info.sex);
             binding.tvSettingWxaccount.setText("未绑定");
@@ -188,36 +191,40 @@ public class MySettingActivity extends PermissionActivity {
         } else if (requestCode == PhotoUtil.SELECT_PIC_BY_PICK_PHOTO) {
             PhotoUtil.getInstance().dealPhoto(this, data, false);
         } else if (requestCode == 200) {
-            Bundle bundle = data.getExtras();
-            Bitmap headPhoto = (Bitmap) bundle.get("data");
-            binding.ivSetHeadimg.setImageBitmap(headPhoto);
-            if (NetworkUtils.isNetworkAvailable(MySettingActivity.this)) {
-                initProgressDialog("正在上传头像...").show();
-                UploadPhotoRequest bean = new UploadPhotoRequest(CommonUtils.Bitmap2StrByBase64(headPhoto));
-                TaskEngine.getInstance().tokenHttps(Canstance.HTTP_UPLOAD_PHOTO, bean, new Response.Listener<String>() {
+            File tempFile = new File(PhotoUtil.getSdcardPath(), "lubancrop.jpg");
+            if (tempFile.exists()) {
+                Bitmap headPhoto = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
+                binding.ivSetHeadimg.setImageBitmap(headPhoto);
+                if (NetworkUtils.isNetworkAvailable(MySettingActivity.this)) {
+                    initProgressDialog("正在上传头像...").show();
+                    UploadPhotoRequest bean = new UploadPhotoRequest(CommonUtils.Bitmap2StrByBase64(headPhoto));
+                    TaskEngine.getInstance().tokenHttps(Canstance.HTTP_UPLOAD_PHOTO, bean, new Response.Listener<String>() {
 
-                    @Override
-                    public void onResponse(String s) {
-                        dialog.dismiss();
-                        UploadPhotoReponse response = new UploadPhotoReponse();
-                        response = (UploadPhotoReponse) CommonUtils.generateEntityByGson(MySettingActivity.this, s, response);
-                        if (response != null) {
-                            RxBus.getInstance().post(new BusEvent(BusEvent.IMG_CODE));
-                            TApplication.context.mUserInfo.face_url = response.info.face_url;
-                            loadFace();
-                            PhotoUtil.getInstance().deleteCache();
+                        @Override
+                        public void onResponse(String s) {
+                            dialog.dismiss();
+                            UploadPhotoReponse response = new UploadPhotoReponse();
+                            response = (UploadPhotoReponse) CommonUtils.generateEntityByGson(MySettingActivity.this, s, response);
+                            if (response != null) {
+                                RxBus.getInstance().post(new BusEvent(BusEvent.IMG_CODE));
+                                TApplication.context.mUserInfo.face_url = response.info.face_url;
+                                loadFace();
+                                PhotoUtil.getInstance().deleteCache();
 
-                            setResult(RESULT_OK);
-                            ToastUtils.showShort(MySettingActivity.this, "上传成功");
+                                setResult(RESULT_OK);
+                                ToastUtils.showShort(MySettingActivity.this, "上传成功");
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        dialog.dismiss();
-                        CommonUtils.fastShowError(MySettingActivity.this, volleyError);
-                    }
-                });
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            dialog.dismiss();
+                            CommonUtils.fastShowError(MySettingActivity.this, volleyError);
+                        }
+                    });
+                }
+            } else {
+                ToastUtils.showShort(MySettingActivity.this, "剪切图片出错");
             }
         } else if (requestCode == 1001) {//修改电话成功
             setPhone();

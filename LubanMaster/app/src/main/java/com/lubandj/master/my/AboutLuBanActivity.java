@@ -70,7 +70,7 @@ public class AboutLuBanActivity extends BaseActivity {
      * @param view
      */
     public void onUpdate(View view) {
-        ToastUtils.showShort(AboutLuBanActivity.this, "点击更新");
+
     }
 
 
