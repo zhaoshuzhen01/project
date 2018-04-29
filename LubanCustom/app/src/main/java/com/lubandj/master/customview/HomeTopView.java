@@ -65,6 +65,8 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
 
     //初始化ViewPager
     public void initViewPager(Context context,List<HomeBeen.InfoBean> datas) {
+        pagerlist.clear();
+        contentlist.clear();
        for (int i=0;i<datas.size();i++){
 
            if (i%6==0){

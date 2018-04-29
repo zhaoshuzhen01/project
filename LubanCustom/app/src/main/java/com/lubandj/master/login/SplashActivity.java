@@ -95,8 +95,11 @@ public class SplashActivity extends PermissionActivity implements ViewPager.OnPa
             }
         }
         if (CommonUtils.getFirst())
-            return;
-        startPageModel.getGuangGao();
+            return;{
+            Intent intent = new Intent(SplashActivity.this, MainCantainActivity.class);
+            startActivity(intent);
+        }
+//        startPageModel.getGuangGao();
     }
 
 

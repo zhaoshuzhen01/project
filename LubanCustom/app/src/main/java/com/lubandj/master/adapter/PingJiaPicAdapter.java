@@ -15,15 +15,15 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2018/1/28.
  */
 
-public class PingJiaPicAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.ListBean, BaseViewHolder> {
+public class PingJiaPicAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     private Context context;
-    public PingJiaPicAdapter(@Nullable List<MsgCenterBeen.InfoBean.ListBean> data, Context context) {
+    public PingJiaPicAdapter(@Nullable List<String> data, Context context) {
         super(R.layout.item_pingjia_pic, data);
         this.context = context ;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MsgCenterBeen.InfoBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, String item) {
         int position = helper.getAdapterPosition();
     }
 

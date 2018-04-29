@@ -46,7 +46,8 @@ public class MyEvaluationAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean
         int position = helper.getAdapterPosition();
         recyclerView =  ((RecyclerView) (helper.getView(R.id.recyclerView)));
         scrooview = ((ScrollView) (helper.getView(R.id.scrooview)));
-        pingJiaPicAdapter = new PingJiaPicAdapter(msgBeens,context);
+        List<String>imgs = new ArrayList<>();
+        pingJiaPicAdapter = new PingJiaPicAdapter(imgs,context);
         pingJiaPicAdapter.setIndex(position);
         pingJiaPicAdapter.setOnItemClickListener(this);
         LinearLayoutManager layoutManager =   new LinearLayoutManager(context);

@@ -16,6 +16,7 @@ import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
 import com.lubandj.master.activity.PhotoViewActivity;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.been.PingJiaBeen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,25 +25,26 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2018/1/27.
  */
 
-public class PingJIaAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.ListBean, BaseViewHolder> implements BaseQuickAdapter.OnItemClickListener{
+public class PingJIaAdapter extends BaseQuickAdapter<PingJiaBeen.InfoBean.ResultBean, BaseViewHolder> implements BaseQuickAdapter.OnItemClickListener{
     private Context context;
     private RecyclerView recyclerView ;
     private PingJiaPicAdapter pingJiaPicAdapter ;
-    private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
+    private List<PingJiaBeen.InfoBean.ResultBean> msgBeens = new ArrayList<>();
 
-    public PingJIaAdapter(@Nullable List<MsgCenterBeen.InfoBean.ListBean> data, Context context) {
+    public PingJIaAdapter(@Nullable List<PingJiaBeen.InfoBean.ResultBean> data, Context context) {
         super(R.layout.item_pingjia, data);
         this.context = context ;
         for (int i = 0; i < 6; i++) {
-            msgBeens.add(new MsgCenterBeen.InfoBean.ListBean());
+            msgBeens.add(new PingJiaBeen.InfoBean.ResultBean());
         }
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MsgCenterBeen.InfoBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, PingJiaBeen.InfoBean.ResultBean item) {
         int position = helper.getAdapterPosition();
         recyclerView =  ((RecyclerView) (helper.getView(R.id.recyclerView)));
-        pingJiaPicAdapter = new PingJiaPicAdapter(msgBeens,context);
+        List<String>imgs = item.getImg();
+        pingJiaPicAdapter = new PingJiaPicAdapter(imgs,context);
         pingJiaPicAdapter.setIndex(position);
         pingJiaPicAdapter.setOnItemClickListener(this);
         LinearLayoutManager layoutManager =   new LinearLayoutManager(context);
