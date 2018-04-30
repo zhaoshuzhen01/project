@@ -103,6 +103,9 @@ public class DialogTagin {
                 content = "确认支付";
 
                 break;
+            case Canstance.TYPE_ORDER_DETAILS_IN_SERVICE+"":
+                content = "取消订单";
+                break;
         }
         return content;
     }
