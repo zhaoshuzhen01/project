@@ -29,6 +29,7 @@ import com.lubandj.master.model.ServiceDetailModel;
 import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -190,6 +191,17 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
         Glide.with(getActivity()).load(data.getInfo().getService_pic()).skipMemoryCache(false).into(topPic);
         topName.setText(data.getInfo().getName());
         msgBeens.addAll(data.getInfo().getItems());
+        if (data.getInfo().getItems().size()==1){
+            top_price.setText("¥ "+data.getInfo().getItems().get(0).getItem_pic());
+        }else {
+            List<String>prices = new ArrayList<>();
+            for (int i = 0; i < data.getInfo().getItems().size() ; i++) {
+                prices.add(data.getInfo().getItems().get(i).getPrice());
+            }
+            Collections.sort(prices);
+            top_price.setText("¥ "+data.getInfo().getItems().get(0).getPrice()+"-"+data.getInfo().getItems().get(data.getInfo().getItems().size()-1).getPrice());
+
+        }
         introduceAdapter.notifyDataSetChanged();
 
       /*  List<String> prices = new ArrayList<>();
