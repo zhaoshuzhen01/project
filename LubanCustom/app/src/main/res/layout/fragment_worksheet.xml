@@ -9,6 +9,7 @@
 
     <com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6
         android:id="@+id/prpt"
+        android:layout_marginBottom="@dimen/h_10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
