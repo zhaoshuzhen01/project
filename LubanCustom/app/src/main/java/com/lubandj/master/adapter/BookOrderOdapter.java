@@ -47,6 +47,10 @@ public class BookOrderOdapter extends BaseQuickAdapter<ShoppingCartBean, BaseVie
 
     }
 
+    public void setData(){
+
+    }
+
     @Override
     public void childViewClick(int position, View view) {
 

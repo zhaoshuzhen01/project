@@ -121,6 +121,6 @@ public class CancleOrderActivity extends TitleBaseActivity implements DataCall<B
 
     @Override
     public void getServiceData(BookOrderBeen data) {
-        CheckStandActivity.startActivity(this,data);
+        CheckStandActivity.startActivity(this,data.getInfo().getId(),data.getInfo().getOrder_id());
     }
 }

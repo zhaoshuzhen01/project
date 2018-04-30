@@ -9,7 +9,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lubandj.customer.bean.OrderLogBean;
 import com.lubandj.master.R;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -55,14 +58,24 @@ public class OrderTraceView extends FrameLayout {
         ButterKnife.inject(this);
 
 
-        llOrderTraceItem.removeAllViews();
-        for (int i = 0; i < 3; i++) {
-            OrderTraceItemView orderTraceItemView = new OrderTraceItemView(context);
-            orderTraceItemView.init(i == 2);
-            llOrderTraceItem.addView(orderTraceItemView);
-        }
+//        llOrderTraceItem.removeAllViews();
+//        for (int i = 0; i < logBeans.size(); i++) {
+//            OrderTraceItemView orderTraceItemView = new OrderTraceItemView(context);
+//            orderTraceItemView.init(i == logBeans.size()-1);
+//            llOrderTraceItem.addView(orderTraceItemView);
+//        }
 
     }
+
+    public void refreshData(Context context, List<OrderLogBean> logBeans){
+        llOrderTraceItem.removeAllViews();
+        for (int i = 0; i < logBeans.size(); i++) {
+            OrderTraceItemView orderTraceItemView = new OrderTraceItemView(context);
+            orderTraceItemView.init(i == logBeans.size()-1,logBeans.get(i));
+            llOrderTraceItem.addView(orderTraceItemView);
+        }
+    }
+
 
     @OnClick(R.id.tv_close_order_trace)
     public void onViewClicked() {

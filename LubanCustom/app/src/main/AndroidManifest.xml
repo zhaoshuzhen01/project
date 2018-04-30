@@ -244,6 +244,9 @@
             android:name="com.lubandj.customer.order.OrderDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.lubandj.customer.order.NewOrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.PhotoViewActivity"
             android:screenOrientation="portrait" />
         <activity

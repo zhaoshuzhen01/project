@@ -53,8 +53,6 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class OrderDetailsActivity extends PhonePermissionActivity {
-
-
     @InjectView(R.id.iv_state_icon)
     ImageView ivStateIcon;
     @InjectView(R.id.tv_state_desc)
@@ -155,7 +153,7 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
     public void initData() {
         initProgressDialog(R.string.txt_loading).show();
         HttpDetailOrder detailOrder = new HttpDetailOrder();
-        detailOrder.id = workSheetId ;
+        detailOrder.id = workSheetId;
         TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_DETAILS, detailOrder, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -183,7 +181,7 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
                         tvOrderNum.setText(msgCenterBeen.getInfo().getOrder_id() + "");
                         tvPlaceTime.setText(msgCenterBeen.getInfo().getDatatime() + "");
                         tvStateDesc.setText(msgCenterBeen.getInfo().getStatusText());
-                        if (msgCenterBeen.getInfo().getPay_status().equals("1")){
+                        if (msgCenterBeen.getInfo().getPay_status().equals("1")) {
                             tvStateDesc.setText(msgCenterBeen.getInfo().getPay_statusText());
                             btnBuyAgain.setText("去付款");
                         }
@@ -318,13 +316,13 @@ public class OrderDetailsActivity extends PhonePermissionActivity {
                                 }
                             }).show();
 
-                }else if (msgCenterBeen.getInfo().getPay_status().equals("1")){
+                } else if (msgCenterBeen.getInfo().getPay_status().equals("1")) {
                     BookOrderBeen bookOrderBeen = new BookOrderBeen();
                     BookOrderBeen.InfoBean infoBean = new BookOrderBeen.InfoBean();
                     infoBean.setId(msgCenterBeen.getInfo().getId());
                     infoBean.setOrder_id(msgCenterBeen.getInfo().getOrder_id());
                     bookOrderBeen.setInfo(infoBean);
-                    CheckStandActivity.startActivity(this,bookOrderBeen);
+//                    CheckStandActivity.startActivity(this, bookOrderBeen);
 
                 }
                 break;

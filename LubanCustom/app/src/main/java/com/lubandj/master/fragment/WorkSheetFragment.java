@@ -14,6 +14,7 @@ import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.customer.login.LoginActivity;
+import com.lubandj.customer.order.NewOrderDetailsActivity;
 import com.lubandj.customer.order.OrderDetailsActivity;
 import com.lubandj.master.Presenter.SheetListPresenter;
 import com.lubandj.master.R;
@@ -167,7 +168,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
                 startActivity(intent);
                 break;
         }*/
-        Intent intent = new Intent(getActivity(), OrderDetailsActivity.class);
+        Intent intent = new Intent(getActivity(), NewOrderDetailsActivity.class);
         intent.putExtra(OrderDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
         startActivity(intent);
     }

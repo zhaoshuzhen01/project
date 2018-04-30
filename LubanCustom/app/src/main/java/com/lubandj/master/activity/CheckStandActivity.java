@@ -53,15 +53,17 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
     private final long INTERVAL = 1000L;
     private LinearLayout sure_pay;
     public Pay pay;
-    private BookOrderBeen bookOrderBeen ;
+    private String orderid ;
+    private String id;
     private PayModel payModel ;
     /**
      * 充值结果,0为未充值状态;1为成功;2为失败
      */
     public static int mRechargeResult = 0;
-    public static void startActivity(Context context,BookOrderBeen data) {
+    public static void startActivity(Context context,String id,String orderid) {
         Intent intent = new Intent(context, CheckStandActivity.class);
-        intent.putExtra("data",data);
+        intent.putExtra("id",id);
+        intent.putExtra("orderid",orderid);
         context.startActivity(intent);
     }
 
@@ -87,14 +89,15 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
         xiandanprice.setText("¥" +LocalleCarData.newInstance().getTotalPrice());
         payModel = new PayModel(this,this);
         startTimer();
-        bookOrderBeen = (BookOrderBeen) getIntent().getSerializableExtra("data");
+        orderid = getIntent().getStringExtra("orderid");
+        id = getIntent().getStringExtra("id");
         pay = new Pay(this, new PayResultCallbackImpl() {
             @Override
             public void onPaySuccess(String result, String payType) {
                 MainCantainActivity.startActivity(CheckStandActivity.this);
                 LocalleCarData.newInstance().clear();
                 Intent intent = new Intent(CheckStandActivity.this, OrderDetailsActivity.class);
-                intent.putExtra(OrderDetailsActivity.KEY_DETAILS_ID, bookOrderBeen.getInfo().getId());
+                intent.putExtra(OrderDetailsActivity.KEY_DETAILS_ID, id);
                 startActivity(intent);
                 finish();
             }
@@ -129,9 +132,9 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
             case R.id.sure_pay:
 
                 if (weixinchekcout.isChecked()) {
-                    payModel.bookOrder(bookOrderBeen.getInfo().getOrder_id(),"1");
+                    payModel.bookOrder(orderid,"1");
                 } else {
-                    payModel.bookOrder(bookOrderBeen.getInfo().getOrder_id(),"2");
+                    payModel.bookOrder(orderid,"2");
                 }
                 break;
         }
