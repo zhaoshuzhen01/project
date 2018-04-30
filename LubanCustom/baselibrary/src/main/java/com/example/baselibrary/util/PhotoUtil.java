@@ -67,7 +67,7 @@ public class PhotoUtil {
             photoUri = Uri.fromFile(image);
         } else {
             photoUri = FileProvider.getUriForFile(context,
-                    "com.lubandj.master.fileprovider",
+                    "com.lubandj.customer.fileprovider",
                     image);
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);

@@ -38,6 +38,21 @@ import java.util.List;
  */
 
 public class CommonUtils {
+    private static long lastClickTime;
+
+    /**
+     * 避免控件连续点击的时间限定
+     */
+    public static boolean isFastDoubleClick() {
+        long time = System.currentTimeMillis();
+        long timeD = time - lastClickTime;
+        if (0 < timeD && timeD < 800) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
+    }
+
     /**
      * 通过Base32将Bitmap转换成Base64字符串
      *
@@ -172,8 +187,8 @@ public class CommonUtils {
 
     public static String[] getAddress() {
         String address = SPUtils.getInstance().getString(Canstance.ADDRESS);
-        if (!TextUtils.isEmpty(address)){
-         return    address.split(",");
+        if (!TextUtils.isEmpty(address)) {
+            return address.split(",");
         }
         return null;
     }
@@ -187,7 +202,7 @@ public class CommonUtils {
     }
 
     public static String getAddressID() {
-      return   SPUtils.getInstance().getString(Canstance.ADDRESS_ID);
+        return SPUtils.getInstance().getString(Canstance.ADDRESS_ID);
     }
 
     public static int getMsgCount() {

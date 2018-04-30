@@ -1,6 +1,7 @@
 package com.lubandj.customer.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -10,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lubandj.customer.bean.OrderLogBean;
 import com.lubandj.master.R;
 
 import butterknife.ButterKnife;
@@ -48,14 +50,19 @@ public class OrderTraceItemView extends FrameLayout {
     }
 
 
-    public void  init(boolean isLast){
+    public void  init(boolean isLast, OrderLogBean bean){
         if(isLast){
            viewLine.setVisibility(GONE);
            ivCircle.setImageResource(R.drawable.shape_order_trace_item_circle);
+            tvStatusDesc.setTextColor(Color.RED);
+            tvTime.setTextColor(Color.RED);
         }else{
             viewLine.setVisibility(VISIBLE);
             ivCircle.setImageResource(R.drawable.shape_order_trace_item_circle_gray);
+            tvStatusDesc.setTextColor(Color.parseColor("#999999"));
+            tvTime.setTextColor(Color.parseColor("#999999"));
         }
+        tvStatusDesc.setText(bean.method);
+        tvTime.setText(bean.created_time);
     }
-
 }
