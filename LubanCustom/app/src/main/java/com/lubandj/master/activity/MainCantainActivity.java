@@ -25,6 +25,7 @@ import com.example.baselibrary.widget.MainBottomTab;
 import com.example.baselibrary.widget.MainBottomView;
 import com.example.baselibrary.widget.NotitleBaseActivity;
 import com.example.baselibrary.widget.ViewPagerSlide;
+import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.master.R;
 import com.lubandj.master.fragment.HomeFragment;
 import com.lubandj.master.fragment.MyFragment;
@@ -66,6 +67,9 @@ public class MainCantainActivity extends BaseMainActivity {
         tv_basetitle_back.setCompoundDrawablesWithIntrinsicBounds(null,
                 null, drawableLeft, null);
         ivBaseTitleBack.setVisibility(View.GONE);
+
+        if (!CommonUtils.isHasRequestUpgrade)
+            CommonUtils.upgradeApp(MainCantainActivity.this, null);
     }
 
     @Override

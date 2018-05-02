@@ -100,6 +100,9 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
         if (!TextUtils.isEmpty(mPhoneNum)) {
             etPhoneNum.setText(mPhoneNum);
         }
+
+        if (!CommonUtils.isHasRequestUpgrade)
+            CommonUtils.upgradeApp(LoginActivity.this, null);
     }
 
     private void setListener() {
@@ -145,7 +148,7 @@ public class LoginActivity extends TitleBaseActivity implements EditTextWithDel.
                                 ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
                             } else if (baseEntity.getCode() == 104) {
                                 CommonUtils.tokenNullDeal(LoginActivity.this);
-                            }else {
+                            } else {
                                 ToastUtils.showShort(LoginActivity.this, baseEntity.getMessage());
                             }
                         }

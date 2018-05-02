@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.example.baselibrary.GuangGaoBeen;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.tools.Tools;
 import com.example.baselibrary.util.ActUtils;
 import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.master.Canstance;
@@ -58,6 +59,8 @@ public class SplashActivity extends PermissionActivity implements ViewPager.OnPa
         ActUtils.isFirstIn = true;//设置为入口正常进入
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+        Canstance.VERSION = Tools.getVersionName(SplashActivity.this);
+
         iv_splash = findView(R.id.iv_splash);
         mBinding.viewpager.setAdapter(new MyAdatper());
         mBinding.viewpager.setOnPageChangeListener(this);

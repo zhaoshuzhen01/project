@@ -11,9 +11,11 @@ import android.view.View;
 import com.example.baselibrary.BaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.tools.Tools;
+import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.master.R;
 import com.lubandj.master.databinding.ActivityAboutlubanBinding;
 import com.lubandj.master.my.AgreementActivity;
+import com.lubandj.master.utils.CommonUtils;
 
 /**
  * function:
@@ -70,7 +72,11 @@ public class AboutLuBanActivity extends BaseActivity {
      * @param view
      */
     public void onUpdate(View view) {
-        ToastUtils.showShort(AboutLuBanActivity.this, "点击更新");
+        if (!NetworkUtils.isNetworkAvailable(AboutLuBanActivity.this)) {
+            return;
+        }
+        initProgressDialog("正在检查更新...");
+        CommonUtils.upgradeApp(AboutLuBanActivity.this, dialog);
     }
 
 
