@@ -316,7 +316,7 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         //订单状态控制
         if ("1".equals(mBean.pay_status)) {//待付款
             mBinding.tvStateDesc.setText(mBean.pay_statusText);
-            mBinding.ivStateIcon.setImageResource(R.drawable.od_wate_to_be_assign);
+            mBinding.ivStateIcon.setImageResource(R.drawable.od_wait_to_pay);
         } else {//其他状态
             mBinding.tvStateDesc.setText(mBean.statusText);
             switch (mBean.status) {
@@ -332,11 +332,11 @@ public class NewOrderDetailsActivity extends PermissionActivity {
                 case "4"://正在服务
                     mBinding.ivStateIcon.setImageResource(R.drawable.od_serving);
                     break;
-                case "5"://正在服务
+                case "5"://服务已完成
                     mBinding.ivStateIcon.setImageResource(R.drawable.od_complete);
                     break;
                 case "7"://订单已取消
-                    mBinding.ivStateIcon.setImageResource(R.drawable.od_complete);
+                    mBinding.ivStateIcon.setImageResource(R.drawable.ic_details_canceled);
                     break;
             }
         }
