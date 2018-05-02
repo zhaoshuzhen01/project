@@ -208,7 +208,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void callClick(OrderListBeen.InfoBean entity,int currentIndex) {
-        Intent intent = new Intent(getActivity(), OrderDetailsActivity.class);
+        Intent intent = new Intent(getActivity(), NewOrderDetailsActivity.class);
         intent.putExtra(OrderDetailsActivity.KEY_DETAILS_ID, worklists.get(currentIndex).getId());
         startActivity(intent);
     }
