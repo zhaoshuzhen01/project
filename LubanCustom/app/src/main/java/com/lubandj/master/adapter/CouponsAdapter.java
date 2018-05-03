@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
 import com.example.baselibrary.tools.ToastUtils;
+import com.lubandj.customer.bean.CouponBean;
 import com.lubandj.master.R;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.WorkListBeen;
@@ -20,21 +21,21 @@ import java.util.List;
  * Created by ${zhaoshuzhen} on 2018/2/4.
  */
 
-public class CouponsAdapter extends BaseQuickAdapter<MsgCenterBeen.InfoBean.ListBean, BaseViewHolder> {
+public class CouponsAdapter extends BaseQuickAdapter<CouponBean, BaseViewHolder> {
     private Context context;
 
-    public CouponsAdapter(@Nullable List<MsgCenterBeen.InfoBean.ListBean> data, Context context) {
+    public CouponsAdapter(@Nullable List<CouponBean> data, Context context) {
         super(R.layout.item_coupons, data);
         this.context = context;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MsgCenterBeen.InfoBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, CouponBean item) {
         initView(helper, item);
 
     }
 
-    private void initView(final BaseViewHolder helper, MsgCenterBeen.InfoBean.ListBean item) {
+    private void initView(final BaseViewHolder helper, CouponBean item) {
         int position = helper.getAdapterPosition();
         LinearLayout msgtitle = ((LinearLayout) (helper.getView(R.id.detail_coups)));
         ImageView iconMsg = ((ImageView) (helper.getView(R.id.open_youhui)));

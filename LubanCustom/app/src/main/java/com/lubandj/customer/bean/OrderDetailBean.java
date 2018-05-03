@@ -27,7 +27,7 @@ public class OrderDetailBean {
     public String statusText;//待指派
     public String pay_status;//1
     public String pay_statusText;//待付款
-    public ServiceUserBean service_user_info;
+    public List<ServiceUserBean> service_user_info;
     public List<RefundBean> refund_info;//
     public List<ServiceTotalBean> items;//
     public List<OrderLogBean> order_log;//

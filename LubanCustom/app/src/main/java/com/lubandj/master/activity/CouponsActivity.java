@@ -11,13 +11,12 @@ import android.widget.TextView;
 import com.example.baselibrary.BaseRefreshActivity;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
+import com.lubandj.customer.bean.CouponBean;
 import com.lubandj.master.Iview.IbaseView;
 import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.CouponsAdapter;
-import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.model.CouponsModel;
-import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +25,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class CouponsActivity extends BaseRefreshActivity implements IbaseView<MsgCenterBeen.InfoBean.ListBean> {
+public class CouponsActivity extends BaseRefreshActivity implements IbaseView<CouponBean> {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.in_get)
     TextView inget;
     private CouponsAdapter msgCenterAdapter;
-    private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
+    private List<CouponBean> msgBeens = new ArrayList<>();
     private BaseReflushPresenter msgCenterPresenter;
 
     @Override
@@ -62,7 +61,7 @@ public class CouponsActivity extends BaseRefreshActivity implements IbaseView<Ms
         initRecyclerView(recyclerView, new LinearLayoutManager(this), msgCenterAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(25, 25, 0, 25));
 
-        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this, this, new CouponsModel(this));
+        msgCenterPresenter = new BaseReflushPresenter<CouponBean>(this, this, new CouponsModel(this));
         msgCenterPresenter.getReflushData(0);
     }
 
@@ -93,7 +92,7 @@ public class CouponsActivity extends BaseRefreshActivity implements IbaseView<Ms
     }
 
     @Override
-    public void getDataLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
+    public void getDataLists(List<CouponBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
         msgBeens.clear();

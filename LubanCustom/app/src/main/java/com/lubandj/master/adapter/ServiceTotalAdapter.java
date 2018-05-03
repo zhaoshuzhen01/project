@@ -31,10 +31,6 @@ public class ServiceTotalAdapter extends BaseQuickAdapter<ServiceTotalBean, Base
     }
 
 
-    public void setData() {
-
-    }
-
     @Override
     protected void convert(BaseViewHolder helper, ServiceTotalBean item) {
         int position = helper.getAdapterPosition();

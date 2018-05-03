@@ -12,16 +12,20 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mapapi.map.MapBaseIndoorMapInfo;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.tools.ToastUtils;
 import com.google.gson.Gson;
 import com.lubandj.customer.httpbean.CancelOrderInfoRequest;
 import com.lubandj.customer.httpbean.CancelOrderInfoResponse;
+import com.lubandj.customer.httpbean.CancelOrderRequest;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.CancelOrderServiceAdapter;
+import com.lubandj.master.dialog.CancelReasonSelectDialog;
 import com.lubandj.master.dialog.ToastDialog;
+import com.lubandj.master.httpbean.BaseResponseBean;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
 
@@ -135,9 +139,48 @@ public class CancleOrderActivity extends TitleBaseActivity {
                 if (TextUtils.isEmpty(mTvReason.getText().toString())) {
                     new ToastDialog(CancleOrderActivity.this, "请选择原因").show();
                 }
+                initProgressDialog(R.string.txt_loading).show();
+                CancelOrderRequest detailOrder = new CancelOrderRequest();
+                detailOrder.order_id = order_id;
+                detailOrder.reason=mTvReason.getText().toString();
+                TaskEngine.getInstance().tokenHttps(Canstance.HTTP_CANCELORDER, detailOrder, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        dialog.dismiss();
+                        try {
+                            BaseResponseBean response = new Gson().fromJson(s, BaseResponseBean.class);
+                            if (response.code == 0) {
+                                ToastUtils.showShort(CancleOrderActivity.this, "取消成功");
+                                setResult(RESULT_OK);
+                                finish();
+                            } else if (response.code == 104) {
+                                CommonUtils.tokenNullDeal(CancleOrderActivity.this);
+                            } else {
+                                ToastUtils.showShort(CancleOrderActivity.this, response.message);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            ToastUtils.showShort(CancleOrderActivity.this, "返回数据解析出错");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        dialog.dismiss();
+                        CommonUtils.fastShowError(CancleOrderActivity.this, volleyError);
+                    }
+                });
                 break;
             case R.id.ll_cancel_reason://获取原因
-
+                CancelReasonSelectDialog dialog = new CancelReasonSelectDialog(CancleOrderActivity.this, new CancelReasonSelectDialog.SelectClickListenter() {
+                    @Override
+                    public void clickString(String strng) {
+                        mTvReason.setText(strng);
+                    }
+                });
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.show();
                 break;
         }
     }

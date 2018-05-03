@@ -6,11 +6,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.baselibrary.tools.ToastUtils;
 import com.google.gson.Gson;
+import com.lubandj.customer.bean.CouponBean;
+import com.lubandj.customer.httpbean.MyCouponsResponse;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.httpbean.NetStartBeen;
-import com.lubandj.master.httpbean.NetWorkListBeen;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
 
@@ -32,18 +33,18 @@ public class CouponsModel extends BaseModel {
             @Override
             public void onResponse(String s) {
 
-                MsgCenterBeen msgCenterBeen = new Gson().fromJson(s, MsgCenterBeen.class);
+                MyCouponsResponse msgCenterBeen = new Gson().fromJson(s, MyCouponsResponse.class);
                 if (msgCenterBeen != null) {
-                    if (msgCenterBeen.getCode() == 0) {
-                        List<MsgCenterBeen.InfoBean.ListBean> datas = msgCenterBeen.getInfo().getList();
+                    if (msgCenterBeen.code == 0) {
+                        List<CouponBean> datas = msgCenterBeen.info;
                         if (datas!=null)
                             ibaseModel.getDataLists(datas);
                         if (datas.size()==0){
 //                            ToastUtils.showShort(context,"暂无数据");
                         }
-                    }else if (msgCenterBeen.getCode()==104){
+                    }else if (msgCenterBeen.code==104){
                         CommonUtils.tokenNullDeal(context);
-                    }else if (msgCenterBeen.getCode()==103){
+                    }else if (msgCenterBeen.code==103){
                         ibaseModel.getDataLists(null);
                     }
                 }

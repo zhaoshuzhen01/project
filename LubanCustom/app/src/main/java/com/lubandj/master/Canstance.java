@@ -59,7 +59,7 @@ public class Canstance {
     public static final int HTTP_UPGRADE = 20011;//更新
 
     public static final int HTTP_CANCELORDERINFO = 40007;//取消订单详情
-
+    public static final int HTTP_CANCELORDER = 40006;//取消订单
 //  sp constant
 
     public static final String KEY_SP_PHONE_NUM = "sp_phone_num";
