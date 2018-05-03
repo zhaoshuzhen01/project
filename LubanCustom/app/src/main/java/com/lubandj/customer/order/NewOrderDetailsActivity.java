@@ -268,23 +268,6 @@ public class NewOrderDetailsActivity extends PermissionActivity {
 
 
     public void showOrderTracePop() {
-//        if (orderTracePop == null) {
-//            OrderTraceView orderTraceView = new OrderTraceView(this, this);
-//            orderTracePop = new PopupWindow(orderTraceView,
-//                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-//            orderTracePop.setTouchable(true);
-//            orderTracePop.setOutsideTouchable(true);
-//            orderTracePop.setFocusable(true);
-//            orderTracePop.setAnimationStyle(R.style.ActionSheetDialogAnimation);
-//            orderTracePop.setBackgroundDrawable(getResources().getDrawable(android.R.color.transparent));
-//            orderTracePop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-//            orderTracePop.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                @Override
-//                public void onDismiss() {
-//                    darkenBackground(1f);
-//                }
-//            });
-//        }
         orderTracePop.showAtLocation(mBinding.ivBack, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         darkenBackground(0.5f);
     }
@@ -340,7 +323,7 @@ public class NewOrderDetailsActivity extends PermissionActivity {
                     break;
             }
         }
-        mBinding.tvStateTime.setText("");
+        mBinding.tvStateTime.setText(mBean.order_log.get(mBean.order_log.size() - 1).created_time);
 
         //服务项
         mServiceTotalAdapter.setNewData(mBean.items);
@@ -356,8 +339,10 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         }
         //师傅控制
         if (Integer.parseInt(mBean.status) >= 2 && Integer.parseInt(mBean.status) <= 5) {
-            Glide.with(NewOrderDetailsActivity.this).load(mBean.service_user_info.face).skipMemoryCache(false).into(mBinding.ivEngineerPhoto);
-            mBinding.tvEngineerName.setText(mBean.service_user_info.name);
+            if (mBean.service_user_info != null) {
+                Glide.with(NewOrderDetailsActivity.this).load(mBean.service_user_info.face_url).skipMemoryCache(false).into(mBinding.ivEngineerPhoto);
+                mBinding.tvEngineerName.setText(mBean.service_user_info.nickname);
+            }
         } else {
             mBinding.llEngineerInfo.setVisibility(View.GONE);
         }
@@ -428,11 +413,11 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         }
         new AlertDialog(this)
                 .builder()
-                .setMsg(String.format(getString(R.string.txt_make_sure_phone), mBean.service_user_info.tel))
+                .setMsg(String.format(getString(R.string.txt_make_sure_phone), mBean.service_user_info.mobile))
                 .setPositiveButton(getString(R.string.txt_sure), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mBean.service_user_info.tel));
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mBean.service_user_info.mobile));
                         startActivity(intent);
                     }
                 })
@@ -467,7 +452,7 @@ public class NewOrderDetailsActivity extends PermissionActivity {
                 .setPositiveButton(getString(R.string.txt_confirm_cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CancleOrderActivity.startActivity(NewOrderDetailsActivity.this);
+                        CancleOrderActivity.startActivity(NewOrderDetailsActivity.this, mBean.order_id);
                     }
                 })
                 .setNegativeButton(getString(R.string.txt_give_up_cancel), new View.OnClickListener() {

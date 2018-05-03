@@ -8,7 +8,7 @@ package com.lubandj.customer.bean;
  */
 
 public class ServiceUserBean {
-    public String face;//http://www.xx/com/1.jpg
-    public String name;//孙师傅
-    public String tel;//13328282832
+    public String face_url;//http://www.xx/com/1.jpg
+    public String nickname;//孙师傅
+    public String mobile;//13328282832
 }

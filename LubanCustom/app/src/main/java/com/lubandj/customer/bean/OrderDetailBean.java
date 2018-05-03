@@ -30,5 +30,5 @@ public class OrderDetailBean {
     public ServiceUserBean service_user_info;
     public List<RefundBean> refund_info;//
     public List<ServiceTotalBean> items;//
-    public List<OrderLogBean> order_log;
+    public List<OrderLogBean> order_log;//
 }

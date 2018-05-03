@@ -189,7 +189,8 @@ S
                         android:id="@+id/iv_engineer_photo"
                         android:layout_width="42dp"
                         android:layout_height="42dp"
-                        android:src="@drawable/default_header"/>
+                        android:src="@drawable/default_header"
+                        android:scaleType="fitXY"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
