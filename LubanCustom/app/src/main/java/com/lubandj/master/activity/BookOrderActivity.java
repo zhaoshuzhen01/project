@@ -248,12 +248,11 @@ public class BookOrderActivity extends TitleBaseActivity implements DataCall<Boo
 
     @Override
     public void getServiceData(BookOrderBeen data) {
-        CheckStandActivity.startActivity(this, data.getInfo().getId(),data.getInfo().getOrder_id());
+        CheckStandActivity.startActivity(this, data.getInfo().getId(),data.getInfo().getOrder_id(),data.getInfo().getPay_amount());
         //清理购物车和界面
         LocalleCarData.newInstance().clear();
         setResult(1010);
         finish();
-        ;
     }
 
     /**

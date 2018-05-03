@@ -236,7 +236,7 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         mServiceTotalAdapter.setNewData(mBean.items);
 
         mBinding.tvSalePrice.setText(mBean.coupon_amount);
-        mBinding.tvOrderPriceTotal.setText("¥" + mBean.pay_amount);
+        mBinding.tvOrderPriceTotal.setText("¥" + mBean.amount);
         //退款控制
         if (mBean.refund_info != null && mBean.refund_info.size() > 0) {
             mRefundAdapter.setNewData(mBean.refund_info);
@@ -376,7 +376,7 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         if (CommonUtils.isFastDoubleClick()) {
             return;
         }
-        CheckStandActivity.startActivity(this, mBean.id + "", mBean.order_id);
+        CheckStandActivity.startActivity(this, mBean.id + "", mBean.order_id,mBean.amount);
     }
 
     /**
