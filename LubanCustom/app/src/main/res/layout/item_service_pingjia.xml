@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/work_center_lay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/color_f4f4f4"
     android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/color_e1e1e1"></View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_10dp"></View>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/h_10dp"
+        android:background="@color/white"
         android:paddingTop="@dimen/h_10dp">
 
         <ImageView
@@ -59,7 +67,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/h_10dp"
                 android:numStars="5"
-                android:rating="2"></RatingBar>
+                android:rating="0"></RatingBar>
         </LinearLayout>
         <ImageView
             android:id="@+id/pingclick"
@@ -67,6 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:clickable="true"
+            android:visibility="gone"
             android:layout_marginRight="@dimen/h_14dp"
             android:src="@drawable/citydown"
             android:layout_alignParentRight="true"/>
@@ -76,47 +85,48 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0.5"
         android:background="@color/color_e1e1e1"></View>
-<ScrollView
-    android:id="@+id/scrooview"
-    android:layout_width="match_parent"
-    android:visibility="gone"
-    android:layout_height="wrap_content">
-    <RelativeLayout
+    <EditText
+        android:id="@+id/ask_edit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_140dp"
+        android:background="@color/white"
+        android:gravity="left"
+        android:hint="在这里留下您的评价吧"
+        android:lineSpacingExtra="@dimen/h_10dp"
+        android:maxLength="100"
+        android:paddingBottom="5dp"
+        android:paddingLeft="@dimen/h_7dp"
+        android:paddingRight="@dimen/h_7dp"
+        android:paddingTop="@dimen/h_10dp"
+        android:text=""
+        android:textColor="@color/color_999"
+        android:textColorHint="@color/color_999"
+        android:textSize="@dimen/sp_14" />
+
+
+    <GridView
+        android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/pingjia_mydata"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/h_6dp"
-            android:layout_marginLeft="@dimen/h_10dp"
-            android:text="fdsdsdf" />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/pingjia_mydata"
-            android:layout_marginLeft="@dimen/h_14dp"
-            android:layout_marginTop="@dimen/h_10dp"
-            android:layout_marginRight="@dimen/h_14dp"
-            android:overScrollMode="never"
-            android:scrollbars="none" />
-        <TextView
-            android:id="@+id/pingjia_time"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/h_30dp"
-            android:layout_below="@+id/recyclerView"
+        android:horizontalSpacing="@dimen/h_10dp"
+        android:padding="@dimen/h_6dp"
+        android:background="@color/white"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="4"
+        android:verticalSpacing="@dimen/h_5dp">
 
-            android:gravity="right|center_vertical"
-            android:layout_marginTop="@dimen/h_6dp"
-            android:layout_marginBottom="@dimen/h_6dp"
-            android:layout_marginRight="@dimen/h_14dp"
-            android:text="2017-12-12" />
-    </RelativeLayout>
-</ScrollView>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0.5"
-        android:background="@color/color_e1e1e1"></View>
+    </GridView>
+
+    <com.example.baselibrary.recycleview.NoScrollGridView
+        android:id="@+id/add_icon_gridView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:horizontalSpacing="@dimen/h_5dp"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:scrollingCache="false"
+        android:verticalSpacing="5dp" />
+
+
 </LinearLayout>

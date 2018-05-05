@@ -55,7 +55,6 @@ public class SlideShowView extends FrameLayout {
     private int mtype;
     private LayoutView mlayoutView;
     private List<List<HomeBeen.InfoBean>> contentlist = new ArrayList<>();
-
     public void setGuangGaolists(List<GuangGaoBeen.InfoBean> guangGaolists) {
         this.guangGaolists = guangGaolists;
     }
@@ -64,6 +63,7 @@ public class SlideShowView extends FrameLayout {
 
     public SlideShowView(Context context) {
         this(context, null);
+
     }
 
     public SlideShowView(Context context, AttributeSet attrs) {
@@ -251,7 +251,8 @@ public class SlideShowView extends FrameLayout {
                     //                ImageUtils.requestImage(imageView, m_AdvImgs.get(pos), 0, 0, null);
                     ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
                     layoutParams.height = (getResources().getDisplayMetrics().widthPixels / 2);
-                    Glide.with(context).load(guangGaolists.get(pos).getPicture()).skipMemoryCache(false).into(imageView);
+//                    Glide.with(context).load(guangGaolists.get(pos).getPicture()).skipMemoryCache(false).into(imageView);
+                    Glide.with(context).load(guangGaolists.get(pos).getPicture()).placeholder(R.drawable.lunbo).dontAnimate().error(R.drawable.lunbo).into(imageView);
                     imageView.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {

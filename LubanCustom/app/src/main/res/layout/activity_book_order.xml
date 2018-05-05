@@ -244,6 +244,7 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/youhui"/>
                 <TextView
+                    android:id="@+id/keyongcous"
                     android:layout_centerVertical="true"
                     android:textColor="@color/black"
                     android:text="优惠券"

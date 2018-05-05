@@ -2,7 +2,12 @@ package com.lubandj.master.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,18 +15,31 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
 
+import com.example.baselibrary.BaseEntity;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.adapter.PhotoGridAdapter;
+import com.example.baselibrary.eventbus.BusEvent;
+import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.photomanager.IPhoto;
 import com.example.baselibrary.photomanager.Photo;
 import com.example.baselibrary.photomanager.PhotoUtil;
 import com.example.baselibrary.photomanager.TagsAdapter;
+import com.example.baselibrary.util.NetworkUtils;
+import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.activity.photo.TakePhotoActivity;
 import com.example.baselibrary.recycleview.NoScrollGridView;
 import com.example.baselibrary.tools.KeyBorad;
 import com.lubandj.master.R;
+import com.lubandj.master.adapter.DetailPingAdapter;
+import com.lubandj.master.been.OrderListBeen;
+import com.lubandj.master.model.DetailPingJiaModel;
+import com.lubandj.master.utils.CommonUtils;
 
 import net.bither.util.NativeUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,26 +47,25 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class ServiceEvaluationActivity extends TitleBaseActivity {
-
-    @InjectView(R.id.ask_edit)
-    EditText askEdit;
-    @InjectView(R.id.gridview)
-    GridView gridview;
-    @InjectView(R.id.add_icon_gridView)
-    NoScrollGridView addIconGridView;
+public class ServiceEvaluationActivity extends TitleBaseActivity implements DataCall<BaseEntity> {
+    @InjectView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    private List<String> msgBeens = new ArrayList<>();
+    private OrderListBeen.InfoBean infoBean;
+    private DetailPingJiaModel detailPingJiaModel;
+    private DetailPingAdapter detailPingAdapter;
     public static final int REQUEST_PHOTO = 1;
-    private PhotoGridAdapter mPhotoGridAdapter;
+    private static final int REQUEST_CODE_BIG_IMAGE = 100;
     private static final int TOTAL_IMAGE_COUNT = 4;
-
     private List<String> mImgPath = new ArrayList<String>();
     private List<IPhoto> mImgs;
-    private static final int REQUEST_CODE_BIG_IMAGE = 100;
-    private int editTextMaxSize = 200;
-    private volatile int mCount = 0;
+    List<OrderListBeen.InfoBean.ItemsBean> datas;
+    public static int index = 0;
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context, OrderListBeen.InfoBean infoBean) {
         Intent intent = new Intent(context, ServiceEvaluationActivity.class);
+        Bundle bundle = new Bundle();
+        intent.putExtra("info", infoBean);
         context.startActivity(intent);
     }
 
@@ -74,81 +91,22 @@ public class ServiceEvaluationActivity extends TitleBaseActivity {
         setRightText("完成");
         setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
-        KeyBorad.DelayShow(askEdit, this);
-        askEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() >= editTextMaxSize) {
-                    toast(ServiceEvaluationActivity.this, "抱歉，您输入的字数太多了，请控制在" + editTextMaxSize + "字以内");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-        mPhotoGridAdapter = new PhotoGridAdapter(this);
+        msgBeens.add("");
+        msgBeens.add("");
+        infoBean = (OrderListBeen.InfoBean) getIntent().getSerializableExtra("info");
+//        infoBean.getItems().addAll(infoBean.getItems());
+        datas = infoBean.getItems();
+        detailPingAdapter = new DetailPingAdapter(datas, this);
+        LinearLayoutManager manager = new LinearLayoutManager(this); //spanCount为列数，默认方向vertical
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(detailPingAdapter);
+        detailPingJiaModel = new DetailPingJiaModel(this, this);
         initData();
     }
 
     @Override
     public void initData() {
         float dp_5 = getResources().getDimension(R.dimen.h_5dp);
-        mPhotoGridAdapter.setPhotoSize(3, (int) (dp_5 * 3));//padding设置15dp所以左右有5*6，三张图片有两个空隙是5*2
-        mPhotoGridAdapter.setShowMinus(true);
-        mPhotoGridAdapter.setOnMinusClickListener(new PhotoGridAdapter.OnPhotoMunisClickListener() {
-            @Override
-            public void onItemClick(IPhoto item, int position) {
-                //删除图片
-                mPhotoGridAdapter.remove(position);
-                int count = mPhotoGridAdapter.getCount();
-                if (count > 0) {
-                    IPhoto iPhoto = mPhotoGridAdapter.getItem(count - 1);
-                    if (!TextUtils.isEmpty(iPhoto.getPhotoPath())) {
-                        mPhotoGridAdapter.add(new Photo(null, R.drawable.my_add));
-                    }
-                }
-            }
-        });
-        mPhotoGridAdapter.add(new Photo(null, R.drawable.my_add));
-        mPhotoGridAdapter.setOnPhotoClickListener(new PhotoGridAdapter.OnPhotoClickListener() {
-            @Override
-            public void onItemClick(IPhoto item, int position) {
-                if (!TextUtils.isEmpty(item.getPhotoPath())) {
-                    //显示删除菜单
-                    mImgs = new ArrayList<IPhoto>(mPhotoGridAdapter.getList());
-                    if (null != mImgs && mImgs.size() > 0) {
-                        IPhoto iPhoto = mImgs.get(mImgs.size() - 1);
-                        if (TextUtils.isEmpty(iPhoto.getPhotoPath())) {
-                            mImgs.remove(mImgs.size() - 1);
-                        }
-                        ArrayList<CharSequence> allImage = new ArrayList<>();
-                        for (int i = 0; i < mImgs.size(); i++) {
-                            allImage.add(mImgs.get(i).getPhotoPath());
-                        }
-//大图浏览
-                        Intent intent = new Intent(ServiceEvaluationActivity.this, PhotoViewActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putCharSequenceArrayList("dataBean", allImage);
-                        intent.putExtras(bundle);
-                        intent.putExtra("currentPosition", position);
-                        startActivity(intent);
-                    }
-                } else {
-                    // 获取照片
-                    Intent intent = new Intent(getBaseContext(), TakePhotoActivity.class);
-                    intent.putExtra(TakePhotoActivity.IS_CHOOSE_MANY, true);
-                    intent.putExtra(TakePhotoActivity.NEED_CROP, false);
-                    intent.putExtra(TakePhotoActivity.CHOOSE_MANY_CURRENT_SIZE, mPhotoGridAdapter.getCount() - 1);
-                    startActivityForResult(intent, REQUEST_PHOTO);
-                }
-            }
-        });
-        gridview.setAdapter(mPhotoGridAdapter);
     }
 
 
@@ -162,7 +120,42 @@ public class ServiceEvaluationActivity extends TitleBaseActivity {
 
     @Override
     public void onClick(View view) {
-        toast(this, "完成");
+        if (!NetworkUtils.isNetworkAvailable(this)){
+            return;
+        }
+        initProgressDialog("正在发布").show();
+        JSONObject upBeen = new JSONObject();
+        try {
+            upBeen.put("id", infoBean.getId());
+
+            JSONArray jsonArray = new JSONArray();
+            for (OrderListBeen.InfoBean.ItemsBean itemsBean : datas) {
+                JSONObject object = new JSONObject();
+                try {
+                    object.put("content", TextUtils.isEmpty(itemsBean.getContent()) ? "" : itemsBean.getContent());
+                    object.put("service_id", itemsBean.getService_id());
+                    object.put("star", itemsBean.getStar());
+                    List<String> pics = new ArrayList<>();
+                    for (Photo photo : itemsBean.getPhotos()) {
+                        String path = photo.getPhotoPath();
+                        if (!TextUtils.isEmpty(path)) {
+                            Bitmap headPhoto = BitmapFactory.decodeFile(path);
+                            pics.add(CommonUtils.Bitmap2StrByBase64(headPhoto));
+                        }
+                    }
+                    object.put("content_img", pics);
+                    jsonArray.put(object);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            upBeen.put("data", jsonArray);
+            detailPingJiaModel.getPingJiaData(upBeen);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -179,12 +172,8 @@ public class ServiceEvaluationActivity extends TitleBaseActivity {
                         }
                         if (null != dataPath) {
                             NativeUtil.compressBitmap(dataPath, dataPath);
-                            int count = mPhotoGridAdapter.getCount();
-                            mPhotoGridAdapter.remove(count - 1);
-                            mPhotoGridAdapter.add(new Photo(dataPath, R.drawable.my_add));
-                            if (count < TOTAL_IMAGE_COUNT) {
-                                mPhotoGridAdapter.add(new Photo(null, R.drawable.my_add));
-                            }
+                            datas.get(ServiceEvaluationActivity.index).getPhotos().add(new Photo(dataPath, 0));
+                            detailPingAdapter.notifyDataSetChanged();
                         }
                     }
                     //多图选择返回
@@ -196,8 +185,7 @@ public class ServiceEvaluationActivity extends TitleBaseActivity {
                         }
                     }
                     if (null != patharr && patharr.size() > 0) {
-                        int count = mPhotoGridAdapter.getCount();
-                        mPhotoGridAdapter.remove(count - 1);
+
                         int i = 0;
                         for (final String path : patharr) {
                             final String newpath = IMG_DIR
@@ -210,15 +198,8 @@ public class ServiceEvaluationActivity extends TitleBaseActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            mPhotoGridAdapter.add(new Photo(newpath, 0));
-                                            ++mCount;
-                                            if (mCount == patharr.size()) {
-                                                mCount = 0;
-                                                int count = mPhotoGridAdapter.getCount();
-                                                if (count < TOTAL_IMAGE_COUNT) {
-                                                    mPhotoGridAdapter.add(new Photo(null, R.drawable.my_add));
-                                                }
-                                            }
+                                            datas.get(ServiceEvaluationActivity.index).getPhotos().add(new Photo(newpath, 0));
+                                            detailPingAdapter.notifyDataSetChanged();
                                         }
                                     });
                                 }
@@ -226,31 +207,16 @@ public class ServiceEvaluationActivity extends TitleBaseActivity {
                         }
                     }
                     break;
-                case REQUEST_CODE_BIG_IMAGE:
-                    if (null != data) {
-                        mImgs.clear();
-                        mPhotoGridAdapter.removeAll();
-                        Bundle bundle = data.getBundleExtra("data");
-                        if (bundle != null && bundle.size() > 0) {
-                            int size = bundle.size();
-                            for (int i = 0; i < size; i++) {
-                                Photo o = (Photo) bundle.get("img" + i);
-                                mImgs.add(o);
-                            }
-                            mPhotoGridAdapter.addData(mImgs);
-                            int count = mPhotoGridAdapter.getCount();
-                            if (count < TOTAL_IMAGE_COUNT) {
-                                mPhotoGridAdapter.add(new Photo(null, R.drawable.my_add));
-                            }
-                        } else {
-                            int count = mPhotoGridAdapter.getCount();
-                            if (count < TOTAL_IMAGE_COUNT) {
-                                mPhotoGridAdapter.add(new Photo(null, R.drawable.my_add));
-                            }
-                        }
-                    }
-                    break;
             }
         }
+    }
+
+    @Override
+    public void getServiceData(BaseEntity data) {
+        RxBus.getInstance().post(new BusEvent(BusEvent.PINGLUN_CHENEGG));
+
+        dialog.dismiss();
+        toast(ServiceEvaluationActivity.this, data.getMessage());
+        finish();
     }
 }

@@ -1,7 +1,10 @@
 package com.lubandj.master.been;
 
+import com.example.baselibrary.photomanager.Photo;
 import com.lubandj.master.httpbean.BaseEntity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +24,7 @@ public class OrderListBeen extends BaseEntity {
         this.info = info;
     }
 
-    public static class InfoBean {
+    public static class InfoBean implements Serializable{
         /**
          * id : 265
          * order_id : 20180302161951555048
@@ -156,7 +159,7 @@ public class OrderListBeen extends BaseEntity {
             this.items = items;
         }
 
-        public static class ItemsBean {
+        public static class ItemsBean implements Serializable{
             /**
              * service_name : 空调保养-挂式
              * num : 2
@@ -164,6 +167,36 @@ public class OrderListBeen extends BaseEntity {
 
             private String service_name;
             private String num;
+
+            public String getStar() {
+                return star;
+            }
+
+            public void setStar(String star) {
+                this.star = star;
+            }
+
+            private String star;
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+
+            private String content;
+
+            public String getService_id() {
+                return service_id;
+            }
+
+            public void setService_id(String service_id) {
+                this.service_id = service_id;
+            }
+
+            private String service_id ;
 
             public String getService_name() {
                 return service_name;
@@ -180,6 +213,26 @@ public class OrderListBeen extends BaseEntity {
             public void setNum(String num) {
                 this.num = num;
             }
+
+            public String getService_icon() {
+                return service_icon;
+            }
+
+            public void setService_icon(String service_icon) {
+                this.service_icon = service_icon;
+            }
+
+            public String service_icon ;
+            public List<Photo> getPhotos() {
+                return photos;
+            }
+
+            public void setPhotos(List<Photo> photos) {
+                this.photos = photos;
+            }
+
+            public List<Photo> photos=new ArrayList<>();
+
         }
     }
 }

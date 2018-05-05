@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
@@ -15,6 +16,8 @@ import com.lubandj.master.R;
 import com.lubandj.master.been.CarListBeen;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.ShoppingCartBean;
+import com.lubandj.master.utils.BitmapCache;
+import com.lubandj.master.utils.TaskEngine;
 
 import java.util.List;
 
@@ -24,16 +27,22 @@ import java.util.List;
 
 public class BookOrderOdapter extends BaseQuickAdapter<ShoppingCartBean, BaseViewHolder> {
     private Context context;
+    private ImageLoader imageLoader;
+
     public BookOrderOdapter(@Nullable List<ShoppingCartBean> data, Context context) {
         super(R.layout.item_shopping_cart_layout, data);
         this.context = context ;
+        imageLoader = new ImageLoader(TaskEngine.getInstance().getQueue(), new BitmapCache());
+
     }
 
     @Override
     protected void convert(BaseViewHolder helper, ShoppingCartBean item) {
         int position = helper.getAdapterPosition();
         ImageView iconMsg =  ((ImageView) (helper.getView(R.id.iv_show_pic)));
-        Glide.with(context).load(item.getImageUrl()).skipMemoryCache(false).into(iconMsg);
+//        Glide.with(context).load(item.getImageUrl()).skipMemoryCache(false).into(iconMsg);
+        ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(iconMsg, R.drawable.homelistdefaut, R.drawable.homelistdefaut);
+        imageLoader.get(item.getImageUrl(), imageListener);
        TextView tvCommodityAttr = ((TextView)(helper.getView(R.id.tv_commodity_attr)));
        TextView tvCommodityNum = ((TextView)(helper.getView(R.id.tv_commodity_num)));
         TextView tvCommodityPrice = ((TextView)(helper.getView(R.id.tv_commodity_price)));

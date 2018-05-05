@@ -4,48 +4,46 @@ import android.content.Context;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.baselibrary.BaseEntity;
 import com.example.baselibrary.tools.ToastUtils;
 import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
+import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.R;
-import com.lubandj.master.been.MsgCenterBeen;
-import com.lubandj.master.been.MyCons;
-import com.lubandj.master.httpbean.NetStartBeen;
-import com.lubandj.master.httpbean.NetWorkListBeen;
+import com.lubandj.master.been.CityListBeen;
+import com.lubandj.master.httpbean.HttpDetailOrder;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
 
-import java.util.List;
+import org.json.JSONObject;
 
 /**
- * Created by ${zhaoshuzhen} on 2018/4/29.
+ * Created by ${zhaoshuzhen} on 2018/5/2.
  */
 
-public class CouponsModel extends BaseModel {
-    public CouponsModel(Context context){
+public class DetailPingJiaModel {
+    private Context context ;
+    private DataCall dataCall ;
+    public DetailPingJiaModel(Context context,DataCall dataCall){
         this.context = context ;
+        this.dataCall = dataCall ;
     }
-    @Override
-    public void getReflushData(int type,int startIndex,int pageSize) {
 
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_COUSPS_LIST, new NetStartBeen( startIndex,pageSize), new Response.Listener<String>() {
+    public void getPingJiaData(JSONObject  jsonObject) {
+
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_DETAIL_PINGJIA_LIST,jsonObject, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {
 
-                MyCons msgCenterBeen = new Gson().fromJson(s, MyCons.class);
+                BaseEntity msgCenterBeen = new Gson().fromJson(s, BaseEntity.class);
                 if (msgCenterBeen != null) {
                     if (msgCenterBeen.getCode() == 0) {
-                        List<MyCons.InfoBean> datas = msgCenterBeen.getInfo();
-                        if (datas!=null)
-                            ibaseModel.getDataLists(datas);
-                        if (datas.size()==0){
-//                            ToastUtils.showShort(context,"暂无数据");
-                        }
+                        dataCall.getServiceData(msgCenterBeen);
                     }else if (msgCenterBeen.getCode()==104){
                         CommonUtils.tokenNullDeal(context);
                     }else if (msgCenterBeen.getCode()==103){
-                        ibaseModel.getDataLists(null);
+//                        ibaseModel.getDataLists(null);
                     }
                 }
 
@@ -62,4 +60,7 @@ public class CouponsModel extends BaseModel {
             }
         });
     }
+
 }
+
+

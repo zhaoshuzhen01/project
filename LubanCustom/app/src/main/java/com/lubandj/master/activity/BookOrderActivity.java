@@ -19,16 +19,19 @@ import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.customer.my.LeaveMsgActivity;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.Iview.DataCall;
+import com.lubandj.master.Iview.Keyong;
 import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.BookOrderOdapter;
 import com.lubandj.master.been.AddressBean;
 import com.lubandj.master.been.BookOrderBeen;
+import com.lubandj.master.been.MyCons;
 import com.lubandj.master.been.ShoppingCartBean;
 import com.lubandj.master.httpbean.AddressListReponse;
 import com.lubandj.master.httpbean.NetBookBeen;
 import com.lubandj.master.httpbean.UidParamsRequest;
 import com.lubandj.master.model.BookOrderModel;
+import com.lubandj.master.model.CheckCouModel;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
 
@@ -42,7 +45,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class BookOrderActivity extends TitleBaseActivity implements DataCall<BookOrderBeen> {
+public class BookOrderActivity extends TitleBaseActivity implements DataCall<BookOrderBeen> ,Keyong{
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.choose_youhui)
@@ -82,14 +85,16 @@ public class BookOrderActivity extends TitleBaseActivity implements DataCall<Boo
     TextView tv_phone;
     @InjectView(R.id.tv_address)
     TextView tv_address;
+    @InjectView(R.id.keyongcous)
+    TextView keyongcous;
     private BookOrderModel bookOrderModel;
     private String addressId = "";
-
+private CheckCouModel checkCouModel ;
     private BookOrderOdapter bookOrderOdapter;
     private List<ShoppingCartBean> msgBeens = new ArrayList<>();
     private List<NetBookBeen.ItemsBean> items = new ArrayList<>();
     private NetBookBeen netBookBeen = new NetBookBeen();
-
+private  MyCons.InfoBean bean1;
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, BookOrderActivity.class);
         context.startActivity(intent);
@@ -106,6 +111,7 @@ public class BookOrderActivity extends TitleBaseActivity implements DataCall<Boo
         setTitleText("预约下单");
         setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
+        checkCouModel = new CheckCouModel(this,this);
         msgBeens = LocalleCarData.newInstance().getShoppingBeenList();
         tv_settlement = findView(R.id.tv_settlement);
         tv_settlement.setOnClickListener(this);
@@ -116,6 +122,7 @@ public class BookOrderActivity extends TitleBaseActivity implements DataCall<Boo
 
         recyclerView.setAdapter(bookOrderOdapter);
         setAddress();
+        List<String>service_ids = new ArrayList<>();
         bookOrderModel = new BookOrderModel(this, this);
         for (ShoppingCartBean bean : msgBeens) {
             NetBookBeen.ItemsBean itemsBean = new NetBookBeen.ItemsBean();
@@ -126,6 +133,10 @@ public class BookOrderActivity extends TitleBaseActivity implements DataCall<Boo
             itemsBean.setPrice(bean.getPrice() + "");
             itemsBean.setNum(bean.getCount());
             items.add(itemsBean);
+            service_ids.add(bean.getService_id()+"");
+        }
+        if (service_ids.size()>0){
+            checkCouModel.getCheckCoun(LocalleCarData.newInstance().getTotalPrice()+"","北京",service_ids);
         }
         initData();
     }
@@ -158,10 +169,11 @@ public class BookOrderActivity extends TitleBaseActivity implements DataCall<Boo
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.choose_youhui:
-                CouponsActivity.startActivity(this);
+                Intent intent = new Intent(this, CouponsActivity.class);
+                startActivityForResult(intent,110);
                 break;
             case R.id.choose_time:
-                Intent intent = new Intent(BookOrderActivity.this, OrderCalendarActivity.class);
+                 intent = new Intent(BookOrderActivity.this, OrderCalendarActivity.class);
                 startActivityForResult(intent, 303);
                 break;
             case R.id.choose_liuyan:
@@ -179,8 +191,16 @@ public class BookOrderActivity extends TitleBaseActivity implements DataCall<Boo
                 }
                 netBookBeen.setAddress_id(addressId);
                 netBookBeen.setAmount(LocalleCarData.newInstance().getTotalPrice());
-                netBookBeen.setCoupon_id(0);
-                netBookBeen.setCoupon_amount(0);
+                if (!TextUtils.isEmpty(bean1.getId())){
+                    netBookBeen.setCoupon_id(Integer.parseInt(bean1.getId()));
+                }else {
+                    netBookBeen.setCoupon_id(0);
+                }
+                if (!TextUtils.isEmpty(bean1.getAmount())){
+                    netBookBeen.setCoupon_amount(Integer.parseInt(bean1.getAmount()));
+                }else {
+                    netBookBeen.setCoupon_amount(0);
+                }
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 netBookBeen.setDatetime(sdf.format(new Date()));
                 netBookBeen.setRemark(tv_marktext.getText().toString());
@@ -243,6 +263,10 @@ public class BookOrderActivity extends TitleBaseActivity implements DataCall<Boo
                     tv_marktext.setText(data.getStringExtra("msg"));
                 }
                 break;
+            case 110:
+                 bean1 = (MyCons.InfoBean) data.getSerializableExtra("data");
+                keyongcous.setText(bean1.getAmount()+" "+bean1.getReduction());
+                break;
         }
     }
 
@@ -303,5 +327,10 @@ public class BookOrderActivity extends TitleBaseActivity implements DataCall<Boo
                 }
             });
         }
+    }
+
+    @Override
+    public void getKeData(Object data) {
+
     }
 }

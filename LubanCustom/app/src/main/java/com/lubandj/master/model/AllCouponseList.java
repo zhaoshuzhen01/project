@@ -8,35 +8,34 @@ import com.example.baselibrary.tools.ToastUtils;
 import com.google.gson.Gson;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
+import com.lubandj.master.been.Allcon;
 import com.lubandj.master.been.MsgCenterBeen;
-import com.lubandj.master.been.MyCons;
 import com.lubandj.master.httpbean.NetStartBeen;
-import com.lubandj.master.httpbean.NetWorkListBeen;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
 
 import java.util.List;
 
 /**
- * Created by ${zhaoshuzhen} on 2018/4/29.
+ * Created by ${zhaoshuzhen} on 2018/5/5.
  */
 
-public class CouponsModel extends BaseModel {
-    public CouponsModel(Context context){
+public class AllCouponseList extends BaseModel {
+    public AllCouponseList(Context context){
         this.context = context ;
     }
     @Override
     public void getReflushData(int type,int startIndex,int pageSize) {
 
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_COUSPS_LIST, new NetStartBeen( startIndex,pageSize), new Response.Listener<String>() {
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_ALLCOUSPS_LIST, new NetStartBeen( startIndex,pageSize), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {
 
-                MyCons msgCenterBeen = new Gson().fromJson(s, MyCons.class);
+                Allcon msgCenterBeen = new Gson().fromJson(s, Allcon.class);
                 if (msgCenterBeen != null) {
                     if (msgCenterBeen.getCode() == 0) {
-                        List<MyCons.InfoBean> datas = msgCenterBeen.getInfo();
+                        List<Allcon.InfoBean> datas = msgCenterBeen.getInfo();
                         if (datas!=null)
                             ibaseModel.getDataLists(datas);
                         if (datas.size()==0){

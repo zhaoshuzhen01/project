@@ -19,7 +19,9 @@ import com.lubandj.master.adapter.GetCoupsAdapter;
 import com.lubandj.master.adapter.MyEvaluationAdapter;
 import com.lubandj.master.adapter.PingJIaAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.been.MyPingjiaBeen;
 import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
+import com.lubandj.master.model.MyPinglun;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +30,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class MyEvaluationActivity extends BaseRefreshActivity implements IbaseView<MsgCenterBeen.InfoBean.ListBean> {
+public class MyEvaluationActivity extends BaseRefreshActivity implements IbaseView<MyPingjiaBeen.InfoBean> {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.in_get)
     TextView inget;
     private MyEvaluationAdapter msgCenterAdapter;
-    private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
+    private List<MyPingjiaBeen.InfoBean> msgBeens = new ArrayList<>();
     private BaseReflushPresenter msgCenterPresenter;
 
     @Override
@@ -65,8 +67,8 @@ public class MyEvaluationActivity extends BaseRefreshActivity implements IbaseVi
         initRecyclerView(recyclerView, new LinearLayoutManager(this), msgCenterAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(25, 25, 0, 25));
 
-      /*  msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this, this, new MsgCenterModel(this));
-        msgCenterPresenter.getReflushData(0);*/
+        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this, this, new MyPinglun(this));
+        msgCenterPresenter.getReflushData(0);
     }
 
     @Override
@@ -96,7 +98,7 @@ public class MyEvaluationActivity extends BaseRefreshActivity implements IbaseVi
     }
 
     @Override
-    public void getDataLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
+    public void getDataLists(List<MyPingjiaBeen.InfoBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
         msgBeens.clear();
@@ -104,7 +106,7 @@ public class MyEvaluationActivity extends BaseRefreshActivity implements IbaseVi
         msgBeens.addAll(datas);
 //        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
         msgCenterAdapter.notifyDataSetChanged();
-        ServiceEvaluationActivity.startActivity(this);
+//        ServiceEvaluationActivity.startActivity(this,null);
     }
 
     @Override

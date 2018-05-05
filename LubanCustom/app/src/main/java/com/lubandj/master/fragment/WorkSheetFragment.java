@@ -5,23 +5,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.example.baselibrary.BaseRefreshFragment;
+import com.example.baselibrary.eventbus.BusEvent;
+import com.example.baselibrary.eventbus.RxBus;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.view.PullToRefreshAndPushToLoadView6;
+import com.example.baselibrary.tools.NotificationUtil;
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.customer.order.NewOrderDetailsActivity;
 import com.lubandj.customer.order.OrderDetailsActivity;
 import com.lubandj.master.Presenter.SheetListPresenter;
 import com.lubandj.master.R;
+import com.lubandj.master.TApplication;
 import com.lubandj.master.activity.CheckStandActivity;
 import com.lubandj.master.activity.MainCantainActivity;
 import com.lubandj.master.adapter.WorkSheetAdapter;
 import com.lubandj.master.been.OrderListBeen;
+import com.lubandj.master.been.UserInfo;
 import com.lubandj.master.been.WorkListBeen;
 import com.lubandj.master.customview.BackLayout;
 import com.lubandj.master.Iview.IworkListView;
@@ -30,11 +36,15 @@ import com.lubandj.master.model.workList.WorkListClickModel;
 import com.example.baselibrary.util.NetworkUtils;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone;
+import com.lubandj.master.worksheet.WorkSheetListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by ${zhaoshuzhen} on 2017/9/5.
@@ -52,6 +62,7 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
     private SheetListPresenter sheetListPresenter;
     private WorkListClickModel workListClickModel;
     private int currentIndex ;
+    private Observable<BusEvent> observable;
 
     public static WorkSheetFragment newInstance(int index) {
         WorkSheetFragment myFragment = new WorkSheetFragment();
@@ -83,6 +94,17 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
         recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 20, 0));
         sheetListPresenter = new SheetListPresenter(getActivity(), this);
         workListClickModel = new WorkListClickModel(getActivity(), this);
+        observable = RxBus.getInstance().register(this);
+        observable.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<BusEvent>() {
+            @Override
+            public void call(BusEvent busEvent) {
+                switch (busEvent.getCode()) {
+                    case BusEvent.PINGLUN_CHENEGG:
+                       getWebDatas();
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -112,6 +134,10 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     private void getWebDatas() {
         if (NetworkUtils.isNetworkAvailable(getActivity())&& CommonUtils.isLogin()) {
+            backLayout.setNodataText("您还没有相关订单");
+            backLayout.setImg(R.drawable.nodingdan);
+            backLayout.setButtonText("立即预约");
+            backLayout.setVisibility(View.VISIBLE);
             initData();
         } else {
             if (worklists != null && worklists.size() > 0) {
@@ -151,23 +177,6 @@ public class WorkSheetFragment extends BaseRefreshFragment implements BaseQuickA
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        /*switch (index) {
-            case 0://全部
-                Intent intent = new Intent(getActivity(), WorkSheetDetailsActivityPhone.class);
-                intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, worklists.get(position).getId());
-                startActivity(intent);
-                break;
-            case 1://未完成
-                intent = new Intent(getActivity(), WorkSheetDetailsActivityPhone.class);
-                intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, worklists.get(position).getId());
-                startActivity(intent);
-                break;
-            case 2://评价
-                intent = new Intent(getActivity(), WorkSheetDetailsActivityPhone.class);
-                intent.putExtra(WorkSheetDetailsActivityPhone.KEY_DETAILS_ID, worklists.get(position).getId());
-                startActivity(intent);
-                break;
-        }*/
         Intent intent = new Intent(getActivity(), NewOrderDetailsActivity.class);
         intent.putExtra(OrderDetailsActivity.KEY_DETAILS_ID, worklists.get(position).getId());
         startActivity(intent);

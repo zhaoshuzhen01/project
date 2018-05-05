@@ -53,7 +53,6 @@ public class SheetListPresenter implements IRefleshLoadMorePrester, IWorkModel {
 
     @Override
     public void getMoreData(int type) {
-        ++type;
         loadMore = true ;
         if (mdatas!=null){
             mstartIndex=mstartIndex+1;

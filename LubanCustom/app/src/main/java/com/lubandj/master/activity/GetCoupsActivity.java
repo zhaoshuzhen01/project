@@ -17,7 +17,9 @@ import com.lubandj.master.Presenter.BaseReflushPresenter;
 import com.lubandj.master.R;
 import com.lubandj.master.adapter.CouponsAdapter;
 import com.lubandj.master.adapter.GetCoupsAdapter;
+import com.lubandj.master.been.Allcon;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.model.AllCouponseList;
 import com.lubandj.master.model.MsgCenterModel.MsgCenterModel;
 
 import java.util.ArrayList;
@@ -27,13 +29,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class GetCoupsActivity extends BaseRefreshActivity implements IbaseView<MsgCenterBeen.InfoBean.ListBean> {
+public class GetCoupsActivity extends BaseRefreshActivity implements IbaseView<Allcon.InfoBean> {
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.in_get)
     TextView inget;
     private GetCoupsAdapter msgCenterAdapter;
-    private List<MsgCenterBeen.InfoBean.ListBean> msgBeens = new ArrayList<>();
+    private List<Allcon.InfoBean> msgBeens = new ArrayList<>();
     private BaseReflushPresenter msgCenterPresenter;
 
     @Override
@@ -64,7 +66,7 @@ public class GetCoupsActivity extends BaseRefreshActivity implements IbaseView<M
         initRecyclerView(recyclerView, new LinearLayoutManager(this), msgCenterAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(25, 25, 0, 25));
 
-        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this, this, new MsgCenterModel(this));
+        msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(this, this, new AllCouponseList(this));
         msgCenterPresenter.getReflushData(0);
     }
 
@@ -95,7 +97,7 @@ public class GetCoupsActivity extends BaseRefreshActivity implements IbaseView<M
     }
 
     @Override
-    public void getDataLists(List<MsgCenterBeen.InfoBean.ListBean> datas) {
+    public void getDataLists(List<Allcon.InfoBean> datas) {
         pullToRefreshAndPushToLoadView.finishRefreshing();
         pullToRefreshAndPushToLoadView.finishLoading();
         msgBeens.clear();

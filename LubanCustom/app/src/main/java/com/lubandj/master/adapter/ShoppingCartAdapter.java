@@ -11,11 +11,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
 import com.lubandj.master.R;
 import com.lubandj.master.been.ShoppingCartBean;
+import com.lubandj.master.utils.BitmapCache;
+import com.lubandj.master.utils.TaskEngine;
 
 import java.util.List;
 
@@ -31,10 +34,13 @@ public class ShoppingCartAdapter extends BaseQuickAdapter<ShoppingCartBean, Base
     private CheckInterface checkInterface;
     private ModifyCountInterface modifyCountInterface;
     private Context context;
+    private ImageLoader imageLoader;
 
     public ShoppingCartAdapter(@Nullable List<ShoppingCartBean> data,Context context) {
         super(R.layout.item_shopping_cart_layout, data);
         this.context = context;
+        imageLoader = new ImageLoader(TaskEngine.getInstance().getQueue(), new BitmapCache());
+
     }
 
     public void setShoppingCartBeanList(List<ShoppingCartBean> shoppingCartBeanList) {
@@ -80,7 +86,9 @@ public class ShoppingCartAdapter extends BaseQuickAdapter<ShoppingCartBean, Base
         tvCommodityPrice.setText("￥ "+shoppingCartBean.getPrice()+"");
         tvCommodityNum.setText(" X"+shoppingCartBean.getCount()+"");
         tvCommodityShowNum.setText(shoppingCartBean.getCount()+"");
-        Glide.with(context).load(shoppingCartBean.getImageUrl()).skipMemoryCache(false).into(ivShowPic);
+//        Glide.with(context).load(shoppingCartBean.getImageUrl()).skipMemoryCache(false).into(ivShowPic);
+        ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(ivShowPic, R.drawable.homelistdefaut, R.drawable.homelistdefaut);
+        imageLoader.get(shoppingCartBean.getImageUrl(), imageListener);
         //单选框按钮
         ckOneChose.setOnClickListener(
                 new View.OnClickListener() {
