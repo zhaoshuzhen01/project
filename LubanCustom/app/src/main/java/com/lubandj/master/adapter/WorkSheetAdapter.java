@@ -104,7 +104,7 @@ public class WorkSheetAdapter extends BaseQuickAdapter<OrderListBeen.InfoBean, B
         currentIndex = position;
         if (mdata.get(currentIndex).getPay_status().equals("1")) {
             LocalleCarData.newInstance().setTotalPrice(Double.parseDouble(mdata.get(currentIndex).getAmount()+""));
-            CheckStandActivity.startActivity(mContext,mdata.get(currentIndex).getId(),mdata.get(currentIndex).getOrder_id());
+            CheckStandActivity.startActivity(mContext,mdata.get(currentIndex).getId(),mdata.get(currentIndex).getOrder_id(),mdata.get(currentIndex).getAmount());
             return;
         }
         switch (view.getId()) {

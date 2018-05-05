@@ -114,7 +114,7 @@ public class CouponsActivity extends BaseRefreshActivity implements IbaseView<My
         pullToRefreshAndPushToLoadView.finishLoading();
         msgBeens.clear();
         if (datas!=null)
-        msgBeens.addAll(datas);
+            msgBeens.addAll(datas);
 //        msgBeens.addAll(NotifyMsgInstance.getInstance().getNotifyBeens());
         msgCenterAdapter.notifyDataSetChanged();
     }

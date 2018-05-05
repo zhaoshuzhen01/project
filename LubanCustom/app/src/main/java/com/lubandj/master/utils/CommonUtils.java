@@ -1,21 +1,26 @@
 package com.lubandj.master.utils;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.util.ActUtils;
+import com.example.baselibrary.widget.AlertDialog;
 import com.google.gson.Gson;
 import com.igexin.sdk.PushManager;
 import com.lubandj.master.Canstance;
@@ -23,6 +28,7 @@ import com.lubandj.master.R;
 import com.lubandj.master.TApplication;
 import com.lubandj.master.httpbean.BaseResponseBean;
 import com.lubandj.customer.login.LoginActivity;
+import com.lubandj.master.httpbean.UpgradeAppResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
@@ -260,5 +266,69 @@ public class CommonUtils {
         result.setDuration(Toast.LENGTH_SHORT);
         result.setGravity(Gravity.CENTER, 0, 0);
         result.show();
+    }
+
+    public static boolean isHasRequestUpgrade = false;
+
+    //检测版本
+    public static void upgradeApp(final Context context, final Dialog dialog) {
+        if (dialog != null)
+            dialog.show();
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_UPGRADE, null, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String s) {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                try {
+                    isHasRequestUpgrade = true;
+                    BaseResponseBean bean = new Gson().fromJson(s, BaseResponseBean.class);
+                    if (bean.code == 0) {
+                        UpgradeAppResponse reponse = new Gson().fromJson(s, UpgradeAppResponse.class);
+                        final UpgradeAppResponse.UpgradeApp upgradeApp = reponse.info;
+                        new AlertDialog(context)
+                                .builder()
+                                .setTitle("版本更新")
+                                .setMsg(upgradeApp.des)
+                                .setPositiveButton("立即更新", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent();
+                                        intent.setAction("android.intent.action.VIEW");
+                                        Uri content_url = Uri.parse(upgradeApp.url);
+                                        intent.setData(content_url);
+                                        context.startActivity(intent);
+                                    }
+                                })
+                                .setNegativeButton("以后再说", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                    }
+                                }).show();
+                    } else {
+                        if (dialog != null)
+                            ToastUtils.showShort(TApplication.context, "已经是最新版本！");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (dialog != null)
+                        ToastUtils.showShort(context, "返回数据解析出错:" + s);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                if (volleyError != null) {
+                    if (volleyError.networkResponse != null)
+                        ToastUtils.showShort(TApplication.context, "网络连接错误（" + volleyError.networkResponse.statusCode + ")");
+                    Log.e("TAG", volleyError.getMessage(), volleyError);
+                }
+            }
+        });
     }
 }

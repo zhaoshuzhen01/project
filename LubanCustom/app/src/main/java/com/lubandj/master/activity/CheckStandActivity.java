@@ -33,7 +33,7 @@ import com.lubandj.master.worksheet.WorkSheetDetailsActivityPhone;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class CheckStandActivity extends TitleBaseActivity implements CompoundButton.OnCheckedChangeListener,DataCall {
+public class CheckStandActivity extends TitleBaseActivity implements CompoundButton.OnCheckedChangeListener, DataCall {
     @InjectView(R.id.top_img)
     ImageView topImg;
     @InjectView(R.id.top_lay)
@@ -43,27 +43,30 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
     @InjectView(R.id.zfbcheckout)
     CheckBox zfbcheckout;
     @InjectView(R.id.text1)
-    TextView text1 ;
+    TextView text1;
     @InjectView(R.id.xiadanprice)
-    TextView xiandanprice ;
+    TextView xiandanprice;
     @InjectView(R.id.text4)
-    TextView text4 ;
+    TextView text4;
     private MyCountDownTimer timer;
-    private final long TIME = 15*60 * 1000L;
+    private final long TIME = 15 * 60 * 1000L;
     private final long INTERVAL = 1000L;
     private LinearLayout sure_pay;
     public Pay pay;
-    private String orderid ;
+    private String orderid;
     private String id;
-    private PayModel payModel ;
+    private String amount;
+    private PayModel payModel;
     /**
      * 充值结果,0为未充值状态;1为成功;2为失败
      */
     public static int mRechargeResult = 0;
-    public static void startActivity(Context context,String id,String orderid) {
+
+    public static void startActivity(Context context, String id, String orderid, String amount) {
         Intent intent = new Intent(context, CheckStandActivity.class);
-        intent.putExtra("id",id);
-        intent.putExtra("orderid",orderid);
+        intent.putExtra("id", id);
+        intent.putExtra("orderid", orderid);
+        intent.putExtra("amount", amount);
         context.startActivity(intent);
     }
 
@@ -79,18 +82,21 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
         setTitleText("收银台");
         setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
+        orderid = getIntent().getStringExtra("orderid");
+        id = getIntent().getStringExtra("id");
+        amount = getIntent().getStringExtra("amount");
+
         sure_pay = findView(R.id.sure_pay);
         sure_pay.setOnClickListener(this);
         weixinchekcout.setChecked(true);
         weixinchekcout.setOnCheckedChangeListener(this);
         zfbcheckout.setOnCheckedChangeListener(this);
         window.setStatusBarColor(getResources().getColor(R.color.weixin));
-        text1.setText("¥" +LocalleCarData.newInstance().getTotalPrice());
-        xiandanprice.setText("¥" +LocalleCarData.newInstance().getTotalPrice());
-        payModel = new PayModel(this,this);
+        text1.setText("¥" + amount);
+        xiandanprice.setText("¥" + amount);
+        payModel = new PayModel(this, this);
         startTimer();
-        orderid = getIntent().getStringExtra("orderid");
-        id = getIntent().getStringExtra("id");
+
         pay = new Pay(this, new PayResultCallbackImpl() {
             @Override
             public void onPaySuccess(String result, String payType) {
@@ -132,9 +138,9 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
             case R.id.sure_pay:
 
                 if (weixinchekcout.isChecked()) {
-                    payModel.bookOrder(orderid,"1");
+                    payModel.bookOrder(orderid, "1");
                 } else {
-                    payModel.bookOrder(orderid,"2");
+                    payModel.bookOrder(orderid, "2");
                 }
                 break;
         }
@@ -201,10 +207,11 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
         public void onFinish() {
             text4.setText("  00:00");
             cancelTimer();
-            ToastUtils.showShort(CheckStandActivity.this,"支付超时");
+            ToastUtils.showShort(CheckStandActivity.this, "支付超时");
             finish();
         }
     }
+
     /**
      * 开始倒计时
      */

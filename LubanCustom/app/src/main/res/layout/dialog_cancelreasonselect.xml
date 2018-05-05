@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/trans"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:text="退款原因"
+        android:textColor="#666666"
+        android:textSize="16sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#999999"/>
+
+    <TextView
+        android:id="@+id/tv_firstreason"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:text="拍错/多拍/不想要"
+        android:textColor="#666666"
+        android:textSize="14sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#999999"/>
+
+    <TextView
+        android:id="@+id/tv_secondreason"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:text="时间有变动"
+        android:textColor="#666666"
+        android:textSize="14sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#999999"/>
+
+    <TextView
+        android:id="@+id/tv_thirdreason"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:text="工程师未按时到场"
+        android:textColor="#666666"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tv_cancel_cancelreason"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#e94b4e"
+        android:gravity="center"
+        android:text="关闭"
+        android:textColor="#ffffff"
+        android:textSize="16sp"/>
+
+</LinearLayout>

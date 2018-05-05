@@ -1,7 +1,6 @@
 package com.lubandj.master.login;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
@@ -14,8 +13,8 @@ import android.view.View;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.baselibrary.BaseActivity;
 import com.example.baselibrary.tools.ToastUtils;
+import com.example.baselibrary.tools.Tools;
 import com.example.baselibrary.util.ActUtils;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
@@ -25,7 +24,6 @@ import com.lubandj.master.httpbean.UserInfoRequest;
 import com.lubandj.master.httpbean.UserInfoResponse;
 import com.lubandj.master.my.PermissionActivity;
 import com.lubandj.master.utils.CommonUtils;
-import com.lubandj.master.utils.Logger;
 import com.lubandj.master.utils.StatusBarUtils;
 import com.lubandj.master.utils.TaskEngine;
 import com.lubandj.master.worksheet.WorkSheetListActivity;
@@ -46,6 +44,8 @@ public class SplashActivity extends PermissionActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         StatusBarUtils.setWindowStatusBarColor(SplashActivity.this, R.color.splash_status_bar);
+        Canstance.VERSION = Tools.getVersionName(SplashActivity.this);
+
         onLogin();
     }
 

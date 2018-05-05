@@ -17,7 +17,7 @@ public class Canstance {
 
     public static final int TYPE_WORKCALENDAR = 5;//工作日历跳转
 
-    public static final String VERSION = "v1.0";
+    public static String VERSION = "v1.0";
 
     public static final int HTTP_SEND_CODE = 90001;//发短信
     public static final int HTTP_LOGIN = 10002;//登陆
@@ -36,6 +36,8 @@ public class Canstance {
     public static final int HTTP_WORKDETAIL = 60001;//工作日历详情
     public static final int HTTP_LEAVERECORD = 50002;//请假列表
     public static final int HTTP_LEAVEREQUEST = 50001;//请假提交
+    public static final int HTTP_UPGRADE = 20011;//更新
+
 //  sp constant
 
     public static final String KEY_SP_PHONE_NUM = "sp_phone_num";

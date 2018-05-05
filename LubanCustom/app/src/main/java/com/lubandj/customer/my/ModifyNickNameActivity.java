@@ -142,7 +142,6 @@ public class ModifyNickNameActivity extends BaseActivity {
                 if (response != null) {
                     ToastUtils.showShort(ModifyNickNameActivity.this, response.message);
                     TApplication.context.mUserInfo.nickname = nickName;
-                    ToastUtils.showShort(ModifyNickNameActivity.this, "修改成功");
                     setResult(RESULT_OK);
                     finish();
                 }

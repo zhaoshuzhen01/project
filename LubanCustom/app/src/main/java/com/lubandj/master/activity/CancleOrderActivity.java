@@ -2,52 +2,58 @@ package com.lubandj.master.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.baidu.mapapi.map.MapBaseIndoorMapInfo;
 import com.example.baselibrary.TitleBaseActivity;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.tools.ToastUtils;
-import com.lubandj.customer.my.FeedBackInfoActivity;
-import com.lubandj.master.Iview.DataCall;
-import com.lubandj.master.LocalleCarData;
+import com.google.gson.Gson;
+import com.lubandj.customer.httpbean.CancelOrderInfoRequest;
+import com.lubandj.customer.httpbean.CancelOrderInfoResponse;
+import com.lubandj.customer.httpbean.CancelOrderRequest;
+import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
-import com.lubandj.master.adapter.BookOrderOdapter;
-import com.lubandj.master.been.AddressBean;
-import com.lubandj.master.been.BookOrderBeen;
-import com.lubandj.master.been.ShoppingCartBean;
-import com.lubandj.master.httpbean.NetBookBeen;
-import com.lubandj.master.model.BookOrderModel;
+import com.lubandj.master.adapter.CancelOrderServiceAdapter;
+import com.lubandj.master.dialog.CancelReasonSelectDialog;
+import com.lubandj.master.dialog.ToastDialog;
+import com.lubandj.master.httpbean.BaseResponseBean;
 import com.lubandj.master.utils.CommonUtils;
+import com.lubandj.master.utils.TaskEngine;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class CancleOrderActivity extends TitleBaseActivity implements DataCall<BookOrderBeen> {
-    @InjectView(R.id.recyclerView)
+public class CancleOrderActivity extends TitleBaseActivity {
+    @InjectView(R.id.rv_items)
     RecyclerView recyclerView;
+    @InjectView(R.id.tv_cancel_reason)
+    TextView mTvReason;
+    @InjectView(R.id.tv_cancel_amount)
+    TextView mTvAmount;
+    @InjectView(R.id.ll_cancel_reason)
+    LinearLayout mLlReason;
 
+    private CancelOrderServiceAdapter mCancelOrderServiceAdapter;
 
-    private BookOrderOdapter bookOrderOdapter;
-    private List<ShoppingCartBean> msgBeens = new ArrayList<>();
-    private  List<NetBookBeen.ItemsBean> items = new ArrayList<>();
-    private  NetBookBeen netBookBeen = new NetBookBeen();
-    public static void startActivity(Context context) {
+    private List<CancelOrderInfoResponse.CancelOrderService> itemList = new ArrayList<>();
+    private String order_id;
+
+    public static void startActivity(Context context, String order_id) {
         Intent intent = new Intent(context, CancleOrderActivity.class);
+        intent.putExtra("orderid", order_id);
         context.startActivity(intent);
     }
 
@@ -62,31 +68,51 @@ public class CancleOrderActivity extends TitleBaseActivity implements DataCall<B
         setTitleText("取消下单");
         setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
-        msgBeens = LocalleCarData.newInstance().getShoppingBeenList();
-        bookOrderOdapter = new BookOrderOdapter(msgBeens, this);
+
+        order_id = getIntent().getStringExtra("orderid");
+
+        itemList = new ArrayList<>();
+        mCancelOrderServiceAdapter = new CancelOrderServiceAdapter(itemList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 2, 0));
-
-        recyclerView.setAdapter(bookOrderOdapter);
-
-        for (ShoppingCartBean bean:msgBeens){
-            NetBookBeen.ItemsBean itemsBean= new NetBookBeen.ItemsBean();
-            itemsBean.setId(bean.getId());
-            itemsBean.setService_id(bean.getService_id());
-            itemsBean.setSpec_id(bean.getSpec_id());
-            itemsBean.setService_name(bean.getShoppingName());
-            itemsBean.setPrice(bean.getPrice()+"");
-            itemsBean.setNum(bean.getCount());
-            items.add(itemsBean);
-        }
+        recyclerView.setAdapter(mCancelOrderServiceAdapter);
         initData();
     }
 
     @Override
     public void initData() {
-       /* tv_show_price.setText("¥" + LocalleCarData.newInstance().getTotalPrice() + "");
-        tv_show_price11.setText("¥" + LocalleCarData.newInstance().getTotalPrice() + "");*/
+        initProgressDialog(R.string.txt_loading).show();
+        CancelOrderInfoRequest detailOrder = new CancelOrderInfoRequest();
+        detailOrder.order_id = order_id;
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_CANCELORDERINFO, detailOrder, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                dialog.dismiss();
+                try {
+                    CancelOrderInfoResponse response = new Gson().fromJson(s, CancelOrderInfoResponse.class);
+                    if (response.code == 0) {
+                        if (response.info != null) {
+                            mCancelOrderServiceAdapter.setNewData(response.info.service);
+                            mTvAmount.setText("¥" + response.info.pay_amount);
+                        }
+                    } else if (response.code == 104) {
+                        CommonUtils.tokenNullDeal(CancleOrderActivity.this);
+                    } else {
+                        ToastUtils.showShort(CancleOrderActivity.this, response.message);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ToastUtils.showShort(CancleOrderActivity.this, "返回数据解析出错");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                CommonUtils.fastShowError(CancleOrderActivity.this, volleyError);
+            }
+        });
     }
 
     @Override
@@ -103,24 +129,60 @@ public class CancleOrderActivity extends TitleBaseActivity implements DataCall<B
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.inject(this);
     }
 
-    @OnClick({R.id.in_get, R.id.choose_address})
+    @OnClick({R.id.in_get, R.id.ll_cancel_reason})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.in_get:
+            case R.id.in_get://提交
+                if (TextUtils.isEmpty(mTvReason.getText().toString())) {
+                    new ToastDialog(CancleOrderActivity.this, "请选择原因").show();
+                }
+                initProgressDialog(R.string.txt_loading).show();
+                CancelOrderRequest detailOrder = new CancelOrderRequest();
+                detailOrder.order_id = order_id;
+                detailOrder.reason=mTvReason.getText().toString();
+                TaskEngine.getInstance().tokenHttps(Canstance.HTTP_CANCELORDER, detailOrder, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        dialog.dismiss();
+                        try {
+                            BaseResponseBean response = new Gson().fromJson(s, BaseResponseBean.class);
+                            if (response.code == 0) {
+                                ToastUtils.showShort(CancleOrderActivity.this, "取消成功");
+                                setResult(RESULT_OK);
+                                finish();
+                            } else if (response.code == 104) {
+                                CommonUtils.tokenNullDeal(CancleOrderActivity.this);
+                            } else {
+                                ToastUtils.showShort(CancleOrderActivity.this, response.message);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            ToastUtils.showShort(CancleOrderActivity.this, "返回数据解析出错");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        dialog.dismiss();
+                        CommonUtils.fastShowError(CancleOrderActivity.this, volleyError);
+                    }
+                });
                 break;
-            case R.id.choose_address:
-
+            case R.id.ll_cancel_reason://获取原因
+                CancelReasonSelectDialog dialog = new CancelReasonSelectDialog(CancleOrderActivity.this, new CancelReasonSelectDialog.SelectClickListenter() {
+                    @Override
+                    public void clickString(String strng) {
+                        mTvReason.setText(strng);
+                    }
+                });
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.show();
                 break;
         }
     }
 
-
-    @Override
-    public void getServiceData(BookOrderBeen data) {
-        CheckStandActivity.startActivity(this,data.getInfo().getId(),data.getInfo().getOrder_id());
-    }
 }

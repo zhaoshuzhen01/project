@@ -1,237 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/color_f4f4f4"
-    tools:context="com.lubandj.master.activity.BookOrderActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_f4f4f4"
+                android:orientation="vertical"
+                tools:context="com.lubandj.master.activity.BookOrderActivity">
+
     <View
-        android:background="@color/color_e1e1e1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0.5"></View>
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/color_e1e1e1"></View>
+
     <ScrollView
-        android:layout_marginTop="@dimen/h_10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_marginTop="@dimen/h_10dp"
+                android:id="@+id/rv_items"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:overScrollMode="never"
-                android:scrollbars="none" />
+                android:scrollbars="none"/>
 
-                <RelativeLayout
-                    android:id="@+id/choose_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="@dimen/h_14dp"
-                    android:layout_centerInParent="true"
-                    android:background="@color/white"
-                    android:layout_marginTop="@dimen/h_14dp">
+            <LinearLayout
+                android:id="@+id/ll_cancel_reason"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical">
 
-                    <ImageView
-                        android:id="@+id/pic1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:visibility="gone"
-                        android:layout_marginLeft="@dimen/h_14dp"
-                        android:src="@drawable/serviceaddress"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="退款原因"
+                    android:textSize="15sp"
+                    />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/h_6dp"
-                        android:layout_toRightOf="@+id/pic1"
-                        android:text="退款原因"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/h_20dp"
-                        android:drawableRight="@drawable/right_arrow"
-                        android:text="/////////////     "
-                        />
-                </RelativeLayout>
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tv_cancel_reason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:hint="请选择"
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="21dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/right_arrow"/>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
+                android:layout_marginTop="1dp"
                 android:background="@color/white"
-                android:gravity="center_vertical"
-                android:padding="@dimen/h_3dp">
+                android:gravity="center_vertical">
+
                 <TextView
-                    android:layout_width="@dimen/h_0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:gravity="center|left"
-                    android:padding="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="退款金额"
-                     />
+                    android:textSize="15sp"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
                 <TextView
-                    android:id="@+id/tv_show_price11"
+                    android:id="@+id/tv_cancel_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
                     android:gravity="center|left"
-                    android:padding="5dp"
-                    android:text="￥390"
-                    android:textColor="@color/color_ff0000" />
+                    android:text=""
+                    android:textColor="@color/color_ff0000"
+                    android:textSize="15sp"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h_10dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:text="退款说明"
-                    android:layout_marginLeft="@dimen/h_5dp"
-
+                    android:textSize="16sp"
                     />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/h_10dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/circle"
+                        android:gravity="center"
                         android:text="1"
-                        android:background="@drawable/circle"
                         android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_marginLeft="@dimen/h_5dp"
+                        android:textSize="14sp"/>
 
-                        />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:text="预约上门时间半小时前取消订单，无需扣除违约金。"
-                        android:layout_marginLeft="@dimen/h_5dp"
-
+                        android:textSize="14sp"
                         />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/h_10dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/circle"
+                        android:gravity="center"
                         android:text="2"
-                        android:background="@drawable/circle"
                         android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_marginLeft="@dimen/h_5dp"
-
+                        android:textSize="14sp"
                         />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:text="预约上门时间半小时内取消订单，需扣除50元违约金。"
-                        android:layout_marginLeft="@dimen/h_5dp"
-
+                        android:textSize="14sp"
                         />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/h_10dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/circle"
+                        android:gravity="center"
                         android:text="3"
-                        android:background="@drawable/circle"
                         android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_marginLeft="@dimen/h_5dp"
-
+                        android:textSize="14sp"
                         />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:text="若已到预约时间，因用户原因导致工程师无法进门服务，将扣除50元上门费。"
-                        android:layout_marginLeft="@dimen/h_5dp"
-
+                        android:textSize="14sp"
                         />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/h_10dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/circle"
+                        android:gravity="center"
                         android:text="4"
-                        android:background="@drawable/circle"
                         android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_marginLeft="@dimen/h_5dp"
-
+                        android:textSize="14sp"
                         />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:text="退款金额将于1-7个工作日内返回到您的支付账户"
-                        android:layout_marginLeft="@dimen/h_5dp"
-
+                        android:textSize="14sp"
                         />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/h_10dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="5"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/circle"
-                        android:textColor="@color/white"
                         android:gravity="center"
-                        android:layout_marginLeft="@dimen/h_5dp"
-
+                        android:text="5"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
                         />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:text="特别说明:若使用优惠券后，进行退款操作，而订单无法满足优惠券使用规则，则按未优惠价格计算剩余的订单项目。"
-                        android:layout_marginLeft="@dimen/h_5dp"
-
+                        android:textSize="14sp"
                         />
                 </LinearLayout>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/h_100dp"></View>
         </LinearLayout>
     </ScrollView>
+
     <TextView
         android:id="@+id/in_get"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="提交"
-        android:textColor="@color/white"
-        android:paddingBottom="@dimen/h_14dp"
-        android:paddingTop="@dimen/h_14dp"
-        android:gravity="center"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/color_e94b4e"
+        android:gravity="center"
+        android:paddingBottom="14dp"
+        android:paddingTop="14dp"
+        android:text="提交"
+        android:textColor="@color/white"
         />
-</RelativeLayout>
+</LinearLayout>

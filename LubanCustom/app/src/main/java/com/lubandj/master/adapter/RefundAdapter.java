@@ -29,7 +29,6 @@ public class RefundAdapter extends BaseQuickAdapter<RefundBean, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, RefundBean item) {
-        int position = helper.getAdapterPosition();
         TextView tvNo = helper.getView(R.id.tv_refund_no);
         tvNo.setText(item.refund_no);
         TextView tvService = helper.getView(R.id.tv_refund_service);
@@ -47,8 +46,6 @@ public class RefundAdapter extends BaseQuickAdapter<RefundBean, BaseViewHolder> 
         tvTotal.setText(item.amount);
         TextView tvStart = helper.getView(R.id.tv_refund_start);
         tvStart.setText(item.created_time);
-        TextView tvEnd = helper.getView(R.id.tv_refund_end);
-        tvEnd.setText(item.refund_time);
         TextView tvState = helper.getView(R.id.tv_refund_state);
         tvState.setText(item.status);
     }

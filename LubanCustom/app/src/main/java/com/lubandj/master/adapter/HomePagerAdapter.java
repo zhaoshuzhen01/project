@@ -46,8 +46,8 @@ public class HomePagerAdapter extends BaseQuickAdapter<HomeBeen.InfoBean, BaseVi
         params.width = width/8;
         params.height = width/8;
         ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(iconMsg, R.drawable.bingxiangicon, R.drawable.bingxiangicon);
-        if (!TextUtils.isEmpty(item.getService_pic()))
-            imageLoader.get(item.getService_pic(), imageListener);
+        if (!TextUtils.isEmpty(item.getService_icon()))
+            imageLoader.get(item.getService_icon(), imageListener);
         TextView title = ((TextView) (helper.getView(R.id.home_list_title)));
         title.setText(item.getName());
     }

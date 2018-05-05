@@ -40,7 +40,7 @@
         android:background="@drawable/roundrect"
         android:gravity="center"
         android:text="取消"
-        android:textColor="#FF4141"
+        android:textColor="#e94b4e"
         android:textSize="16sp"/>
 
 </LinearLayout>

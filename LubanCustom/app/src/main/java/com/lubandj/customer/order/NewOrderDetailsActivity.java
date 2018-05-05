@@ -18,7 +18,6 @@ import android.widget.PopupWindow;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.bumptech.glide.Glide;
 import com.example.baselibrary.recycleview.SpacesItemDecoration;
 import com.example.baselibrary.tools.ToastUtils;
 import com.example.baselibrary.widget.AlertDialog;
@@ -26,12 +25,14 @@ import com.google.gson.Gson;
 import com.lubandj.customer.bean.OrderDetailBean;
 import com.lubandj.customer.bean.RefundBean;
 import com.lubandj.customer.bean.ServiceTotalBean;
+import com.lubandj.customer.bean.ServiceUserBean;
 import com.lubandj.customer.httpbean.OrderDetailResponse;
 import com.lubandj.customer.widget.OrderTraceView;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.activity.CancleOrderActivity;
 import com.lubandj.master.activity.CheckStandActivity;
+import com.lubandj.master.adapter.EngineerAdapter;
 import com.lubandj.master.adapter.RefundAdapter;
 import com.lubandj.master.adapter.ServiceTotalAdapter;
 import com.lubandj.master.databinding.ActivityNeworderdetailsBinding;
@@ -49,6 +50,7 @@ public class NewOrderDetailsActivity extends PermissionActivity {
     public static final String KEY_DETAILS_ID = "details_id";
     private String workSheetId;
     private ServiceTotalAdapter mServiceTotalAdapter;
+    private EngineerAdapter mEngineerAdapter;
     private RefundAdapter mRefundAdapter;
     private PopupWindow orderTracePop;
     private int mStatus = Canstance.TYPE_ORDER_DETAILS_IN_THE_SINGLE;
@@ -80,13 +82,21 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         mBinding.rvItems.setHasFixedSize(true);
         mBinding.rvItems.addItemDecoration(new SpacesItemDecoration(0, 0, 2, 0));
         mBinding.rvItems.setAdapter(mServiceTotalAdapter);
-
+        mBinding.rvItems.setNestedScrollingEnabled(false);
 
         mRefundAdapter = new RefundAdapter(refundList, this);
         mBinding.rvRefund.setLayoutManager(new LinearLayoutManager(this));
         mBinding.rvRefund.setHasFixedSize(true);
         mBinding.rvRefund.addItemDecoration(new SpacesItemDecoration(0, 0, 2, 0));
         mBinding.rvRefund.setAdapter(mRefundAdapter);
+        mBinding.rvRefund.setNestedScrollingEnabled(false);
+
+        mEngineerAdapter = new EngineerAdapter(new ArrayList<ServiceUserBean>(), this);
+        mBinding.rvEngineer.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.rvEngineer.setHasFixedSize(true);
+        mBinding.rvEngineer.addItemDecoration(new SpacesItemDecoration(0, 0, 2, 0));
+        mBinding.rvEngineer.setAdapter(mEngineerAdapter);
+        mBinding.rvEngineer.setNestedScrollingEnabled(false);
 
         initData();
     }
@@ -126,56 +136,6 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         });
     }
 
-    private void setStatus(int status) {
-        switch (status) {
-//            case Canstance.TYPE_ORDER_DETAILS_CANCELED:
-//                llEngineerInfo.setVisibility(View.GONE);
-//                break;
-//            case Canstance.TYPE_ORDER_DETAILS_IN_THE_SINGLE:
-//                llEngineerInfo.setVisibility(View.GONE);
-//                refundCount = 2;
-//                break;
-//            case Canstance.TYPE_ORDER_DETAILS_COMPLETED:
-//                ivStateIcon.setImageResource(R.drawable.ic_details_to_perform);
-//                btnBuyAgain.setText(R.string.txt_cancel_order);
-//                break;
-//            case Canstance.TYPE_ORDER_DETAILS_PAY_OVERTIME:
-//                llEngineerInfo.setVisibility(View.GONE);
-//                refundCount = 0;
-//                tvRefundDetails.setVisibility(View.GONE);
-//                ivStateIcon.setImageResource(R.drawable.ic_details_on_road);
-//
-//                break;
-//            case Canstance.TYPE_ORDER_DETAILS_NO_PAYMENT:
-//                llEngineerInfo.setVisibility(View.GONE);
-//                refundCount = 0;
-//                tvRefundDetails.setVisibility(View.GONE);
-//                llSmallBtn.setVisibility(View.VISIBLE);
-//                btnBuyAgain.setVisibility(View.GONE);
-//                ivStateIcon.setImageResource(R.drawable.ic_details_in_service);
-//
-//                break;
-//            case Canstance.TYPE_ORDER_DETAILS_WAIT_SERVICE:
-//                llEngineerInfo.setVisibility(View.GONE);
-//                refundCount = 0;
-//                tvRefundDetails.setVisibility(View.GONE);
-//                btnBuyAgain.setText(R.string.txt_cancel_order);
-//                ivStateIcon.setImageResource(R.drawable.ic_details_completed);
-//                break;
-//            case Canstance.TYPE_ORDER_DETAILS_IN_SERVICE:
-//                llEngineerInfo.setVisibility(View.GONE);
-//                refundCount = 0;
-//                tvRefundDetails.setVisibility(View.GONE);
-//                btnBuyAgain.setText(R.string.txt_cancel_order);
-//                ivStateIcon.setImageResource(R.drawable.ic_details_canceled);
-//
-//                break;
-            default:
-                break;
-        }
-
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -190,59 +150,6 @@ public class NewOrderDetailsActivity extends PermissionActivity {
                 }
                 break;
             default:
-                break;
-        }
-    }
-
-
-    @OnClick({R.id.ll_state, R.id.iv_phone_icon, R.id.tv_copy, R.id.btn_cancel_order, R.id.btn_go_to_pay, R.id.btn_buy_again})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.ll_state:
-                showOrderTracePop();
-                break;
-            case R.id.iv_phone_icon:
-//                callToClient("10086", String.format(getString(R.string.txt_make_sure_phone), "10086"));
-                break;
-            case R.id.tv_copy:
-//                copy("10086");
-                break;
-            case R.id.btn_cancel_order:
-                ToastUtils.showShort(this, R.string.txt_cancel_order);
-                break;
-            case R.id.btn_go_to_pay:
-                ToastUtils.showShort(this, R.string.txt_go_to_pay);
-                break;
-            case R.id.btn_buy_again:
-//                String text = btnBuyAgain.getText().toString();
-//                if (TextUtils.equals(text, getString(R.string.txt_buy_again))) {
-//
-//                } else if (TextUtils.equals(text, getString(R.string.txt_cancel_order))) {
-//                    new AlertDialog(this)
-//                            .builder()
-//                            .setMsg(getString(R.string.txt_confirm_cancel_order))
-//                            .setPositiveButton(getString(R.string.txt_confirm_cancel), new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    CancleOrderActivity.startActivity(NewOrderDetailsActivity.this);
-//                                }
-//                            })
-//                            .setNegativeButton(getString(R.string.txt_give_up_cancel), new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//
-//                                }
-//                            }).show();
-//
-//                } else if (msgCenterBeen.getInfo().getPay_status().equals("1")) {
-//                    BookOrderBeen bookOrderBeen = new BookOrderBeen();
-//                    BookOrderBeen.InfoBean infoBean = new BookOrderBeen.InfoBean();
-//                    infoBean.setId(msgCenterBeen.getInfo().getId());
-//                    infoBean.setOrder_id(msgCenterBeen.getInfo().getOrder_id());
-//                    bookOrderBeen.setInfo(infoBean);
-//                    CheckStandActivity.startActivity(this, bookOrderBeen);
-//
-//                }
                 break;
         }
     }
@@ -268,23 +175,6 @@ public class NewOrderDetailsActivity extends PermissionActivity {
 
 
     public void showOrderTracePop() {
-//        if (orderTracePop == null) {
-//            OrderTraceView orderTraceView = new OrderTraceView(this, this);
-//            orderTracePop = new PopupWindow(orderTraceView,
-//                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-//            orderTracePop.setTouchable(true);
-//            orderTracePop.setOutsideTouchable(true);
-//            orderTracePop.setFocusable(true);
-//            orderTracePop.setAnimationStyle(R.style.ActionSheetDialogAnimation);
-//            orderTracePop.setBackgroundDrawable(getResources().getDrawable(android.R.color.transparent));
-//            orderTracePop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-//            orderTracePop.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                @Override
-//                public void onDismiss() {
-//                    darkenBackground(1f);
-//                }
-//            });
-//        }
         orderTracePop.showAtLocation(mBinding.ivBack, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         darkenBackground(0.5f);
     }
@@ -316,7 +206,7 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         //订单状态控制
         if ("1".equals(mBean.pay_status)) {//待付款
             mBinding.tvStateDesc.setText(mBean.pay_statusText);
-            mBinding.ivStateIcon.setImageResource(R.drawable.od_wate_to_be_assign);
+            mBinding.ivStateIcon.setImageResource(R.drawable.od_wait_to_pay);
         } else {//其他状态
             mBinding.tvStateDesc.setText(mBean.statusText);
             switch (mBean.status) {
@@ -332,21 +222,21 @@ public class NewOrderDetailsActivity extends PermissionActivity {
                 case "4"://正在服务
                     mBinding.ivStateIcon.setImageResource(R.drawable.od_serving);
                     break;
-                case "5"://正在服务
+                case "5"://服务已完成
                     mBinding.ivStateIcon.setImageResource(R.drawable.od_complete);
                     break;
                 case "7"://订单已取消
-                    mBinding.ivStateIcon.setImageResource(R.drawable.od_complete);
+                    mBinding.ivStateIcon.setImageResource(R.drawable.ic_details_canceled);
                     break;
             }
         }
-        mBinding.tvStateTime.setText("");
+        mBinding.tvStateTime.setText(mBean.order_log.get(mBean.order_log.size() - 1).created_time);
 
         //服务项
         mServiceTotalAdapter.setNewData(mBean.items);
 
         mBinding.tvSalePrice.setText(mBean.coupon_amount);
-        mBinding.tvOrderPriceTotal.setText("¥" + mBean.pay_amount);
+        mBinding.tvOrderPriceTotal.setText("¥" + mBean.amount);
         //退款控制
         if (mBean.refund_info != null && mBean.refund_info.size() > 0) {
             mRefundAdapter.setNewData(mBean.refund_info);
@@ -356,10 +246,9 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         }
         //师傅控制
         if (Integer.parseInt(mBean.status) >= 2 && Integer.parseInt(mBean.status) <= 5) {
-            Glide.with(NewOrderDetailsActivity.this).load(mBean.service_user_info.face).skipMemoryCache(false).into(mBinding.ivEngineerPhoto);
-            mBinding.tvEngineerName.setText(mBean.service_user_info.name);
+            mEngineerAdapter.setNewData(mBean.service_user_info);
         } else {
-            mBinding.llEngineerInfo.setVisibility(View.GONE);
+            mBinding.rvEngineer.setVisibility(View.GONE);
         }
         //订单信息
         mBinding.tvContactName.setText(mBean.contact_name);
@@ -412,10 +301,8 @@ public class NewOrderDetailsActivity extends PermissionActivity {
 
     /**
      * 给师傅打电话
-     *
-     * @param view
      */
-    public void onEngineerPhone(View view) {
+    public void onEngineerPhone(final String tel) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission(Manifest.permission.CALL_PHONE, "phone")) {
                 setDialogTipUserGoToAppSettting("权限提醒", "应用需要打电话权限，请到应用设置中打开");
@@ -428,11 +315,11 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         }
         new AlertDialog(this)
                 .builder()
-                .setMsg(String.format(getString(R.string.txt_make_sure_phone), mBean.service_user_info.tel))
+                .setMsg(String.format(getString(R.string.txt_make_sure_phone), tel))
                 .setPositiveButton(getString(R.string.txt_sure), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mBean.service_user_info.tel));
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
                         startActivity(intent);
                     }
                 })
@@ -467,7 +354,9 @@ public class NewOrderDetailsActivity extends PermissionActivity {
                 .setPositiveButton(getString(R.string.txt_confirm_cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CancleOrderActivity.startActivity(NewOrderDetailsActivity.this);
+                        Intent intent = new Intent(NewOrderDetailsActivity.this, CancleOrderActivity.class);
+                        intent.putExtra("orderid", mBean.order_id);
+                        startActivityForResult(intent, 909);
                     }
                 })
                 .setNegativeButton(getString(R.string.txt_give_up_cancel), new View.OnClickListener() {
@@ -487,7 +376,7 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         if (CommonUtils.isFastDoubleClick()) {
             return;
         }
-        CheckStandActivity.startActivity(this, mBean.id + "", mBean.order_id);
+        CheckStandActivity.startActivity(this, mBean.id + "", mBean.order_id,mBean.amount);
     }
 
     /**
@@ -498,6 +387,18 @@ public class NewOrderDetailsActivity extends PermissionActivity {
     public void onReBuyOrder(View view) {
         if (CommonUtils.isFastDoubleClick()) {
             return;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 909:
+                    finish();
+                    break;
+            }
         }
     }
 }
