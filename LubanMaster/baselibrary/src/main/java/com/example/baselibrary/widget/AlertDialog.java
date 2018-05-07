@@ -3,6 +3,7 @@ package com.example.baselibrary.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -80,6 +81,17 @@ public class AlertDialog {
             txt_msg.setText("");
         } else {
             txt_msg.setText(msg);
+        }
+        return this;
+    }
+
+    public AlertDialog setUpgradeMsg(String msg) {
+        showMsg = true;
+        if ("".equals(msg)) {
+            txt_msg.setText("");
+        } else {
+            txt_msg.setText(msg);
+            txt_msg.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
         return this;
     }

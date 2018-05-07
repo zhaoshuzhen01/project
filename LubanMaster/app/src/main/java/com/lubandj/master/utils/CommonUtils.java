@@ -215,7 +215,8 @@ public class CommonUtils {
                         new AlertDialog(context)
                                 .builder()
                                 .setTitle("版本更新")
-                                .setMsg(upgradeApp.des)
+                                .setUpgradeMsg(upgradeApp.des)
+//                                .setUpgradeMsg("1.优化细节\n2.解决bug\n3.圣诞节疯狂圣诞节福利卡时间段来看附件是的离开房间乐山大佛吉林省地方")
                                 .setPositiveButton("立即更新", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
