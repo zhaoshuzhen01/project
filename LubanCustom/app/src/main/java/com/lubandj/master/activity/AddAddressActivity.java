@@ -156,6 +156,8 @@ public class AddAddressActivity extends TitleBaseActivity implements BaseQuickAd
             case R.id.xiaoqu:
                 if (!TextUtils.isEmpty(diqu.getText().toString())) {
                     Intent intent = new Intent(AddAddressActivity.this, SelectAddressActivity.class);
+                    intent.putExtra("city",city.getText().toString());
+                    intent.putExtra("qu",diqu.getText().toString());
                     startActivityForResult(intent, 1010);
                 } else {
                     CommonUtils.customShowToast(AddAddressActivity.this, "请选择服务地区");

@@ -4,10 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <View
-        android:background="@color/color_e1e1e1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0.5"></View>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"

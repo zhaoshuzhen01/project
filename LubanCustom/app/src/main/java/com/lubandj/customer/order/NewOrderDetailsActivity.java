@@ -109,7 +109,6 @@ public class NewOrderDetailsActivity extends PermissionActivity {
         TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_DETAILS, detailOrder, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                dialog.dismiss();
                 try {
                     OrderDetailResponse response = new Gson().fromJson(s, OrderDetailResponse.class);
                     if (response.code == 0) {
@@ -126,6 +125,7 @@ public class NewOrderDetailsActivity extends PermissionActivity {
                     e.printStackTrace();
                     ToastUtils.showShort(NewOrderDetailsActivity.this, "返回数据解析出错");
                 }
+                dialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override

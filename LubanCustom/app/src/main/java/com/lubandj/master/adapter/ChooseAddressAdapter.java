@@ -18,6 +18,7 @@ import com.lubandj.master.activity.AddAddressActivity;
 import com.lubandj.master.activity.CustomAddressActivity;
 import com.lubandj.master.been.AddressBean;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class ChooseAddressAdapter extends BaseQuickAdapter<AddressBean, BaseView
     protected void convert(BaseViewHolder helper, AddressBean item) {
         final int position = helper.getAdapterPosition();
         ImageView iconMsg = ((ImageView) (helper.getView(R.id.tv_commodity_delete)));
+        ImageView iconmark = ((ImageView) (helper.getView(R.id.iv_outofspace)));
         TextView tvCommodityAttr = ((TextView) (helper.getView(R.id.tv_commodity_attr)));
         TextView tvCommodityNum = ((TextView) (helper.getView(R.id.tv_commodity_num)));
         iconMsg.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +54,11 @@ public class ChooseAddressAdapter extends BaseQuickAdapter<AddressBean, BaseView
             }
         });
 
+        if (CommonUtils.getCity().equals(item.city)) {
+            iconmark.setVisibility(View.INVISIBLE);
+        } else {
+            iconmark.setVisibility(View.VISIBLE);
+        }
         tvCommodityAttr.setText(item.city + item.area + "    " + item.housing_estate + item.house_number);
         tvCommodityNum.setText(item.linkman + "|" + item.phone);
     }

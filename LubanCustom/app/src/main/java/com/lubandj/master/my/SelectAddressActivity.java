@@ -41,6 +41,7 @@ import com.lubandj.master.R;
 import com.lubandj.master.adapter.SelectAddressAdapter;
 import com.lubandj.master.been.AddressBean;
 import com.lubandj.master.databinding.ActivitySelectaddressBinding;
+import com.lubandj.master.dialog.ToastDialog;
 
 import java.util.List;
 
@@ -375,11 +376,18 @@ public class SelectAddressActivity extends BaseActivity implements BaiduMap.OnMa
                 bean.address = component.street + component.streetNumber;
                 bean.housing_estate = mInfo.name;
 
-                Intent intent = new Intent();
-                intent.putExtra("address", bean);
-                setResult(RESULT_OK, intent);
+                String city = getIntent().getStringExtra("city");
+                String qu = getIntent().getStringExtra("qu");
+                if (bean.city.equals(city) && bean.areapublic.equals(qu)) {
+                    Intent intent = new Intent();
+                    intent.putExtra("address", bean);
+                    setResult(RESULT_OK, intent);
+                    dialog.dismiss();
+                    finish();
+                }else{
+                    new ToastDialog(SelectAddressActivity.this, "地址与城市区域不符").show();
+                }
                 dialog.dismiss();
-                finish();
             } else {
                 //经纬度转化地址
                 final List<PoiInfo> poiInfos = result.getPoiList();

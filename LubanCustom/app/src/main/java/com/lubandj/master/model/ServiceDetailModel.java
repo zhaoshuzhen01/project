@@ -29,7 +29,7 @@ public class ServiceDetailModel  {
 
     public void getData(String id) {
 
-        TaskEngine.getInstance().commonHttps(Canstance.HTTP_SERVICE_DETAILS, new NetServiceDetail(Canstance.CITY,id), new Response.Listener<String>() {
+        TaskEngine.getInstance().commonHttps(Canstance.HTTP_SERVICE_DETAILS, new NetServiceDetail(CommonUtils.getCity(),id), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {

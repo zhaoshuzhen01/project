@@ -27,6 +27,7 @@ import com.example.baselibrary.widget.NotitleBaseActivity;
 import com.example.baselibrary.widget.ViewPagerSlide;
 import com.lubandj.customer.login.LoginActivity;
 import com.lubandj.master.Canstance;
+import com.lubandj.master.LocalleCarData;
 import com.lubandj.master.R;
 import com.lubandj.master.fragment.HomeFragment;
 import com.lubandj.master.fragment.MyFragment;
@@ -134,6 +135,7 @@ public class MainCantainActivity extends BaseMainActivity {
                 tv_basetitle_back.setText("  "+CommonUtils.getCity()+" ");
                 HomeFragment fragment= (HomeFragment) mList.get(0);
                 fragment.onRefresh();
+                LocalleCarData.newInstance().clear();
             }
         }
     }

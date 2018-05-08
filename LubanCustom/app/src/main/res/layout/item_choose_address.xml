@@ -8,7 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
         android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tv_commodity_delete"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
         android:orientation="vertical">
@@ -19,6 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:text="北京市海淀区"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textColor="@color/black"
             android:textSize="14sp"/>
 
@@ -31,6 +35,15 @@
             android:textColor="#999999"
             android:textSize="14sp"/>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_outofspace"
+        android:layout_width="65dp"
+        android:layout_height="40dp"
+        android:layout_toLeftOf="@+id/tv_commodity_delete"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/outofspace"/>
 
     <ImageView
         android:id="@+id/tv_commodity_delete"

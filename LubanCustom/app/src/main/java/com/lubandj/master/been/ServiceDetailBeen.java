@@ -40,6 +40,7 @@ public class ServiceDetailBeen extends BaseEntity {
         private String service_pic;
         private String content;
         private String content_url;
+        private String price_interval;
         private List<ItemsBean> items;
 
         public String getService_id() {
@@ -84,6 +85,14 @@ public class ServiceDetailBeen extends BaseEntity {
 
         public String getContent_url() {
             return content_url;
+        }
+
+        public String getPrice_interval() {
+            return price_interval;
+        }
+
+        public void setPrice_interval(String price_interval) {
+            this.price_interval = price_interval;
         }
 
         public void setContent_url(String content_url) {
@@ -153,6 +162,8 @@ public class ServiceDetailBeen extends BaseEntity {
             public void setItem_pic(String item_pic) {
                 this.item_pic = item_pic;
             }
+
+
 
             public String getPrice() {
                 if (TextUtils.isEmpty(price))

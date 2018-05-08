@@ -85,7 +85,7 @@ public class HomeFragment extends BaseRefreshFragment implements IbaseView<HomeB
         guangGaoModel = new GuangGaoModel(getActivity(),this);
         msgCenterPresenter = new BaseReflushPresenter<MsgCenterBeen.InfoBean.ListBean>(getActivity(), this, homeModel);
 
-        homeModel.setCity(Canstance.CITY);
+        homeModel.setCity(CommonUtils.getCity());
         guangGaoModel.getGuangGao();
         main_car_lay = view.findViewById(R.id.main_car_lay);
         main_car_lay.setOnClickListener(this);

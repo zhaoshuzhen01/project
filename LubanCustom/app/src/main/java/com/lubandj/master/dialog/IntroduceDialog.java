@@ -116,7 +116,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
     }
 
     public void clickShow(FragmentManager manager, String tag, Context context){
-        count=0;
+        count=1;
         this.show(manager,"");
         addCarModel = new AddCarModel(context,this);
     }

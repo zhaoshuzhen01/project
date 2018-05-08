@@ -221,17 +221,18 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
         Glide.with(getActivity()).load(data.getInfo().getService_pic()).skipMemoryCache(false).into(topPic);
         topName.setText(data.getInfo().getName());
         msgBeens.addAll(data.getInfo().getItems());
-        if (data.getInfo().getItems().size()==1){
-            top_price.setText("¥ "+data.getInfo().getItems().get(0).getItem_pic());
-        }else {
-            List<String>prices = new ArrayList<>();
-            for (int i = 0; i < data.getInfo().getItems().size() ; i++) {
-                prices.add(data.getInfo().getItems().get(i).getPrice());
-            }
-            Collections.sort(prices);
-            top_price.setText("¥ "+data.getInfo().getItems().get(0).getPrice()+"-"+data.getInfo().getItems().get(data.getInfo().getItems().size()-1).getPrice());
-
-        }
+//        if (data.getInfo().getItems().size()==1){
+//            top_price.setText("¥ "+data.getInfo().getItems().get(0).getItem_pic());
+//        }else {
+//            List<String>prices = new ArrayList<>();
+//            for (int i = 0; i < data.getInfo().getItems().size() ; i++) {
+//                prices.add(data.getInfo().getItems().get(i).getPrice());
+//            }
+//            Collections.sort(prices);
+//            top_price.setText("¥ "+data.getInfo().getItems().get(0).getPrice()+"-"+data.getInfo().getItems().get(data.getInfo().getItems().size()-1).getPrice());
+//
+//        }
+        top_price.setText("¥ "+data.getInfo().getPrice_interval());
 //        introduceAdapter.notifyDataSetChanged();
          mWebView.loadUrl(data.getInfo().getContent_url());
 
