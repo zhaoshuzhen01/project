@@ -191,6 +191,15 @@ public class CommonUtils {
         SPUtils.getInstance().put(Canstance.TOKEN, token);
     }
 
+    public static String getCity() {
+        String city=SPUtils.getInstance().getString(Canstance.CITY);
+        return TextUtils.isEmpty(city)?"北京市":city;
+    }
+
+    public static void setCity(String city) {
+        SPUtils.getInstance().put(Canstance.CITY, city);
+    }
+
     public static String[] getAddress() {
         String address = SPUtils.getInstance().getString(Canstance.ADDRESS);
         if (!TextUtils.isEmpty(address)) {

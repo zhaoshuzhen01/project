@@ -26,6 +26,7 @@ import com.example.baselibrary.widget.MainBottomView;
 import com.example.baselibrary.widget.NotitleBaseActivity;
 import com.example.baselibrary.widget.ViewPagerSlide;
 import com.lubandj.customer.login.LoginActivity;
+import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.fragment.HomeFragment;
 import com.lubandj.master.fragment.MyFragment;
@@ -60,7 +61,7 @@ public class MainCantainActivity extends BaseMainActivity {
         setTitleText("首页");
         msgCount.setText(1 + "");
         msgCount.setVisibility(View.VISIBLE);
-        tv_basetitle_back.setText("  北京 ");
+        tv_basetitle_back.setText("  "+CommonUtils.getCity()+" ");
         Drawable drawableLeft = getResources().getDrawable(
                 R.drawable.selectaddress_gps_down);
 
@@ -102,7 +103,8 @@ public class MainCantainActivity extends BaseMainActivity {
 
     @Override
     public void titleLeftClick() {
-        ChooseCityActivity.startActivity(this);
+        Intent intent=new Intent(MainCantainActivity.this,ChooseCityActivity.class);
+        startActivityForResult(intent,1003);
     }
 
     @Override
@@ -124,5 +126,15 @@ public class MainCantainActivity extends BaseMainActivity {
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            if(requestCode==1003){//选择城市返回，且有变化,刷新数据
+                tv_basetitle_back.setText("  "+CommonUtils.getCity()+" ");
+                HomeFragment fragment= (HomeFragment) mList.get(0);
+                fragment.onRefresh();
+            }
+        }
+    }
 }

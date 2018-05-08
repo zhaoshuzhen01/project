@@ -5,7 +5,6 @@ package com.lubandj.master;
  */
 
 public class Canstance {
-    public static String CITY = "";
     public static final int TYPE_LIST_ALL = 0;//所有消息
     public static final int TYPE_LIST_UNFINISH = 0;//工单列表未完成
     public static final int TYPE_LIST_FINISH = 1;//工单列表已完成
@@ -79,6 +78,7 @@ public class Canstance {
     public static final String ADDRESS_ID = "address_id";
     public static final String UID = "UID";
     public static final String MSG = "MSG";
+    public static final String CITY="city";
     public static final String FIRSTSTART = "first_start";
 
     public static final String KEY_SHEET_STATUS_TO_PERFORM = "1";

@@ -38,6 +38,7 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
     TextView fankuiButton;
     private List<AddressBean> msgBeens = new ArrayList<>();
     private ChooseAddressAdapter chooseCityAdapter;
+    private boolean isNeedResult=false;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CustomAddressActivity.class);
@@ -71,7 +72,12 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
         setTitleText("我的地址");
         setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
-        chooseCityAdapter = new ChooseAddressAdapter(msgBeens, this);
+        if(getIntent()==null) {
+            isNeedResult=true;
+        }else{
+            isNeedResult=false;
+        }
+        chooseCityAdapter=new ChooseAddressAdapter(msgBeens,CustomAddressActivity.this);
         chooseCityAdapter.setOnItemClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(this); //spanCount为列数，默认方向vertical
         recyclerView.setLayoutManager(manager);
@@ -79,6 +85,7 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(chooseCityAdapter);
         initData();
+
     }
 
     @Override
@@ -98,11 +105,13 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        Intent intent = getIntent();
-        AddressBean bean = chooseCityAdapter.getItem(position);
-        intent.putExtra("data", bean);
-        setResult(1, intent);
-        finish();
+        if(isNeedResult) {
+            Intent intent = getIntent();
+            AddressBean bean = chooseCityAdapter.getItem(position);
+            intent.putExtra("data", bean);
+            setResult(1, intent);
+            finish();
+        }
     }
 
     @Override

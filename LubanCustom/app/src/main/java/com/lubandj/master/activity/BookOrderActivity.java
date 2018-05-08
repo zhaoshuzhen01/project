@@ -196,7 +196,7 @@ private  MyCons.InfoBean bean1;
                 }else {
                     netBookBeen.setCoupon_id(0);
                 }
-                if (!TextUtils.isEmpty(bean1.getAmount())){
+                if (bean1!=null&&!TextUtils.isEmpty(bean1.getAmount())){
                     netBookBeen.setCoupon_amount(Integer.parseInt(bean1.getAmount()));
                 }else {
                     netBookBeen.setCoupon_amount(0);

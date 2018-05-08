@@ -12,6 +12,7 @@ import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.been.MsgCenterBeen;
+import com.lubandj.master.utils.CommonUtils;
 
 import java.util.List;
 
@@ -41,7 +42,11 @@ public class ChooseCityAdapter extends BaseQuickAdapter<String, BaseViewHolder> 
 
     @Override
     public void childViewClick(int position, View view) {
-        Canstance.CITY =getItem(position);
+        String city =getItem(position);
+        if(!CommonUtils.getCity().equals(city)){
+            ((Activity)context).setResult(Activity.RESULT_OK);
+            CommonUtils.setCity(city);
+        }
         ((Activity)context).finish();
     }
 }
