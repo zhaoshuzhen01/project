@@ -67,7 +67,7 @@
                 <RelativeLayout
                     android:id="@+id/userScroreRe"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="180dp"
                     app:layout_scrollFlags="enterAlwaysCollapsed">
                     <ImageView
                         android:id="@+id/detail_top_pic"
@@ -79,7 +79,9 @@
             </android.support.design.widget.CollapsingToolbarLayout>
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="@dimen/h_70dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
@@ -89,18 +91,22 @@
                     android:layout_height="wrap_content"
                     android:text="¥ 150-180"
                     android:layout_marginLeft="@dimen/h_10dp"
+                    android:textSize="20sp"
                     android:textColor="@color/color_ff0000" />
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/top_name"
                         android:layout_marginLeft="@dimen/h_10dp"
                         android:layout_width="@dimen/h_0dp"
                         android:layout_weight="1"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
                         android:text="空调"
+                        android:textSize="18sp"
                         android:layout_below="@+id/top_price"
                         android:textColor="@color/black" />
                     <TextView
@@ -108,14 +114,11 @@
                         android:layout_marginRight="@dimen/h_10dp"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_size_12"
-                        android:paddingRight="@dimen/h_14dp"
-                        android:paddingLeft="@dimen/h_14dp"
-                        android:paddingTop="@dimen/h_5dp"
-                        android:paddingBottom="@dimen/h_5dp"
-                        android:background="@drawable/selector_btn_send_code_bg"
+                        android:background="@drawable/selector_btn_small_bg"
                         android:text="选中型号"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:gravity="center"
+                        android:layout_width="80dp"
+                        android:layout_height="36dp" />
                 </LinearLayout>
             </LinearLayout>
         </android.support.design.widget.AppBarLayout>

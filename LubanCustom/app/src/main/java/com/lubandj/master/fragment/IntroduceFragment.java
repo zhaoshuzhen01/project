@@ -119,7 +119,7 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
         //支持javascript
         settings.setJavaScriptEnabled(true);
         // 设置可以支持缩放
-        settings.setSupportZoom(false);
+        settings.setSupportZoom(true);
         // 设置出现缩放工具
 //        settings.setBuiltInZoomControls(true);
         //扩大比例的缩放
@@ -234,9 +234,7 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
         }
 //        introduceAdapter.notifyDataSetChanged();
          mWebView.loadUrl(data.getInfo().getContent_url());
-//        if(url.endsWith(".jpg")||url.endsWith(".png")){
-//            mWebView.loadDataWithBaseURL(null, "<img  src="+data.getInfo().getContent_url()+">", "text/html", "charset=UTF-8", null);
-//        }
+
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

@@ -100,7 +100,6 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
         pay = new Pay(this, new PayResultCallbackImpl() {
             @Override
             public void onPaySuccess(String result, String payType) {
-                MainCantainActivity.startActivity(CheckStandActivity.this);
                 LocalleCarData.newInstance().clear();
                 Intent intent = new Intent(CheckStandActivity.this, OrderDetailsActivity.class);
                 intent.putExtra(OrderDetailsActivity.KEY_DETAILS_ID, id);
