@@ -1,6 +1,8 @@
 package com.lubandj.master.fragment;
 
 import android.content.Intent;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +10,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +30,7 @@ import com.lubandj.master.adapter.IntroduceAdapter;
 import com.lubandj.master.been.MsgCenterBeen;
 import com.lubandj.master.been.ServiceDetailBeen;
 import com.lubandj.master.customview.CarView;
+import com.lubandj.master.customview.NestedScrollWebView;
 import com.lubandj.master.dialog.IntroduceDialog;
 import com.lubandj.master.model.ServiceDetailModel;
 import com.lubandj.master.utils.CommonUtils;
@@ -41,8 +48,8 @@ import butterknife.OnClick;
  */
 
 public class IntroduceFragment extends BaseFragment implements DataCall<ServiceDetailBeen> {
-    @InjectView(R.id.recyclerView)
-    RecyclerView recyclerView;
+//    @InjectView(R.id.recyclerView)
+//    RecyclerView recyclerView;
     @InjectView(R.id.button_text)
     TextView buttonText;
     @InjectView(R.id.main_car_lay)
@@ -63,9 +70,11 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
     TextView tv_show_price ;
     @InjectView(R.id.top_price)
     TextView top_price ;
+
+    NestedScrollWebView mWebView ;
     private RelativeLayout carView;
     private List<ServiceDetailBeen.InfoBean.ItemsBean> msgBeens = new ArrayList<>();
-    private IntroduceAdapter introduceAdapter;
+//    private IntroduceAdapter introduceAdapter;
     protected boolean isVisible = false;
     private IntroduceDialog introduceDialog;
     private String service_id;
@@ -94,16 +103,37 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
                 view.setVisibility(View.GONE);
             }
         });
-        introduceAdapter = new IntroduceAdapter(msgBeens, getActivity());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(introduceAdapter);
+//        introduceAdapter = new IntroduceAdapter(msgBeens, getActivity());
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setAdapter(introduceAdapter);
         introduceDialog = new IntroduceDialog();
         service_id = (String) getArguments().get("serviceId");
         serviceDetailModel = new ServiceDetailModel(getActivity(), this);
         car_msgCount.setVisibility(View.GONE);
         carLayout.setCar_msgCount(carView, car_msgCount, main_car,tv_show_price);
         main_car.setTag(R.drawable.car);
+
+        mWebView=view.findViewById(R.id.webView_servicedetail);
+        WebSettings settings = mWebView.getSettings();
+        //支持javascript
+        settings.setJavaScriptEnabled(true);
+        // 设置可以支持缩放
+        settings.setSupportZoom(false);
+        // 设置出现缩放工具
+//        settings.setBuiltInZoomControls(true);
+        //扩大比例的缩放
+        settings.setUseWideViewPort(true);
+        //自适应屏幕
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        //可以加载图片
+        settings.setLoadWithOverviewMode(true);
+        settings.setDomStorageEnabled(true);
+        settings.setAllowFileAccess(true);
+        settings.setAppCacheEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
     }
 
     @Override
@@ -202,8 +232,33 @@ public class IntroduceFragment extends BaseFragment implements DataCall<ServiceD
             top_price.setText("¥ "+data.getInfo().getItems().get(0).getPrice()+"-"+data.getInfo().getItems().get(data.getInfo().getItems().size()-1).getPrice());
 
         }
-        introduceAdapter.notifyDataSetChanged();
+//        introduceAdapter.notifyDataSetChanged();
+         mWebView.loadUrl(data.getInfo().getContent_url());
+//        if(url.endsWith(".jpg")||url.endsWith(".png")){
+//            mWebView.loadDataWithBaseURL(null, "<img  src="+data.getInfo().getContent_url()+">", "text/html", "charset=UTF-8", null);
+//        }
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+                view.loadUrl(url);
+                return true;
+            }
 
+            @Override
+            public void onReceivedError(WebView view, int errorCode,
+                                        String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                //在此处显示加载失败页面
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                super.onReceivedSslError(view, handler, error);
+                handler.proceed();
+            }
+
+        });
       /*  List<String> prices = new ArrayList<>();
         for (ServiceDetailBeen.InfoBean.ItemsBean bean:msgBeens){
             if (!TextUtils.isEmpty(bean.getPrice()))

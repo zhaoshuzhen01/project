@@ -39,6 +39,7 @@ public class ServiceDetailBeen extends BaseEntity {
         private String name;
         private String service_pic;
         private String content;
+        private String content_url;
         private List<ItemsBean> items;
 
         public String getService_id() {
@@ -79,6 +80,14 @@ public class ServiceDetailBeen extends BaseEntity {
 
         public void setItems(List<ItemsBean> items) {
             this.items = items;
+        }
+
+        public String getContent_url() {
+            return content_url;
+        }
+
+        public void setContent_url(String content_url) {
+            this.content_url = content_url;
         }
 
         public static class ItemsBean {
