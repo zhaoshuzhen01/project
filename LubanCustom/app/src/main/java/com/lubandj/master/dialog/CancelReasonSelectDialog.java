@@ -68,7 +68,7 @@ public class CancelReasonSelectDialog extends Dialog implements View.OnClickList
                 CancelReasonSelectDialog.this.dismiss();
                 clickListenerInterface.clickString(((TextView) v).getText().toString());
                 break;
-            case R.id.tv_cancel_doubleselect:
+            case R.id.tv_cancel_cancelreason:
                 CancelReasonSelectDialog.this.dismiss();
                 break;
         }

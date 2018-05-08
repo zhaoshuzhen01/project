@@ -9,7 +9,7 @@ import com.lubandj.master.httpbean.BaseEntity;
 public class WeiXinBeen extends BaseEntity {
 
     /**
-     * info : {"nickname":null,"uid":75,"token":"OF-k2eXhr8FLJqosZNM3Hqogn4jsCvPPdH_zWMmq","mobile":"18661985898","face_url":null,"reg_time":"2018-01-15 20:40:41","sex":"男","wechat":null,"openid":null,"realname":null,"idcard":"***************","birthday":null,"marry":"未设置","school":null,"education":null,"province":"","city":null,"area":null,"address":null,"housing_estate":null,"house_number":null,"phone":null,"login_times":5,"last_login_ip":"127.0.0.1","last_login_time":"2018-03-05 13:34:14"}
+     * info : {"name":null,"uid":75,"token":"OF-k2eXhr8FLJqosZNM3Hqogn4jsCvPPdH_zWMmq","tel":"18661985898","face":null,"reg_time":"2018-01-15 20:40:41","sex":"男","wechat":null,"openid":null,"realname":null,"idcard":"***************","birthday":null,"marry":"未设置","school":null,"education":null,"province":"","city":null,"area":null,"address":null,"housing_estate":null,"house_number":null,"phone":null,"login_times":5,"last_login_ip":"127.0.0.1","last_login_time":"2018-03-05 13:34:14"}
      */
 
     private InfoBean info;
@@ -24,11 +24,11 @@ public class WeiXinBeen extends BaseEntity {
 
     public static class InfoBean {
         /**
-         * nickname : null
+         * name : null
          * uid : 75
          * token : OF-k2eXhr8FLJqosZNM3Hqogn4jsCvPPdH_zWMmq
-         * mobile : 18661985898
-         * face_url : null
+         * tel : 18661985898
+         * face : null
          * reg_time : 2018-01-15 20:40:41
          * sex : 男
          * wechat : null

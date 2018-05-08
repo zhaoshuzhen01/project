@@ -11,7 +11,7 @@ import java.util.List;
 public class PingJiaBeen extends BaseEntity {
 
     /**
-     * info : {"percent":"90%","count":1232,"result":[{"nickname":"账上","face_url":"http://xxx/asds.jpg","content":"adasdasd","img":["http://asdasd/x.jpg,http://asd/x.jpg","http://asdasd/x.jpg,http://asd/x.jpg"],"create_time":"2019-10-1 12:12:22","star":"5"}]}
+     * info : {"percent":"90%","count":1232,"result":[{"name":"账上","face":"http://xxx/asds.jpg","content":"adasdasd","img":["http://asdasd/x.jpg,http://asd/x.jpg","http://asdasd/x.jpg,http://asd/x.jpg"],"create_time":"2019-10-1 12:12:22","star":"5"}]}
      */
 
     private InfoBean info;
@@ -28,7 +28,7 @@ public class PingJiaBeen extends BaseEntity {
         /**
          * percent : 90%
          * count : 1232
-         * result : [{"nickname":"账上","face_url":"http://xxx/asds.jpg","content":"adasdasd","img":["http://asdasd/x.jpg,http://asd/x.jpg","http://asdasd/x.jpg,http://asd/x.jpg"],"create_time":"2019-10-1 12:12:22","star":"5"}]
+         * result : [{"name":"账上","face":"http://xxx/asds.jpg","content":"adasdasd","img":["http://asdasd/x.jpg,http://asd/x.jpg","http://asdasd/x.jpg,http://asd/x.jpg"],"create_time":"2019-10-1 12:12:22","star":"5"}]
          */
 
         private String percent;
@@ -61,8 +61,8 @@ public class PingJiaBeen extends BaseEntity {
 
         public static class ResultBean {
             /**
-             * nickname : 账上
-             * face_url : http://xxx/asds.jpg
+             * name : 账上
+             * face : http://xxx/asds.jpg
              * content : adasdasd
              * img : ["http://asdasd/x.jpg,http://asd/x.jpg","http://asdasd/x.jpg,http://asd/x.jpg"]
              * create_time : 2019-10-1 12:12:22

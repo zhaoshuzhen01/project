@@ -100,8 +100,8 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = getIntent();
         AddressBean bean = chooseCityAdapter.getItem(position);
-        intent.putExtra("data",bean);
-        setResult(1,intent);
+        intent.putExtra("data", bean);
+        setResult(1, intent);
         finish();
     }
 

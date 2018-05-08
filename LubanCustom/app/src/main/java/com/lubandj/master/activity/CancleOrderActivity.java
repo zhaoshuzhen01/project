@@ -1,8 +1,10 @@
 package com.lubandj.master.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -137,12 +139,21 @@ public class CancleOrderActivity extends TitleBaseActivity {
         switch (view.getId()) {
             case R.id.in_get://提交
                 if (TextUtils.isEmpty(mTvReason.getText().toString())) {
-                    new ToastDialog(CancleOrderActivity.this, "请选择原因").show();
+                    final Dialog dialog = new ToastDialog(CancleOrderActivity.this, "请选择原因");
+                    dialog.show();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (dialog != null && dialog.isShowing())
+                                dialog.dismiss();
+                        }
+                    }, 2000);
+                    return;
                 }
                 initProgressDialog(R.string.txt_loading).show();
                 CancelOrderRequest detailOrder = new CancelOrderRequest();
                 detailOrder.order_id = order_id;
-                detailOrder.reason=mTvReason.getText().toString();
+                detailOrder.reason = mTvReason.getText().toString();
                 TaskEngine.getInstance().tokenHttps(Canstance.HTTP_CANCELORDER, detailOrder, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {

@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
-import com.lubandj.customer.bean.ServiceTotalBean;
 import com.lubandj.customer.bean.ServiceUserBean;
 import com.lubandj.customer.order.NewOrderDetailsActivity;
 import com.lubandj.master.R;
@@ -31,11 +30,11 @@ public class EngineerAdapter extends BaseQuickAdapter<ServiceUserBean, BaseViewH
     @Override
     protected void convert(BaseViewHolder helper, ServiceUserBean item) {
         ImageView iconMsg = ((helper.getView(R.id.iv_engineer_photo)));
-        Glide.with(context).load(item.face_url).skipMemoryCache(false).into(iconMsg);
+        Glide.with(context).load(item.face).skipMemoryCache(false).into(iconMsg);
         TextView tvServiceName = helper.getView(R.id.tv_engineer_name);
         ImageView mIvPhone = helper.getView(R.id.iv_phone_icon);
-        tvServiceName.setText(item.nickname);
-        mIvPhone.setTag(item.mobile);
+        tvServiceName.setText(item.name);
+        mIvPhone.setTag(item.tel);
         mIvPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

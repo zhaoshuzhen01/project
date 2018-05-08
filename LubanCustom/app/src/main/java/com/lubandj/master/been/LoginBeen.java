@@ -26,11 +26,11 @@ public class LoginBeen extends BaseEntity{
     public static class InfoBean {
 
         /**
-         * nickname : null
+         * name : null
          * uid : 11
          * token : VC7D_X6Z2K9Z0wwUsFVn8mndnT6WrXfaynPk9-JH
-         * mobile : 13522374928
-         * face_url : null
+         * tel : 13522374928
+         * face : null
          */
 
         private Object nickname;

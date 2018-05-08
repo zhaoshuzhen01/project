@@ -11,9 +11,9 @@ public class UserInfoEntity {
 
     /**
      * uid : 101048
-     * mobile : 18813003698
+     * tel : 18813003698
      * token : mBXkLOfQuwWAsmfJG+q+6JN6Pq8OV4HvowNg
-     * face_url : http://url
+     * face : http://url
      */
 
     private int uid;
@@ -25,9 +25,9 @@ public class UserInfoEntity {
     public String toString() {
         return "UserInfoEntity{" +
                 "uid=" + uid +
-                ", mobile='" + mobile + '\'' +
+                ", tel='" + mobile + '\'' +
                 ", token='" + token + '\'' +
-                ", face_url='" + face_url + '\'' +
+                ", face='" + face_url + '\'' +
                 '}';
     }
 

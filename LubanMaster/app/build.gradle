@@ -14,6 +14,8 @@ android {
                 GETUI_APP_ID    : "ZbJqKhikIF7d2UEIUDmWq4",
                 GETUI_APP_KEY   : "DwiMI0gzDz8vsXAMmIcfr7",
                 GETUI_APP_SECRET: "Bua63OzXRD8o3n2hoBITk4",
+                PACKAGE_NAME       : applicationId,
+                UMENG_CHANNEL_VALUE: "default_channel"
                 /* GETUI_APP_ID    : "3pa6zWkUC38EM1r0NZBGB8",
                  GETUI_APP_KEY   : "PZQ9sBnkny9ilioJHLP247",
                  GETUI_APP_SECRET: "IWxpDINGEnAk0FtFtLh8k7"
@@ -57,17 +59,17 @@ MasterSecret： be2mClT9kU5PWNhyqz39YA重置
             manifestPlaceholders = [channelID: "testluban"]
         }
     }
-    productFlavors {
+//    productFlavors {
 
-        ceshi { // 测试渠道
-            manifestPlaceholders = [channelID: "testmoli"]
-        }
-        guanwang { // 官方渠道
-            manifestPlaceholders = [channelID: "guanwang"]
-        }
-        xiaomi { // 小米
-            manifestPlaceholders = [channelID: "xiaomi"]
-        }
+//        ceshi { // 测试渠道
+//            manifestPlaceholders = [channelID: "testmoli"]
+//        }
+//        guanwang { // 官方渠道
+//            manifestPlaceholders = [channelID: "guanwang"]
+//        }
+//        xiaomi { // 小米
+//            manifestPlaceholders = [channelID: "xiaomi"]
+//        }
 //        baidu { // 百度
 //            manifestPlaceholders = [channelID: "baidu"]
 //        }
@@ -125,10 +127,26 @@ MasterSecret： be2mClT9kU5PWNhyqz39YA重置
 //        qiuyu { // 秋雨
 //            manifestPlaceholders = [channelID: "qiuyu"]
 //        }
-    }
+//    }
 
     dataBinding {
         enabled = true
+    }
+
+    //多平台打包
+    productFlavors {
+        default_channel {}
+        wandoujia {}
+        _360 {}
+        yingyongbao {}
+        xiaomi {}
+        baidu {}
+        huawei {}
+        jifeng {}
+        _91 {}
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
 
 }

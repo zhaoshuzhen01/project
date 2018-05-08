@@ -26,7 +26,7 @@ public class LoginModel {
         WebService service = RetrofitUtil.getInstance(new WebCommonInterceptor(context)).getBuilder().baseUrl(WebUrl.HOST_URL).build().create(WebService.class);
         JSONObject object = new JSONObject();
         try {
-            object.put("mobile","18813003698");
+            object.put("tel","18813003698");
             object.put("verifyCode","1231");
         } catch (JSONException e) {
             e.printStackTrace();

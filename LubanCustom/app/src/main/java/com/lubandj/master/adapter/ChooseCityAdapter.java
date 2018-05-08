@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
 import com.example.baselibrary.tools.ToastUtils;
+import com.lubandj.master.Canstance;
 import com.lubandj.master.R;
 import com.lubandj.master.been.MsgCenterBeen;
 
@@ -40,7 +41,7 @@ public class ChooseCityAdapter extends BaseQuickAdapter<String, BaseViewHolder> 
 
     @Override
     public void childViewClick(int position, View view) {
-        ToastUtils.showShort(context,getItem(position)+"");
+        Canstance.CITY =getItem(position);
         ((Activity)context).finish();
     }
 }
