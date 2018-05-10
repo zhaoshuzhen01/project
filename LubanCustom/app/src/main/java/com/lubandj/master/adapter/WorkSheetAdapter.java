@@ -177,8 +177,12 @@ public class WorkSheetAdapter extends BaseQuickAdapter<OrderListBeen.InfoBean, B
                 ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.ic_details_completed);
                 finishState.setText("再次购买");
                 ((TextView) (helper.getView(R.id.daohangprice1))).setVisibility(View.VISIBLE);
-                ((TextView) (helper.getView(R.id.daohangState))).setVisibility(View.VISIBLE);
-                ((TextView) (helper.getView(R.id.daohangState))).setText("去评价");
+
+                if(item.getIs_comment()==0) {
+                    ((TextView) (helper.getView(R.id.daohangState))).setVisibility(View.VISIBLE);
+                    ((TextView) (helper.getView(R.id.daohangState))).setText("去评价");
+                }else
+                    ((TextView) (helper.getView(R.id.daohangState))).setVisibility(View.GONE);
                 break;
             case 7:
                 ((ImageView) (helper.getView(R.id.state_img))).setImageResource(R.drawable.ic_details_canceled);

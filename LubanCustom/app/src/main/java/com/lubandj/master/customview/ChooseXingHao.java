@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -58,8 +59,10 @@ public class ChooseXingHao extends LinearLayout implements BaseQuickAdapter.OnIt
         this.context = context ;
         View view = LayoutInflater.from(context).inflate(R.layout.view_home_table, this);
         ButterKnife.inject(this, view);
-        GridLayoutManager manager = new  GridLayoutManager(context,4); //spanCount为列数，默认方向vertical
-        recyclerView.setLayoutManager(manager);
+//        GridLayoutManager manager = new  GridLayoutManager(context,4); //spanCount为列数，默认方向vertical
+        LinearLayoutManager layoutManager = new  LinearLayoutManager(context); //spanCount为列数，默认方向vertical
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new SpacesItemDecoration(10,10,0,10));
         recyclerView.setHasFixedSize(true);
     }
@@ -67,9 +70,14 @@ public class ChooseXingHao extends LinearLayout implements BaseQuickAdapter.OnIt
     public void setData(List<ServiceDetailBeen.InfoBean.ItemsBean> msgBeens,XingHao xingHao){
         this.msgBeens = msgBeens ;
         this.xingHao = xingHao ;
+        //初始化为无选择
+        for(int i=0;i<msgBeens.size();i++){
+            msgBeens.get(i).setSelect(false);
+        }
         homeListAdapter = new ChooseXingHaoAdapter(msgBeens,context);
         homeListAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(homeListAdapter);
+
     }
 
 

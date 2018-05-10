@@ -1,6 +1,7 @@
 package com.lubandj.master.customview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -12,6 +13,7 @@ import com.example.baselibrary.widget.SlideShowView;
 import com.lubandj.master.R;
 import com.example.baselibrary.HomeBeen;
 import com.example.baselibrary.GuangGaoBeen;
+import com.lubandj.master.my.AdActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +80,7 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
                viewpagerDatas.add(datas.get(i));
            }
        }
-        viewPager.setData(pagerlist, SlideShowView.TOPCONTENT, this,contentlist);
+        viewPager.setData(pagerlist, SlideShowView.TOPCONTENT, this,contentlist,null);
 
     }
     public void initGuangGao(List<GuangGaoBeen.InfoBean> guangGaolists){
@@ -86,7 +88,14 @@ public class HomeTopView extends LinearLayout implements ViewPager.OnPageChangeL
             list.add("1");
         }
        bannerView.setGuangGaolists(guangGaolists);
-        bannerView.setData(list, SlideShowView.GUANG, null,null);
+        bannerView.setData(list, SlideShowView.GUANG, null, null, new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), AdActivity.class);
+                intent.putExtra("url", (String) v.getTag());
+                getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

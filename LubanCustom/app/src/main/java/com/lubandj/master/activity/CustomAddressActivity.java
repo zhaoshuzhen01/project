@@ -1,9 +1,11 @@
 package com.lubandj.master.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,7 +40,7 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
     TextView fankuiButton;
     private List<AddressBean> msgBeens = new ArrayList<>();
     private ChooseAddressAdapter chooseCityAdapter;
-    private boolean isNeedResult=false;
+    private boolean isNeedResult = false;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CustomAddressActivity.class);
@@ -72,12 +74,12 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
         setTitleText("我的地址");
         setBackImg(R.drawable.back_mark);
         setOkVisibity(false);
-        if(getIntent()==null) {
-            isNeedResult=true;
-        }else{
-            isNeedResult=false;
+        if (TextUtils.isEmpty(getIntent().getStringExtra("isNeedResult"))) {
+            isNeedResult = true;
+        } else {
+            isNeedResult = false;
         }
-        chooseCityAdapter=new ChooseAddressAdapter(msgBeens,CustomAddressActivity.this);
+        chooseCityAdapter = new ChooseAddressAdapter(msgBeens, CustomAddressActivity.this);
         chooseCityAdapter.setOnItemClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(this); //spanCount为列数，默认方向vertical
         recyclerView.setLayoutManager(manager);
@@ -105,12 +107,17 @@ public class CustomAddressActivity extends TitleBaseActivity implements BaseQuic
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        if(isNeedResult) {
-            Intent intent = getIntent();
+        if (isNeedResult) {
             AddressBean bean = chooseCityAdapter.getItem(position);
-            intent.putExtra("data", bean);
-            setResult(1, intent);
-            finish();
+            if (CommonUtils.getCity().equals(bean.city)) {
+                Intent intent = getIntent();
+                intent.putExtra("data", bean);
+                setResult(1, intent);
+                finish();
+            } else {
+                ToastUtils.showShort(CustomAddressActivity.this, "该地址超出服务范围");
+            }
+
         }
     }
 

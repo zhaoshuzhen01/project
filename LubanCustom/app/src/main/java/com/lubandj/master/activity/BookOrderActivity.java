@@ -191,7 +191,7 @@ private  MyCons.InfoBean bean1;
                 }
                 netBookBeen.setAddress_id(addressId);
                 netBookBeen.setAmount(LocalleCarData.newInstance().getTotalPrice());
-                if (!TextUtils.isEmpty(bean1.getId())){
+                if (bean1!=null&&!TextUtils.isEmpty(bean1.getId())){
                     netBookBeen.setCoupon_id(Integer.parseInt(bean1.getId()));
                 }else {
                     netBookBeen.setCoupon_id(0);

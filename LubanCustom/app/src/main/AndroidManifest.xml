@@ -126,6 +126,9 @@
             android:name=".my.AgreementActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".my.AdActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.lubandj.customer.my.MySettingActivity"
             android:screenOrientation="portrait" />
         <activity

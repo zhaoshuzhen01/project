@@ -42,7 +42,7 @@
             android:layout_marginTop="@dimen/h_2dp"
             android:gravity="center"
             android:text="223"
-            android:textColor="@color/color_999999"
+            android:textColor="@color/color_ff0000"
             android:textSize="@dimen/h_13dp" />
     </LinearLayout>
 </LinearLayout>

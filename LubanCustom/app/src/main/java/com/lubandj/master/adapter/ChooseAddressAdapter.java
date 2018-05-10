@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.baselibrary.refresh.BaseQuickAdapter;
 import com.example.baselibrary.refresh.BaseViewHolder;
+import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.R;
 import com.lubandj.master.activity.AddAddressActivity;
 import com.lubandj.master.activity.CustomAddressActivity;
@@ -65,9 +66,14 @@ public class ChooseAddressAdapter extends BaseQuickAdapter<AddressBean, BaseView
 
     @Override
     public void childViewClick(int position, View view) {
-        Intent intent = new Intent(context, AddAddressActivity.class);
-        intent.putExtra("bean", getItem(position));
-        ((Activity) context).startActivityForResult(intent, 1001);
+//        AddressBean bean= getItem(position);
+//        if(CommonUtils.getCity().equals(bean.city)) {
+//            Intent intent = new Intent(context, AddAddressActivity.class);
+//            intent.putExtra("bean", getItem(position));
+//            ((Activity) context).startActivityForResult(intent, 1001);
+//        }else{
+//            ToastUtils.showShort(context,"该地址超出服务范围");
+//        }
     }
 }
 

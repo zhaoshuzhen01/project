@@ -30,7 +30,7 @@ public class ChooseXingHaoAdapter extends BaseQuickAdapter<ServiceDetailBeen.Inf
         TextView finishState =  ((TextView) (helper.getView(R.id.home_list_title)));
         finishState.setText(item.getSpec_name()+"");
         if (item.isSelect()){
-            finishState.setBackgroundResource(R.drawable.selector_btn_send_code_bg);
+            finishState.setBackgroundResource(R.drawable.selector_btn_small_bg);
             finishState.setTextColor(context.getResources().getColor(R.color.white));
         }else {
             finishState.setBackgroundResource(R.drawable.gray_listback);

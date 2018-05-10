@@ -176,7 +176,7 @@ public class MyFragment extends BaseFragment implements DialogTagin.DialogSure {
             case R.id.my_address:
                 if (CommonUtils.isLogin()) {
                     Intent intent=new Intent(getActivity(),CustomAddressActivity.class);
-                    intent.putExtra("isNeedResult",false);
+                    intent.putExtra("isNeedResult","no");
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);

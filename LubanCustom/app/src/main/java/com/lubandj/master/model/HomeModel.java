@@ -30,7 +30,7 @@ public class HomeModel extends BaseModel {
     @Override
     public void getReflushData(int type,int startIndex,int pageSize) {
 
-        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_LIST, new NetHomeBeen("","0"), new Response.Listener<String>() {
+        TaskEngine.getInstance().tokenHttps(Canstance.HTTP_WORK_SHEET_LIST, new NetHomeBeen(CommonUtils.getCity(),"0"), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String s) {

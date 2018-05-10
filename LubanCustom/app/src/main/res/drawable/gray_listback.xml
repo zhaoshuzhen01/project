@@ -10,5 +10,5 @@
     <!-- 形状颜色（如果需要的是空心矩形, 则形状颜色设置为透明） -->
     <solid
         android:color="#0000" />
-    <corners android:radius="@dimen/h_20dp"></corners>
+    <corners android:radius="16dp"></corners>
 </shape>

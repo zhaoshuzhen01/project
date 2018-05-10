@@ -7,10 +7,11 @@
 <ImageView
     android:id="@+id/dialog_introduce_pic"
     android:src="@drawable/homelistdefaut"
-    android:layout_width="wrap_content"
+    android:layout_width="70dp"
     android:layout_marginLeft="@dimen/h_14dp"
+    android:scaleType="fitXY"
     android:layout_marginTop="@dimen/h_14dp"
-    android:layout_height="wrap_content" />
+    android:layout_height="70dp" />
     <TextView
         android:id="@+id/top_price"
         android:layout_marginTop="@dimen/h_30dp"

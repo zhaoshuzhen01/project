@@ -23,6 +23,7 @@
                 android:onClick="onBack"/>
 
             <TextView
+                android:id="@+id/tv_title"
                 style="@style/my_title_text"
                 android:text="用户协议"/>
 

@@ -34,7 +34,7 @@ public class HomeListAdapter extends BaseQuickAdapter<HomeBeen.InfoBean, BaseVie
         TextView title = ((TextView) (helper.getView(R.id.home_list_title)));
         title.setText(item.getName());
         TextView price = ((TextView) (helper.getView(R.id.home_list_price)));
-        price.setText(item.getPrice());
+        price.setText("¥"+item.getPrice());
     }
 
     @Override

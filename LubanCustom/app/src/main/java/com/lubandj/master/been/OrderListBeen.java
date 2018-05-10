@@ -53,6 +53,7 @@ public class OrderListBeen extends BaseEntity {
         private String statusText;
         private String pay_status;
         private String pay_statusText;
+        private int is_comment;
         private List<ItemsBean> items;
 
         public String getId() {
@@ -73,6 +74,14 @@ public class OrderListBeen extends BaseEntity {
 
         public String getContact_name() {
             return contact_name;
+        }
+
+        public int getIs_comment() {
+            return is_comment;
+        }
+
+        public void setIs_comment(int is_comment) {
+            this.is_comment = is_comment;
         }
 
         public void setContact_name(String contact_name) {

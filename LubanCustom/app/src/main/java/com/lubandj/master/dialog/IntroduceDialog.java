@@ -15,6 +15,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.baselibrary.tools.ToastUtils;
 import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.LocalleCarData;
@@ -49,6 +50,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
     private ImageView main_car ;
     private TextView  car_msgCount,tv_show_price;
 
+    private ImageView mIconView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
         top_name = view.findViewById(R.id.top_name);
         top_price = view.findViewById(R.id.top_price);
         chooseXingHao = view.findViewById(R.id.introde_middle);
+        mIconView=view.findViewById(R.id.dialog_introduce_pic);
         chooseXingHao.setData(data.getInfo().getItems(),this);
         countView = view.findViewById(R.id.count);
         jianView.setOnClickListener(this);
@@ -87,11 +90,16 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
         topChose.setOnClickListener(this);
         buttonText.setOnClickListener(this);
         top_name.setText(data.getInfo().getName());
+        xinghao=null;
+        if(data!=null&&xinghao==null) {
+            top_name.setText(data.getInfo().getName());
+            top_price.setText("¥ " +data.getInfo().getPrice_interval());
+            Glide.with(getActivity()).load(data.getInfo().getService_pic()).skipMemoryCache(false).into(mIconView);
+        }
         if (xinghao!=null){
-            double price = Double.parseDouble(xinghao.getPrice())*count;
-            top_price.setText("¥ " +price);
-            countView.setText(count+"");
-            top_name.setText(xinghao.getItem_name()+"");
+            changeView();
+            mIconView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            Glide.with(getActivity()).load(xinghao.getItem_pic()).skipMemoryCache(false).into(mIconView);
         }
     }
     public void setData(ServiceDetailBeen data, ImageView main_car,TextView car_msgCount,TextView tv_show_price) {
@@ -116,7 +124,7 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
     }
 
     public void clickShow(FragmentManager manager, String tag, Context context){
-        count=1;
+//        count=0;
         this.show(manager,"");
         addCarModel = new AddCarModel(context,this);
     }
@@ -137,21 +145,32 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
                     ToastUtils.showShort(getActivity(),"数量不能为0个");
                 break;
             case R.id.jian:
+                if (xinghao==null){
+                    ToastUtils.showShort(getActivity(),"请选择型号");
+                    return;
+                }
                 if (count>0){
                     --count;
-                    countView.setText(count+"");
-                    double price = Double.parseDouble(xinghao.getPrice())*count;
-                    top_price.setText("¥ "+price+"");
+                    changeView();
                 }
                 break;
             case R.id.jia:
+                if (xinghao==null){
+                    ToastUtils.showShort(getActivity(),"请选择型号");
+                    return;
+                }
                 ++count;
-                countView.setText(count+"");
-                double price = Double.parseDouble(xinghao.getPrice())*count;
-                top_price.setText("¥ "+price+"");
+                changeView();
                 break;
         }
     }
+
+    public void changeView(){
+        countView.setText(count+"");
+        double price = Double.parseDouble(xinghao.getPrice())*count;
+        top_price.setText("¥ "+price+"");
+    }
+
 
     @Override
     public void getServiceData(Object mdata) {
@@ -175,8 +194,9 @@ public class IntroduceDialog extends DialogFragment implements View.OnClickListe
     @Override
     public void getXingHao(ServiceDetailBeen.InfoBean.ItemsBean xinghao) {
         this.xinghao = xinghao ;
-        top_name.setText(xinghao.getItem_name()+"");
-        double price = Double.parseDouble(xinghao.getPrice())*count;
-        top_price.setText("¥ " +price);
+        if(count==0)
+            count=1;
+        changeView();
+        Glide.with(getActivity()).load(xinghao.getItem_pic()).skipMemoryCache(false).into(mIconView);
     }
 }

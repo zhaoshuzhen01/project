@@ -149,12 +149,16 @@ public class CarActivity extends TitleBaseActivity implements  ShoppingCartAdapt
                     tv_clear.setVisibility(View.VISIBLE);
                     rl_bottom.setVisibility(View.GONE);
                     tv_basetitle_right.setText("取消");
+                    ckAll.setChecked(false);
+                    chooseAll();
 //                    ckAll.setChecked(true);
 //                    shoppingCartAdapter.isShow(false);
                 } else {
                     tv_clear.setVisibility(View.GONE);
                     tv_basetitle_right.setText("编辑");
                     rl_bottom.setVisibility(View.VISIBLE);
+                    ckAll.setChecked(true);
+                    chooseAll();
 //                    ckAll.setChecked(false);
 //                    shoppingCartAdapter.isShow(true);
                 }

@@ -27,6 +27,12 @@ public class LocalleCarData {
 
     public void setShoppingCartBeanList(ShoppingCartBean bean){
         //do something
+        for(int i=0;i<shoppingCartBeanList.size();i++) {
+            if(shoppingCartBeanList.get(i).getService_id()==bean.getService_id()&&shoppingCartBeanList.get(i).getSpec_id()==bean.getSpec_id()){//如果有相同服务项在内
+                shoppingCartBeanList.get(i).setCount(shoppingCartBeanList.get(i).getCount()+bean.getCount());
+                return;
+            }
+        }
         this.shoppingCartBeanList.add(bean) ;
     }
 

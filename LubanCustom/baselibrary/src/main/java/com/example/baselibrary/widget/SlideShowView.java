@@ -55,6 +55,8 @@ public class SlideShowView extends FrameLayout {
     private int mtype;
     private LayoutView mlayoutView;
     private List<List<HomeBeen.InfoBean>> contentlist = new ArrayList<>();
+    private OnClickListener mListener;
+
     public void setGuangGaolists(List<GuangGaoBeen.InfoBean> guangGaolists) {
         this.guangGaolists = guangGaolists;
     }
@@ -76,16 +78,20 @@ public class SlideShowView extends FrameLayout {
         initUI(context);
     }
 
-    public void setData(List<String> m_AdvImgs, int type, LayoutView layoutView, List<List<HomeBeen.InfoBean>> contentlist) {
+    public void setData(List<String> m_AdvImgs, int type, LayoutView layoutView, List<List<HomeBeen.InfoBean>> contentlist,OnClickListener listener) {
         mtype = type;
         mlayoutView = layoutView;
         stopLoopAdv();
         this.contentlist = contentlist;
         this.m_AdvImgs.clear();
         this.m_AdvImgs.addAll(m_AdvImgs);
+        this.mListener=listener;
 
 
-        adatper.notifyDataSetChanged();
+        adatper = new MyAdatper();
+
+        mViewPager.setAdapter(adatper);
+//        adatper.notifyDataSetChanged();
 
         setListener();
         if (mtype != GUANG) {
@@ -253,10 +259,13 @@ public class SlideShowView extends FrameLayout {
                     layoutParams.height = (getResources().getDisplayMetrics().widthPixels / 2);
 //                    Glide.with(context).load(guangGaolists.get(pos).getPicture()).skipMemoryCache(false).into(imageView);
                     Glide.with(context).load(guangGaolists.get(pos).getPicture()).placeholder(R.drawable.lunbo).dontAnimate().error(R.drawable.lunbo).into(imageView);
+                    imageView.setTag(guangGaolists.get(pos).getLinkurl());
                     imageView.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ToastUtils.showShort(context,"跳转webview");
+//                            ToastUtils.showShort(context,"跳转webview");
+                            if(mListener!=null)
+                            mListener.onClick(v);
                         }
                     });
 

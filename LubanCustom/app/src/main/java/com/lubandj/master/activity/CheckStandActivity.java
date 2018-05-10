@@ -135,7 +135,6 @@ public class CheckStandActivity extends TitleBaseActivity implements CompoundBut
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sure_pay:
-
                 if (weixinchekcout.isChecked()) {
                     payModel.bookOrder(orderid, "1");
                 } else {

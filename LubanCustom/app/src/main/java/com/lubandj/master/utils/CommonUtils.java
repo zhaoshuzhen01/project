@@ -257,8 +257,8 @@ public class CommonUtils {
 //        TApplication.context.setGetuiTag(-1);
         CommonUtils.setToken("");
         CommonUtils.setUid(-1);
-       /* ActUtils.getInstance().finishAllALiveAcitity();
-        context.startActivity(new Intent(context, LoginActivity.class));*/
+       //ActUtils.getInstance().finishAllALiveAcitity();
+        context.startActivity(new Intent(context, LoginActivity.class));
     }
 
 

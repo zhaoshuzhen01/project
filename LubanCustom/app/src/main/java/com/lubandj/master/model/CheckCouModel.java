@@ -11,6 +11,7 @@ import com.lubandj.master.Iview.DataCall;
 import com.lubandj.master.Iview.Keyong;
 import com.lubandj.master.R;
 import com.lubandj.master.been.CityListBeen;
+import com.lubandj.master.been.MyCons;
 import com.lubandj.master.httpbean.HttpCheckCous;
 import com.lubandj.master.utils.CommonUtils;
 import com.lubandj.master.utils.TaskEngine;
@@ -36,7 +37,7 @@ public class CheckCouModel {
             @Override
             public void onResponse(String s) {
 
-                CityListBeen msgCenterBeen = new Gson().fromJson(s, CityListBeen.class);
+                MyCons msgCenterBeen = new Gson().fromJson(s, MyCons.class);
                 if (msgCenterBeen != null) {
                     if (msgCenterBeen.getCode() == 0) {
                         dataCall.getKeData(msgCenterBeen);
