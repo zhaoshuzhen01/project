@@ -55,6 +55,7 @@ public class Canstance {
     public static final int HTTP_MYPINGJIA_LIST = 60004;//我的评价列表
 
     public static final int HTTP_DETAIL_PINGJIA_LIST = 60001;//评价提交
+    public static final int HTTP_DETAIL_PINGJIA_INIT_LIST = 60000;//评价提交
 
     public static final int HTTP_WORKDETAIL = 60001;//工作日历详情
     public static final int HTTP_LEAVERECORD = 50002;//请假列表

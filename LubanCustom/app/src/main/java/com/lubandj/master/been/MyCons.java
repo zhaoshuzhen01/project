@@ -11,6 +11,7 @@ import java.util.List;
 
 public class MyCons extends BaseEntity {
 
+
     private List<InfoBean> info;
 
     public List<InfoBean> getInfo() {
@@ -24,12 +25,12 @@ public class MyCons extends BaseEntity {
     public static class InfoBean implements Serializable{
         /**
          * service_item : 不限
-         * expiry_info : 有效期1970-01-01至1970-01-01
-         * name : null
-         * amount : null
+         * expiry_info : 有效期2018-05-10至2018-05-17
+         * name : 小样促销3
+         * amount : 0
          * city : 不限
-         * reduction : 抵扣券
-         * id : null
+         * reduction : 满1可用
+         * id : 37
          */
 
         private String service_item;
@@ -56,7 +57,7 @@ public class MyCons extends BaseEntity {
             this.expiry_info = expiry_info;
         }
 
-        public Object getName() {
+        public String getName() {
             return name;
         }
 

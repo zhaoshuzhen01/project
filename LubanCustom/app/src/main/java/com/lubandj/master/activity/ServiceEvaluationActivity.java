@@ -33,6 +33,7 @@ import com.lubandj.master.R;
 import com.lubandj.master.adapter.DetailPingAdapter;
 import com.lubandj.master.been.OrderListBeen;
 import com.lubandj.master.model.DetailPingJiaModel;
+import com.lubandj.master.model.DetailPingjiaInitModel;
 import com.lubandj.master.utils.CommonUtils;
 
 import net.bither.util.NativeUtil;
@@ -59,6 +60,8 @@ public class ServiceEvaluationActivity extends TitleBaseActivity implements Data
     private static final int TOTAL_IMAGE_COUNT = 4;
     private List<String> mImgPath = new ArrayList<String>();
     private List<IPhoto> mImgs;
+    private String id ;
+    private DetailPingjiaInitModel detailPingjiaInitModel;
     List<OrderListBeen.InfoBean.ItemsBean> datas;
     public static int index = 0;
 
@@ -96,12 +99,15 @@ public class ServiceEvaluationActivity extends TitleBaseActivity implements Data
         infoBean = (OrderListBeen.InfoBean) getIntent().getSerializableExtra("info");
 //        infoBean.getItems().addAll(infoBean.getItems());
         datas = infoBean.getItems();
-        detailPingAdapter = new DetailPingAdapter(datas, this);
+        id = infoBean.getId();
+        detailPingjiaInitModel = new DetailPingjiaInitModel(this,null);
+        detailPingjiaInitModel.getPingJiaData(id);
+      /*  detailPingAdapter = new DetailPingAdapter(datas, this);
         LinearLayoutManager manager = new LinearLayoutManager(this); //spanCount为列数，默认方向vertical
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(detailPingAdapter);
         detailPingJiaModel = new DetailPingJiaModel(this, this);
-        initData();
+        initData();*/
     }
 
     @Override

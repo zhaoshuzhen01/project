@@ -66,14 +66,14 @@ public class ChooseAddressAdapter extends BaseQuickAdapter<AddressBean, BaseView
 
     @Override
     public void childViewClick(int position, View view) {
-//        AddressBean bean= getItem(position);
-//        if(CommonUtils.getCity().equals(bean.city)) {
-//            Intent intent = new Intent(context, AddAddressActivity.class);
-//            intent.putExtra("bean", getItem(position));
-//            ((Activity) context).startActivityForResult(intent, 1001);
-//        }else{
-//            ToastUtils.showShort(context,"该地址超出服务范围");
-//        }
+        AddressBean bean= getItem(position);
+        if(CommonUtils.getCity().equals(bean.city)) {
+            Intent intent = new Intent(context, AddAddressActivity.class);
+            intent.putExtra("bean", getItem(position));
+            ((Activity) context).startActivityForResult(intent, 1001);
+        }else{
+            ToastUtils.showShort(context,"该地址超出服务范围");
+        }
     }
 }
 

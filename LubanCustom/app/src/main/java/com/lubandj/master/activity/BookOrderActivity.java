@@ -264,8 +264,10 @@ private  MyCons.InfoBean bean1;
                 }
                 break;
             case 110:
-                 bean1 = (MyCons.InfoBean) data.getSerializableExtra("data");
-                keyongcous.setText(bean1.getAmount()+" "+bean1.getReduction());
+                if (data!=null){
+                    bean1 = (MyCons.InfoBean) data.getSerializableExtra("data");
+                    keyongcous.setText(bean1.getAmount()+" "+bean1.getReduction());
+                }
                 break;
         }
     }
